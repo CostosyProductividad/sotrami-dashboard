@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reporte Diario – Minera Sotrami S.A.</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  /* ========== ESTILOS (resumidos, igual que antes) ========== */
+  :root{--nv:#003366;--gd:#D4AF37;--glt:#F5ECC8;--gmd:#B8962A;--bg:#EEF1F6;--w:#fff;--w2:#F4F6FA;--bd:#DDE3EC;--bd2:#C4CEDC;--t1:#0F1E33;--t2:#3E4E66;--t3:#7A8CA8;--G:#0D6832;--Gbg:#E8F8EE;--Gbd:#A3DFBA;--Y:#7C5800;--Ybg:#FFFBEA;--Ybd:#F0D060;--R:#871A1A;--Rbg:#FDEAEA;--Rbd:#F0A0A0;--rr:6px;--rr2:12px;--sh:0 1px 3px rgba(15,30,51,.07);}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--t1);font-size:13px}
+  .topbar{background:var(--nv);border-bottom:3px solid var(--gd);min-height:56px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;gap:8px;position:sticky;top:0;z-index:100}
+  .brand{display:flex;align-items:center;gap:10px}
+  .logo-img{width:40px;height:40px;border-radius:50%;object-fit:cover}
+  .bname{font-size:14px;font-weight:700;color:#fff}
+  .bsub{font-size:10px;color:rgba(255,255,255,.45)}
+  .topbar-r{display:flex;align-items:center;gap:12px}
+  .tbdg{padding:3px 10px;border-radius:20px;font-size:10px;font-weight:600}
+  .tbg{background:rgba(212,175,55,.18);border:1px solid rgba(212,175,55,.4);color:var(--gd)}
+  .tbgn{background:rgba(13,104,50,.2);border:1px solid rgba(13,104,50,.4);color:#4ade80}
+  .metabar{background:rgba(0,30,70,.97);padding:5px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .mi{font-size:10px;color:rgba(255,255,255,.5)}
+  .mi strong{color:white}
+  .page{max-width:1440px;margin:0 auto;padding:16px 20px 48px}
+  .krow{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+  .kcard{background:var(--w);border:1px solid var(--bd);border-radius:var(--rr2);padding:13px 16px;border-top:3px solid var(--kc,var(--nv));box-shadow:var(--sh)}
+  .kcard-body{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-bottom:8px}
+  .klbl{font-size:9px;color:var(--t3);text-transform:uppercase;margin-bottom:7px;font-weight:600}
+  .kval{font-size:24px;font-weight:700;color:var(--t1);font-family:'DM Mono',monospace}
+  .kunit{font-size:10px;color:var(--t3)}
+  .kprog{display:flex;justify-content:space-between;padding-top:8px;border-top:1px solid var(--bd);margin-top:4px}
+  .kprog-lbl{font-size:9px;color:var(--t3)}
+  .kprog-val{font-size:10px;font-family:'DM Mono',monospace;color:var(--t2)}
+  .kbdg{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:600;padding:3px 8px;border-radius:20px;border:1px solid transparent}
+  .kG{background:var(--Gbg);color:var(--G);border-color:var(--Gbd)}
+  .kA{background:var(--Ybg);color:var(--Y);border-color:var(--Ybd)}
+  .kR{background:var(--Rbg);color:var(--R);border-color:var(--Rbd)}
+  .g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+  .gf{margin-bottom:12px}
+  .card{background:var(--w);border:1px solid var(--bd);border-radius:var(--rr2);overflow:hidden}
+  .ch{padding:9px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--bd);background:var(--nv)}
+  .chg{background:var(--glt);border-bottom:1px solid rgba(212,175,55,.35)}
+  .ct{font-size:11px;font-weight:700;color:#fff;text-transform:uppercase}
+  .ctg{color:var(--nv)}
+  .csub{font-size:9px;color:rgba(255,255,255,.45)}
+  .csubg{color:var(--t3)}
+  .tbl{width:100%;border-collapse:collapse;font-size:11px}
+  .tbl th{background:var(--w2);color:var(--t3);font-weight:700;font-size:9px;padding:7px 9px;text-align:center}
+  .tbl th:first-child{text-align:left;padding-left:14px}
+  .tbl td{padding:7px 9px;border-bottom:1px solid var(--bd);color:var(--t2);text-align:center}
+  .tbl td:first-child{text-align:left;padding-left:14px;color:var(--t1);font-weight:500}
+  .tbl tr.tot td{background:var(--glt);color:var(--nv);font-weight:700}
+  .tw{overflow-x:auto}
+  .mono{font-family:'DM Mono',monospace;font-size:10px}
+  .pG{background:var(--Gbg);color:var(--G);border:1px solid var(--Gbd);display:inline-block;padding:2px 8px;border-radius:20px;font-weight:700}
+  .pY{background:var(--Ybg);color:var(--Y);border:1px solid var(--Ybd);display:inline-block;padding:2px 8px;border-radius:20px;font-weight:700}
+  .note{padding:5px 14px;font-size:10px;color:var(--t3);background:var(--bg);border-top:1px solid var(--bd)}
+  .footer{background:var(--nv);border-top:3px solid var(--gd);padding:10px 20px;text-align:center;font-size:10px;color:rgba(255,255,255,.4)}
+  .footer span{color:var(--gd)}
+  @media(max-width:900px){.krow{grid-template-columns:repeat(2,1fr)}.g2{grid-template-columns:1fr}}
+  @media(max-width:600px){.krow{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <img class="logo-img" src="data:image/png;base64,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" alt="Logo">
+    <div><div class="bname">Minera Sotrami S.A.</div><div class="bsub">U.M. Santa Filomena · Sancos – Ayacucho</div></div>
+  </div>
+  <div class="topbar-r">
+    <span class="tbdg tbg" id="fecha-actual">--/--/----</span>
+    <span class="tbdg tbgn">&#9679; Turno Día — Semana 23</span>
+    <div style="display: flex; gap: 8px; align-items: center; background: rgba(0,0,0,0.2); padding: 4px 12px; border-radius: 30px;">
+      <label style="color:white; font-size:11px;">📅 Desde:</label>
+      <input type="date" id="fechaInicio" value="2026-01-01" style="background:#fff; border:none; border-radius:20px; padding:4px 8px; font-size:11px;">
+      <label style="color:white; font-size:11px;">Hasta:</label>
+      <input type="date" id="fechaFin" value="2026-06-30" style="background:#fff; border:none; border-radius:20px; padding:4px 8px; font-size:11px;">
+      <button id="btnFiltrar" style="background:#D4AF37; border:none; border-radius:20px; padding:4px 12px; font-size:11px; font-weight:bold; cursor:pointer;">Aplicar</button>
+      <span id="ultimaActualizacion" style="color:#ccc; font-size:10px;"></span>
+    </div>
+  </div>
+</div>
+<div class="metabar">
+  <div class="mi">Área: <strong>MINA / PLANTA</strong></div><div class="ms">|</div>
+  <div class="mi">Periodo: <strong id="periodo-label">01/01/2026 → 30/06/2026</strong></div>
+</div>
+
+<div class="page">
+
+<!-- KPIs - 9 tarjetas -->
+<div class="krow" id="kpi-container"></div>
+
+<!-- PRODUCCIÓN -->
+<div class="gf">
+  <div class="card">
+    <div class="ch"><span class="ct">&#9935; Producción – Enviado a Planta</span></div>
+    <div class="tw">
+      <table class="tbl" id="tabla-produccion">
+        <thead><tr><th rowspan="2">Zona</th><th colspan="3">Producción Día (TM)</th><th colspan="3">Producción Acumulada (TM)</th><th>Prog. Mes</th><th>% Mes</th></tr>
+        <tr><th>Prog.</th><th>Ejec.</th><th>% Día</th><th>Prog.</th><th>Ejec.</th><th>% Acum</th><th>(TM)</th><th></th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- AVANCES -->
+<div class="gf">
+  <div class="card">
+    <div class="ch"><span class="ct">&#128208; Avances</span></div>
+    <div class="tw">
+      <table class="tbl" id="tabla-avances">
+        <thead><tr><th>Zona</th><th>Descripción</th><th>Ejecutor</th><th>Ejec.Día</th><th>Prog.Día</th><th>%Día</th><th>Ejec.Acum</th><th>Prog.Acum</th><th>%Acum</th><th>Prog.Mes</th><th>%Mes</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- REHABILITACIÓN -->
+<div class="gf">
+  <div class="card">
+    <div class="ch"><span class="ct">&#128296; Rehabilitación</span></div>
+    <div class="tw">
+      <table class="tbl" id="tabla-rehabilitacion">
+        <thead><tr><th>Zona</th><th>Descripción</th><th>Ejec.Día</th><th>Prog.Día</th><th>%Día</th><th>Ejec.Acum</th><th>%Acum</th><th>Prog.Mes</th><th>%Mes</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- RAISE BORING -->
+<div class="gf">
+  <div class="card">
+    <div class="ch"><span class="ct">&#128297; Raise Boring</span></div>
+    <div class="tw">
+      <table class="tbl" id="tabla-raise">
+        <thead><tr><th>Zona</th><th>Proyecto</th><th>Tipo</th><th>Ejec.Día</th><th>Prog.Día</th><th>Ejec.Acum</th><th>%Día</th><th>%Mes</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- PERSONAL -->
+<div class="gf">
+  <div class="card">
+    <div class="ch"><span class="ct">&#128119; RRHH – Recursos Humanos</span></div>
+    <div class="tw">
+      <table class="tbl" id="tabla-personal">
+        <thead><tr><th>Empresa</th><th>Empleados</th><th>Obreros</th><th>Total HC</th><th>HC Prog.</th><th>% Cumpl.</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- SEGURIDAD -->
+<div class="gf">
+  <div class="card">
+    <div class="ch"><span class="ct">&#129302; Seguridad y Medio Ambiente</span></div>
+    <div class="tw">
+      <table class="tbl" id="tabla-seguridad">
+        <thead><tr><th>Empresa</th><th>Incidentes</th><th>Leve</th><th>Incapac.</th><th>Mortal</th><th>Equipos</th><th>Obs.</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- LABORATORIO -->
+<div class="gf">
+  <div class="card">
+    <div class="ch"><span class="ct">&#129514; Laboratorio Químico</span></div>
+    <div class="tw">
+      <table class="tbl" id="tabla-laboratorio">
+        <thead><tr><th>Zona</th><th>Au Línea Base</th><th>Peso kg–Día</th><th>Peso TMH–Día</th><th>%H₂O Día</th><th>Ley Au–Día</th><th>Ley Ag–Día</th><th>Ley Au–Mes</th><th>Ley Ag–Mes</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- MANTENIMIENTO -->
+<div class="gf">
+  <div class="card">
+    <div class="ch"><span class="ct">&#128295; Mantenimiento – Equipos Críticos</span></div>
+    <div class="tw">
+      <table class="tbl" id="tabla-mantenimiento">
+        <thead><tr><th>Equipo</th><th>Fecha Inop.</th><th>Estado</th><th>Motivo</th><th>Atenciones</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ALMACÉN -->
+<div class="gf">
+  <div class="card">
+    <div class="ch"><span class="ct">&#128230; Almacén – Materiales Críticos</span></div>
+    <div class="tw">
+      <table class="tbl" id="tabla-almacen">
+        <thead><tr><th>Centro Costos</th><th>Material</th><th>UM</th><th>Stock Act.</th><th>Stock Mín.</th><th>Dif.</th><th>Estado</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- GEOLOGÍA LEYES -->
+<div class="gf">
+  <div class="card">
+    <div class="ch"><span class="ct">&#9903; Geología Mina – Leyes</span></div>
+    <div class="tw">
+      <table class="tbl" id="tabla-geologia">
+        <thead><tr><th>Zona</th><th>Ley Au Ponderada</th><th>Ley Ag Ponderada</th><th>Línea Base Au</th><th>% Cumpl.</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</div><!-- page -->
+<div class="footer"><span>Minera Sotrami S.A.</span> &nbsp;|&nbsp; Datos en tiempo real desde Google Sheets</div>
+
+<script>
+// ================= CONFIGURACIÓN =================
+const API_URL = 'https://script.google.com/macros/s/AKfycbwNliSUttDI23wYNteJsVzXKhS2FrLhAHRrnpSzSIDJedfSaVqr1dP-suGzkOyfH7xn8g/exec';
+
+let datosGlobales = {};
+
+// ================= INICIALIZACIÓN =================
+window.addEventListener('DOMContentLoaded', () => {
+  cargarDatos();
+  document.getElementById('btnFiltrar').addEventListener('click', () => {
+    renderizarTodo();
+  });
+});
+
+// ================= CARGAR DATOS =================
+async function cargarDatos() {
+  try {
+    const resp = await fetch(API_URL);
+    datosGlobales = await resp.json();
+    document.getElementById('ultimaActualizacion').innerText = 
+      'Actualizado: ' + new Date(datosGlobales.ultimaActualizacion).toLocaleString();
+    // Mostrar fecha actual (última fecha disponible en producción)
+    if (datosGlobales.produccion && datosGlobales.produccion.length) {
+      const ultimaFecha = new Date(datosGlobales.produccion[datosGlobales.produccion.length-1].fecha);
+      document.getElementById('fecha-actual').innerText = ultimaFecha.toLocaleDateString('es-PE');
+    }
+    renderizarTodo();
+  } catch (err) {
+    console.error('Error al cargar datos:', err);
+    alert('Error al cargar datos. Revisa la URL de la API o los permisos.');
+  }
+}
+
+// ================= FILTRO DE FECHAS =================
+function getFechasFiltro() {
+  const inicio = document.getElementById('fechaInicio').value;
+  const fin = document.getElementById('fechaFin').value;
+  return { inicio, fin };
+}
+
+function estaEnRango(fechaStr, inicio, fin) {
+  if (!fechaStr) return false;
+  let fecha = new Date(fechaStr);
+  if (isNaN(fecha)) fecha = new Date(fechaStr);
+  const fechaISO = fecha.toISOString().split('T')[0];
+  return fechaISO >= inicio && fechaISO <= fin;
+}
+
+// ================= RENDERIZAR TODO =================
+function renderizarTodo() {
+  if (!datosGlobales.produccion) return;
+  const { inicio, fin } = getFechasFiltro();
+  document.getElementById('periodo-label').innerText = `${formatearFecha(inicio)} → ${formatearFecha(fin)}`;
+  
+  // Filtrar por fecha
+  const produccionFiltrada = datosGlobales.produccion.filter(row => estaEnRango(row.fecha, inicio, fin));
+  const avancesFiltrados = (datosGlobales.avances_diarios || []).filter(row => estaEnRango(row.fecha, inicio, fin));
+  const rehabFiltrada = (datosGlobales.rehabilitacion || []).filter(row => estaEnRango(row.fecha, inicio, fin));
+  const raiseFiltrada = (datosGlobales.raise_boring || []).filter(row => estaEnRango(row.fecha, inicio, fin));
+  const personalFiltrado = (datosGlobales.personal || []).filter(row => estaEnRango(row.fecha, inicio, fin));
+  const seguridadFiltrada = (datosGlobales.seguridad || []).filter(row => estaEnRango(row.fecha, inicio, fin));
+  const laboratorioFiltrado = (datosGlobales.laboratorio || []).filter(row => estaEnRango(row.fecha, inicio, fin));
+  const mantenimientoFiltrado = datosGlobales.mantenimiento || [];
+  const almacenFiltrado = datosGlobales.almacen || [];
+  const geologiaFiltrado = datosGlobales.geologia_leyes || [];
+  
+  renderTablaProduccion(produccionFiltrada);
+  renderTablaAvances(avancesFiltrados);
+  renderTablaRehabilitacion(rehabFiltrada);
+  renderTablaRaise(raiseFiltrada);
+  renderTablaPersonal(personalFiltrado);
+  renderTablaSeguridad(seguridadFiltrada);
+  renderTablaLaboratorio(laboratorioFiltrado);
+  renderTablaMantenimiento(mantenimientoFiltrado);
+  renderTablaAlmacen(almacenFiltrado);
+  renderTablaGeologia(geologiaFiltrado);
+  
+  actualizarKPIs(produccionFiltrada, avancesFiltrados, rehabFiltrada);
+}
+
+// ================= FUNCIONES DE RENDER =================
+
+function renderTablaProduccion(produccion) {
+  const tbody = document.querySelector('#tabla-produccion tbody');
+  if (!tbody) return;
+  const zonas = ['Zona 23', 'Santa Rosa'];
+  const datosPorZona = zonas.map(zona => {
+    const filasZona = produccion.filter(r => r.zona === zona);
+    if (!filasZona.length) return null;
+    const ultima = filasZona[filasZona.length-1];
+    const tmhAcum = filasZona.reduce((sum, r) => sum + (r.tmh_dia || 0), 0);
+    const progAcum = filasZona.reduce((sum, r) => sum + (r.prog_dia || 0), 0);
+    const mesProg = ultima.mes_prog;
+    return {
+      zona,
+      progDia: ultima.prog_dia,
+      tmhDia: ultima.tmh_dia,
+      pctDia: (ultima.tmh_dia / ultima.prog_dia) * 100,
+      progAcum,
+      tmhAcum,
+      pctAcum: (tmhAcum / progAcum) * 100,
+      mesProg,
+      pctMes: (tmhAcum / mesProg) * 100
+    };
+  }).filter(d => d);
+  
+  if (!datosPorZona.length) {
+    tbody.innerHTML = '<tr><td colspan="9">No hay datos en el rango</td></td>';
+    return;
+  }
+  
+  let html = '';
+  datosPorZona.forEach(p => {
+    html += `<tr>
+      <td>${p.zona}</td>
+      <td class="mono">${p.progDia.toFixed(2)}</td>
+      <td class="mono">${p.tmhDia.toFixed(2)}</td>
+      <td>${p.pctDia >= 100 ? '<span class="pG">'+p.pctDia.toFixed(0)+'%</span>' : '<span class="pY">'+p.pctDia.toFixed(0)+'%</span>'}</td>
+      <td class="mono">${p.progAcum.toFixed(2)}</td>
+      <td class="mono">${p.tmhAcum.toFixed(2)}</td>
+      <td>${p.pctAcum.toFixed(0)}%</td>
+      <td class="mono">${p.mesProg}</td>
+      <td>${p.pctMes.toFixed(0)}%</td>
+    </tr>`;
+  });
+  const totalTMH = datosPorZona.reduce((s,p)=>s+p.tmhAcum,0);
+  const totalProg = datosPorZona.reduce((s,p)=>s+p.progAcum,0);
+  const totalProgDia = datosPorZona.reduce((s,p)=>s+p.progDia,0);
+  const totalTMHDia = datosPorZona.reduce((s,p)=>s+p.tmhDia,0);
+  const totalMesProg = datosPorZona.reduce((s,p)=>s+p.mesProg,0);
+  html += `<tr class="tot">
+    <td>ACUMULADO</td>
+    <td class="mono">${totalProgDia.toFixed(2)}</td>
+    <td class="mono">${totalTMHDia.toFixed(2)}</td>
+    <td>${((totalTMHDia/totalProgDia)*100).toFixed(0)}%</td>
+    <td class="mono">${totalProg.toFixed(2)}</td>
+    <td class="mono">${totalTMH.toFixed(2)}</td>
+    <td>${(totalTMH/totalProg*100).toFixed(0)}%</td>
+    <td class="mono">${totalMesProg}</td>
+    <td>${(totalTMH/totalMesProg*100).toFixed(0)}%</td>
+  </tr>`;
+  tbody.innerHTML = html;
+}
+
+function renderTablaAvances(avances) {
+  const tbody = document.querySelector('#tabla-avances tbody');
+  if (!tbody) return;
+  if (!avances.length) { tbody.innerHTML='<tr><td colspan="11">Sin datos</td></tr>'; return; }
+  // Agrupar y mostrar el último día para cada combinación
+  const grupos = {};
+  avances.forEach(a => {
+    const key = `${a.zona}|${a.tipo_avance}|${a.ejecutor}`;
+    if (!grupos[key] || new Date(a.fecha) > new Date(grupos[key].fecha)) grupos[key] = a;
+  });
+  let html = '';
+  for (let key in grupos) {
+    const a = grupos[key];
+    const pctDia = (a.metros_dia / a.prog_dia) * 100;
+    const pctAcum = (a.metros_acum / a.prog_acum) * 100;
+    const pctMes = (a.metros_acum / a.mes_prog) * 100;
+    html += `<tr>
+      <td>${a.zona}</td>
+      <td>${a.tipo_avance}</td>
+      <td>${a.ejecutor}</td>
+      <td class="mono">${a.metros_dia}</td>
+      <td class="mono">${a.prog_dia}</td>
+      <td>${pctDia>=100?'<span class="pG">'+pctDia.toFixed(0)+'%</span>':'<span class="pY">'+pctDia.toFixed(0)+'%</span>'}</td>
+      <td class="mono">${a.metros_acum}</td>
+      <td class="mono">${a.prog_acum}</td>
+      <td>${pctAcum.toFixed(0)}%</td>
+      <td class="mono">${a.mes_prog}</td>
+      <td>${pctMes.toFixed(0)}%</td>
+    </tr>`;
+  }
+  tbody.innerHTML = html;
+}
+
+function renderTablaRehabilitacion(rehab) {
+  const tbody = document.querySelector('#tabla-rehabilitacion tbody');
+  if (!tbody) return;
+  if (!rehab.length) { tbody.innerHTML='<tr><td colspan="9">Sin datos</td></tr>'; return; }
+  const grupos = {};
+  rehab.forEach(r => {
+    const key = `${r.zona}|${r.tipo_rehab}`;
+    if (!grupos[key] || new Date(r.fecha) > new Date(grupos[key].fecha)) grupos[key] = r;
+  });
+  let html = '';
+  for (let key in grupos) {
+    const r = grupos[key];
+    const pctDia = (r.metros_dia / r.prog_dia) * 100;
+    const pctAcum = (r.metros_acum / r.prog_acum) * 100;
+    const pctMes = (r.metros_acum / r.mes_prog) * 100;
+    html += `<tr>
+      <td>${r.zona}</td>
+      <td>${r.tipo_rehab}</td>
+      <td class="mono">${r.metros_dia}</td>
+      <td class="mono">${r.prog_dia}</td>
+      <td>${pctDia>=100?'<span class="pG">'+pctDia.toFixed(0)+'%</span>':'<span class="pY">'+pctDia.toFixed(0)+'%</span>'}</td>
+      <td class="mono">${r.metros_acum}</td>
+      <td>${pctAcum.toFixed(0)}%</td>
+      <td class="mono">${r.mes_prog}</td>
+      <td>${pctMes.toFixed(0)}%</td>
+    </tr>`;
+  }
+  tbody.innerHTML = html;
+}
+
+function renderTablaRaise(raise) {
+  const tbody = document.querySelector('#tabla-raise tbody');
+  if (!tbody) return;
+  if (!raise.length) { tbody.innerHTML='<tr><td colspan="8">Sin datos</td></tr>'; return; }
+  const grupos = {};
+  raise.forEach(r => {
+    const key = `${r.proyecto}|${r.tipo}`;
+    if (!grupos[key] || new Date(r.fecha) > new Date(grupos[key].fecha)) grupos[key] = r;
+  });
+  let html = '';
+  for (let key in grupos) {
+    const r = grupos[key];
+    const pctDia = (r.metros_dia / r.prog_dia) * 100;
+    const pctMes = (r.metros_acum / r.mes_prog) * 100;
+    html += `<tr>
+      <td>${r.zona || ''}</td>
+      <td>${r.proyecto}</td>
+      <td>${r.tipo}</td>
+      <td class="mono">${r.metros_dia}</td>
+      <td class="mono">${r.prog_dia}</td>
+      <td class="mono">${r.metros_acum}</td>
+      <td>${pctDia>=100?'<span class="pG">'+pctDia.toFixed(0)+'%</span>':'<span class="pY">'+pctDia.toFixed(0)+'%</span>'}</td>
+      <td>${pctMes.toFixed(0)}%</td>
+    </tr>`;
+  }
+  tbody.innerHTML = html;
+}
+
+function renderTablaPersonal(personal) {
+  const tbody = document.querySelector('#tabla-personal tbody');
+  if (!tbody) return;
+  if (!personal.length) { tbody.innerHTML='<tr><td colspan="6">Sin datos</td></tr>'; return; }
+  const ultimos = {};
+  personal.forEach(p => {
+    if (!ultimos[p.empresa] || new Date(p.fecha) > new Date(ultimos[p.empresa].fecha)) ultimos[p.empresa] = p;
+  });
+  let html = '';
+  for (let emp in ultimos) {
+    const p = ultimos[emp];
+    const pct = (p.total_hc / p.prog_hc) * 100;
+    html += `<tr>
+      <td>${p.empresa}</td>
+      <td class="mono">${p.empleados}</td>
+      <td class="mono">${p.obreros}</td>
+      <td class="mono">${p.total_hc}</td>
+      <td class="mono">${p.prog_hc}</td>
+      <td>${pct>=90?'<span class="pG">'+pct.toFixed(0)+'%</span>':'<span class="pY">'+pct.toFixed(0)+'%</span>'}</td>
+    </tr>`;
+  }
+  tbody.innerHTML = html;
+}
+
+function renderTablaSeguridad(seguridad) {
+  const tbody = document.querySelector('#tabla-seguridad tbody');
+  if (!tbody) return;
+  if (!seguridad.length) { tbody.innerHTML='<tr><td colspan="7">Sin datos</td></tr>'; return; }
+  // Mostrar todos los registros (o el último por empresa)
+  const ultimos = {};
+  seguridad.forEach(s => {
+    if (!ultimos[s.empresa] || new Date(s.fecha) > new Date(ultimos[s.empresa].fecha)) ultimos[s.empresa] = s;
+  });
+  let html = '';
+  for (let emp in ultimos) {
+    const s = ultimos[emp];
+    html += `<tr>
+      <td>${s.empresa}</td>
+      <td>${s.incidentes}</td>
+      <td>${s.leve}</td>
+      <td>${s.incapac}</td>
+      <td>${s.mortal}</td>
+      <td>${s.equipos}</td>
+      <td>${s.observaciones || '—'}</td>
+    </tr>`;
+  }
+  tbody.innerHTML = html;
+}
+
+function renderTablaLaboratorio(laboratorio) {
+  const tbody = document.querySelector('#tabla-laboratorio tbody');
+  if (!tbody) return;
+  if (!laboratorio.length) { tbody.innerHTML='<tr><td colspan="9">Sin datos</td></tr>'; return; }
+  // Agrupar por zona y tomar el último registro de cada zona
+  const ultimos = {};
+  laboratorio.forEach(l => {
+    if (!ultimos[l.zona] || new Date(l.fecha) > new Date(ultimos[l.zona].fecha)) ultimos[l.zona] = l;
+  });
+  let html = '';
+  for (let zona in ultimos) {
+    const l = ultimos[zona];
+    html += `<tr>
+      <td>${l.zona}</td>
+      <td class="mono">0.418</td>
+      <td class="mono">${(l.peso_tmh * 1000).toFixed(0)}</td>
+      <td class="mono">${l.peso_tmh.toFixed(2)}</td>
+      <td class="mono">${l.humedad_pct.toFixed(2)}</td>
+      <td>${l.ley_au ? '<span class="pY">'+l.ley_au.toFixed(3)+'</span>' : '—'}</td>
+      <td class="mono">${l.ley_ag ? l.ley_ag.toFixed(3) : '—'}</td>
+      <td class="mono">—</td>
+      <td class="mono">—</td>
+    </tr>`;
+  }
+  tbody.innerHTML = html;
+}
+
+function renderTablaMantenimiento(mantenimiento) {
+  const tbody = document.querySelector('#tabla-mantenimiento tbody');
+  if (!tbody) return;
+  if (!mantenimiento.length) { tbody.innerHTML='<tr><td colspan="5">Sin datos</td></tr>'; return; }
+  // Mostrar los registros más recientes por equipo
+  const ultimos = {};
+  mantenimiento.forEach(m => {
+    if (!ultimos[m.equipo] || new Date(m.fecha) > new Date(ultimos[m.equipo].fecha)) ultimos[m.equipo] = m;
+  });
+  let html = '';
+  for (let eq in ultimos) {
+    const m = ultimos[eq];
+    const estadoClass = m.estado === 'INOP.' ? 'eCrit' : 'eEst';
+    html += `<tr>
+      <td>${m.equipo}</td>
+      <td class="mono">${m.fecha_inop || '—'}</td>
+      <td><span class="${estadoClass}">${m.estado}</span></td>
+      <td>${m.motivo || '—'}</td>
+      <td>${m.atenciones || '—'}</td>
+    </tr>`;
+  }
+  tbody.innerHTML = html;
+}
+
+function renderTablaAlmacen(almacen) {
+  const tbody = document.querySelector('#tabla-almacen tbody');
+  if (!tbody) return;
+  if (!almacen.length) { tbody.innerHTML='<tr><td colspan="7">Sin datos</td></tr>'; return; }
+  // Mostrar los registros más recientes por material
+  const ultimos = {};
+  almacen.forEach(a => {
+    const key = `${a.centro_costo}|${a.material}`;
+    if (!ultimos[key] || new Date(a.fecha) > new Date(ultimos[key].fecha)) ultimos[key] = a;
+  });
+  let html = '';
+  for (let key in ultimos) {
+    const a = ultimos[key];
+    const dif = a.stock_act - a.stock_min;
+    const estadoClass = a.estado === 'Crítico' ? 'eCrit' : 'eEst';
+    html += `<tr>
+      <td>${a.centro_costo}</td>
+      <td>${a.material}</td>
+      <td>${a.unidad}</td>
+      <td class="mono">${a.stock_act}</td>
+      <td class="mono">${a.stock_min}</td>
+      <td class="mono">${dif}</td>
+      <td><span class="${estadoClass}">${a.estado}</span></td>
+    </tr>`;
+  }
+  tbody.innerHTML = html;
+}
+
+function renderTablaGeologia(geologia) {
+  const tbody = document.querySelector('#tabla-geologia tbody');
+  if (!tbody) return;
+  if (!geologia.length) { tbody.innerHTML='<tr><td colspan="5">Sin datos</td></tr>'; return; }
+  // Mostrar el último registro por zona
+  const ultimos = {};
+  geologia.forEach(g => {
+    if (!ultimos[g.zona] || new Date(g.fecha_cierre) > new Date(ultimos[g.zona].fecha_cierre)) ultimos[g.zona] = g;
+  });
+  let html = '';
+  for (let zona in ultimos) {
+    const g = ultimos[zona];
+    const pct = (g.ley_au_ponderada / g.lineabase_au) * 100;
+    html += `<tr>
+      <td>${g.zona}</td>
+      <td class="mono">${g.ley_au_ponderada.toFixed(3)}</td>
+      <td class="mono">${g.ley_ag_ponderada.toFixed(3)}</td>
+      <td class="mono">${g.lineabase_au}</td>
+      <td>${pct>=95?'<span class="pG">'+pct.toFixed(0)+'%</span>':'<span class="pY">'+pct.toFixed(0)+'%</span>'}</td>
+    </tr>`;
+  }
+  tbody.innerHTML = html;
+}
+
+// ================= KPIs =================
+function actualizarKPIs(produccion, avances, rehab) {
+  const container = document.getElementById('kpi-container');
+  if (!container) return;
+  // Obtener últimos datos de producción
+  const ultimoZ23 = produccion.filter(p => p.zona === 'Zona 23').pop();
+  const ultimoSR = produccion.filter(p => p.zona === 'Santa Rosa').pop();
+  // Último avance convencional
+  const avanceConv = avances.find(a => a.tipo_avance === 'Convencional' && a.zona === 'Zona 23');
+  const avanceTrack = avances.find(a => a.tipo_avance === 'Trackless' && a.zona === 'Santa Rosa');
+  const rehabCimbras = rehab.find(r => r.tipo_rehab === 'Cimbras');
+  const rehabPerno = rehab.find(r => r.tipo_rehab === 'Perno/Malla');
+  // Personal (último registro)
+  const personal = datosGlobales.personal ? datosGlobales.personal.slice(-1)[0] : null;
+  
+  const kpis = [
+    { label: 'Extracción – Zona 23', value: ultimoZ23?.tmh_dia || 0, unit: 'tmh / día', prog: ultimoZ23?.prog_dia || 0, pct: ultimoZ23 ? (ultimoZ23.tmh_dia/ultimoZ23.prog_dia)*100 : 0, kc: '#003366' },
+    { label: 'Extracción – Sta. Rosa', value: ultimoSR?.tmh_dia || 0, unit: 'tmh / día', prog: ultimoSR?.prog_dia || 0, pct: ultimoSR ? (ultimoSR.tmh_dia/ultimoSR.prog_dia)*100 : 0, kc: '#D4AF37' },
+    { label: 'Ley Au Ponderada – Mes', value: 'Z23: ' + (datosGlobales.geologia_leyes?.find(g=>g.zona==='Zona 23')?.ley_au_ponderada?.toFixed(3) || '—'), unit: 'Oz/ton', prog: 'L.Base: 0.418', pct: 0, kc: '#B8962A' },
+    { label: 'Avance – Convencional', value: avanceConv?.metros_dia || 0, unit: 'm / día', prog: avanceConv?.prog_dia || 0, pct: avanceConv ? (avanceConv.metros_dia/avanceConv.prog_dia)*100 : 0, kc: '#1D4ED8' },
+    { label: 'Avance – Trackless', value: avanceTrack?.metros_dia || 0, unit: 'm / día', prog: avanceTrack?.prog_dia || 0, pct: avanceTrack ? (avanceTrack.metros_dia/avanceTrack.prog_dia)*100 : 0, kc: '#0E7490' },
+    { label: 'Raise Boring 2000 – Chulbe', value: datosGlobales.raise_boring?.find(r=>r.proyecto==='Chulbe')?.metros_dia || 0, unit: 'm rimado / día', prog: 8.67, pct: 0, kc: '#7C3AED' },
+    { label: 'RRHH – Personal Activo', value: personal?.total_hc || 0, unit: 'HC ejecutado', prog: personal?.prog_hc || 0, pct: personal ? (personal.total_hc/personal.prog_hc)*100 : 0, kc: '#6D28D9' },
+    { label: 'Seguridad – Accidentes LTI', value: 0, unit: 'acum. mes', prog: '0 accidentes', pct: 100, kc: '#15803D' },
+    { label: 'Rehabilitación Total', value: (rehabPerno?.metros_dia||0)+(rehabCimbras?.metros_dia||0), unit: 'm / día', prog: (rehabPerno?.prog_dia||0)+(rehabCimbras?.prog_dia||0), pct: 0, kc: '#DC2626' }
+  ];
+  
+  container.innerHTML = kpis.map(k => `
+    <div class="kcard" style="--kc:${k.kc}">
+      <div class="klbl">${k.label}</div>
+      <div class="kcard-body">
+        <div class="kcard-vals">
+          <div class="kval">${typeof k.value === 'number' ? k.value.toFixed(1) : k.value}</div>
+          <div class="kunit">${k.unit}</div>
+        </div>
+        <span class="kbdg ${k.pct>=100?'kG':(k.pct>=80?'kA':'kR')}">${k.pct>=100?'&#9650;':(k.pct>=80?'&#9679;':'&#9660;')} ${k.pct.toFixed(0)}%</span>
+      </div>
+      <div class="kprog"><span class="kprog-lbl">Prog. día</span><span class="kprog-val">${typeof k.prog === 'number' ? k.prog.toFixed(1) : k.prog}</span></div>
+    </div>
+  `).join('');
+}
+
+function formatearFecha(fechaISO) {
+  if (!fechaISO) return '';
+  const partes = fechaISO.split('-');
+  return `${partes[2]}/${partes[1]}/${partes[0]}`;
+}
+</script>
+</body>
+</html>
