@@ -215,7 +215,7 @@ html{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 /* KPI */
 .krow{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
 .kcard{background:var(--w);border:1px solid var(--bd);border-radius:var(--rr2);padding:13px 16px 11px;border-top:3px solid var(--kc,var(--nv));box-shadow:var(--sh)}
-.kcard-body{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-bottom:8px}
+.kcard-body{overflow-x:hidden;display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-bottom:8px}
 .kcard-vals{flex:1}
 .kprog{display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid var(--bd);margin-top:4px}
 .kprog-lbl{font-size:9px;color:var(--t3);font-weight:500}
@@ -229,14 +229,14 @@ html{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .kR{background:var(--Rbg);color:var(--R);border-color:var(--Rbd)}
 
 /* GRID */
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
-.gf{margin-bottom:12px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;min-width:0}
+.gf{overflow:hidden;margin-bottom:12px}
 
 
 
 
 /* CARD */
-.card{background:var(--w);border:1px solid var(--bd);border-radius:var(--rr2);overflow:hidden;box-shadow:var(--sh)}
+.card{min-width:0;background:var(--w);border:1px solid var(--bd);border-radius:var(--rr2);overflow:hidden;box-shadow:var(--sh)}
 .ch{padding:9px 14px;display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--bd);background:var(--nv)}
 .chg{background:var(--glt);border-bottom:1px solid rgba(212,175,55,.35)}
 .ct{font-size:11px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;gap:6px}
@@ -247,7 +247,7 @@ html{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .ch-btn:hover{background:rgba(255,255,255,.22)}
 
 /* TABLE */
-.tbl{width:100%;border-collapse:collapse;font-size:11px}
+.tbl{min-width:420px;width:100%;border-collapse:collapse;font-size:11px}
 .tbl th{background:var(--w2);color:var(--t3);font-weight:700;font-size:9px;padding:7px 9px;text-align:center;text-transform:uppercase;letter-spacing:.04em;border-bottom:2px solid var(--bd)}
 .tbl th:first-child{text-align:left;padding-left:14px}
 .tbl td{padding:7px 9px;border-bottom:1px solid var(--bd);color:var(--t2);text-align:center}
@@ -413,6 +413,31 @@ html{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 /* ── SKIP/VOLQ headers dobles ── */
 .tbl th[colspan] {font-size:9px;padding:5px 6px;text-align:center}
 .tbl th[rowspan] {vertical-align:middle}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .grid3 { grid-template-columns: 1fr 1fr !important; }
+  .grid4 { grid-template-columns: 1fr 1fr !important; }
+  .krow  { grid-template-columns: 1fr 1fr !important; }
+  .modal { width:98vw !important; max-width:98vw !important; margin:8px !important; }
+  .mscroll { max-height:55vh !important; overflow-x:auto !important; }
+  #av-panel-resumen > div[style*="grid-template-columns:1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+  .gf { overflow-x:auto !important; }
+}
+@media (max-width: 600px) {
+  .grid3, .grid4 { grid-template-columns: 1fr !important; }
+  .krow { grid-template-columns: 1fr !important; }
+  .card { border-radius: 6px !important; }
+  #av-panel-resumen > div[style*="grid-template-columns:repeat(4"] {
+    grid-template-columns: repeat(2,1fr) !important;
+  }
+}
+
+#tbl-av td, #tbl-av th { font-size:9px; padding:5px 6px; }
+#tbl-av td.mono { font-size:10px; }
+#tbl-av .pG, #tbl-av .pR, #tbl-av .pY, #tbl-av .pN { font-size:9px; }
 </style>
 </head>
 <body>
@@ -577,17 +602,18 @@ html{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 
   <!-- RB 2000 Chulbe -->
   <div class="kcard" style="--kc:#7C3AED">
-    <div class="klbl">Raise Boring 2000 – Chulbe</div>
+    <div class="klbl">Raise Boring – Chulbe</div>
     <div class="kcard-body">
       <div class="kcard-vals">
-        <div class="kval" id="rb-ejec-dia">10.7</div>
+        <div class="kval" id="rb-ejec-dia">—</div>
         <div class="kunit">m rimado / día</div>
       </div>
-      <span class="kbdg kG" id="rb-pct-badge">&#9650; 123%</span>
+      <span class="kbdg kN" id="rb-pct-badge">— —%</span>
     </div>
     <div class="kprog" style="flex-direction:column;gap:2px;align-items:flex-start">
-      <span class="kprog-lbl">Prog. día: <span id="rb-prog-dia" style="font-weight:700">8.67</span> m</span>
-      <span class="kprog-lbl">Acum: <span id="rb-ejec-acum" style="font-weight:700;color:var(--gd)">140.1</span> m / <span id="rb-prog-acum">138.7</span></span>
+      <span class="kprog-lbl">Prog. día: <span id="rb-prog-dia" style="font-weight:700">—</span> m &nbsp;·&nbsp; % Día: <span id="rb-pct-dia">—</span></span>
+      <span class="kprog-lbl">Acum.Mes: <span id="rb-ejec-acum" style="font-weight:700;color:var(--gd)">—</span> / <span id="rb-prog-mes">—</span> m (<span id="rb-pct-mes">—</span>)</span>
+      <span class="kprog-lbl">Acum.Proy: <span id="rb-ejec-proy" style="font-weight:700">—</span> / <span id="rb-prog-proy">—</span> m (<span id="rb-pct-proy">—</span>)</span>
     </div>
   </div>
 
@@ -621,10 +647,11 @@ html{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
       <span style="font-size:9px;color:var(--t3)">
         Insp: <strong id="kpi-seg-insp">—%</strong> &nbsp;
         RACS: <strong id="kpi-seg-racs">—%</strong> &nbsp;
-        Reinst: <strong id="kpi-seg-reinst">—%</strong>
+        IDS: <strong id="kpi-seg-ids">—%</strong>
       </span>
       <span style="font-size:9px;color:var(--t3)">
         Global: <strong id="kpi-seg-global" style="font-size:11px">—%</strong>
+        &nbsp;·&nbsp; Meta: <strong id="kpi-seg-meta" style="font-size:10px;color:var(--t2)">—%</strong>
       </span>
     </div>
   </div>
@@ -974,7 +1001,8 @@ html{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
         <button class="ch-btn" onclick="openAv()">&#128202; Ver detalle / Gráficos</button>
       </div>
     </div>
-    <table class="tbl" id="tbl-av" style="width:100%">
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:6px">
+    <table class="tbl" id="tbl-av" style="width:100%;min-width:700px">
       <colgroup>
         <col style="width:14%">
         <col style="width:18%">
@@ -1005,14 +1033,14 @@ html{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
       <tbody>
         <tr>
           <td>Zona 23</td><td>Avance – Conv.</td><td>Sector IV</td>
-          <td class="mono" id="av-cv-z23-ejec">15.0</td>
-          <td class="mono" id="av-cv-z23-prog">16.5</td>
-          <td><span class="pR" id="av-cv-z23-pct">91%</span></td>
-          <td class="mono" id="av-cv-z23-acum">290.0</td>
-          <td class="mono" id="av-cv-z23-pacum">281.2</td>
-          <td><span class="pG" id="av-cv-z23-pct-acum">103%</span></td>
-          <td class="mono" id="av-cv-z23-pmes">645</td>
-          <td style="text-align:center"><span class="pG" id="av-cv-z23-pct-mes">45%</span></td>
+          <td class="mono" id="av-cv-z23-ejec">—</td>
+          <td class="mono" id="av-cv-z23-prog">—</td>
+          <td><span class="pR" id="av-cv-z23-pct">—</span></td>
+          <td class="mono" id="av-cv-z23-acum">—</td>
+          <td class="mono" id="av-cv-z23-pacum">—</td>
+          <td><span class="pG" id="av-cv-z23-pct-acum">—</span></td>
+          <td class="mono" id="av-cv-z23-pmes">—</td>
+          <td style="text-align:center"><span class="pG" id="av-cv-z23-pct-mes">—</span></td>
         </tr>
         <tr>
           <td>Zona 23</td><td>Avance – Conv.</td><td style="color:var(--t3)">Cía. Sotrami</td>
@@ -1022,25 +1050,25 @@ html{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
         </tr>
         <tr>
           <td>Sta. Rosa</td><td>Avance – Conv.</td><td>Sector IV</td>
-          <td class="mono" id="av-cv-sr-ejec">8.0</td>
-          <td class="mono" id="av-cv-sr-prog">4.5</td>
-          <td><span class="pG" id="av-cv-sr-pct">178%</span></td>
-          <td class="mono" id="av-cv-sr-acum">105.0</td>
-          <td class="mono" id="av-cv-sr-pacum">76.7</td>
-          <td><span class="pG" id="av-cv-sr-pct-acum">137%</span></td>
-          <td class="mono" id="av-cv-sr-pmes">176</td>
-          <td style="text-align:center"><span class="pG" id="av-cv-sr-pct-mes">60%</span></td>
+          <td class="mono" id="av-cv-sr-ejec">—</td>
+          <td class="mono" id="av-cv-sr-prog">—</td>
+          <td><span class="pG" id="av-cv-sr-pct">—</span></td>
+          <td class="mono" id="av-cv-sr-acum">—</td>
+          <td class="mono" id="av-cv-sr-pacum">—</td>
+          <td><span class="pG" id="av-cv-sr-pct-acum">—</span></td>
+          <td class="mono" id="av-cv-sr-pmes">—</td>
+          <td style="text-align:center"><span class="pG" id="av-cv-sr-pct-mes">—</span></td>
         </tr>
         <tr>
           <td>Sta. Rosa</td><td>Avance – Trackless</td><td>Sector IV</td>
-          <td class="mono" id="av-tl-sr-ejec">7.0</td>
-          <td class="mono" id="av-tl-sr-prog">6.7</td>
-          <td><span class="pG" id="av-tl-sr-pct">104%</span></td>
-          <td class="mono" id="av-tl-sr-acum">89.8</td>
-          <td class="mono" id="av-tl-sr-pacum">113.3</td>
-          <td><span class="pR" id="av-tl-sr-pct-acum">79%</span></td>
-          <td class="mono" id="av-tl-sr-pmes">260</td>
-          <td style="text-align:center"><span class="pR" id="av-tl-sr-pct-mes">35%</span></td>
+          <td class="mono" id="av-tl-sr-ejec">—</td>
+          <td class="mono" id="av-tl-sr-prog">—</td>
+          <td><span class="pG" id="av-tl-sr-pct">—</span></td>
+          <td class="mono" id="av-tl-sr-acum">—</td>
+          <td class="mono" id="av-tl-sr-pacum">—</td>
+          <td><span class="pR" id="av-tl-sr-pct-acum">—</span></td>
+          <td class="mono" id="av-tl-sr-pmes">—</td>
+          <td style="text-align:center"><span class="pR" id="av-tl-sr-pct-mes">—</span></td>
         </tr>
         <tr>
           <td>Sta. Rosa</td><td>Avance – Conv.</td><td style="color:var(--t3)">Cía. Sotrami</td>
@@ -1078,14 +1106,14 @@ html{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
         </tr>
         <tr class="tot">
           <td colspan="3">TOTAL AVANCE (m)</td>
-          <td class="mono" id="av-tot-ejec">32.0</td>
-          <td class="mono" id="av-tot-prog">32.1</td>
-          <td><span class="pG" id="av-tot-pct">100%</span></td>
-          <td class="mono" id="av-tot-acum">536.8</td>
-          <td class="mono" id="av-tot-pacum">545.3</td>
-          <td><span class="pY" id="av-tot-pct-acum">98%</span></td>
-          <td class="mono" id="av-tot-pmes">1,251</td>
-          <td style="text-align:center"><span class="pG" id="av-tot-pct-mes">43%</span></td>
+          <td class="mono" id="av-tot-ejec">—</td>
+          <td class="mono" id="av-tot-prog">—</td>
+          <td><span class="pN" id="av-tot-pct">—</span></td>
+          <td class="mono" id="av-tot-acum">—</td>
+          <td class="mono" id="av-tot-pacum">—</td>
+          <td><span class="pN" id="av-tot-pct-acum">—</span></td>
+          <td class="mono" id="av-tot-pmes">—</td>
+          <td style="text-align:center"><span class="pN" id="av-tot-pct-mes">—</span></td>
         </tr>
       </tbody>
     </table>
@@ -1093,7 +1121,7 @@ html{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
   </div>
   <div style="display:flex;flex-direction:column;gap:12px">
     <div class="card">
-      <div class="ch"><span class="ct">&#128296; Rehabilitación</span><span class="csub">02/06/2026</span></div>
+      <div class="ch"><span class="ct">&#128296; Rehabilitación</span><span class="csub" id="alm-act-fecha">—</span></div>
       <div class="tw"><table class="tbl">
         <thead><tr><th>Zona</th><th>Descripción</th><th>Ejec.Día</th><th>Prog.Día</th><th>%Día</th><th>Ejec.Acum</th><th>%Acum</th><th>Prog.Mes</th><th>%Mes</th></tr></thead>
         <tbody>
@@ -1104,12 +1132,32 @@ html{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
       </table></div>
     </div>
     <div class="card">
-      <div class="ch"><span class="ct">&#128297; Raise Boring – Tumi</span><span class="csub">02/06/2026</span></div>
-      <div class="tw"><table class="tbl" id="tbl-rb">
-        <thead><tr><th>Zona</th><th>Proyecto</th><th>Tipo</th><th>Ejec.Día</th><th>Prog.Día</th><th>Ejec.Acum</th><th>%Día</th><th>%Mes</th></tr></thead>
-        <tbody>
-          <tr><td>Chulbe</td><td>RB 2000</td><td>RIMADO</td><td class="mono">10.70</td><td class="mono">8.67</td><td class="mono">140.10</td><td><span class="pG">123%</span></td><td><span class="pG">101%</span></td></tr>
-          <tr><td>Santa Rosa</td><td>RB 1420</td><td>RIMADO</td><td class="mono">0.00</td><td class="mono">0.00</td><td class="mono">0.00</td><td><span class="pN">—</span></td><td><span class="pN">—</span></td></tr>
+      <div class="ch" style="justify-content:space-between">
+        <span class="ct">&#128297; Raise Boring – Tumi</span>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="csub" id="rb-act-fecha">—</span>
+          <button class="ch-btn" onclick="openRB()">&#128200; Curva S / Detalle</button>
+        </div>
+      </div>
+      <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+      <table class="tbl" id="tbl-rb" style="min-width:780px">
+        <thead><tr>
+          <th style="text-align:left">Zona</th>
+          <th style="text-align:left">Proyecto</th>
+          <th style="text-align:left">Tipo</th>
+          <th style="text-align:center">Ejec. Día</th>
+          <th style="text-align:center">Prog. Día</th>
+          <th style="text-align:center">% Día</th>
+          <th style="text-align:center">Ejec. Acum.</th>
+          <th style="text-align:center">Prog. Mes</th>
+          <th style="text-align:center">% Mes</th>
+          <th style="text-align:center">Prog. Proy.</th>
+          <th style="text-align:center">Ejec. Acum. Proy.</th>
+          <th style="text-align:center">Dif.</th>
+          <th style="text-align:center">% Proy.</th>
+        </tr></thead>
+        <tbody id="tb-rb">
+          <tr><td colspan="13" style="text-align:center;color:var(--t3);padding:12px">Cargando...</td></tr>
         </tbody>
       </table></div>
     </div>
@@ -1167,11 +1215,11 @@ html{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
     </div>
 
     <!-- Tabla DDH -->
-    <div class="tw"><table class="tbl" id="tbl-ddh" style="table-layout:fixed;width:100%">
+    <div class="tw"><table class="tbl" id="tbl-ddh" style="width:100%;min-width:600px">
       <colgroup>
-        <col style="width:10%"><col style="width:22%">
-        <col style="width:9%"><col style="width:9%"><col style="width:11%">
-        <col style="width:9%"><col style="width:8%"><col style="width:8%"><col style="width:14%">
+        <col style="width:8%"><col style="width:20%">
+        <col style="width:9%"><col style="width:8%"><col style="width:10%">
+        <col style="width:9%"><col style="width:9%"><col style="width:8%"><col style="width:8%"><col style="width:11%">
       </colgroup>
       <thead>
         <tr>
@@ -1279,15 +1327,21 @@ html{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
       </tr></thead>
       <tbody id="tb-mant-body">
         <tr><td colspan="6" style="text-align:center;color:var(--t3);padding:12px">Cargando...</td></tr>
-      </tbody>
     </table></div>
   </div>
   <div class="card">
-    <div class="ch"><span class="ct">&#128230; Almacén – Materiales Críticos</span>
-      <div style="display:flex;align-items:center;gap:8px">
+    <div class="ch" style="justify-content:space-between">
+      <span class="ct">&#128230; Almacén – Materiales Críticos</span>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:10px">
+          <span style="color:#DC2626;font-weight:700" id="alm-kpi-crit">—</span> 🔴
+          &nbsp;<span style="color:#D97706;font-weight:700" id="alm-kpi-pre">—</span> 🟡
+        </span>
         <span class="csub">Solo Crítico y Precaución</span>
+        <span class="csub" id="alm-act-fecha">—</span>
         <button class="ch-btn" onclick="openAlm()">&#128202; Ver detalle</button>
-      </div><span class="csub">02/06/2026</span></div>
+      </div>
+    </div>
     <div class="tw"><table class="tbl" id="tbl-alm">
       <thead>
         <tr>
@@ -1299,8 +1353,7 @@ html{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
           <th style="text-align:center">Estado</th>
         </tr>
       </thead>
-      <tbody id="tb-alm-body">
-        <!-- Poblado por renderAlmacen() -->
+      <tbody id="tb-alm">
         <tr><td colspan="6" style="text-align:center;color:var(--t3);padding:12px">Cargando...</td></tr>
       </tbody>
     </table></div>
@@ -1310,7 +1363,13 @@ html{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 <!-- RRHH -->
 <div class="gf">
   <div class="card">
-    <div class="ch"><span class="ct">&#128119; RRHH – Recursos Humanos</span><span class="csub">02/06/2026</span></div>
+    <div class="ch" style="justify-content:space-between">
+      <span class="ct">&#128119; RRHH – Recursos Humanos</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span class="csub" id="rrhh-act-fecha">—</span>
+        <button class="ch-btn" onclick="openRRHH()">&#128202; Detalle / Gráficos</button>
+      </div>
+    </div>
     <div class="tw"><table class="tbl" id="tbl-rrhh">
       <thead>
         <tr>
@@ -2638,13 +2697,15 @@ id="alm-modal" onclick="if(event.target===this)closeAlm()">
     <div class="mscroll" style="padding:10px 16px 12px">
       <table class="dtbl" style="min-width:620px">
         <thead><tr>
-          <th>Tipo Material</th>
-          <th>Material</th>
-          <th style="text-align:center;font-size:8px">UM</th>
-          <th style="text-align:center;font-size:8px">Stock Act.</th>
-          <th style="text-align:center;font-size:8px">Stock Mín.</th>
-          <th style="text-align:center;font-size:8px">Diferencia</th>
-          <th style="text-align:center">Estado</th>
+          <th style="text-align:center;font-size:8px;width:40px">Año</th>
+          <th style="text-align:left;font-size:8px;width:55px">Período</th>
+          <th style="text-align:left;font-size:8px">Tipo Material</th>
+          <th style="text-align:left;font-size:8px">Material</th>
+          <th style="text-align:center;font-size:8px;width:40px">UM</th>
+          <th style="text-align:center;font-size:8px;width:70px">Stock Act.</th>
+          <th style="text-align:center;font-size:8px;width:70px">Stock Mín.</th>
+          <th style="text-align:center;font-size:8px;width:70px">Diferencia</th>
+          <th style="text-align:center;width:90px">Estado</th>
         </tr></thead>
         <tbody id="tb-alm-det"></tbody>
       </table>
@@ -2880,33 +2941,7 @@ id="alm-modal" onclick="if(event.target===this)closeAlm()">
 </div>
 
 <script>
-const DDH_R=[
-["01/06/2026","Dia","BROWNFIELD","DDH - LF 160",1092,0,35.95,7400,2111.55,3.29,28.53,"Equipo inoperativo por falta de mordazas."],
-["01/06/2026","Dia","BROWNFIELD","DDH - CS 140",1185,44.8,341.9,5000,1779.2,28.85,35.58,"Se perfora con normalidad."],
-["01/06/2026","Dia","INFILL","DDH - PHC 06",1050,31.2,60.3,6500,971.3,5.74,14.94,"Se perfora con normalidad."],
-["01/06/2026","Dia","INFILL","DDH - U 232",0,0,0,0,1060.8,0,0,"Se traslada equipo al NV 15."],
-["01/06/2026","Dia","INFILL","DDH - PACKSACK Z23",0,0,0,0,535.55,0,0,"Falta personal."],
-["02/06/2026","Dia","BROWNFIELD","DDH - LF 160",1092,0,35.95,7400,2111.55,3.29,28.53,"Equipo inoperativo por falta de mordazas."],
-["02/06/2026","Dia","BROWNFIELD","DDH - CS 140",1185,15,356.9,5000,1749.2,30.12,34.98,"Se perfora con normalidad."],
-["02/06/2026","Dia","INFILL","DDH - PHC 06",1050,33,93.3,6500,1004.3,8.89,15.45,"Se perfora con normalidad."],
-["02/06/2026","Dia","INFILL","DDH - U 232",0,0,0,0,1060.8,0,0,"Falta personal."],
-["02/06/2026","Dia","INFILL","DDH - PACKSACK Z23",0,0,0,0,535.55,0,0,"Falta personal."],
-["03/06/2026","Dia","BROWNFIELD","DDH - LF 160",1092,0,35.95,7400,2111.55,3.29,28.53,"Equipo inoperativo por falta de mordazas."],
-["03/06/2026","Dia","BROWNFIELD","DDH - CS 140",1185,44.8,341.9,5000,1779.2,28.85,35.58,"Se perfora con normalidad."],
-["03/06/2026","Dia","INFILL","DDH - PHC 06",1050,31.2,60.3,6500,971.3,5.74,14.94,"Se perfora con normalidad."],
-["03/06/2026","Dia","INFILL","DDH - U 232",0,0,0,0,1060.8,0,0,"Se traslada equipo al NV 15."],
-["03/06/2026","Dia","INFILL","DDH - PACKSACK Z23",0,0,0,0,535.55,0,0,"Falta personal."],
-["04/06/2026","Dia","BROWNFIELD","DDH - LF 160",1092,0,35.95,7400,2111.55,3.29,28.53,"Se traslada y baja tubería."],
-["04/06/2026","Dia","BROWNFIELD","DDH - CS 140",1185,16.6,418.5,5000,1810.85,35.32,36.22,"Limpieza de pozas. Se continúa con la perforación."],
-["04/06/2026","Dia","INFILL","DDH - PHC 06",1050,15.1,138.3,6500,1049.3,13.17,16.14,"Se perfora con normalidad. Solo un turno."],
-["04/06/2026","Dia","INFILL","DDH - U 232",0,0,0,0,1060.8,0,0,"Falta personal."],
-["04/06/2026","Dia","INFILL","DDH - PACKSACK Z23",0,0,0,0,535.55,0,0,"Falta personal."],
-["05/06/2026","Dia","BROWNFIELD","DDH - LF 160",1092,0,35.95,7400,2111.55,3.29,28.53,"Se traslada tubería y se limpia la lama."],
-["05/06/2026","Dia","BROWNFIELD","DDH - CS 140",1185,4.8,43.3,5000,1815.65,3.65,36.31,"Se descarga y carga tubería con nueva broca."],
-["05/06/2026","Dia","INFILL","DDH - PHC 06",1050,15,153.3,6500,1064.3,14.6,16.37,"Se perfora con normalidad. Solo un turno."],
-["05/06/2026","Dia","INFILL","DDH - U 232",0,0,0,0,1060.8,0,0,"Se realiza pruebas al equipo."],
-["05/06/2026","Dia","INFILL","DDH - PACKSACK Z23",0,0,0,0,535.55,0,0,"Falta personal."]
-];
+const DDH_R=[]; // datos desde API
 
 // ── Helpers globales (disponibles antes de cualquier función) ──────────────
 const L_CABEZA = 0.46;
@@ -2929,16 +2964,16 @@ const MANT_DATA = [
 
 // ══ APPS SCRIPT — URL DE LA API ═════════════════════════════════════
 const APPSCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwCTBZ6b9eJnfPnplU95m_780grItPpM67ElNEefxadpbhpw7JhVEqzHGD6Fbwqmezdgg/exec';
-const APPSCRIPT_URL_GEO = 'https://script.google.com/macros/s/AKfycbwBSbN41xMCIlazIG3s7nGdZKCtJEMtxecLCqYJwyOZQsZM4uyQjhS6hGF_wptlQcfM/exec';
+const APPSCRIPT_URL_GEO          = 'https://script.google.com/macros/s/AKfycbzSZT1WkoMjgh5EgyyLgrCUAlecKEeHSVU4c2khFWbUviU-rlmINGtEP8OP3lIORDUX/exec';
 const APPSCRIPT_URL_IZ  = 'https://script.google.com/macros/s/AKfycbzah0mHlWL95TbO3ZsdizhecwHggrmUCVBDoVJV9fbUTsGPXsbh4FqvWVKW61YTpKys2g/exec';
 const APPSCRIPT_URL_LAB = 'https://script.google.com/macros/s/AKfycbw0I9o4MbTalfVbsD5PSfL6u-zhWdpoqsPjKaeazYGKAPsvOAyU-gJcOc1L-583MYLM/exec';
 const APPSCRIPT_URL_VQ  = 'https://script.google.com/macros/s/AKfycbwAIgZlNFBgT28m7csv13GgIjsBmeUv69YUJetggWHaAjuFSSCmQDqJgKy_MhdkHg_1/exec';
 const APPSCRIPT_URL_RRHH_SOT = 'https://script.google.com/macros/s/AKfycbz3bE9qb3zrcmMvDWk-ETFWb6S_4gCVBujIgllIzr2ac-4GZErdR6Iru2xzf3amtXHIlw/exec';  // Cía. Sotrami RRHH v3
-const APPSCRIPT_URL_COP = 'https://script.google.com/macros/s/AKfycbyPQ9PbyxxNhD_NSG0sF2Ws0y3Hc7buRMUNWbkBj73U20CJSbd7cnW3WMdVZyU9BzISDQ/exec';
-const APPSCRIPT_URL_AV_COP = 'https://script.google.com/macros/s/AKfycbyPQ9PbyxxNhD_NSG0sF2Ws0y3Hc7buRMUNWbkBj73U20CJSbd7cnW3WMdVZyU9BzISDQ/exec'; // ← URL AVANCES_COPSEM_CONVENCIONAL        // Copsem RRHH + Rehab
-const APPSCRIPT_URL_SIV_TL   = 'https://script.google.com/macros/s/AKfycbwCxbPzO-JbQsidSsaV53SxiA9cSLEFVXlxjRExh6IHaCJhyMoQDJlHKQYNduFbYlFsRg/exec';    // SIV Trackless RRHH + Avances
-const APPSCRIPT_URL_SIV_CV   = 'https://script.google.com/macros/s/AKfycbxHtXEEZgh8g1g4_HUn2-mOo_MjM2YW3wORuaoXfjtyspCYgr7wnFNRaz6fUF-osb8/exec';    // SIV Convencional RRHH + Avances
-const APPSCRIPT_URL_TUMI     = 'https://script.google.com/macros/s/AKfycbyZh_W0CkQMmY-tWcuPV4WXK2LZ2yDpy7C9cQdu6soQvQRBb-MAOvFtKLyekHW29wEQCw/exec';       // Tumi RB + RRHH
+const APPSCRIPT_URL_COP          = 'https://script.google.com/macros/s/AKfycbzR0LNGSd-RyvxCJRApZlf0imuk_iefNobNSj4oCG6AhGXRlgBdJyCA1aPTH9xTYpfr/exec';
+const APPSCRIPT_URL_AV_COP       = 'https://script.google.com/macros/s/AKfycbzR0LNGSd-RyvxCJRApZlf0imuk_iefNobNSj4oCG6AhGXRlgBdJyCA1aPTH9xTYpfr/exec'; // ← URL AVANCES_COPSEM_CONVENCIONAL        // Copsem RRHH + Rehab
+const APPSCRIPT_URL_SIV_TL       = 'https://script.google.com/macros/s/AKfycbxQtqhHWiaGuONw4eymi31c2QDsXXKPaQ6x7pHqmRCuOmfhwCDJfkmOvsjoKgIajanpcg/exec';    // SIV Trackless RRHH + Avances
+const APPSCRIPT_URL_SIV_CV       = 'https://script.google.com/macros/s/AKfycbxWP5fAPnoTKWi0S8S6DKEPPxqMjQ_yxcCXlykS9UtfoR94xg8CwvhtbkB5-JRixnE6/exec';    // SIV Convencional RRHH + Avances
+const APPSCRIPT_URL_TUMI         = 'https://script.google.com/macros/s/AKfycbxde2qApzQ_m-fXc2gYpJGWqkoIqt4KgkEtoiAXqqDxpCuHmfN4Ntq16B-CCG6rtjCOXw/exec';       // Tumi RB + RRHH
 const APPSCRIPT_URL_SEG = 'https://script.google.com/macros/s/AKfycbxjwm6kVGp3kVcd9OEyI5EuKnMmlCG92azIPkKRXBT10PnjOgHV72krIXt-cUXlKSprGQ/exec';
 const APPSCRIPT_URL_SEG_COP = 'https://script.google.com/macros/s/AKfycbxktuCoKWru1GHskZl29ZlWMMNLekQLp-WZKGmaNWSgSRtlW30kACs857Hbunk-sbnx6w/exec'; // COPSEM Seguridad // ← Pegar URL de Seguridad cuando esté implementado
 const APPSCRIPT_URL_ALM = 'https://script.google.com/macros/s/AKfycbwO-n6nSodHviw8sLf-GzTKKAvn8bCPMT8wQTR3lFsdpA5cKJTrw57zVc6QmIorpmbF/exec'; // ← Implementar SOTRAMI_appscript_almacen.js en ALMACEN_SOTRAMI → ALMACEN_SOTRAMI // ← Pegar URL de Almacén cuando esté implementado
@@ -5053,6 +5088,8 @@ const DDH_DASH = {
 function openDDH() {
   document.getElementById('ddh-modal').classList.add('open');
   updateDDHMainTable();
+  // Load full period data for the detail tab
+  if (!window._ddhAllData?.length) cargarDDHPeriodoData();
   renderSeguridad();
   // Lab: actualizar con fecha inicial del selector
   const _initFecha = document.getElementById('hdr-fecha-sel');
@@ -5339,7 +5376,9 @@ function renderDDHDet() {
   const equipoFil = document.getElementById('ddh-d-equipo').value;
   const tipoFil   = document.getElementById('ddh-d-tipo').value;
 
-  const data = DDH_R.filter(r =>
+  // Usar datos de la API (todos los registros del período)
+  const source = window._ddhAllData?.length ? window._ddhAllData : DDH_R;
+  const data = source.filter(r =>
     (!equipoFil || r[3]===equipoFil) &&
     (!tipoFil   || r[2]===tipoFil)
   );
@@ -5807,20 +5846,21 @@ function renderSeguridad() {
   const totPInsp  = pct(totIE, totIP);
   const totPRacs  = pct(totRE, totRP);
   const totPReinst= pct(totReE, totReP);
-  const validsKPI = [totPInsp,totPRacs,totPReinst].filter(p=>p!==null);
+  // IDS viene de Copsem (se actualiza después) — usar window._segIDS si disponible
+  const idsVal = window._segIDS || null;
+  const validsKPI = [totPInsp, totPRacs, idsVal].filter(p=>p!==null);
   const gKPI = validsKPI.length
     ? Math.round(validsKPI.reduce((s,v)=>s+v,0)/validsKPI.length) : null;
 
   const svk = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
-  svk('kpi-seg-insp',   totPInsp  !== null ? totPInsp+'%'   : '—%');
-  svk('kpi-seg-racs',   totPRacs  !== null ? totPRacs+'%'   : '—%');
-  svk('kpi-seg-reinst', totPReinst!== null ? totPReinst+'%' : '—%');
+  svk('kpi-seg-insp',   totPInsp !== null ? totPInsp+'%' : '—%');
+  svk('kpi-seg-racs',   totPRacs !== null ? totPRacs+'%' : '—%');
+  // IDS se actualiza desde cargarSegCopsemDesdeAPI (usa pct_ids_promedio)
   svk('kpi-seg-global', gKPI !== null ? gKPI+'%' : '—%');
-  svk('kpi-seg-lti',    gKPI !== null ? gKPI+'%' : '—%'); // tarjeta = % global
-  // También actualizar el valor grande de la tarjeta KPI
-  const kpiLtiEl = document.getElementById('kpi-seg-lti');
-  if(kpiLtiEl && gKPI !== null) kpiLtiEl.textContent = gKPI+'%';
-  svk('kpi-seg-lti', gKPI !== null ? gKPI+'%' : '—%');
+  svk('kpi-seg-lti',    gKPI !== null ? gKPI+'%' : '—%');
+  // Meta% (porcentaje esperado según días transcurridos)
+  svk('kpi-seg-meta', metaPct !== null ? metaPct+'%' : '—%');
+  window._segMetaPct = metaPct; // guardar para recalc cuando llegue IDS
 
   // Badge global en KPI
   const kpiBadge = document.getElementById('kpi-seg-badge');
@@ -6200,6 +6240,7 @@ function avTab(id, btn) {
   requestAnimationFrame(() => requestAnimationFrame(() => {
     whenChartReady(() => {
       if(id==='resumen') buildAvCharts();
+      if(id==='periodo') loadAvPeriodo();
       if(id==='detalle') renderAvDetalle();
       if(id==='acum')    buildAvAcumChart();
     });
@@ -6363,9 +6404,10 @@ function renderAvDetalle() {
   const tbody = document.getElementById('tb-av-det');
   if(!tbody) return;
   tbody.innerHTML = filtered.map(r => {
-    const pDia  = r.pct_dia  || (r.prog_dia  >0?Math.round(r.ejec_dia /r.prog_dia  *100):0);
-    const pAcum = r.pct_acum || (r.prog_acum >0?Math.round(r.ejec_acum/r.prog_acum *100):0);
-    const pMes  = r.pct_mes  || (r.prog_mes  >0?Math.round(r.ejec_acum/r.prog_mes  *100):0);
+    // Always recalculate from ejec/prog to avoid sheet format issues
+    const pDia  = r.prog_dia  > 0 ? (r.ejec_dia  / r.prog_dia  * 100) : 0;
+    const pAcum = r.prog_acum > 0 ? (r.ejec_acum / r.prog_acum * 100) : 0;
+    const pMes  = r.prog_mes  > 0 ? (r.ejec_acum / r.prog_mes  * 100) : 0;
     const tipoBadge = r.tipo==='Trackless'
       ? '<span style="background:#E0F2FE;color:#0E7490;font-size:9px;padding:1px 6px;border-radius:3px;font-weight:600">TL</span>'
       : '<span style="background:#EFF6FF;color:#003366;font-size:9px;padding:1px 6px;border-radius:3px;font-weight:600">CV</span>';
@@ -6416,9 +6458,710 @@ function buildAvAcumChart() {
 }
 
 
+// ══ AVANCES — DETALLE POR PERÍODO ════════════════════════════════
+let _avPerData = null; // cache: {dias, resumen}
+
+async function loadAvPeriodo() {
+  const ejec = document.getElementById('av-per-ejec')?.value || 'cv';
+  const sv   = (id,v) => { const el=document.getElementById(id); if(el&&v!=null) el.textContent=v; };
+  const fmt1 = n => n>0 ? n.toFixed(2)+' m' : '—';
+
+  // Fetch period data from the appropriate API
+  let url = '', data = null;
+  try {
+    if (ejec === 'cv' && APPSCRIPT_URL_SIV_CV) {
+      url = APPSCRIPT_URL_SIV_CV + '?accion=periodo';
+      data = await fetch(url).then(r=>r.json()).catch(()=>null);
+    } else if (ejec === 'tl' && APPSCRIPT_URL_SIV_TL) {
+      url = APPSCRIPT_URL_SIV_TL + '?accion=periodo';
+      data = await fetch(url).then(r=>r.json()).catch(()=>null);
+    } else if (ejec === 'cop' && APPSCRIPT_URL_AV_COP) {
+      url = APPSCRIPT_URL_AV_COP + '?accion=periodo_avances';
+      data = await fetch(url).then(r=>r.json()).catch(()=>null);
+    }
+  } catch(e) { console.warn('[AV PER]', e.message); }
+
+  if (!data?.ok || !data.dias?.length) {
+    console.warn('[AV PER] Sin datos para', ejec);
+    return;
+  }
+
+  _avPerData = data;
+  const r = data.resumen || {};
+  const dias = data.dias || [];
+  const lastDay = dias[dias.length-1] || {};
+
+  // ── KPI header ─────────────────────────────────────────────────
+  const progAcumFecha = dias.reduce((s,d,i) => {
+    // prog acum to date = prog_dia × days elapsed
+    return s + (d.prog_dia||0);
+  }, 0);
+
+  sv('av-per-prog-mes',   fmt1(r.prog_mes));
+  sv('av-per-prom-dia',   fmt1(r.prom_dia));
+  sv('av-per-prog-acum',  fmt1(progAcumFecha));
+  sv('av-per-acum-real',  fmt1(r.acum_real));
+  sv('av-per-ejec-dia',   fmt1(lastDay.ejec_dia||0));
+  sv('av-per-proyeccion', fmt1(r.proyeccion));
+
+  // Diferencia
+  const dif = (r.proyeccion||0) - (r.prog_mes||0);
+  const difEl = document.getElementById('av-per-diferencia');
+  if(difEl) {
+    difEl.textContent = (dif>=0?'▲ +':' ') + dif.toFixed(2)+' m';
+    difEl.style.color = dif >= 0 ? '#15803D' : '#DC2626';
+  }
+
+  // Cumplimiento
+  const pct = r.pct_cumpl || 0;
+  const cumplEl = document.getElementById('av-per-cumpl');
+  if(cumplEl) {
+    cumplEl.textContent = pct.toFixed(2)+'%';
+    cumplEl.style.color = pct>=100?'#15803D':pct>=85?'#D97706':'#DC2626';
+  }
+
+  sv('av-per-dias', dias.length+' días');
+
+  // ── Populate zona filter ────────────────────────────────────────
+  const sel = document.getElementById('av-per-zona');
+  if(sel) {
+    sel.innerHTML = '<option value="">Todas</option>';
+    const zonas = [...new Set(dias.flatMap(d=>(d.zonas||[]).map(z=>z.zona)).filter(Boolean))].sort();
+    zonas.forEach(z => { const o=document.createElement('option'); o.value=z; o.textContent=z; sel.appendChild(o); });
+  }
+
+  buildAvPerCharts(dias, r);
+  renderAvPerTable(dias);
+}
+
+function filterAvPeriodoTable() {
+  if(!_avPerData) return;
+  renderAvPerTable(_avPerData.dias);
+}
+
+function renderAvPerTable(dias) {
+  const zona = document.getElementById('av-per-zona')?.value || '';
+  const tbody = document.getElementById('tb-av-per-det');
+  if(!tbody) return;
+
+  const fmt1 = n => n>0 ? n.toFixed(2) : '—';
+  const pCls = (e,p) => !p?'pN':e/p>=1?'pG':e/p>=0.85?'pY':'pR';
+  const pFmt = p => p!=null ? p.toFixed(1)+'%' : '—';
+
+  const rows = [];
+  dias.forEach(d => {
+    if (zona && d.zonas?.length) {
+      // Show individual zone rows
+      d.zonas.filter(z=>!zona||z.zona===zona).forEach(z => {
+        rows.push({fecha:d.fecha, zona:z.zona||'—',
+          ejec_dia:z.ejec_dia, prog_dia:z.prog_dia, pct_dia:z.pct_dia,
+          ejec_acum:z.ejec_acum, prog_acum:z.prog_acum, pct_acum:z.pct_acum,
+          prog_mes:z.prog_mes, pct_mes:z.pct_mes});
+      });
+    } else {
+      rows.push({fecha:d.fecha, zona:'(Total)',
+        ejec_dia:d.ejec_dia, prog_dia:d.prog_dia, pct_dia:d.pct_dia,
+        ejec_acum:d.ejec_acum, prog_acum:d.prog_acum, pct_acum:d.pct_acum,
+        prog_mes:d.prog_mes, pct_mes:d.pct_mes});
+    }
+  });
+
+  tbody.innerHTML = rows.map(r => {
+    const pD = r.pct_dia  || (r.prog_dia  >0?Math.round(r.ejec_dia /r.prog_dia  *100):0);
+    const pA = r.pct_acum || (r.prog_acum >0?Math.round(r.ejec_acum/r.prog_acum *100):0);
+    const pM = r.pct_mes  || (r.prog_mes  >0?Math.round(r.ejec_acum/r.prog_mes  *100):0);
+    return `<tr>
+      <td style="font-family:'DM Mono',monospace;font-size:10px">${r.fecha}</td>
+      <td style="font-size:10px;color:var(--t3)">${r.zona}</td>
+      <td class="mono">${fmt1(r.ejec_dia)}</td>
+      <td class="mono">${fmt1(r.prog_dia)}</td>
+      <td><span class="${pCls(r.ejec_dia,r.prog_dia)}">${pFmt(pD)}</span></td>
+      <td class="mono">${fmt1(r.ejec_acum)}</td>
+      <td class="mono">${fmt1(r.prog_acum)}</td>
+      <td><span class="${pCls(r.ejec_acum,r.prog_acum)}">${pFmt(pA)}</span></td>
+      <td class="mono">${fmt1(r.prog_mes)}</td>
+      <td><span class="${pCls(r.ejec_acum,r.prog_mes)}">${pFmt(pM)}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+function buildAvPerCharts(dias, resumen) {
+  const GD = '#D4AF37', NV = '#003366', DK = '#3D3D3D';
+  const labels = dias.map(d => {
+    const p = d.fecha.split('/');
+    return p[0]+'/'+p[1]; // DD/MM
+  });
+  const ejecDia  = dias.map(d=>d.ejec_dia||0);
+  const progDia  = dias.map(d=>d.prog_dia||0);
+  const ejecAcum = dias.map(d=>d.ejec_acum||0);
+  const progAcum = dias.map(d=>d.prog_acum||d.ejec_acum||0);
+
+  // Chart 1: Diario — barras ejec + línea prog
+  if(window._chartAvPerDiario) window._chartAvPerDiario.destroy();
+  const ctx1 = document.getElementById('chartAvPerDiario');
+  if(ctx1) window._chartAvPerDiario = new Chart(ctx1, {
+    data:{
+      labels,
+      datasets:[
+        {type:'bar',  label:'Avance Diario',    data:ejecDia, backgroundColor:GD+'CC',borderRadius:2},
+        {type:'line', label:'Avance Programado', data:progDia, borderColor:'#8B0000',backgroundColor:'transparent',
+         borderWidth:2,pointRadius:0,tension:0},
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom',labels:{font:{size:9},usePointStyle:true}},
+        tooltip:{callbacks:{label:pt=>' '+pt.dataset.label+': '+pt.parsed.y.toFixed(2)+'m'}}},
+      scales:{
+        x:{grid:{display:false},border:{display:false},ticks:{font:{size:7},maxTicksLimit:15}},
+        y:{grid:{color:'rgba(0,0,0,0.05)'},border:{display:false},ticks:{font:{size:9},callback:v=>v+'m'}}
+      }}
+  });
+
+  // Chart 2: Acumulado — líneas prog vs real
+  if(window._chartAvPerAcum) window._chartAvPerAcum.destroy();
+  const ctx2 = document.getElementById('chartAvPerAcum');
+  if(ctx2) window._chartAvPerAcum = new Chart(ctx2, {
+    type:'line',
+    data:{labels,datasets:[
+      {label:'Avance Programado',   data:progAcum,borderColor:DK,backgroundColor:'transparent',borderWidth:2,pointRadius:0,tension:0.1},
+      {label:'Avance Real Acumulado',data:ejecAcum,borderColor:GD,backgroundColor:GD+'22',borderWidth:2.5,
+       pointRadius:dias.map((_,i)=>i===dias.length-1?5:0),
+       pointBackgroundColor:GD,tension:0.1,fill:false},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom',labels:{font:{size:9},usePointStyle:true}},
+        tooltip:{callbacks:{label:pt=>' '+pt.dataset.label+': '+pt.parsed.y.toFixed(2)+'m'}}},
+      scales:{
+        x:{grid:{display:false},border:{display:false},ticks:{font:{size:7},maxTicksLimit:15}},
+        y:{grid:{color:'rgba(0,0,0,0.05)'},border:{display:false},ticks:{font:{size:9},callback:v=>v+'m'}}
+      }}
+  });
+
+  // Chart 3: Proyección vs Programado (barras)
+  if(window._chartAvPerProyeccion) window._chartAvPerProyeccion.destroy();
+  const ctx3 = document.getElementById('chartAvPerProyeccion');
+  if(ctx3) {
+    const progMes  = resumen.prog_mes  || 0;
+    const proyecc  = resumen.proyeccion|| 0;
+    const pct = progMes>0 ? (proyecc/progMes*100).toFixed(2)+'%' : '—';
+    window._chartAvPerProyeccion = new Chart(ctx3, {
+      type:'bar',
+      data:{labels:['Programado Mes','Proyección-mes'],
+        datasets:[{
+          data:[progMes, proyecc],
+          backgroundColor:[DK+'CC', GD+'CC'],
+          borderRadius:3,
+        }]},
+      options:{responsive:true,maintainAspectRatio:false,
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:pt=>' '+pt.parsed.y.toFixed(2)+'m'}},
+          annotation: {annotations:{}},
+        },
+        scales:{
+          x:{grid:{display:false},border:{display:false},ticks:{font:{size:9}}},
+          y:{grid:{color:'rgba(0,0,0,0.05)'},border:{display:false},ticks:{font:{size:9},callback:v=>v+'m'}}
+        }}
+    });
+  }
+}
+
+
+// ══ RAISE BORING MODAL ═══════════════════════════════════════════
+
+function openRB() {
+  document.getElementById('rb-modal').classList.add('open');
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    whenChartReady(() => loadRBModal());
+  }));
+}
+function closeRB() { document.getElementById('rb-modal').classList.remove('open'); }
+
+function rbTab(id, btn) {
+  document.querySelectorAll('#rb-modal .mtab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('#rb-modal .mpanel').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('rb-panel-'+id)?.classList.add('on');
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    whenChartReady(() => {
+      if(id==='curvas')  buildRBCharts();
+      if(id==='kpis')    renderRBKpis();
+      if(id==='detalle') renderRBDetalle();
+    });
+  }));
+}
+
+async function loadRBModal() {
+  // Fetch period data
+  if (!APPSCRIPT_URL_TUMI) return;
+  try {
+    const data = await fetch(APPSCRIPT_URL_TUMI + '?accion=periodo')
+      .then(r=>r.json()).catch(()=>null);
+    if (!data?.ok) { console.warn('[RB] Sin datos de período'); return; }
+    window._rbPeriodo = data;
+    buildRBCharts();
+    renderRBKpis();
+  } catch(e) { console.warn('[RB]', e.message); }
+}
+
+function buildRBCharts() {
+  const d = window._rbPeriodo;
+  if (!d?.dias?.length) return;
+
+  const GD = '#C9A227', NV = '#1B3A6B', SHADOW = 'rgba(201,162,39,0.15)', RED = '#E53E3E';
+  const dias = d.dias;
+  const r    = d.resumen || {};
+
+  // DD-MMM labels
+  const MESES = ['','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Set','Oct','Nov','Dic'];
+  const labels = dias.map(d2 => {
+    const p = d2.fecha.split('/');
+    return p[0]+'-'+MESES[+p[1]];
+  });
+
+  const commonXAxis = {
+    grid:{display:false}, border:{display:false},
+    ticks:{font:{size:8}, maxRotation:90, minRotation:90, maxTicksLimit:20}
+  };
+  const commonYAxis = {
+    grid:{color:'rgba(0,0,0,0.05)'}, border:{display:false},
+    ticks:{font:{size:9}, callback: v => v+'m'}
+  };
+
+  // ── Chart 1: Avance Diario ─────────────────────────────────────
+  if(window._chartRBDiario) window._chartRBDiario.destroy();
+  const ctx1 = document.getElementById('chartRBDiario');
+  if(ctx1) window._chartRBDiario = new Chart(ctx1, {
+    data:{
+      labels,
+      datasets:[
+        {type:'bar', label:'Ejec. Día',
+          data: dias.map(d2 => d2.ejec_dia > 0 ? d2.ejec_dia : null),
+          backgroundColor: GD+'CC', borderRadius:2},
+        {type:'line', label:'Prog. Promedio',
+          data: dias.map(() => r.prom_dia||0),
+          borderColor:'#8B0000', backgroundColor:'transparent',
+          borderWidth:2, pointRadius:0, tension:0, borderDash:[5,3]},
+      ]
+    },
+    options:{responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom',labels:{font:{size:9},usePointStyle:true}},
+        tooltip:{callbacks:{label:pt=>' '+pt.dataset.label+': '+(pt.parsed.y??0).toFixed(2)+'m'}}},
+      scales:{x:commonXAxis, y:commonYAxis}}
+  });
+
+  // ── Chart 2: Curva S — Prog.Acum.Proyecto vs Ejec.Acum.Proyecto ──
+  if(window._chartRBCurvaS) window._chartRBCurvaS.destroy();
+  const ctx2 = document.getElementById('chartRBCurvaS');
+  if(ctx2) {
+    // Use Prog.Acum.Proyecto (constant/cumulative) and Ejec.Acum.Proyecto
+    const progAcumProy  = dias.map(d2 => (d2.prog_acum_proy||0) > 0 ? d2.prog_acum_proy : null);
+    const ejecAcumProy  = dias.map(d2 => (d2.ejec_acum_proy||0) > 0 ? d2.ejec_acum_proy : null);
+
+    // Last non-null index for point marker
+    const lastEjec = ejecAcumProy.reduce((acc,v,i)=>v!=null?i:acc, -1);
+
+    window._chartRBCurvaS = new Chart(ctx2, {
+      type:'line',
+      data:{labels, datasets:[
+        {label:'Prog. Acum. Proyecto',
+          data: progAcumProy,
+          borderColor: NV, backgroundColor:'transparent',
+          borderWidth:2, pointRadius:0, tension:0.3,
+          spanGaps:false},
+        {label:'Ejec. Acum. Proyecto',
+          data: ejecAcumProy,
+          borderColor: GD,
+          backgroundColor: SHADOW,
+          borderWidth:2.5, tension:0.3, fill:true,
+          spanGaps:false,
+          pointRadius: ejecAcumProy.map((_,i)=>i===lastEjec?6:0),
+          pointBackgroundColor:GD, pointBorderColor:'#fff', pointBorderWidth:2},
+      ]},
+      options:{responsive:true, maintainAspectRatio:false,
+        plugins:{
+          legend:{position:'bottom',labels:{font:{size:9},usePointStyle:true}},
+          tooltip:{callbacks:{
+            label:pt => pt.parsed.y!=null?' '+pt.dataset.label+': '+pt.parsed.y.toFixed(2)+'m':null
+          }},
+        },
+        scales:{
+          x:commonXAxis,
+          y:{...commonYAxis,
+            title:{display:true,text:'Avance Acumulado (m)',font:{size:8},color:'rgba(0,0,0,0.4)'}}
+        }}
+    });
+  }
+
+  // ── Chart 3: Prog.Acum.Proyecto vs Ejec.Acum.Proyecto (barras) ──
+  if(window._chartRBProy) window._chartRBProy.destroy();
+  const ctx3 = document.getElementById('chartRBProyeccion');
+  if(ctx3) {
+    // Find last valid values for each
+    const lastProgAcum = dias.reduce((v,d2)=>d2.prog_acum_proy>0?d2.prog_acum_proy:v, 0);
+    const lastEjecAcum = dias.reduce((v,d2)=>d2.ejec_acum_proy>0?d2.ejec_acum_proy:v, 0);
+    const pct = lastProgAcum>0?(lastEjecAcum/lastProgAcum*100).toFixed(1)+'%':'—';
+
+    window._chartRBProy = new Chart(ctx3, {
+      type:'bar',
+      data:{
+        labels:['Prog. Acum.\nProyecto','Ejec. Acum.\nProyecto'],
+        datasets:[{
+          data:[lastProgAcum, lastEjecAcum],
+          backgroundColor:[NV+'CC', GD+'CC'],
+          borderRadius:4,
+        }]
+      },
+      options:{responsive:true, maintainAspectRatio:false,
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:pt=>' '+pt.parsed.y.toFixed(2)+'m'}},
+        },
+        scales:{
+          x:{grid:{display:false}, border:{display:false}, ticks:{font:{size:9}}},
+          y:{...commonYAxis, title:{display:true,text:pct+' cumpl.',font:{size:9,weight:'bold'},color:NV}}
+        }}
+    });
+  }
+
+  // Update Curva S KPI cards
+  const sv = (id,v)=>{ const el=document.getElementById(id); if(el)el.textContent=v; };
+  const fmt1 = n => n>0?n.toFixed(2):'—';
+  const lastPA = dias.reduce((v,d2)=>d2.prog_acum_proy>0?d2.prog_acum_proy:v,0);
+  const lastEA = dias.reduce((v,d2)=>d2.ejec_acum_proy>0?d2.ejec_acum_proy:v,0);
+  sv('rb-k-prog-mes',  fmt1(r.prog_mes)+'m');
+  sv('rb-k-ejec-acum', fmt1(r.acum_real)+'m');
+  const pMes  = r.prog_mes >0?(r.acum_real/r.prog_mes*100).toFixed(1)+'%':'—';
+  const pProy = lastPA>0?(lastEA/lastPA*100).toFixed(1)+'%':'—';
+  sv('rb-k-pct-mes',  pMes);
+  sv('rb-k-pct-proy', pProy);
+  sv('rb-k-pmes-ref', 'Prog: '+fmt1(r.prog_mes)+'m');
+  sv('rb-k-proy-ref', fmt1(lastEA)+' / '+fmt1(lastPA)+'m');
+}
+
+function renderRBKpis() {
+  const d = window._rbPeriodo;
+  if (!d) return;
+  const r = d.resumen || {};
+  const sv = (id,v)=>{ const el=document.getElementById(id); if(el)el.textContent=v; };
+  const fmt1 = n=>n>0?n.toFixed(2)+'m':'—';
+  const fmtP = n=>n!=null?n.toFixed(1)+'%':'—';
+  sv('rb-kh-prog-mes',  fmt1(r.prog_mes));
+  sv('rb-kh-prom-dia',  r.prom_dia>0?r.prom_dia.toFixed(2)+'m':'—');
+  sv('rb-kh-ejec-acum', fmt1(r.acum_real));
+  sv('rb-kh-prog-proy', fmt1(r.prog_proy));
+  const pMes  = r.prog_mes >0?(r.acum_real/r.prog_mes *100):null;
+  const pProy = r.prog_proy>0?(r.ejec_acum_proy/r.prog_proy*100):null;
+  const pmEl = document.getElementById('rb-kh-pct-mes');
+  if(pmEl){ pmEl.textContent=fmtP(pMes); pmEl.style.color=pMes>=100?'#15803D':pMes>=85?'#D97706':'#DC2626'; }
+  const ppEl = document.getElementById('rb-kh-pct-proy');
+  if(ppEl){ ppEl.textContent=fmtP(pProy); ppEl.style.color=pProy>=100?'#15803D':pProy>=85?'#D97706':'#DC2626'; }
+}
+
+function renderRBDetalle() {
+  const d = window._rbPeriodo;
+  if (!d?.dias?.length) {
+    const tb=document.getElementById('tb-rb-det');
+    if(tb) tb.innerHTML='<tr><td colspan="11" style="text-align:center;padding:14px;color:var(--t3)">Sin datos — redeployar Apps Script</td></tr>';
+    return;
+  }
+  const zona = document.getElementById('rb-f-zona')?.value || '';
+  const dias = d.dias;
+  const fmt1 = n=>n>0?n.toFixed(2):'—';
+  const pCls=(e,p)=>!p?'pN':e/p>=1?'pG':e/p>=0.85?'pY':'pR';
+  const fmtP=(e,p)=>p>0?(e/p*100).toFixed(1)+'%':'—';
+  const tbody = document.getElementById('tb-rb-det');
+  if(!tbody) return;
+  tbody.innerHTML = dias.map(d2 => `<tr>
+    <td style="font-family:'DM Mono',monospace;font-size:10px">${d2.fecha}</td>
+    <td style="font-size:9px">${d2.turnos||'—'} turnos</td>
+    <td style="font-size:9px;color:var(--t3)">RIMADO</td>
+    <td class="mono">${fmt1(d2.ejec_dia)}</td>
+    <td class="mono">${fmt1(d2.prog_dia)}</td>
+    <td><span class="${pCls(d2.ejec_dia,d2.prog_dia)}">${fmtP(d2.ejec_dia,d2.prog_dia)}</span></td>
+    <td class="mono" style="font-weight:600;color:var(--gd)">${fmt1(d2.ejec_acum)}</td>
+    <td class="mono">${fmt1(d2.prog_acum)}</td>
+    <td><span class="${pCls(d2.ejec_acum,d2.prog_mes)}">${fmtP(d2.ejec_acum,d2.prog_mes)}</span></td>
+    <td class="mono" style="color:var(--nv)">${fmt1(d2.ejec_acum_proy)}</td>
+    <td><span class="${pCls(d2.ejec_acum_proy,d2.prog_proy)}">${fmtP(d2.ejec_acum_proy,d2.prog_proy)}</span></td>
+  </tr>`).join('');
+  const cnt=document.getElementById('rb-det-cnt');
+  if(cnt) cnt.textContent=dias.length+' días';
+}
+
+
+// ══ RRHH MODAL ═══════════════════════════════════════════════════
+
+function openRRHH() {
+  document.getElementById('rrhh-modal').classList.add('open');
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    whenChartReady(() => buildRRHHModal());
+  }));
+}
+function closeRRHH() { document.getElementById('rrhh-modal').classList.remove('open'); }
+
+function rrhhTab(id, btn) {
+  document.querySelectorAll('#rrhh-modal .mtab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('#rrhh-modal .mpanel').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('rrhh-panel-'+id)?.classList.add('on');
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    whenChartReady(() => {
+      if(id==='indicadores') buildRRHHCharts();
+      if(id==='ausentismo')  buildAusentismoCharts();
+      if(id==='rotacion')    buildRotacionCharts();
+    });
+  }));
+}
+
+function buildRRHHModal() {
+  // Aggregate data from all window._rrhhData entries
+  const data = window._rrhhAll || {};
+  const sv = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
+  const fmt = n => n>0 ? n.toLocaleString('es-PE') : '—';
+
+  // Calculate global totals
+  const empresas = ['sot','cv','tl','cop','tumi'];
+  const labels_emp = ['Cía. Sotrami','SIV Conv.','SIV TL','Copsem','Tumi'];
+  const ids_emp = {sot:'rrhh-sot',cv:'rrhh-cv',tl:'rrhh-tl',cop:'rrhh-cop',tumi:'rrhh-tumi'};
+
+  // Read from DOM (already populated by cargarRRHH)
+  const getV = id => {
+    const el = document.getElementById(id);
+    const v = parseFloat(el?.textContent?.replace(/[^0-9.]/g,'')) || 0;
+    return v;
+  };
+
+  const totHC  = getV('rrhh-tot-total') || 0;
+  const totIng = getV('rrhh-tot-ingr')  || 0;
+  const totSal = getV('rrhh-tot-renun') || 0;
+  const totFal = getV('rrhh-tot-dm')    || 0; // DM+faltas proxy
+
+  sv('rrhh-m-hc',  totHC  || '—');
+  sv('rrhh-m-ing', totIng || '—');
+  sv('rrhh-m-sal', totSal || '—');
+
+  const iAus = totHC > 0 ? (totFal/totHC*100).toFixed(1)+'%' : '—';
+  sv('rrhh-m-aus', iAus);
+
+  buildRRHHCharts();
+}
+
+function getRRHHEmpresaData() {
+  // Read HC, Obr, Emp, Ingresos, Salidas, Faltas, DM per empresa from DOM
+  const emp_ids = {
+    'Sotrami': {tot:'rrhh-sot-total', obr:'rrhh-sot-obr', emp:'rrhh-sot-empl',
+                ing:'rrhh-sot-ingr', sal:'rrhh-sot-renun', dm:'rrhh-sot-dm'},
+    'SIV TL':  {tot:'rrhh-tl-total', obr:'rrhh-tl-obr', emp:'rrhh-tl-empl',
+                ing:'rrhh-tl-ingr', sal:'rrhh-tl-renun', dm:'rrhh-tl-dm'},
+    'SIV CV':  {tot:'rrhh-cv-total', obr:'rrhh-cv-obr', emp:'rrhh-cv-empl',
+                ing:'rrhh-cv-ingr', sal:'rrhh-cv-renun', dm:'rrhh-cv-dm'},
+    'Copsem':  {tot:'rrhh-cop-total', obr:'rrhh-cop-obr', emp:'rrhh-cop-empl',
+                ing:'rrhh-cop-ingr', sal:'rrhh-cop-renun', dm:'rrhh-cop-dm'},
+    'Tumi':    {tot:'rrhh-tumi-total', obr:'rrhh-tumi-obr', emp:'rrhh-tumi-empl',
+                ing:'rrhh-tumi-ingr', sal:'rrhh-tumi-renun', dm:'rrhh-tumi-dm'},
+  };
+  const getN = id => {
+    const el = document.getElementById(id);
+    return parseFloat(el?.textContent?.replace(/[^0-9.-]/g,'')) || 0;
+  };
+  return Object.entries(emp_ids).map(([nombre, ids]) => ({
+    nombre,
+    hc  : getN(ids.tot),
+    obr : getN(ids.obr),
+    emp : getN(ids.emp),
+    ing : getN(ids.ing),
+    sal : getN(ids.sal),
+    dm  : getN(ids.dm),
+  })).filter(e => e.hc > 0);
+}
+
+function buildRRHHCharts() {
+  const data = getRRHHEmpresaData();
+  if (!data.length) return;
+  const NV='#003366', GD='#C9A227', G='#15803D', R='#DC2626', Y='#D97706', T='#0E7490';
+  const colors = [NV, GD, G, Y, T, '#7C3AED'];
+
+  // Chart 1: HC por empresa (horizontal bars)
+  if(window._chartRRHHEmp) window._chartRRHHEmp.destroy();
+  const ctx1 = document.getElementById('chartRRHHEmpresa');
+  if(ctx1) window._chartRRHHEmp = new Chart(ctx1, {
+    type:'bar',
+    data:{labels:data.map(e=>e.nombre),
+      datasets:[{label:'HC Activo',data:data.map(e=>e.hc),
+        backgroundColor:data.map((_,i)=>colors[i]+'CC'),borderRadius:3}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},
+        tooltip:{callbacks:{label:pt=>' HC: '+pt.parsed.x+' personas'}}},
+      scales:{x:{grid:{color:'rgba(0,0,0,0.05)'},border:{display:false},
+        ticks:{font:{size:9}}},
+        y:{grid:{display:false},border:{display:false},ticks:{font:{size:9}}}}}
+  });
+
+  // Chart 2: Obreros vs Empleados donut
+  if(window._chartRRHHTipo) window._chartRRHHTipo.destroy();
+  const ctx2 = document.getElementById('chartRRHHTipo');
+  if(ctx2) {
+    const totObr = data.reduce((s,e)=>s+e.obr,0);
+    const totEmp = data.reduce((s,e)=>s+e.emp,0);
+    window._chartRRHHTipo = new Chart(ctx2, {
+      type:'doughnut',
+      data:{labels:['Obreros','Empleados'],
+        datasets:[{data:[totObr,totEmp],
+          backgroundColor:[NV+'CC',GD+'CC'],borderWidth:2,borderColor:'#fff'}]},
+      options:{responsive:true,maintainAspectRatio:false,cutout:'65%',
+        plugins:{legend:{position:'bottom',labels:{font:{size:9},usePointStyle:true}},
+          tooltip:{callbacks:{label:pt=>' '+pt.label+': '+pt.parsed+' ('+
+            Math.round(pt.parsed/(totObr+totEmp)*100)+'%)'}}}}
+    });
+  }
+}
+
+function buildAusentismoCharts() {
+  const data = getRRHHEmpresaData();
+  const sv = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
+  const NV='#003366', R='#DC2626', Y='#D97706', T='#0E7490', PU='#7C3AED';
+
+  // Global totals
+  const totHC  = data.reduce((s,e)=>s+e.hc, 0);
+  const totFal = data.reduce((s,e)=>s+e.dm, 0); // using dm proxy
+  const iAus   = totHC > 0 ? (totFal/totHC*100).toFixed(1) : '—';
+
+  sv('rrhh-m-fal',  data.reduce((s,e)=>s+e.dm,0) || '—');
+  sv('rrhh-m-dm',   data.reduce((s,e)=>s+e.dm,0) || '—');
+  sv('rrhh-m-iaus', iAus+'%');
+
+  // Chart 1: Composición ausentismo (por empresa — faltas/DM)
+  if(window._chartAusComp) window._chartAusComp.destroy();
+  const ctx1 = document.getElementById('chartAusentismoComp');
+  if(ctx1) window._chartAusComp = new Chart(ctx1, {
+    type:'bar',
+    data:{labels:data.map(e=>e.nombre),
+      datasets:[
+        {label:'DM/Sub.',data:data.map(e=>e.dm),backgroundColor:T+'CC',borderRadius:2},
+      ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{labels:{font:{size:9},usePointStyle:true}},
+        tooltip:{callbacks:{label:pt=>' '+pt.dataset.label+': '+pt.parsed.y+' personas'}}},
+      scales:{x:{grid:{display:false},border:{display:false},ticks:{font:{size:9}}},
+        y:{grid:{color:'rgba(0,0,0,0.05)'},border:{display:false},ticks:{font:{size:9}},
+          title:{display:true,text:'Personas',font:{size:8},color:'rgba(0,0,0,0.4)'}}}}
+  });
+
+  // Chart 2: % Ausentismo por empresa
+  if(window._chartAusEmp) window._chartAusEmp.destroy();
+  const ctx2 = document.getElementById('chartAusentismoEmp');
+  if(ctx2) {
+    const ausEmp = data.map(e => e.hc>0 ? parseFloat((e.dm/e.hc*100).toFixed(1)) : 0);
+    window._chartAusEmp = new Chart(ctx2, {
+      type:'bar',
+      data:{labels:data.map(e=>e.nombre),
+        datasets:[{label:'% Ausentismo',data:ausEmp,
+          backgroundColor:ausEmp.map(v=>v>10?R+'CC':v>5?Y+'CC':T+'CC'),
+          borderRadius:3}]},
+      options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false},
+          tooltip:{callbacks:{label:pt=>' '+pt.parsed.x.toFixed(1)+'% ausentismo'}}},
+        scales:{x:{grid:{color:'rgba(0,0,0,0.05)'},border:{display:false},
+          ticks:{font:{size:9},callback:v=>v+'%'}},
+          y:{grid:{display:false},border:{display:false},ticks:{font:{size:9}}}}}
+    });
+  }
+}
+
+function buildRotacionCharts() {
+  const data = getRRHHEmpresaData();
+  const sv = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
+  const NV='#003366', G='#15803D', R='#DC2626', Y='#D97706';
+
+  const totHC  = data.reduce((s,e)=>s+e.hc, 0);
+  const totIng = data.reduce((s,e)=>s+e.ing,0);
+  const totSal = data.reduce((s,e)=>s+e.sal,0);
+  const totSus = 0; // suspended - would need separate field
+  const iRot   = totHC > 0 ? (((totIng+totSal)/2)/totHC*100).toFixed(1) : '—';
+
+  sv('rrhh-m-rot-ing', totIng || '—');
+  sv('rrhh-m-rot-sal', totSal || '—');
+  sv('rrhh-m-irot',    iRot+'%');
+
+  // Chart 1: Rotación por empresa (barras ing vs sal)
+  if(window._chartRotEmp) window._chartRotEmp.destroy();
+  const ctx1 = document.getElementById('chartRotacionEmp');
+  if(ctx1) window._chartRotEmp = new Chart(ctx1, {
+    type:'bar',
+    data:{labels:data.map(e=>e.nombre),
+      datasets:[
+        {label:'Ingresos',data:data.map(e=>e.ing),backgroundColor:G+'CC',borderRadius:2},
+        {label:'Salidas', data:data.map(e=>e.sal),backgroundColor:R+'CC',borderRadius:2},
+      ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{labels:{font:{size:9},usePointStyle:true}},
+        tooltip:{callbacks:{label:pt=>' '+pt.dataset.label+': '+pt.parsed.y+' personas'}}},
+      scales:{x:{grid:{display:false},border:{display:false},ticks:{font:{size:9}}},
+        y:{grid:{color:'rgba(0,0,0,0.05)'},border:{display:false},
+          ticks:{font:{size:9},stepSize:1}}}}
+  });
+
+  // Chart 2: % Rotación por empresa
+  if(window._chartRotDet) window._chartRotDet.destroy();
+  const ctx2 = document.getElementById('chartRotacionDetalle');
+  if(ctx2) {
+    const rotPct = data.map(e => e.hc>0 ? parseFloat((((e.ing+e.sal)/2)/e.hc*100).toFixed(1)) : 0);
+    window._chartRotDet = new Chart(ctx2, {
+      type:'bar',
+      data:{labels:data.map(e=>e.nombre),
+        datasets:[{label:'% Rotación',data:rotPct,
+          backgroundColor:rotPct.map(v=>v>5?R+'CC':v>2?Y+'CC':G+'CC'),
+          borderRadius:3}]},
+      options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false},
+          tooltip:{callbacks:{label:pt=>' '+pt.parsed.x.toFixed(1)+'% rotación'}}},
+        scales:{x:{grid:{color:'rgba(0,0,0,0.05)'},border:{display:false},
+          ticks:{font:{size:9},callback:v=>v+'%'}},
+          y:{grid:{display:false},border:{display:false},ticks:{font:{size:9}}}}}
+    });
+  }
+}
+
+
+// ── Cargar todos los registros del período para el tab Detalle ───
+async function cargarDDHPeriodoData() {
+  if (!APPSCRIPT_URL_GEO) return;
+  try {
+    // Use rango endpoint if available, else resumen_mes to get all equipos
+    const data = await fetchAppScriptGeo({ accion: 'resumen_mes' });
+    if (!data?.ok) return;
+
+    // resumen_mes returns per-equipo summaries — for full rows use getRango
+    // Alternatively call dia for each date — or use a dedicated 'periodo' endpoint
+    // For now: fetch all days in current period via multiple calls (simplified)
+    // Calcular inicio del período actual dinámicamente
+    const periodos2 = {
+      '2026-05':{ ini:'30/04/2026' }, '2026-06':{ ini:'21/05/2026' },
+      '2026-07':{ ini:'26/06/2026' }
+    };
+    const now2 = new Date();
+    const pk2 = now2.getFullYear()+'-'+(now2.getMonth()+1+'').padStart(2,'0');
+    const desde = periodos2[pk2]?.ini || '01/'+(now2.getMonth()+1+'').padStart(2,'0')+'/'+now2.getFullYear();
+    const hasta = new Date().toLocaleDateString('es-PE',{day:'2-digit',month:'2-digit',year:'numeric'}).replace(/\//g,'/');
+    const rangoData = await fetchAppScriptGeo({ accion: 'rango', desde, hasta });
+    if (rangoData?.ok && rangoData.registros?.length) {
+      window._ddhAllData = rangoData.registros.map(r => [
+        r.fecha, r.turno, r.tipo, r.equipo,
+        r.prog_mes||0, r.ejec_dia||0, r.acum_mes||0,
+        r.meta_anual||0, r.total_acum_anual||0,
+        r.pct_cumpl_mes||0, r.pct_cumpl_anual||0,
+        r.obs||''
+      ]);
+      console.log('[DDH Período] Cargado:', window._ddhAllData.length, 'registros');
+      renderDDHDet();
+    }
+  } catch(e) { console.warn('[DDH Período]', e.message); }
+}
+
 // ══ ESC ══════════════════════════════════════════════════════════
 document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){closeProd();closeLab();closeSkip();closeDDH();closeVQ();closeSeg();closeMant();closeAlm();closeAv();}
+  if(e.key==='Escape'){closeProd();closeLab();closeSkip();closeDDH();closeVQ();closeSeg();closeMant();closeAlm();closeAv();closeRB();closeRRHH();}
 });
 
 // ══════════════════════════════════════════════════════════════════
@@ -6491,162 +7234,87 @@ async function fetchTUMI(params={}) {
 }
 
 // ── Cargar RRHH de todas las empresas y actualizar tabla ──────────
-async function cargarRRHH(fecha) {
-  const sv   = (id,v) => { const el=document.getElementById(id); if(el&&v!=null) el.textContent=v; };
-  const pCls = (e,p)  => !p?'pN':e/p>=1?'pG':e/p>=.85?'pY':'pR';
-  const fmt  = n      => n>0?n.toLocaleString('es-PE'):'—';
+async function cargarRB_Tumi(fecha) {
+  if (!APPSCRIPT_URL_TUMI) return;
+  try {
+    const qs = fecha ? '?accion=rb&fecha='+encodeURIComponent(fecha) : '?accion=rb';
+    const data = await fetch(APPSCRIPT_URL_TUMI + qs).then(r=>r.json()).catch(()=>null);
 
-  // IDs de filas RRHH: [id_empl, id_obr, id_ingr, id_renun, id_dm, id_vac, id_pobs, id_total, id_prog, id_deficit, id_pct]
-  // Las filas del tbl-rrhh están construidas estáticamente — las actualizamos por empresa
-  // Sotrami
-  const ds = await fetchRRHH_SOT({ accion:'dia', fecha });
-  if (ds?.ok) {
-    // Sumar todos los centros (Mina + Planta + otros)
-    let t = ds.totales || {};
-    if (ds.por_centro && Object.keys(ds.por_centro).length > 0) {
-      // Si hay desglose por centro, sumar manualmente
-      const all = Object.values(ds.por_centro).flat();
-      const sum = k => all.reduce((s,r)=>s+(r[k]||0),0);
-      t = {
-        emp_activo   : sum('emp_activo'),
-        obr_activo   : sum('obr_activo'),
-        activo_total : sum('activo_total'),
-        obr_ingreso  : sum('obr_ingreso'), emp_ingreso: sum('emp_ingreso'),
-        obr_salida   : sum('obr_salida'),  emp_salida : sum('emp_salida'),
-        obr_dm       : sum('obr_dm'),      emp_dm     : sum('emp_dm'),
-      };
-      // Si los campos individuales vienen vacíos, usar activo_total
-      const hcCalc = t.obr_activo + t.emp_activo;
-      t.total_hc = hcCalc > 0 ? hcCalc : (t.activo_total || 0);
-      // Debug: log raw response to check if App Script is returning fields
-      if (t.total_hc === 0) {
-        console.warn('[RRHH SOT] HC=0 debug — raw ds:', JSON.stringify(ds).substring(0,300));
-      }
+    // Fallback: if no data for given date, use latest available
+    let d = data;
+    if (d?.ok && (!d.zonas?.length || !d.zonas.some(z=>z.ejec_dia>0||z.ejec_acum>0)) && fecha) {
+      d = await fetch(APPSCRIPT_URL_TUMI + '?accion=rb').then(r=>r.json()).catch(()=>null) || data;
     }
-    sv('rrhh-sot-empl',  t.emp_activo||0);
-    sv('rrhh-sot-obr',   t.obr_activo||0);
-    sv('rrhh-sot-ingr',  (t.obr_ingreso||0)+(t.emp_ingreso||0)||'—');
-    sv('rrhh-sot-renun', (t.obr_salida ||0)+(t.emp_salida ||0)||'—');
-    sv('rrhh-sot-dm',    (t.obr_dm     ||0)+(t.emp_dm     ||0)||'—');
-    sv('rrhh-sot-total', fmt(t.total_hc));
-    const prog_sot=930, def_sot=prog_sot-(t.total_hc||0);
-    sv('rrhh-sot-deficit', (def_sot<=0?'+':'-')+Math.abs(def_sot));
-    const el_sot=document.getElementById('rrhh-sot-deficit'); if(el_sot) el_sot.style.color=def_sot<=0?'#15803D':'#DC2626';
-    const pct_sot=Math.round((t.total_hc||0)/prog_sot*100);
-    const sp_sot=document.getElementById('rrhh-sot-pct'); if(sp_sot){sp_sot.textContent=pct_sot+'%'; sp_sot.className=pct_sot>=100?'pG':pct_sot>=85?'pY':'pR';}
-    console.log('[RRHH SOT] HC:', t.total_hc, '| Obreros:', t.obr_activo,
-      '| Empleados:', t.emp_activo, '| activo_total:', t.activo_total,
-      '| Raw ok:', ds.ok, '| registros:', ds.registros);
-  }
+    if (!d?.ok) { console.warn('[TUMI RB] Sin datos'); return; }
 
-  // SIV Trackless
-  let dtl = await fetchSIV_TL({ accion:'rrhh', fecha });
-  if (dtl?.ok && dtl.totales?.total_hc === 0 && fecha) {
-    const dtl2 = await fetchSIV_TL({ accion:'rrhh' });
-    if (dtl2?.ok && dtl2.totales?.total_hc > 0) dtl = dtl2;
-  }
-  if (dtl?.ok && dtl.totales) {
-    const t = dtl.totales;
-    sv('rrhh-tl-obr', t.obr_activo||0); sv('rrhh-tl-empl', t.emp_activo||0); sv('rrhh-tl-total', fmt(t.total_hc || (t.obr_activo||0)+(t.emp_activo||0) || t.activo_total || 0));
-    const hc_tl = t.total_hc||(t.obr_activo||0)+(t.emp_activo||0)||t.activo_total||0;
-    const def_tl = 62 - hc_tl;
-    const pct_tl = hc_tl>0 ? Math.round(hc_tl/62*100) : 0;
-    sv('rrhh-tl-deficit', (def_tl<=0?'+':'-')+Math.abs(def_tl));
-    const elD_tl=document.getElementById('rrhh-tl-deficit'); if(elD_tl) elD_tl.style.color=def_tl<=0?'#15803D':'#DC2626';
-    const sp_tl=document.getElementById('rrhh-tl-pct'); if(sp_tl){sp_tl.textContent=pct_tl+'%'; sp_tl.className=pct_tl>=100?'pG':pct_tl>=85?'pY':'pR';}
-    console.log('[RRHH SIV TL] HC:', t.total_hc);
-  }
+    const sv = (id,v) => { const el=document.getElementById(id); if(el&&v!=null) el.textContent=v; };
+    const fmt1 = n => n>0 ? n.toFixed(2) : '—';
+    const pCls = (e,p) => !p?'pN':e/p>=1?'pG':e/p>=0.85?'pY':'pR';
 
-  // SIV Convencional
-  let dcv = await fetchSIV_CV({ accion:'rrhh', fecha });
-  if (dcv?.ok && dcv.totales?.total_hc === 0 && fecha) {
-    const dcv2 = await fetchSIV_CV({ accion:'rrhh' });
-    if (dcv2?.ok && dcv2.totales?.total_hc > 0) dcv = dcv2;
-  }
-  if (dcv?.ok && dcv.totales) {
-    const t = dcv.totales;
-    sv('rrhh-cv-obr', t.obr_activo||0); sv('rrhh-cv-empl', t.emp_activo||0); sv('rrhh-cv-total', fmt(t.total_hc || (t.obr_activo||0)+(t.emp_activo||0) || t.activo_total || 0));
-    const hc_cv = t.total_hc||(t.obr_activo||0)+(t.emp_activo||0)||t.activo_total||0;
-    const def_cv = 170 - hc_cv;
-    const pct_cv = hc_cv>0 ? Math.round(hc_cv/170*100) : 0;
-    sv('rrhh-cv-deficit', (def_cv<=0?'+':'-')+Math.abs(def_cv));
-    const elD_cv=document.getElementById('rrhh-cv-deficit'); if(elD_cv) elD_cv.style.color=def_cv<=0?'#15803D':'#DC2626';
-    const sp_cv=document.getElementById('rrhh-cv-pct'); if(sp_cv){sp_cv.textContent=pct_cv+'%'; sp_cv.className=pct_cv>=100?'pG':pct_cv>=85?'pY':'pR';}
-    console.log('[RRHH SIV CV] HC:', t.total_hc);
-  }
+    // Update fecha
+    sv('rb-act-fecha', d.fecha||'—');
 
-  // Copsem
-  let dc = await fetchCOP({ accion:'rrhh', fecha });
-  if (dc?.ok && dc.totales?.total_hc === 0 && fecha) {
-    const dc2 = await fetchCOP({ accion:'rrhh' });
-    if (dc2?.ok && dc2.totales?.total_hc > 0) dc = dc2;
-  }
-  if (dc?.ok && dc.totales) {
-    const t = dc.totales;
-    sv('rrhh-cop-obr', t.obr_activo||0); sv('rrhh-cop-empl', t.emp_activo||0); sv('rrhh-cop-total', fmt(t.total_hc || (t.obr_activo||0)+(t.emp_activo||0) || t.activo_total || 0));
-    const hc_cop = t.total_hc||(t.obr_activo||0)+(t.emp_activo||0)||t.activo_total||0;
-    const def_cop = 23 - hc_cop;
-    const pct_cop = hc_cop>0 ? Math.round(hc_cop/23*100) : 0;
-    sv('rrhh-cop-deficit', (def_cop<=0?'+':'-')+Math.abs(def_cop));
-    const elD_cop=document.getElementById('rrhh-cop-deficit'); if(elD_cop) elD_cop.style.color=def_cop<=0?'#15803D':'#DC2626';
-    const sp_cop=document.getElementById('rrhh-cop-pct'); if(sp_cop){sp_cop.textContent=pct_cop+'%'; sp_cop.className=pct_cop>=100?'pG':pct_cop>=85?'pY':'pR';}
-    console.log('[RRHH COPSEM] HC:', t.total_hc);
-  }
+    // Update main table
+    const tbody = document.getElementById('tb-rb');
+    if (tbody && d.zonas?.length) {
+      tbody.innerHTML = d.zonas.map(z => {
+        const pDia  = z.prog_dia  >0?(z.ejec_dia  /z.prog_dia  *100):null;
+        const pMes  = z.prog_mes  >0?(z.ejec_acum /z.prog_mes  *100):null;
+        const pProy = z.prog_proy >0?(z.ejec_acum_proy/z.prog_proy*100):null;
+        const dif   = z.prog_proy - z.ejec_acum_proy;
+        return `<tr>
+          <td>${z.zona||'—'}</td>
+          <td>${z.proyecto||'—'}</td>
+          <td style="font-size:9px;color:var(--t3)">${z.tipo||'—'}</td>
+          <td class="mono" style="text-align:center">${fmt1(z.ejec_dia)}</td>
+          <td class="mono" style="text-align:center">${fmt1(z.prog_dia)}</td>
+          <td style="text-align:center"><span class="${pCls(z.ejec_dia,z.prog_dia)}">${pDia!=null?pDia.toFixed(1)+'%':'—'}</span></td>
+          <td class="mono" style="text-align:center;font-weight:600;color:var(--gd)">${fmt1(z.ejec_acum)}</td>
+          <td class="mono" style="text-align:center">${fmt1(z.prog_mes)}</td>
+          <td style="text-align:center"><span class="${pCls(z.ejec_acum,z.prog_mes)}">${pMes!=null?pMes.toFixed(1)+'%':'—'}</span></td>
+          <td class="mono" style="text-align:center">${fmt1(z.prog_proy)}</td>
+          <td class="mono" style="text-align:center;font-weight:600;color:var(--nv)">${fmt1(z.ejec_acum_proy)}</td>
+          <td class="mono" style="text-align:center;color:${dif<0?'#15803D':'#DC2626'}">${dif>=0?'+':''}${fmt1(dif)}</td>
+          <td style="text-align:center"><span class="${pCls(z.ejec_acum_proy,z.prog_proy)}">${pProy!=null?pProy.toFixed(1)+'%':'—'}</span></td>
+        </tr>`;
+      }).join('');
+    }
 
-  // Tumi
-  let dt = await fetchTUMI({ accion:'rrhh', fecha });
-  if (dt?.ok && dt.totales?.total_hc === 0 && fecha) {
-    const dt2 = await fetchTUMI({ accion:'rrhh' });
-    if (dt2?.ok && dt2.totales?.total_hc > 0) dt = dt2;
-  }
-  if (dt?.ok && dt.totales) {
-    const t = dt.totales;
-    sv('rrhh-tumi-obr', t.obr_activo||0); sv('rrhh-tumi-empl', t.emp_activo||0); sv('rrhh-tumi-total', fmt(t.total_hc || (t.obr_activo||0)+(t.emp_activo||0) || t.activo_total || 0));
-    const hc_tumi = t.total_hc||(t.obr_activo||0)+(t.emp_activo||0)||t.activo_total||0;
-    const def_tumi = 23 - hc_tumi;
-    const pct_tumi = hc_tumi>0 ? Math.round(hc_tumi/23*100) : 0;
-    sv('rrhh-tumi-deficit', (def_tumi<=0?'+':'-')+Math.abs(def_tumi));
-    const elD_tumi=document.getElementById('rrhh-tumi-deficit'); if(elD_tumi) elD_tumi.style.color=def_tumi<=0?'#15803D':'#DC2626';
-    const sp_tumi=document.getElementById('rrhh-tumi-pct'); if(sp_tumi){sp_tumi.textContent=pct_tumi+'%'; sp_tumi.className=pct_tumi>=100?'pG':pct_tumi>=85?'pY':'pR';}
-    console.log('[RRHH TUMI] HC:', t.total_hc);
-  }
+    // Update KPI card (use first zona = Chulbe RB 2000)
+    const z0 = d.zonas?.find(z=>z.ejec_dia>0||z.ejec_acum>0) || d.zonas?.[0] || {};
+    sv('rb-ejec-dia',  fmt1(z0.ejec_dia));
+    sv('rb-prog-dia',  fmt1(z0.prog_dia));
+    sv('rb-ejec-acum', fmt1(z0.ejec_acum));
+    sv('rb-prog-mes',  fmt1(z0.prog_mes));
+    sv('rb-ejec-proy', fmt1(z0.ejec_acum_proy));
+    sv('rb-prog-proy', fmt1(z0.prog_proy));
 
-  // Recalcular fila TOTAL — esperar que todos los fallbacks terminen
-  setTimeout(() => {
-    const pfx = ['sot','cv','tl','cop','tumi'];
-    let totE=0,totO=0,totH=0;
-    pfx.forEach(p => {
-      const e = parseInt(document.getElementById('rrhh-'+p+'-empl')?.textContent)||0;
-      const o = parseInt(document.getElementById('rrhh-'+p+'-obr')?.textContent)||0;
-      const h = parseInt(document.getElementById('rrhh-'+p+'-total')?.textContent)||0;
-      totE+=e; totO+=o; totH+=h;
-    });
-    const sv2=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
-    sv2('rrhh-tot-empl', totE||'—');
-    sv2('rrhh-tot-obr',  totO||'—');
-    sv2('rrhh-tot-total',totH||'—');
-    // Calcular Déficit y % Cumpl del TOTAL
-    const progTot = 1208; // 930+170+62+23+23
-    const defTot  = progTot - totH;
-    const pctTot  = totH > 0 ? Math.round(totH/progTot*100) : 0;
-    sv2('rrhh-tot-deficit', (defTot<=0?'+':'-')+Math.abs(defTot));
-    const elDefTot = document.getElementById('rrhh-tot-deficit');
-    if (elDefTot) elDefTot.style.color = defTot<=0?'#15803D':'#DC2626';
-    const spTot = document.getElementById('rrhh-tot-pct');
-    if (spTot) { spTot.textContent=pctTot+'%'; spTot.className=pctTot>=100?'pG':pctTot>=85?'pY':'pR'; }
-    // Actualizar KPI HC en tarjeta
-    const kpiHC = document.getElementById('kpi-hc-total');
-    if(kpiHC && totH>0) kpiHC.textContent = totH.toLocaleString('es-PE');
-    console.log('[RRHH TOTAL] Empleados:', totE, '| Obreros:', totO, '| HC:', totH, '| Déficit:', defTot, '| %:', pctTot+'%');
-  }, 1500); // 1500ms: wait for all RRHH fallbacks
+    const pDia0  = z0.prog_dia  >0?(z0.ejec_dia  /z0.prog_dia  *100):null;
+    const pMes0  = z0.prog_mes  >0?(z0.ejec_acum /z0.prog_mes  *100):null;
+    const pProy0 = z0.prog_proy >0?(z0.ejec_acum_proy/z0.prog_proy*100):null;
+    sv('rb-pct-dia',  pDia0!=null?pDia0.toFixed(1)+'%':'—');
+    sv('rb-pct-mes',  pMes0!=null?pMes0.toFixed(1)+'%':'—');
+    sv('rb-pct-proy', pProy0!=null?pProy0.toFixed(1)+'%':'—');
+
+    const badge = document.getElementById('rb-pct-badge');
+    if (badge && pMes0!=null) {
+      const arr = pMes0>=100?'▲':pMes0>=85?'●':'▼';
+      badge.textContent = arr+' '+pMes0.toFixed(1)+'%';
+      badge.className = 'kbdg '+(pMes0>=100?'kG':pMes0>=85?'kA':'kR');
+    }
+
+    console.log('[TUMI RB] Ejec día:', fmt1(z0.ejec_dia)+'m | Acum:', fmt1(z0.ejec_acum)+'m | %Proy:', pProy0?.toFixed(1)+'%');
+  } catch(e) { console.warn('[TUMI RB]', e.message); }
 }
 
-// ── Cargar Avances desde SIV TL + SIV CV ─────────────────────────
+
 async function cargarAvances(fecha) {
   const sv  = (id,v) => { const el=document.getElementById(id); if(el&&v!=null) el.textContent=v; };
   const fmtM = n => (n>0) ? n.toFixed(1) : '—';
   const getN = id => { const el=document.getElementById(id); const v=el?.textContent?.replace('—','').trim(); return v?parseFloat(v):0; };
   const pCls = (e,p) => { if(!p||!e) return 'pN'; const r=e/p*100; return r>=100?'pG':r>=85?'pY':'pR'; };
+  // Normalize pct: if ≤1.0 it's a ratio (sheet stores 0.5 = 50%) → ×100
+  const normPct = p => p==null ? null : (Math.abs(p) <= 1.0 && p !== 0) ? p*100 : p;
 
   // ── Fetch CV, TL, COP en paralelo ─────────────────────────────
   const [dcvRaw, dtlRaw, dcopRaw] = await Promise.all([
@@ -6678,12 +7346,16 @@ async function cargarAvances(fecha) {
       sv(`av-cv-${key}-acum`,  fmtM(z.ejec_acum));
       sv(`av-cv-${key}-pacum`, fmtM(z.prog_acum));
       sv(`av-cv-${key}-pmes`,  fmtM(z.prog_mes));
+      // Always calculate % from ejec/prog to avoid sheet format issues (ratio vs %)
+      const pDia  = z.prog_dia  > 0 ? (z.ejec_dia  / z.prog_dia  * 100) : null;
+      const pAcum = z.prog_acum > 0 ? (z.ejec_acum / z.prog_acum * 100) : null;
+      const pMes  = z.prog_mes  > 0 ? (z.ejec_acum / z.prog_mes  * 100) : null;
       const el  = document.getElementById(`av-cv-${key}-pct`);
-      if(el){ el.textContent=z.pct_dia!=null?parseFloat(z.pct_dia).toFixed(1)+'%':'—'; el.className=pCls(z.ejec_dia,z.prog_dia); }
+      if(el){ el.textContent=(pDia!=null&&z.ejec_dia>0)?pDia.toFixed(1)+'%':'—'; el.className=pCls(z.ejec_dia,z.prog_dia); }
       const elA = document.getElementById(`av-cv-${key}-pct-acum`);
-      if(elA){ elA.textContent=z.pct_acum!=null?parseFloat(z.pct_acum).toFixed(1)+'%':'—'; elA.className=pCls(z.ejec_acum,z.prog_acum); }
+      if(elA){ elA.textContent=(pAcum!=null&&z.ejec_acum>0)?pAcum.toFixed(1)+'%':'—'; elA.className=pCls(z.ejec_acum,z.prog_acum); }
       const elM = document.getElementById(`av-cv-${key}-pct-mes`);
-      if(elM){ elM.textContent=z.pct_mes!=null?parseFloat(z.pct_mes).toFixed(1)+'%':'—'; elM.className=pCls(z.ejec_acum,z.prog_mes); }
+      if(elM){ elM.textContent=(pMes!=null&&z.ejec_acum>0)?pMes.toFixed(1)+'%':'—'; elM.className=pCls(z.ejec_acum,z.prog_mes); }
     });
   }
   console.log('[AVANCES CV] Zonas:', dcv?.zonas?.length||0, '| Total ejec:', (dcv?.resumen?.ejec_dia||0).toFixed(1)+'m',
@@ -6701,10 +7373,16 @@ async function cargarAvances(fecha) {
       sv(`av-tl-${key}-acum`,  fmtM(z.ejec_acum));
       sv(`av-tl-${key}-pacum`, fmtM(z.prog_acum));
       sv(`av-tl-${key}-pmes`,  fmtM(z.prog_mes));
+      const pDia  = z.prog_dia  > 0 ? (z.ejec_dia  / z.prog_dia  * 100) : null;
+      const pAcum = z.prog_acum > 0 ? (z.ejec_acum / z.prog_acum * 100) : null;
       const el  = document.getElementById(`av-tl-${key}-pct`);
-      if(el){ el.textContent=z.pct_dia!=null?parseFloat(z.pct_dia).toFixed(1)+'%':'—'; el.className=pCls(z.ejec_dia,z.prog_dia); }
+      if(el){ el.textContent=(pDia!=null&&z.ejec_dia>0)?pDia.toFixed(1)+'%':'—'; el.className=pCls(z.ejec_dia,z.prog_dia); }
       const elA = document.getElementById(`av-tl-${key}-pct-acum`);
-      if(elA){ elA.textContent=z.pct_acum!=null?parseFloat(z.pct_acum).toFixed(1)+'%':'—'; elA.className=pCls(z.ejec_acum,z.prog_acum); }
+      if(elA){ elA.textContent=(pAcum!=null&&z.ejec_acum>0)?pAcum.toFixed(1)+'%':'—'; elA.className=pCls(z.ejec_acum,z.prog_acum); }
+      sv(`av-tl-${key}-pmes`,  fmtM(z.prog_mes));
+      const pMes = z.prog_mes > 0 ? (z.ejec_acum / z.prog_mes * 100) : null;
+      const elM = document.getElementById(`av-tl-${key}-pct-mes`);
+      if(elM){ elM.textContent=pMes!=null?pMes.toFixed(1)+'%':'—'; elM.className=pCls(z.ejec_acum,z.prog_mes); }
     });
   }
   console.log('[AVANCES TL] Total ejec:', (dtl?.resumen?.ejec_dia||0).toFixed(1)+'m',
@@ -6751,7 +7429,7 @@ async function cargarAvances(fecha) {
   sv('av-tot-pacum', fmtT(totPAcum));
   sv('av-tot-pmes',  fmtT(totPmes));
   const elTP = document.getElementById('av-tot-pct');
-  if(elTP){elTP.textContent=totProg>0?Math.round(totEjec/totProg*100)+'%':'—'; elTP.className=pCls(totEjec,totProg);}
+  if(elTP){elTP.textContent=(totProg>0&&totEjec>0)?Math.round(totEjec/totProg*100)+'%':'—'; elTP.className=pCls(totEjec,totProg);}
   const elTA = document.getElementById('av-tot-pct-acum');
   if(elTA){elTA.textContent=totPAcum>0?Math.round(totAcum/totPAcum*100)+'%':'—'; elTA.className=pCls(totAcum,totPAcum);}
   const elTM = document.getElementById('av-tot-pct-mes');
@@ -6835,32 +7513,7 @@ async function cargarAvancesCopDesdeAPI(fecha) {
 }
 
 // ── Cargar RB 2000 Tumi ───────────────────────────────────────────
-async function cargarRB_Tumi(fecha) {
-  const data = await fetchTUMI({ accion:'rb', fecha });
-  if (!data?.ok) { console.warn('[TUMI RB] Sin respuesta'); return; }
-  if (!data.resumen || (!data.resumen.ejec_dia && !data.resumen.ejec_acum)) {
-    console.info('[TUMI RB] Sin datos para', fecha||'última fecha');
-    return;
-  }
 
-  const r   = data.resumen;
-  const sv  = (id,v) => { const el=document.getElementById(id); if(el&&v!=null) el.textContent=v; };
-  const fmt = n => n>0?n.toLocaleString('es-PE',{minimumFractionDigits:1,maximumFractionDigits:1}):'—';
-
-  sv('rb-ejec-dia',  fmt(r.ejec_dia));
-  sv('rb-prog-dia',  fmt(r.prog_dia));
-  sv('rb-ejec-acum', fmt(r.ejec_acum));
-  sv('rb-prog-acum', fmt(r.prog_acum));
-
-  const pct = r.pct_dia ?? (r.prog_dia>0?Math.round(r.ejec_dia/r.prog_dia*100):null);
-  const badge = document.getElementById('rb-pct-badge');
-  if(badge && pct!==null) {
-    badge.textContent = pct>=100?'▲ '+pct+'%' : pct>=85?'● '+pct+'%' : '▼ '+pct+'%';
-    badge.className   = 'kbdg ' + (pct>=100?'kG':pct>=85?'kY':'kR');
-  }
-
-  console.log('[TUMI RB] Ejec día:', r.ejec_dia, 'm | Acum:', r.ejec_acum, 'm | %:', pct+'%');
-}
 
 
 // ══ MANTENIMIENTO Y ALMACÉN ══════════════════════════════════════
@@ -6906,7 +7559,12 @@ async function cargarAlmacenDesdeAPI(fecha) {
     const qs = fecha ? '?accion=dia&fecha='+encodeURIComponent(fecha) : '?accion=dia';
     const res = await fetch(APPSCRIPT_URL_ALM + qs);
     const data = await res.json();
-    if (!data?.ok) { console.warn('[ALM]', data?.error); return; }
+    if (!data?.ok) {
+      console.error('[ALM] API error:', data?.error, '| Raw:', JSON.stringify(data)?.substring(0,300));
+      return;
+    }
+    console.log('[ALM] Raw response — ok:', data.ok, '| alerta:', data.alerta?.length,
+      '| todos:', data.todos?.length, '| campos muestra:', JSON.stringify(data.alerta?.[0]||data.todos?.[0]).substring(0,150));
 
     // Usar 'alerta' (pre-filtrado por API: solo Crítico+Precaución) si existe
     const alerta = data.alerta || [];
@@ -6914,6 +7572,8 @@ async function cargarAlmacenDesdeAPI(fecha) {
     const source = alerta.length > 0 ? alerta : todos;
     if (source.length > 0) {
       const rows = source.map(m => ({
+        anio   : m.anio||m.ano||'',
+        periodo: m.periodo||'',
         fecha: m.fecha, tipo: m.tipo, mat: m.material||m.mat,
         um: m.um, act: +(m.stock_act||m.act||0), min: +(m.stock_min||m.min||0),
         diferencia: m.diferencia||0,
@@ -6923,7 +7583,9 @@ async function cargarAlmacenDesdeAPI(fecha) {
         _prefiltered: alerta.length > 0, // flag: ya viene filtrado del API
       }));
       window._almRows = todos.length > 0 ? todos.map(m => ({
-        fecha: m.fecha, tipo: m.tipo, mat: m.material||m.mat,
+        anio   : m.anio||m.ano||'',
+        periodo: m.periodo||'',
+        fecha  : m.fecha, tipo: m.tipo, mat: m.material||m.mat,
         um: m.um, act: +(m.stock_act||m.act||0), min: +(m.stock_min||m.min||0),
         diferencia: m.diferencia||0,
         estado_hoja: m.estado_hoja||m.estado_calc||m.estado||'',
@@ -7099,7 +7761,34 @@ async function cargarSegCopsemDesdeAPI(mes, anio) {
     </tr>`).join('');
   }
   const idsProm = data.totales?.pct_ids_promedio;
-  const idsDisplay = idsProm!=null ? (idsProm<1?idsProm*100:idsProm).toFixed(1) : '—';
+  const idsNorm  = idsProm!=null ? (idsProm<1 ? idsProm*100 : idsProm) : null;
+  const idsDisplay = idsNorm!=null ? idsNorm.toFixed(1) : '—';
+  // Actualizar tarjeta IDS y recalcular gKPI global con IDS
+  if (idsNorm !== null) {
+    window._segIDS = Math.round(idsNorm);
+    const svk2 = (id,v)=>{ const el=document.getElementById(id); if(el) el.textContent=v; };
+    svk2('kpi-seg-ids', idsNorm.toFixed(1)+'%');
+    // Recalcular global incluyendo IDS
+    const insp = parseFloat(document.getElementById('kpi-seg-insp')?.textContent)||null;
+    const racs = parseFloat(document.getElementById('kpi-seg-racs')?.textContent)||null;
+    const valids2 = [insp,racs,Math.round(idsNorm)].filter(v=>v>0);
+    const gKPI2 = valids2.length ? Math.round(valids2.reduce((s,v)=>s+v,0)/valids2.length) : null;
+    if(gKPI2 !== null) {
+      svk2('kpi-seg-global', gKPI2+'%');
+      svk2('kpi-seg-lti',    gKPI2+'%');
+      const meta = window._segMetaPct;
+      const badge = document.getElementById('kpi-seg-badge');
+      if(badge) {
+        if(meta !== null && gKPI2 >= meta) {
+          badge.className='kbdg kG'; badge.textContent='✓ '+gKPI2+'%';
+        } else if(meta !== null) {
+          badge.className='kbdg kR'; badge.textContent='▼ '+gKPI2+'% / '+meta+'%';
+        } else {
+          badge.className='kbdg kA'; badge.textContent='● '+gKPI2+'%';
+        }
+      }
+    }
+  }
   console.log('[SEG COP] Cargado:', personas.length, 'personas',
     '| Insp:', data.totales?.pct_insp+'%',
     '| RACS:', data.totales?.pct_racs+'%',
@@ -7292,10 +7981,16 @@ async function cargarGeoDesdAPI(fecha) {
     return;
   }
   if (!data.registros || data.registros.length === 0) {
-    console.info('[GEO API] Sin registros para', fecha);
-    // Clear DDH table for this date
-    const tb = document.getElementById('tb-ddh');
-    if (tb) tb.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--t3);padding:8px">Sin perforación para esta fecha</td></tr>';
+    if (fecha) {
+      // Retry without fecha to get latest available
+      console.info('[GEO API] Sin registros para', fecha, '— usando última fecha disponible');
+      const data2 = await fetchAppScriptGeo({ accion: 'dia' });
+      if (data2?.ok && data2.registros?.length > 0) {
+        return cargarGeoDesdAPI(''); // recurse without fecha
+      }
+    }
+    const tb = document.getElementById('tb-ddh-body');
+    if (tb) tb.innerHTML = '<tr><td colspan="10" style="text-align:center;color:var(--t3);padding:8px">Sin perforación registrada</td></tr>';
     return;
   }
 
@@ -7314,11 +8009,12 @@ async function cargarGeoDesdAPI(fecha) {
   const apiMap = {};
   registros.forEach(r => { apiMap[r.equipo] = r; });
 
-  // Orden fijo de equipos
-  const equipoOrder = [
-    'DDH - LF 160','DDH - CS 140','DDH - PHC 06',
-    'DDH - U 232','DDH - PACKSACK Z23'
-  ];
+  // Orden dinámico: primero los del API, luego orden fijo para los conocidos
+  const knownOrder = ['DDH - LF 160','DDH - CS 140','DDH - PHC 06',
+    'DDH - U 232','DDH - PACKSACK Z23','DDH - PACKSACK SR'];
+  const apiEquipos = registros.map(r=>r.equipo).filter(Boolean);
+  // Merge: known order first, then any new ones from API
+  const equipoOrder = [...new Set([...knownOrder, ...apiEquipos])];
 
   const tbody = document.getElementById('tb-ddh-body');
   if (!tbody) return;
@@ -7339,8 +8035,15 @@ async function cargarGeoDesdAPI(fecha) {
     const progMes   = r ? (r.prog_mes  || 0) : 0;
     const metaAnual = r ? (r.meta_anual|| 0) : 0;
     const acumAnual = r ? (r.total_acum_anual || 0) : 0;
-    const pctMes    = r ? (r.pct_cumpl_mes   || 0) : 0;
-    const pctAnual  = r ? (r.pct_cumpl_anual || 0) : 0;
+    // pct: sheet stores as % (e.g. 28.53) or decimal (e.g. 0.2853) — normalize
+    const normP = v => v == null ? null : (Math.abs(v) > 0 && Math.abs(v) <= 1.0 ? v * 100 : v);
+    const rawPM  = r ? normP(r.pct_cumpl_mes)   : null;
+    const rawPA  = r ? normP(r.pct_cumpl_anual)  : null;
+    // Fallback: calculate from acum/prog if sheet value is 0
+    const pctMes   = (rawPM  != null && rawPM  > 0) ? rawPM
+                   : (progMes   > 0 ? (acumMes   / progMes   * 100) : 0);
+    const pctAnual = (rawPA  != null && rawPA  > 0) ? rawPA
+                   : (metaAnual > 0 ? (acumAnual / metaAnual * 100) : 0);
     const obs       = r ? (r.obs || '—') : '—';
 
     const pctCls = p => p >= 100 ? 'pG' : p >= 70 ? 'pY' : 'pR';
@@ -7363,7 +8066,9 @@ async function cargarGeoDesdAPI(fecha) {
       <td style="text-align:center">
         <span class="${pctCls(pctMes)}">${pctMes > 0 ? pctMes.toFixed(1)+'%' : '—'}</span>
       </td>
-
+      <td style="text-align:center">
+        <span class="${pctCls(pctAnual)}">${pctAnual > 0 ? pctAnual.toFixed(1)+'%' : '—'}</span>
+      </td>
     </tr>`;
   }).join('');
 
@@ -7963,7 +8668,7 @@ function buildSegResumen() {
 
 // ══ ESC ══════════════════════════════════════════════════════════
 document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){closeProd();closeLab();closeSkip();closeDDH();closeVQ();closeSeg();closeMant();closeAlm();closeAv();}
+  if(e.key==='Escape'){closeProd();closeLab();closeSkip();closeDDH();closeVQ();closeSeg();closeMant();closeAlm();closeAv();closeRB();closeRRHH();}
 });
 
 // ══════════════════════════════════════════════════════════════════
@@ -8189,32 +8894,7 @@ async function cargarRRHH(fecha) {
 // ── Cargar Avances desde SIV TL + SIV CV ─────────────────────────
 
 // ── Cargar RB 2000 Tumi ───────────────────────────────────────────
-async function cargarRB_Tumi(fecha) {
-  const data = await fetchTUMI({ accion:'rb', fecha });
-  if (!data?.ok) { console.warn('[TUMI RB] Sin respuesta'); return; }
-  if (!data.resumen || (!data.resumen.ejec_dia && !data.resumen.ejec_acum)) {
-    console.info('[TUMI RB] Sin datos para', fecha||'última fecha');
-    return;
-  }
 
-  const r   = data.resumen;
-  const sv  = (id,v) => { const el=document.getElementById(id); if(el&&v!=null) el.textContent=v; };
-  const fmt = n => n>0?n.toLocaleString('es-PE',{minimumFractionDigits:1,maximumFractionDigits:1}):'—';
-
-  sv('rb-ejec-dia',  fmt(r.ejec_dia));
-  sv('rb-prog-dia',  fmt(r.prog_dia));
-  sv('rb-ejec-acum', fmt(r.ejec_acum));
-  sv('rb-prog-acum', fmt(r.prog_acum));
-
-  const pct = r.pct_dia ?? (r.prog_dia>0?Math.round(r.ejec_dia/r.prog_dia*100):null);
-  const badge = document.getElementById('rb-pct-badge');
-  if(badge && pct!==null) {
-    badge.textContent = pct>=100?'▲ '+pct+'%' : pct>=85?'● '+pct+'%' : '▼ '+pct+'%';
-    badge.className   = 'kbdg ' + (pct>=100?'kG':pct>=85?'kY':'kR');
-  }
-
-  console.log('[TUMI RB] Ejec día:', r.ejec_dia, 'm | Acum:', r.ejec_acum, 'm | %:', pct+'%');
-}
 
 
 // ══ MANTENIMIENTO Y ALMACÉN ══════════════════════════════════════
@@ -8253,36 +8933,6 @@ async function cargarMantDesdeAPI(fecha) {
     }
   } catch(e) { console.warn('[MANT API]', e.message); renderMantenimiento(null); }
 }
-
-async function cargarAlmacenDesdeAPI(fecha) {
-  if (!APPSCRIPT_URL_ALM) { renderAlmacen(null); return; }
-  try {
-    const qs = fecha ? '?accion=dia&fecha='+encodeURIComponent(fecha) : '?accion=dia';
-    const res = await fetch(APPSCRIPT_URL_ALM + qs);
-    const data = await res.json();
-    if (!data?.ok) { console.warn('[ALM]', data?.error); return; }
-
-    // Usar 'alerta' (pre-filtrado por API: solo Crítico+Precaución) si existe
-    const alerta = data.alerta || [];
-    const todos  = data.todos  || data.materiales || [];
-    const source = alerta.length > 0 ? alerta : todos;
-    if (source.length > 0) {
-      const rows = source.map(m => ({
-        fecha: m.fecha, tipo: m.tipo, mat: m.material||m.mat,
-        um: m.um, act: +(m.stock_act||m.act||0), min: +(m.stock_min||m.min||0),
-        diferencia: m.diferencia||0,
-        estado_hoja: m.estado_hoja||m.estado_calc||m.estado||'',
-        estado_calc: m.estado_calc||'',
-        estado: m.estado_hoja||m.estado_calc||m.estado||'Estable',
-        _prefiltered: alerta.length > 0, // flag: ya viene filtrado del API
-      }));
-      renderAlmacen(rows);
-      console.log('[ALM] Cargado:', todos.length, 'items | Criticos:', data.criticos_count||0,
-        '| Precaución:', data.precaucion_count||0);
-    }
-  } catch(e) { console.warn('[ALM API]', e.message); }
-}
-
 
 // ══ FETCH SEGURIDAD ══════════════════════════════════════════════
 async function fetchAppScriptSeg(params={}) {
@@ -8337,7 +8987,34 @@ async function cargarSegCopsemDesdeAPI(mes, anio) {
     </tr>`).join('');
   }
   const idsProm = data.totales?.pct_ids_promedio;
-  const idsDisplay = idsProm!=null ? (idsProm<1?idsProm*100:idsProm).toFixed(1) : '—';
+  const idsNorm  = idsProm!=null ? (idsProm<1 ? idsProm*100 : idsProm) : null;
+  const idsDisplay = idsNorm!=null ? idsNorm.toFixed(1) : '—';
+  // Actualizar tarjeta IDS y recalcular gKPI global con IDS
+  if (idsNorm !== null) {
+    window._segIDS = Math.round(idsNorm);
+    const svk2 = (id,v)=>{ const el=document.getElementById(id); if(el) el.textContent=v; };
+    svk2('kpi-seg-ids', idsNorm.toFixed(1)+'%');
+    // Recalcular global incluyendo IDS
+    const insp = parseFloat(document.getElementById('kpi-seg-insp')?.textContent)||null;
+    const racs = parseFloat(document.getElementById('kpi-seg-racs')?.textContent)||null;
+    const valids2 = [insp,racs,Math.round(idsNorm)].filter(v=>v>0);
+    const gKPI2 = valids2.length ? Math.round(valids2.reduce((s,v)=>s+v,0)/valids2.length) : null;
+    if(gKPI2 !== null) {
+      svk2('kpi-seg-global', gKPI2+'%');
+      svk2('kpi-seg-lti',    gKPI2+'%');
+      const meta = window._segMetaPct;
+      const badge = document.getElementById('kpi-seg-badge');
+      if(badge) {
+        if(meta !== null && gKPI2 >= meta) {
+          badge.className='kbdg kG'; badge.textContent='✓ '+gKPI2+'%';
+        } else if(meta !== null) {
+          badge.className='kbdg kR'; badge.textContent='▼ '+gKPI2+'% / '+meta+'%';
+        } else {
+          badge.className='kbdg kA'; badge.textContent='● '+gKPI2+'%';
+        }
+      }
+    }
+  }
   console.log('[SEG COP] Cargado:', personas.length, 'personas',
     '| Insp:', data.totales?.pct_insp+'%',
     '| RACS:', data.totales?.pct_racs+'%',
@@ -8848,21 +9525,26 @@ function estadoAlm(act, min) {
 }
 
 function renderAlmacen(data) {
+  console.log('[ALM] renderAlmacen items:', data?.length||0, '| first:', JSON.stringify(data?.[0])?.substring(0,120));
   const items = data || ALM_DATA;
   const tbody = document.getElementById('tb-alm');
   if (!tbody) return;
 
   // Main table: solo Crítico y Precaución
   const alert = items.filter(e => {
-    // El sheet ya calcula el estado con =IF(E<=F,"🔴 Crítico",IF(E<=F*1.5,"🟡 Precaución","🟢 Adecuado"))
-    // Usar ese campo directamente cuando está disponible
-    const est = String(e.estado_hoja||e.estado_calc||e.estado||'').toLowerCase()
+    // Si viene pre-filtrado del API (campo alerta), mostrar todo
+    if (e._prefiltered) return true;
+    // Chequear estado_calc (viene del script: 'Critico' / 'Precaucion' sin tilde)
+    const ec = String(e.estado_calc||'').trim();
+    if (ec === 'Critico' || ec === 'Precaucion') return true;
+    // Chequear estado_hoja / estado (puede tener emoji o tilde)
+    const est = String(e.estado_hoja||e.estado||'').toLowerCase()
                 .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
-                .replace(/[^a-z0-9 ]/g,'').trim();  // strips emojis + accents
+                .replace(/[^a-z0-9 ]/g,'').trim();
     if (est.includes('critico') || est.includes('precaucion')) return true;
-    // Fallback calculado: solo si min > 0
-    const min = parseFloat(e.min||e.stock_min||e.minimo||0);
-    const act = parseFloat(e.act||e.stock_act||e.actual||0);
+    // Fallback numérico: solo si min > 0
+    const min = parseFloat(e.min||0);
+    const act = parseFloat(e.act||0);
     if (min > 0) return act <= min * 1.5;
     return false;
   });
@@ -8960,20 +9642,36 @@ function closeMant() { document.getElementById('mant-modal').classList.remove('o
 
 function openAlm() {
   document.getElementById('alm-modal').classList.add('open');
-  renderAlmDet();
+  if (window._almRows?.length > 0) {
+    renderAlmDet();
+  } else {
+    // Datos no cargados aún — cargar ahora
+    const tbody = document.getElementById('tb-alm-det');
+    if(tbody) tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:14px;color:var(--t3)">Cargando datos...</td></tr>';
+    cargarAlmacenDesdeAPI('').then(() => renderAlmDet());
+  }
 }
 function closeAlm() {
   document.getElementById('alm-modal').classList.remove('open');
 }
 function renderAlmDet() {
   const src = window._almRows || [];
-  // Modal shows ALL items (not just alert), sorted by estado
   const tbody = document.getElementById('tb-alm-det');
   if (!tbody) return;
   if (!src.length) {
-    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--t3);padding:12px">Sin datos de almacén</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--t3);padding:12px">Sin datos — verificar API Almacén</td></tr>';
     return;
   }
+  // ── Update modal KPI cards ─────────────────────────────────────
+  const sv = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
+  const crit  = src.filter(e => (e.estado_calc||'').includes('Critico')   || (e.estado_hoja||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes('critico')).length;
+  const prec  = src.filter(e => (e.estado_calc||'').includes('Precaucion')|| (e.estado_hoja||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes('precaucion')).length;
+  const adeq  = src.filter(e => (e.estado_calc||'').includes('Adecuado')  || (e.estado_hoja||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes('adecuado')).length;
+  const exc   = src.filter(e => (e.estado_calc||'').includes('Excedente') || (e.estado_hoja||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes('excedente')).length;
+  sv('alm-cnt-crit', crit);
+  sv('alm-cnt-prec', prec);
+  sv('alm-cnt-adeq', adeq);
+  sv('alm-cnt-exc',  exc);
   const estOrd = e => { const s=String(e.estado_hoja||e.estado_calc||e.estado||'').toLowerCase().replace(/[^a-z]/g,''); return s.includes('critico')?0:s.includes('precaucion')?1:2; };
   const sorted = [...src].sort((a,b)=>estOrd(a)-estOrd(b));
   const fmtN2 = n => n>0?n.toLocaleString('es-PE',{minimumFractionDigits:1,maximumFractionDigits:1}):'—';
@@ -8987,6 +9685,8 @@ function renderAlmDet() {
                  :           '<span class="eoper">🟢 Adecuado</span>';
     const dif = e.diferencia||0;
     return `<tr>
+      <td style="font-size:9px;color:var(--t3);font-family:'DM Mono',monospace">${e.anio||'—'}</td>
+      <td style="font-size:9px;color:var(--t3)">${e.periodo||'—'}</td>
       <td style="font-size:9px;color:var(--t3)">${e.tipo||'—'}</td>
       <td style="font-weight:600;font-size:10px">${e.mat||'—'}</td>
       <td class="mono" style="text-align:center;font-size:9px">${e.um||'—'}</td>
@@ -9051,10 +9751,11 @@ function renderMantDet() {
     </div>
     <div class="mtabs">
       <button class="mtab on" onclick="avTab('resumen',this)">&#128202; Resumen / Gr&#xE1;ficos</button>
+      <button class="mtab"    onclick="avTab('periodo',this)">&#128197; Detalle por Per&#xED;odo</button>
       <button class="mtab"    onclick="avTab('detalle',this)">&#128196; Detalle por Ejecutor</button>
       <button class="mtab"    onclick="avTab('acum',this)">&#128200; Acumulado Mes</button>
     </div>
-    <div class="mpanel on" id="av-panel-resumen">
+    <div class="mpanel on" id="av-panel-resumen" style="overflow-y:auto;max-height:75vh">
       <div style="padding:10px 16px 6px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
         <div class="mstat"><div class="mstat-l">Ejec. D&#xED;a Total</div><div class="mstat-v" id="av-kpi-ejec">&#x2014;</div><div class="mstat-s">metros</div></div>
         <div class="mstat"><div class="mstat-l">Prog. D&#xED;a Total</div><div class="mstat-v" id="av-kpi-prog">&#x2014;</div><div class="mstat-s">metros</div></div>
@@ -9078,7 +9779,79 @@ function renderMantDet() {
         </div>
       </div>
     </div>
-    <div class="mpanel" id="av-panel-detalle">
+    <div class="mpanel" id="av-panel-periodo" style="overflow-y:auto;max-height:75vh">
+      <!-- Filtros -->
+      <div class="mfilter" style="gap:12px">
+        <span class="mf-lbl">Ejecutor</span>
+        <select class="mf-sel" id="av-per-ejec" onchange="loadAvPeriodo()">
+          <option value="cv">SIV Convencional</option>
+          <option value="tl">SIV Trackless</option>
+          <option value="cop">Copsem Convencional</option>
+        </select>
+        <span class="mf-lbl">Zona</span>
+        <select class="mf-sel" id="av-per-zona" onchange="filterAvPeriodoTable()">
+          <option value="">Todas</option>
+        </select>
+        <span class="mf-badge" id="av-per-dias">— d&#xED;as</span>
+        <button class="mf-clear" onclick="loadAvPeriodo()">&#8635; Actualizar</button>
+      </div>
+      <!-- KPI header — modelo de la imagen -->
+      <div style="margin:6px 16px 0;border:1px solid var(--bd);border-radius:8px;overflow:hidden">
+        <div style="display:grid;grid-template-columns:1fr 1fr;background:var(--nv)">
+          <div style="padding:6px 14px;color:#fff;font-size:10px;font-weight:700;letter-spacing:.06em;text-align:center;border-right:1px solid rgba(255,255,255,.15)">PROGRAMA</div>
+          <div style="padding:6px 14px;color:#fff;font-size:10px;font-weight:700;letter-spacing:.06em;text-align:center">CUMPLIMIENTO</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(8,1fr);background:var(--gd)">
+          <div style="padding:5px 8px;font-size:9px;font-weight:700;color:var(--nv);text-align:center;border-right:1px solid rgba(0,0,0,.1)">Prog. Mes</div>
+          <div style="padding:5px 8px;font-size:9px;font-weight:700;color:var(--nv);text-align:center;border-right:1px solid rgba(0,0,0,.1)">Prog. Prom/D&#xED;a</div>
+          <div style="padding:5px 8px;font-size:9px;font-weight:700;color:var(--nv);text-align:center;border-right:1px solid rgba(0,0,0,.1)">Prog. Acum. a la fecha</div>
+          <div style="padding:5px 8px;font-size:9px;font-weight:700;color:var(--nv);text-align:center;border-right:1px solid rgba(0,0,0,.1)">Acumulado Real-mes</div>
+          <div style="padding:5px 8px;font-size:9px;font-weight:700;color:var(--nv);text-align:center;border-right:1px solid rgba(0,0,0,.1)">Ejecutado Real-d&#xED;a</div>
+          <div style="padding:5px 8px;font-size:9px;font-weight:700;color:var(--nv);text-align:center;border-right:1px solid rgba(0,0,0,.1)">Proyecci&#xF3;n-mes</div>
+          <div style="padding:5px 8px;font-size:9px;font-weight:700;color:var(--nv);text-align:center;border-right:1px solid rgba(0,0,0,.1)">Diferencia</div>
+          <div style="padding:5px 8px;font-size:9px;font-weight:700;color:var(--nv);text-align:center">Cumplimiento</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(8,1fr);background:var(--w);border-top:1px solid var(--bd)">
+          <div class="mono" style="padding:8px;text-align:center;font-size:12px;font-weight:700;color:var(--nv);border-right:1px solid var(--bd)" id="av-per-prog-mes">—</div>
+          <div class="mono" style="padding:8px;text-align:center;font-size:12px;font-weight:700;color:var(--t2);border-right:1px solid var(--bd)" id="av-per-prom-dia">—</div>
+          <div class="mono" style="padding:8px;text-align:center;font-size:12px;font-weight:700;color:var(--t2);border-right:1px solid var(--bd)" id="av-per-prog-acum">—</div>
+          <div class="mono" style="padding:8px;text-align:center;font-size:12px;font-weight:700;color:var(--nv);border-right:1px solid var(--bd)" id="av-per-acum-real">—</div>
+          <div class="mono" style="padding:8px;text-align:center;font-size:12px;font-weight:700;color:var(--nv);border-right:1px solid var(--bd)" id="av-per-ejec-dia">—</div>
+          <div class="mono" style="padding:8px;text-align:center;font-size:12px;font-weight:700;color:var(--Y);border-right:1px solid var(--bd)" id="av-per-proyeccion">—</div>
+          <div class="mono" style="padding:8px;text-align:center;font-size:13px;font-weight:700;border-right:1px solid var(--bd)" id="av-per-diferencia">—</div>
+          <div class="mono" style="padding:8px;text-align:center;font-size:14px;font-weight:700" id="av-per-cumpl">—</div>
+        </div>
+      </div>
+      <!-- Charts row: Diario + Acumulado + Proyección -->
+      <div style="padding:8px 16px 6px;display:grid;grid-template-columns:1fr 1fr 280px;gap:10px">
+        <div style="background:var(--w);border-radius:8px;padding:10px;border:1px solid var(--bd)">
+          <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:6px;text-align:center">Avance Prog. VS Avance Real Diario</div>
+          <div style="height:200px"><canvas id="chartAvPerDiario" style="display:block;width:100%;height:100%"></canvas></div>
+        </div>
+        <div style="background:var(--w);border-radius:8px;padding:10px;border:1px solid var(--bd)">
+          <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:6px;text-align:center">Avance Prog. VS Avance Real Acumulado</div>
+          <div style="height:200px"><canvas id="chartAvPerAcum" style="display:block;width:100%;height:100%"></canvas></div>
+        </div>
+        <div style="background:var(--w);border-radius:8px;padding:10px;border:1px solid var(--bd)">
+          <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:6px;text-align:center">Avances Proyectados</div>
+          <div style="height:200px"><canvas id="chartAvPerProyeccion" style="display:block;width:100%;height:100%"></canvas></div>
+        </div>
+      </div>
+      <!-- Detail table -->
+      <div class="mscroll" style="max-height:200px;padding:0 16px 10px">
+        <table class="dtbl" style="min-width:700px">
+          <thead><tr>
+            <th style="text-align:left">Fecha</th>
+            <th style="text-align:left">Zona</th>
+            <th>Ejec. D&#xED;a</th><th>Prog. D&#xED;a</th><th>% D&#xED;a</th>
+            <th>Ejec. Acum</th><th>Prog. Acum</th><th>% Acum</th>
+            <th>Prog. Mes</th><th>% Mes</th>
+          </tr></thead>
+          <tbody id="tb-av-per-det"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="mpanel" id="av-panel-detalle" style="overflow-y:auto;max-height:75vh">
       <div class="mfilter">
         <span class="mf-lbl">Tipo</span>
         <select class="mf-sel" id="av-f-tipo" onchange="renderAvDetalle()">
@@ -9088,7 +9861,7 @@ function renderMantDet() {
         <select class="mf-sel" id="av-f-ejec" onchange="renderAvDetalle()"><option value="">Todos</option></select>
         <span class="mf-badge" id="av-det-cnt">&#x2014;</span>
       </div>
-      <div class="mscroll" style="padding:0 16px 10px">
+      <div class="mscroll" style="padding:0 16px 10px;overflow-x:auto">
         <table class="dtbl" style="min-width:750px">
           <thead><tr>
             <th style="text-align:left">Zona</th><th style="text-align:left">Tipo</th><th style="text-align:left">Ejecutor</th>
@@ -9100,11 +9873,198 @@ function renderMantDet() {
         </table>
       </div>
     </div>
-    <div class="mpanel" id="av-panel-acum">
+    <div class="mpanel" id="av-panel-acum" style="overflow-y:auto;max-height:75vh">
       <div style="padding:6px 16px 10px">
         <div style="background:var(--w);border-radius:8px;padding:12px">
           <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:8px">Avance Acumulado vs Programado por Zona (m)</div>
           <div style="height:280px"><canvas id="chartAvAcum" style="display:block;width:100%;height:100%"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ RAISE BORING TUMI MODAL ════════════════════════════════════ -->
+<div class="mwrap" id="rb-modal" onclick="if(event.target===this)closeRB()">
+  <div class="modal" style="max-width:1100px">
+    <div class="mhead">
+      <span class="mtitle">&#128297; Raise Boring – Tumi &nbsp;&#xB7;&nbsp; <span id="rb-modal-titulo">Chulbe RB 2000</span></span>
+      <button class="mclose" onclick="closeRB()">&#10005;</button>
+    </div>
+    <div class="mtabs">
+      <button class="mtab on" onclick="rbTab('curvas',this)">&#128200; Curva S – Avance</button>
+      <button class="mtab"    onclick="rbTab('kpis',this)">&#128202; KPIs del Período</button>
+      <button class="mtab"    onclick="rbTab('detalle',this)">&#128196; Detalle por Fecha</button>
+    </div>
+
+    <!-- TAB 1: Curva S -->
+    <div class="mpanel on" id="rb-panel-curvas" style="overflow-y:auto;max-height:75vh">
+      <!-- KPI summary header -->
+      <div style="padding:10px 16px 6px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+        <div class="mstat"><div class="mstat-l">Prog. Mes</div><div class="mstat-v" id="rb-k-prog-mes">—</div><div class="mstat-s">metros</div></div>
+        <div class="mstat"><div class="mstat-l">Ejec. Acum. Mes</div><div class="mstat-v" id="rb-k-ejec-acum">—</div><div class="mstat-s">metros</div></div>
+        <div class="mstat"><div class="mstat-l">% Cumpl. Mes</div><div class="mstat-v" id="rb-k-pct-mes">—</div><div class="mstat-s" id="rb-k-pmes-ref">—</div></div>
+        <div class="mstat"><div class="mstat-l">% Cumpl. Proyecto</div><div class="mstat-v" id="rb-k-pct-proy">—</div><div class="mstat-s" id="rb-k-proy-ref">—</div></div>
+      </div>
+      <!-- Curva S charts -->
+      <div style="padding:6px 16px 10px;display:grid;grid-template-columns:1fr 1fr 280px;gap:10px">
+        <div style="background:var(--w);border-radius:8px;padding:10px;border:1px solid var(--bd)">
+          <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:6px;text-align:center">Avance Diario – Prog. VS Real (m)</div>
+          <div style="height:220px"><canvas id="chartRBDiario" style="display:block;width:100%;height:100%"></canvas></div>
+        </div>
+        <div style="background:var(--w);border-radius:8px;padding:10px;border:1px solid var(--bd)">
+          <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:6px;text-align:center">Curva S – Acumulado (m)</div>
+          <div style="height:220px"><canvas id="chartRBCurvaS" style="display:block;width:100%;height:100%"></canvas></div>
+        </div>
+        <div style="background:var(--w);border-radius:8px;padding:10px;border:1px solid var(--bd)">
+          <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:6px;text-align:center">Proyección Mes</div>
+          <div style="height:220px"><canvas id="chartRBProyeccion" style="display:block;width:100%;height:100%"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: KPIs del Período -->
+    <div class="mpanel" id="rb-panel-kpis" style="overflow-y:auto;max-height:75vh">
+      <div style="padding:10px 16px">
+        <!-- Header style tipo modelo imagen -->
+        <div style="border:1px solid var(--bd);border-radius:8px;overflow:hidden;margin-bottom:10px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;background:var(--nv)">
+            <div style="padding:6px 14px;color:#fff;font-size:10px;font-weight:700;text-align:center;border-right:1px solid rgba(255,255,255,.15)">PROGRAMA</div>
+            <div style="padding:6px 14px;color:#fff;font-size:10px;font-weight:700;text-align:center">CUMPLIMIENTO</div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(6,1fr);background:var(--gd)">
+            <div style="padding:5px 8px;font-size:9px;font-weight:700;color:var(--nv);text-align:center;border-right:1px solid rgba(0,0,0,.1)">Prog. Mes</div>
+            <div style="padding:5px 8px;font-size:9px;font-weight:700;color:var(--nv);text-align:center;border-right:1px solid rgba(0,0,0,.1)">Prom. Día</div>
+            <div style="padding:5px 8px;font-size:9px;font-weight:700;color:var(--nv);text-align:center;border-right:1px solid rgba(0,0,0,.1)">Ejec. Acum.</div>
+            <div style="padding:5px 8px;font-size:9px;font-weight:700;color:var(--nv);text-align:center;border-right:1px solid rgba(0,0,0,.1)">% Mes</div>
+            <div style="padding:5px 8px;font-size:9px;font-weight:700;color:var(--nv);text-align:center;border-right:1px solid rgba(0,0,0,.1)">Prog. Proy.</div>
+            <div style="padding:5px 8px;font-size:9px;font-weight:700;color:var(--nv);text-align:center">% Proy.</div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(6,1fr);background:var(--w);border-top:1px solid var(--bd)">
+            <div class="mono" style="padding:8px;text-align:center;font-size:13px;font-weight:700;color:var(--nv);border-right:1px solid var(--bd)" id="rb-kh-prog-mes">—</div>
+            <div class="mono" style="padding:8px;text-align:center;font-size:13px;font-weight:700;color:var(--t2);border-right:1px solid var(--bd)" id="rb-kh-prom-dia">—</div>
+            <div class="mono" style="padding:8px;text-align:center;font-size:13px;font-weight:700;color:var(--gd);border-right:1px solid var(--bd)" id="rb-kh-ejec-acum">—</div>
+            <div class="mono" style="padding:8px;text-align:center;font-size:14px;font-weight:700;border-right:1px solid var(--bd)" id="rb-kh-pct-mes">—</div>
+            <div class="mono" style="padding:8px;text-align:center;font-size:13px;font-weight:700;color:var(--nv);border-right:1px solid var(--bd)" id="rb-kh-prog-proy">—</div>
+            <div class="mono" style="padding:8px;text-align:center;font-size:14px;font-weight:700" id="rb-kh-pct-proy">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: Detalle por Fecha -->
+    <div class="mpanel" id="rb-panel-detalle" style="overflow-y:auto;max-height:75vh">
+      <div class="mfilter">
+        <span class="mf-lbl">Zona/Proyecto</span>
+        <select class="mf-sel" id="rb-f-zona" onchange="renderRBDetalle()">
+          <option value="">Todos</option>
+          <option value="chulbe">Chulbe RB 2000</option>
+          <option value="rosa">Santa Rosa RB 1420</option>
+        </select>
+        <span class="mf-badge" id="rb-det-cnt">— registros</span>
+      </div>
+      <div class="mscroll" style="padding:0 16px 10px;overflow-x:auto">
+        <table class="dtbl" style="min-width:820px">
+          <thead><tr>
+            <th style="text-align:left">Fecha</th>
+            <th style="text-align:left">Turno</th>
+            <th style="text-align:left">Tipo</th>
+            <th>Ejec. Día</th><th>Prog. Día</th><th>% Día</th>
+            <th>Ejec. Acum.</th><th>Prog. Acum.</th><th>% Mes</th>
+            <th>Ejec. Proy.</th><th>% Proy.</th>
+          </tr></thead>
+          <tbody id="tb-rb-det"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ RRHH MODAL ══════════════════════════════════════════════════ -->
+<div class="mwrap" id="rrhh-modal" onclick="if(event.target===this)closeRRHH()">
+  <div class="modal" style="max-width:1100px">
+    <div class="mhead">
+      <span class="mtitle">&#128119; RRHH – Recursos Humanos &nbsp;&#xB7;&nbsp; Indicadores de Gestión</span>
+      <button class="mclose" onclick="closeRRHH()">&#10005;</button>
+    </div>
+    <div class="mtabs">
+      <button class="mtab on" onclick="rrhhTab('indicadores',this)">&#128202; Índices de Gestión</button>
+      <button class="mtab"    onclick="rrhhTab('ausentismo',this)">&#128197; Ausentismo</button>
+      <button class="mtab"    onclick="rrhhTab('rotacion',this)">&#128260; Rotación</button>
+    </div>
+
+    <!-- TAB 1: Índices Resumen -->
+    <div class="mpanel on" id="rrhh-panel-indicadores" style="overflow-y:auto;max-height:75vh">
+      <div style="padding:10px 16px 6px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+        <div class="mstat"><div class="mstat-l">Total HC Activo</div><div class="mstat-v" id="rrhh-m-hc">—</div><div class="mstat-s">personas</div></div>
+        <div class="mstat"><div class="mstat-l">Ingresos del día</div><div class="mstat-v" id="rrhh-m-ing">—</div><div class="mstat-s">personas</div></div>
+        <div class="mstat"><div class="mstat-l">Salidas del día</div><div class="mstat-v" id="rrhh-m-sal">—</div><div class="mstat-s">personas</div></div>
+        <div class="mstat"><div class="mstat-l">Ausentismo</div><div class="mstat-v" id="rrhh-m-aus">—</div><div class="mstat-s">% del total</div></div>
+      </div>
+      <div style="padding:6px 16px 10px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div style="background:var(--w);border-radius:8px;padding:12px;border:1px solid var(--bd)">
+          <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:8px">HC por Empresa</div>
+          <div style="height:220px"><canvas id="chartRRHHEmpresa" style="display:block;width:100%;height:100%"></canvas></div>
+        </div>
+        <div style="background:var(--w);border-radius:8px;padding:12px;border:1px solid var(--bd)">
+          <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:8px">Obreros vs Empleados</div>
+          <div style="height:220px"><canvas id="chartRRHHTipo" style="display:block;width:100%;height:100%"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: Índice de Ausentismo -->
+    <div class="mpanel" id="rrhh-panel-ausentismo" style="overflow-y:auto;max-height:75vh">
+      <div style="padding:10px 16px 6px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+        <div class="mstat" style="border-left:3px solid #DC2626">
+          <div class="mstat-l">Faltas</div><div class="mstat-v" id="rrhh-m-fal" style="color:#DC2626">—</div><div class="mstat-s">personas</div>
+        </div>
+        <div class="mstat" style="border-left:3px solid #D97706">
+          <div class="mstat-l">Vacaciones</div><div class="mstat-v" id="rrhh-m-vac" style="color:#D97706">—</div><div class="mstat-s">personas</div>
+        </div>
+        <div class="mstat" style="border-left:3px solid #0E7490">
+          <div class="mstat-l">DM / Sub.</div><div class="mstat-v" id="rrhh-m-dm" style="color:#0E7490">—</div><div class="mstat-s">personas</div>
+        </div>
+        <div class="mstat" style="border-left:3px solid #7C3AED">
+          <div class="mstat-l">Índice Ausentismo</div><div class="mstat-v" id="rrhh-m-iaus" style="color:#7C3AED">—</div><div class="mstat-s">% (faltas+DM / total)</div>
+        </div>
+      </div>
+      <div style="padding:6px 16px 10px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div style="background:var(--w);border-radius:8px;padding:12px;border:1px solid var(--bd)">
+          <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:8px">Composición del Ausentismo</div>
+          <div style="height:220px"><canvas id="chartAusentismoComp" style="display:block;width:100%;height:100%"></canvas></div>
+        </div>
+        <div style="background:var(--w);border-radius:8px;padding:12px;border:1px solid var(--bd)">
+          <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:8px">Ausentismo por Empresa (%)</div>
+          <div style="height:220px"><canvas id="chartAusentismoEmp" style="display:block;width:100%;height:100%"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: Índice de Rotación -->
+    <div class="mpanel" id="rrhh-panel-rotacion" style="overflow-y:auto;max-height:75vh">
+      <div style="padding:10px 16px 6px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+        <div class="mstat" style="border-left:3px solid #15803D">
+          <div class="mstat-l">Ingresos</div><div class="mstat-v" id="rrhh-m-rot-ing" style="color:#15803D">—</div><div class="mstat-s">del día</div>
+        </div>
+        <div class="mstat" style="border-left:3px solid #DC2626">
+          <div class="mstat-l">Salidas</div><div class="mstat-v" id="rrhh-m-rot-sal" style="color:#DC2626">—</div><div class="mstat-s">del día</div>
+        </div>
+        <div class="mstat" style="border-left:3px solid #D97706">
+          <div class="mstat-l">Suspendidos</div><div class="mstat-v" id="rrhh-m-sus">—</div><div class="mstat-s">personas</div>
+        </div>
+        <div class="mstat" style="border-left:3px solid #003366">
+          <div class="mstat-l">Índice Rotación</div><div class="mstat-v" id="rrhh-m-irot" style="color:#003366">—</div><div class="mstat-s">% ((ing+sal)/2 / total)</div>
+        </div>
+      </div>
+      <div style="padding:6px 16px 10px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div style="background:var(--w);border-radius:8px;padding:12px;border:1px solid var(--bd)">
+          <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:8px">Rotación por Empresa</div>
+          <div style="height:220px"><canvas id="chartRotacionEmp" style="display:block;width:100%;height:100%"></canvas></div>
+        </div>
+        <div style="background:var(--w);border-radius:8px;padding:12px;border:1px solid var(--bd)">
+          <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:8px">Ingresos vs Salidas vs Suspendidos</div>
+          <div style="height:220px"><canvas id="chartRotacionDetalle" style="display:block;width:100%;height:100%"></canvas></div>
         </div>
       </div>
     </div>
