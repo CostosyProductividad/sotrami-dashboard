@@ -703,9 +703,9 @@ body { background:#eef1f6; }
 
 /* ═══ PRINT STYLES — PDF Export ════════════════════════════════ */
 @media print{
-  @page{size:A4 landscape;margin:12mm 10mm;}
+  @page{size:tabloid landscape;margin:5mm 6mm;}
   *{background:transparent!important;box-shadow:none!important;text-shadow:none!important;}
-  html{font-size:9px;background:#fff!important;color:#000!important;}
+  html{font-size:7px!important;background:#fff!important;color:#000!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
   body{background:#fff!important;padding:0!important;margin:0!important;}
 
   /* Hide interactive elements */
@@ -715,72 +715,65 @@ body { background:#eef1f6; }
   canvas,.chart-section,.chart-tabs,.chart-panel,
   #glosario{display:none!important;}
 
-  /* Keep header minimal */
-  .hdr-wrap{position:static!important;border-bottom:2px solid #003366!important;margin-bottom:4px!important;}
-  .hdr-brand{padding:2px 0!important;min-height:auto!important;border:none!important;}
+  /* ── Header compact ── */
+  .hdr-wrap{position:static!important;border-bottom:1px solid #003366!important;margin-bottom:1px!important;padding:0!important;}
+  .hdr-brand{padding:0!important;min-height:auto!important;border:none!important;}
   .hdr-brand::after{display:none!important;}
-  .hdr-brand-left{gap:5px!important;}
-  .hdr-logo{width:24px!important;height:24px!important;box-shadow:none!important;}
-  .hdr-company-name{font-size:9px!important;color:#003366!important;letter-spacing:.05em!important;}
-  .hdr-company-sub{font-size:7px!important;color:#666!important;}
-  .hdr-report-title{font-size:9px!important;color:#003366!important;}
-  .hdr-report-sub{font-size:7px!important;color:#B8962A!important;}
-  .hdr-date-lbl{color:#666!important;font-size:7px!important;}
-  .hdr-fecha-sel{background:#f5f5f5!important;color:#333!important;border:1px solid #ccc!important;padding:2px 5px!important;font-size:9px!important;}
-  .hdr-pills{display:flex!important;flex-direction:row!important;gap:3px!important;}
-  .hdr-pill-semana,.hdr-pill-mes{background:#f5f5f5!important;color:#333!important;border:1px solid #ddd!important;font-size:7px!important;padding:1px 5px!important;}
+  .hdr-brand-left{gap:2px!important;}
+  .hdr-logo{width:14px!important;height:14px!important;box-shadow:none!important;}
+  .hdr-company-name{font-size:6px!important;color:#003366!important;letter-spacing:.04em!important;}
+  .hdr-company-sub{font-size:4px!important;color:#666!important;}
+  .hdr-report-title{font-size:6px!important;color:#003366!important;}
+  .hdr-report-sub{font-size:4px!important;color:#B8962A!important;}
+  .hdr-date-lbl{color:#666!important;font-size:4px!important;}
+  .hdr-fecha-sel{background:#f5f5f5!important;color:#333!important;border:1px solid #ccc!important;padding:0 2px!important;font-size:6px!important;}
+  .hdr-pills{display:flex!important;flex-direction:row!important;gap:1px!important;}
+  .hdr-pill-semana,.hdr-pill-mes{background:#f5f5f5!important;color:#333!important;border:1px solid #ddd!important;font-size:4px!important;padding:0 2px!important;}
 
-  /* Meta bar */
-  .hdr-meta{background:#f8f8f8!important;border-bottom:1px solid #ddd!important;min-height:auto!important;padding:1px 0!important;backdrop-filter:none!important;}
-  .hdr-meta-lbl{color:#666!important;font-size:6px!important;}
-  .hdr-meta-val{color:#333!important;font-size:8px!important;}
-  .hdr-meta-meta{color:#003366!important;font-size:7px!important;}
-  .hdr-meta-div{background:#ddd!important;height:14px!important;}
+  /* ── Meta bar compact ── */
+  .hdr-meta{background:#f8f8f8!important;border-bottom:1px solid #ddd!important;min-height:auto!important;padding:0!important;backdrop-filter:none!important;}
+  .hdr-meta-lbl{color:#666!important;font-size:4px!important;}
+  .hdr-meta-val{color:#333!important;font-size:5px!important;}
+  .hdr-meta-meta{color:#003366!important;font-size:4px!important;}
+  .hdr-meta-div{background:#ddd!important;height:5px!important;}
 
-  /* Page layout — single column for print */
-  .page{max-width:100%!important;padding:0!important;display:block!important;}
-  .page > .gf:first-child{margin-top:0!important;}
-  .gf,.gfull{display:block!important;margin-bottom:12px!important;}
-  .g2{display:block!important;}
-  .page > div[style*="grid-template-columns"]{display:block!important;}
-  .page > div[style*="display:grid"]{display:block!important;}
-  div[style*="grid-template-columns"]{display:block!important;}
+  /* ── Page: preserve 2‑column grid instead of multi‑column ── */
+  .page{max-width:100%!important;padding:0!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:4px!important;align-items:start!important;}
 
-  /* Cards */
-  .card{border:1px solid #ddd!important;border-radius:3px!important;margin-bottom:6px!important;break-inside:avoid!important;}
-  .ch{background:#003366!important;padding:3px 8px!important;border-bottom:1px solid #D4AF37!important;}
+  /* Keep sub‑grids side‑by‑side */
+  .gf,.gfull,.g2{display:block!important;width:100%!important;}
+  .page > div[style*="grid-template-columns"]{display:grid!important;grid-template-columns:1fr 1fr!important;gap:4px!important;width:100%!important;column-gap:4px!important;}
+
+  /* ── Cards compact ── */
+  .card{border:1px solid #ddd!important;border-radius:1px!important;margin-bottom:2px!important;break-inside:avoid!important;padding:0!important;}
+  .ch{background:#003366!important;padding:0 4px!important;border-bottom:1px solid #D4AF37!important;min-height:auto!important;}
   .chg{background:#F5ECC8!important;}
-  .ct{font-size:8px!important;color:#fff!important;letter-spacing:.06em!important;}
+  .ct{font-size:6px!important;color:#fff!important;letter-spacing:.03em!important;}
   .ctg{color:#003366!important;}
-  .csub{font-size:7px!important;color:rgba(255,255,255,.7)!important;}
+  .csub{font-size:5px!important;color:rgba(255,255,255,.7)!important;}
+  .card > div:not(.ch){padding:1px 4px!important;}
 
-  /* KPI cards */
-  .krow{display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:4px!important;margin-bottom:6px!important;}
-  .kcard{border:1px solid #ddd!important;border-radius:3px!important;padding:3px 6px!important;border-top:2px solid #003366!important;break-inside:avoid!important;}
+  /* ── KPI row ── */
+  .krow{display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:2px!important;margin-bottom:2px!important;}
+  .kcard{border:1px solid #ddd!important;border-radius:1px!important;padding:1px 3px!important;border-top:2px solid #003366!important;break-inside:avoid!important;}
   .kcard::before{display:none!important;}
-  .klbl{font-size:6px!important;color:#666!important;letter-spacing:.4px!important;}
-  .kval{font-size:13px!important;color:#003366!important;}
-  .kunit{font-size:7px!important;color:#999!important;}
-  .kprog{padding-top:2px!important;border-top:1px solid #eee!important;}
-  .kprog-lbl{font-size:6px!important;color:#999!important;}
-  .kprog-val{font-size:7px!important;color:#555!important;}
+  .klbl{font-size:4.5px!important;color:#666!important;letter-spacing:.2px!important;}
+  .kval{font-size:9px!important;color:#003366!important;}
+  .kunit{font-size:4.5px!important;color:#999!important;}
+  .kprog{padding-top:0!important;border-top:1px solid #eee!important;}
+  .kprog-lbl{font-size:4px!important;color:#999!important;}
+  .kprog-val{font-size:4px!important;color:#555!important;}
 
-  /* Tables */
+  /* ── Tables compact ── */
   .tw{overflow:visible!important;}
-  .tbl{min-width:auto!important;width:100%!important;font-size:7.5px!important;border-collapse:collapse!important;}
-  .tbl th{font-size:6.5px!important;padding:3px 5px!important;letter-spacing:.3px!important;}
-  .tbl td{padding:2px 5px!important;font-size:7px!important;}
-  .tbl td:first-child{padding-left:8px!important;}
-  .tbl th:first-child{padding-left:8px!important;}
-  .tbl tr.tot td{font-size:7.5px!important;padding:3px 5px!important;}
-  .pG,.pY,.pR,.pN{font-size:7px!important;padding:1px 4px!important;}
-  .mono{font-size:7px!important;}
-  .tbl th{background:#f0f2f5!important;color:#333!important;font-size:7px!important;padding:4px 6px!important;border-bottom:1px solid #003366!important;}
-  .tbl td{padding:3px 6px!important;border-bottom:1px solid #eee!important;color:#333!important;font-size:8px!important;}
-  .tbl tr.tot td{background:#F5ECC8!important;font-weight:700!important;color:#003366!important;}
-  .tbl tr:nth-child(even) td{background:#fafafa!important;}
-  .pG,.pY,.pR,.pN{font-size:8px!important;padding:1px 5px!important;}
-  .mono{font-size:8px!important;}
+  .tbl,.dtbl{width:auto!important;font-size:6px!important;border-collapse:collapse!important;}
+  .tbl th,.dtbl th{background:#f0f2f5!important;color:#333!important;font-size:5.5px!important;padding:1px 3px!important;border-bottom:1px solid #003366!important;letter-spacing:.2px!important;}
+  .tbl td,.dtbl td{padding:1px 3px!important;border-bottom:1px solid #eee!important;color:#333!important;font-size:6px!important;line-height:1.15!important;}
+  .tbl td:first-child,.tbl th:first-child,.dtbl td:first-child,.dtbl th:first-child{padding-left:4px!important;}
+  .tbl tr.tot td{background:#F5ECC8!important;font-weight:700!important;color:#003366!important;font-size:6px!important;padding:1px 3px!important;}
+  .tbl tr:nth-child(even) td,.dtbl tr:nth-child(even) td{background:#fafafa!important;}
+  .pG,.pY,.pR,.pN{font-size:5.5px!important;padding:0 2px!important;}
+  .mono{font-size:6px!important;}
 
   /* Status pills */
   .pG{color:#065f46!important;border:1px solid #065f46!important;}
@@ -789,22 +782,29 @@ body { background:#eef1f6; }
   .pN{color:#555!important;border:1px solid #ccc!important;}
 
   /* Badges */
-  .kbdg{font-size:8px!important;padding:2px 6px!important;}
-  .ley-c{font-size:8px!important;padding:1px 5px!important;}
+  .kbdg{font-size:5px!important;padding:0 2px!important;}
+  .ley-c{font-size:5px!important;padding:0 2px!important;}
   .lhigh{border:1px solid #065f46!important;color:#065f46!important;}
   .lmed{border:1px solid #B8962A!important;color:#7C5800!important;}
   .llow{border:1px solid #DC2626!important;color:#7f1d1d!important;}
 
-  /* Specific sections inline styles override */
+  /* Inline style overrides */
   .hdr-brand-center{display:flex!important;}
   div[style*="overflow-x"]{overflow:visible!important;max-height:none!important;}
-  .mscroll{overflow:visible!important;max-height:none!important;}
+  .mscroll{overflow:visible!important;max-height:none!important;padding:0!important;}
 
-  /* Page breaks */
-  .gf{margin-bottom:6px!important;}
-  .page > .gf:not(:first-of-type){page-break-before:auto!important;}
+  /* Disable column breaks on sections */
+  .page > *{break-inside:avoid!important;}
+
+  /* Hide non‑essential print items */
   .note{display:none!important;}
   #glosario{display:none!important;}
+
+  /* Compact inline overrides */
+  .card [style*="padding:"]{padding:1px 4px!important;}
+  .card [style*="margin-bottom:"]{margin-bottom:1px!important;}
+  .card [style*="gap:"]{gap:2px!important;}
+  .card [style*="min-height:"]{min-height:auto!important;}
 }
 
 </style>
@@ -1070,7 +1070,7 @@ body { background:#eef1f6; }
             <td style="text-align:center"><span class="pN" id="sp-esp-tmh-pct">—</span></td>
           </tr>
           <tr class="tot">
-            <td colspan="2">ACUMULADO (Ene–May 2026)</td>
+            <td colspan="2">ACUMULADO </td>
             <td class="tdm" id="sp-tot-pm">—</td><td class="tdd" id="sp-tot-pd">—</td>
             <td class="tdm" id="sp-tot-ej-min">—</td><td class="tdd" id="sp-tot-ej-des">—</td>
             <td></td>
@@ -1084,7 +1084,7 @@ body { background:#eef1f6; }
         <div class="ch chg" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
           <span class="ct ctg">&#128666; Volquete – Cancha</span>
           <div style="display:flex;align-items:center;gap:8px">
-            <span class="csub csubg" style="color:#666;font-size:9px">Factor ×25.0 TMH/Volq. &nbsp;·&nbsp; <span id="vq-last-fecha">—</span></span>
+            <span class="csub csubg" style="color:#666;font-size:9px">Factor ×25.0 TMH/Volq. &nbsp;·&nbsp; <span id="vq-last-fecha">—</span> <span id="vq-debug" style="font-size:8px;color:var(--t3)"></span></span>
             <button class="ch-btn" onclick="openVQ()">&#128202; Ver detalle / Gráficos</button>
           </div>
         </div>
@@ -1284,7 +1284,13 @@ body { background:#eef1f6; }
   </div>
   <div style="display:flex;flex-direction:column;gap:12px">
     <div class="card">
-      <div class="ch" style="justify-content:space-between"><span class="ct">&#128296; Rehabilitación</span><span class="csub" id="rehab-act-fecha">—</span></div>
+      <div class="ch" style="justify-content:space-between">
+        <span class="ct">&#128296; Rehabilitación</span>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="csub" id="rehab-act-fecha">—</span>
+          <button class="ch-btn" onclick="openRehab()">&#128202; Ver detalle</button>
+        </div>
+      </div>
       <div class="tw"><table class="tbl">
         <thead><tr><th>Zona</th><th>Descripción</th><th>Ejec.Día</th><th>Prog.Día</th><th>%Día</th><th>Ejec.Acum</th><th>%Acum</th><th>Prog.Mes</th><th>%Mes</th></tr></thead>
         <tbody id="tb-rehab">
@@ -1321,6 +1327,27 @@ body { background:#eef1f6; }
           <tr><td colspan="13" style="text-align:center;color:var(--t3);padding:12px">Cargando...</td></tr>
         </tbody>
       </table></div>
+      <div class="tw" style="padding:6px 10px 8px;display:flex;flex-wrap:wrap;gap:6px;align-items:center">
+        <span class="kbdg" id="rb-pct-badge">—</span>
+        <span class="ms" style="font-size:9px;color:var(--t2)">Ejec. Día:</span>
+        <span class="ms" style="font-size:10px;font-weight:700" id="rb-ejec-dia">—</span>
+        <span class="ms" style="font-size:9px;color:var(--t2)">Prog. Día:</span>
+        <span class="ms" style="font-size:10px;font-weight:700" id="rb-prog-dia">—</span>
+        <span class="ms" style="font-size:9px;color:var(--t2)">% Día:</span>
+        <span class="ms" style="font-size:10px;font-weight:700" id="rb-pct-dia">—</span>
+        <span class="ms" style="font-size:9px;color:var(--t2)">Acum.:</span>
+        <span class="ms" style="font-size:10px;font-weight:700;color:var(--gd)" id="rb-ejec-acum">—</span>
+        <span class="ms" style="font-size:9px;color:var(--t2)">Prog. Mes:</span>
+        <span class="ms" style="font-size:10px;font-weight:700" id="rb-prog-mes">—</span>
+        <span class="ms" style="font-size:9px;color:var(--t2)">% Mes:</span>
+        <span class="ms" style="font-size:10px;font-weight:700" id="rb-pct-mes">—</span>
+        <span class="ms" style="font-size:9px;color:var(--t2)">Proy.:</span>
+        <span class="ms" style="font-size:10px;font-weight:700;color:var(--nv)" id="rb-ejec-proy">—</span>
+        <span class="ms" style="font-size:9px;color:var(--t2)">Prog. Proy.:</span>
+        <span class="ms" style="font-size:10px;font-weight:700" id="rb-prog-proy">—</span>
+        <span class="ms" style="font-size:9px;color:var(--t2)">% Proy.:</span>
+        <span class="ms" style="font-size:10px;font-weight:700" id="rb-pct-proy">—</span>
+      </div>
     </div>
   </div>
 </div>
@@ -1922,7 +1949,7 @@ body { background:#eef1f6; }
 <!-- ════════════════════════════════════════════════════
      MODAL LABORATORIO
 ════════════════════════════════════════════════════ -->
-<div clas<div class="mwrap" id="lab-modal" onclick="if(event.target===this)closeLab()">
+<div class="mwrap" id="lab-modal" onclick="if(event.target===this)closeLab()">
   <div class="modal" style="max-width:1100px">
     <div class="mhead">
       <span class="mtitle">&#129514; Laboratorio Químico &nbsp;·&nbsp; Planta Sotrami &nbsp;·&nbsp; <span id="lab-modal-fecha">—</span></span>
@@ -2156,7 +2183,7 @@ body { background:#eef1f6; }
         <select class="mf-sel" id="sk-f-mes" onchange="renderSkipDia()">
           <option value="">Todos</option>
           <option value="01">Enero</option><option value="02">Febrero</option>
-          <option value="03">Marzo</option><option value="05">Mayo</option>
+          <option value="03">Marzo</option><option value="04">Abril</option><option value="05">Mayo</option>
         </select>
         <span class="mf-lbl">Tipo</span>
         <select class="mf-sel" id="sk-f-tipo" onchange="renderSkipDia()">
@@ -2177,6 +2204,7 @@ body { background:#eef1f6; }
           <option value="01">Enero</option>
           <option value="02">Febrero</option>
           <option value="03">Marzo</option>
+          <option value="04">Abril</option>
           <option value="05">Mayo</option>
         </select>
         <span class="mf-lbl">Tipo</span>
@@ -2208,7 +2236,7 @@ body { background:#eef1f6; }
         <select class="mf-sel" id="sk-d-mes" onchange="renderSkipDet()">
           <option value="">Todos</option>
           <option value="01">Enero</option><option value="02">Febrero</option>
-          <option value="03">Marzo</option><option value="05">Mayo</option>
+          <option value="03">Marzo</option><option value="04">Abril</option><option value="05">Mayo</option>
         </select>
         <span class="mf-badge" id="sk-d-cnt">— registros</span>
       </div>
@@ -2254,6 +2282,8 @@ body { background:#eef1f6; }
         <div class="mstat"><div class="mstat-l">Brownfield Día</div><div class="mstat-v" id="ddh-kpi-bf" style="color:#003366">—</div><div class="mstat-s">metros</div></div>
         <div class="mstat"><div class="mstat-l">Infill Día</div><div class="mstat-v" id="ddh-kpi-if" style="color:#B8962A">—</div><div class="mstat-s">metros</div></div>
         <div class="mstat"><div class="mstat-l">Equipos Operativos</div><div class="mstat-v" id="ddh-kpi-op">—</div><div class="mstat-s" id="ddh-kpi-op-det">— de 5</div></div>
+        <div class="mstat"><div class="mstat-l">Brownfield Mes</div><div class="mstat-v" id="ddh-s-bf" style="color:#003366">—</div><div class="mstat-s">metros acum.</div></div>
+        <div class="mstat"><div class="mstat-l">Infill Mes</div><div class="mstat-v" id="ddh-s-if" style="color:#B8962A">—</div><div class="mstat-s">metros acum.</div></div>
         <div class="mstat"><div class="mstat-l">Total Acum. Mes</div><div class="mstat-v" id="ddh-s-total">—</div><div class="mstat-s">metros</div></div>
         <div class="mstat"><div class="mstat-l">Equipos / Total</div><div class="mstat-v" id="ddh-s-op">— / 5</div><div class="mstat-s">equipos</div></div>
       </div>
@@ -3106,7 +3136,7 @@ const APPSCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwCTBZ6b9eJnfPnpl
 const APPSCRIPT_URL_GEO          = 'https://script.google.com/macros/s/AKfycbzSZT1WkoMjgh5EgyyLgrCUAlecKEeHSVU4c2khFWbUviU-rlmINGtEP8OP3lIORDUX/exec';
 const APPSCRIPT_URL_IZ  = 'https://script.google.com/macros/s/AKfycbzah0mHlWL95TbO3ZsdizhecwHggrmUCVBDoVJV9fbUTsGPXsbh4FqvWVKW61YTpKys2g/exec';
 const APPSCRIPT_URL_LAB = 'https://script.google.com/macros/s/AKfycbw0I9o4MbTalfVbsD5PSfL6u-zhWdpoqsPjKaeazYGKAPsvOAyU-gJcOc1L-583MYLM/exec';
-const APPSCRIPT_URL_VQ  = 'https://script.google.com/macros/s/AKfycbwAIgZlNFBgT28m7csv13GgIjsBmeUv69YUJetggWHaAjuFSSCmQDqJgKy_MhdkHg_1/exec';
+const APPSCRIPT_URL_VQ = 'https://script.google.com/macros/s/AKfycbxbi12DlSbJ1MJAw8MuvS7qTpyuk5Cw7W38568sGjcriNbV7OvlAzOyU8y56XRHgzXw/exec';
 const APPSCRIPT_URL_RRHH_SOT = 'https://script.google.com/macros/s/AKfycbz3bE9qb3zrcmMvDWk-ETFWb6S_4gCVBujIgllIzr2ac-4GZErdR6Iru2xzf3amtXHIlw/exec';  // Cía. Sotrami RRHH v3
 const APPSCRIPT_URL_COP          = 'https://script.google.com/macros/s/AKfycbzR0LNGSd-RyvxCJRApZlf0imuk_iefNobNSj4oCG6AhGXRlgBdJyCA1aPTH9xTYpfr/exec';
 const APPSCRIPT_URL_AV_COP       = 'https://script.google.com/macros/s/AKfycbzR0LNGSd-RyvxCJRApZlf0imuk_iefNobNSj4oCG6AhGXRlgBdJyCA1aPTH9xTYpfr/exec'; // ← URL AVANCES_COPSEM_CONVENCIONAL        // Copsem RRHH + Rehab
@@ -3135,17 +3165,6 @@ const SOTRAMI = {
                body:'#E8F0FE', border:'rgba(212,175,55,0.3)' },
 };
 
-// ══ CONFIGURACIÓN DEL PERIODO ══════════════════════════════════
-const CFG = {
-  periodoInicio : new Date('2026-05-16'),
-  periodoFin    : new Date('2026-06-24'),
-  fechaReporte  : new Date('2026-06-02'),
-  diasPeriodo   : 40,
-};
-const diasEjec = Math.round((CFG.fechaReporte - CFG.periodoInicio) / 86400000) + 1;
-const META_PCT  = Math.round(diasEjec / CFG.diasPeriodo * 100);
-// Actualizar metabar dinámicamente al cargar
-
 // ══ CONFIGURACIÓN PERIODOS ════════════════════════════════════════════════
 // Definir los periodos por mes (pueden variar cada periodo)
 const PERIODOS = {
@@ -3155,8 +3174,20 @@ const PERIODOS = {
   '2026-03': { ini:'01/03/2026', fin:'31/03/2026', dias:31 },
   '2026-04': { ini:'01/04/2026', fin:'30/04/2026', dias:30 },
   '2026-05': { ini:'16/05/2026', fin:'15/06/2026', dias:31 },
-  '2026-06': { ini:'16/05/2026', fin:'24/06/2026', dias:40 }, // periodo activo
+  '2026-06': { ini:'21/05/2026', fin:'24/06/2026', dias:35 },
+  '2026-07': { ini:'26/06/2026', fin:'25/07/2026', dias:30 },
 };
+
+// ══ CONFIGURACIÓN DEL PERIODO ══════════════════════════════════
+const _ultPeriodo = (() => { const k=Object.keys(PERIODOS).sort().pop(); return PERIODOS[k]; })();
+const CFG = {
+  periodoInicio : parseFechaHdr(_ultPeriodo.ini),
+  periodoFin    : parseFechaHdr(_ultPeriodo.fin),
+  fechaReporte  : (() => { const d=new Date(); return d; })(),
+  diasPeriodo   : _ultPeriodo.dias,
+};
+const diasEjec = Math.round((CFG.fechaReporte - CFG.periodoInicio) / 86400000) + 1;
+const META_PCT  = Math.round(diasEjec / CFG.diasPeriodo * 100);
 
 const MESES_ES = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio',
                   'Julio','Agosto','Setiembre','Octubre','Noviembre','Diciembre'];
@@ -3168,9 +3199,12 @@ function getFechasHistorial() {
   [...Z23R, ...SRR].forEach(r => set.add(r[0]));
   // Datos adicionales de la API (añadidos dinámicamente)
   if (window._apiDates) window._apiDates.forEach(f => set.add(f));
-  // Generar fechas hasta HOY para el periodo activo (16/05 → 24/06/2026)
-  const periodoIni = new Date(2026, 4, 16); // 16 mayo 2026
-  const periodoFin = new Date(2026, 5, 24); // 24 junio 2026
+  // Generar fechas hasta HOY usando la config de periodos
+  const keys = Object.keys(PERIODOS).sort();
+  const pIni = keys.length ? PERIODOS[keys[0]].ini : '01/01/2026';
+  const pFin = keys.length ? PERIODOS[keys[keys.length-1]].fin : '31/12/2026';
+  const periodoIni = parseFechaHdr(pIni);
+  const periodoFin = parseFechaHdr(pFin);
   const hoy = new Date();
   const limFin = hoy < periodoFin ? hoy : periodoFin;
   for (let d = new Date(periodoIni); d <= limFin; d.setDate(d.getDate()+1)) {
@@ -3249,7 +3283,7 @@ function onFechaReporteChange(fechaSel) {
 
   const d = parseFechaHdr(fechaSel);
   const mesKey = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0');
-  const periodo = PERIODOS[mesKey] || PERIODOS['2026-06'];
+  const periodo = PERIODOS[mesKey] || PERIODOS[Object.keys(PERIODOS).sort().pop()] || PERIODOS[Object.keys(PERIODOS)[0]];
 
   const semana = getSemanaISO(d);
   const mesNom = MESES_ES[d.getMonth()+1];
@@ -3281,9 +3315,9 @@ function onFechaReporteChange(fechaSel) {
   // Actualizar KPIs con datos del día seleccionado
   actualizarKPIsDia(fechaSel);
   // Cargar datos reales desde Apps Script si está configurado
-  if (APPSCRIPT_URL)     cargarDiaDesdeAPI(fechaSel);
+  if (APPSCRIPT_URL)     { cargarDiaDesdeAPI(fechaSel); actualizarHistoricoDesdeAPI(); }
   if (APPSCRIPT_URL_GEO) cargarGeoDesdAPI(fechaSel);
-  if (APPSCRIPT_URL_IZ)  cargarSkipDesdAPI(fechaSel);
+  if (APPSCRIPT_URL_IZ)  { cargarSkipDesdAPI(fechaSel); actualizarSkipHistorico(); }
   if (APPSCRIPT_URL_VQ)  cargarVolqueteDesdAPI(fechaSel);
   if(window._segData) renderSeguridad(window._segData);
   else renderSeguridad();
@@ -3297,7 +3331,7 @@ function onFechaReporteChange(fechaSel) {
   if (APPSCRIPT_URL_PB)       cargarPB(fechaSel);
   if (APPSCRIPT_URL_MANT)     cargarMantDesdeAPI(fechaSel);
   if (APPSCRIPT_URL_ALM)      cargarAlmacenDesdeAPI(fechaSel);
-  if (APPSCRIPT_URL_SEG)      cargarSegDesdeAPI();
+  if (APPSCRIPT_URL_SEG)      cargarSegDesdeAPI(fechaSel);
 }
 
 // ── Inicializar desplegable de fechas ─────────────────────────────────────
@@ -3310,14 +3344,15 @@ function getMesPeriodo(fecha) {
     ABRIL:   {ini:'30/03/2026',fin:'29/04/2026'},
     MAYO:    {ini:'30/04/2026',fin:'20/05/2026'},
     JUNIO:   {ini:'21/05/2026',fin:'24/06/2026'},
+    JULIO:   {ini:'26/06/2026',fin:'25/07/2026'},
   };
-  if (!fecha) return 'JUNIO';
+  if (!fecha) return 'JULIO';
   const d = parseFechaHdr(fecha);
   for (const [per, cfg] of Object.entries(PERIODOS_CIA)) {
     const p1 = parseFechaHdr(cfg.ini), p2 = parseFechaHdr(cfg.fin);
     if (d >= p1 && d <= p2) return per;
   }
-  return 'JUNIO'; // fallback
+  return 'JULIO'; // fallback
 }
 
 function initFechaSelector() {
@@ -3391,19 +3426,19 @@ function togglePeriodoPanel() {
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:11px;margin-bottom:12px">
         <label>Fecha inicio<br>
-          <input id="pi-ini" type="text" placeholder="DD/MM/AAAA" value="${PERIODOS['2026-06'].ini}"
+          <input id="pi-ini" type="text" placeholder="DD/MM/AAAA" value="${(()=>{const k=Object.keys(PERIODOS).sort().pop();return PERIODOS[k].ini;})()}"
             style="width:100%;margin-top:3px;padding:4px 6px;border:1px solid var(--bd);border-radius:6px;font-size:11px">
         </label>
         <label>Fecha fin<br>
-          <input id="pi-fin" type="text" placeholder="DD/MM/AAAA" value="${PERIODOS['2026-06'].fin}"
+          <input id="pi-fin" type="text" placeholder="DD/MM/AAAA" value="${(()=>{const k=Object.keys(PERIODOS).sort().pop();return PERIODOS[k].fin;})()}"
             style="width:100%;margin-top:3px;padding:4px 6px;border:1px solid var(--bd);border-radius:6px;font-size:11px">
         </label>
         <label>Días del periodo<br>
-          <input id="pi-dias" type="number" value="${PERIODOS['2026-06'].dias}" min="1" max="90"
+          <input id="pi-dias" type="number" value="${(()=>{const k=Object.keys(PERIODOS).sort().pop();return PERIODOS[k].dias;})()}" min="1" max="90"
             style="width:100%;margin-top:3px;padding:4px 6px;border:1px solid var(--bd);border-radius:6px;font-size:11px">
         </label>
         <label>Mes clave (AAAA-MM)<br>
-          <input id="pi-key" type="text" placeholder="2026-06" value="2026-06"
+          <input id="pi-key" type="text" placeholder="2026-07" value="${(()=>{const k=Object.keys(PERIODOS).sort().pop();return k;})()}"
             style="width:100%;margin-top:3px;padding:4px 6px;border:1px solid var(--bd);border-radius:6px;font-size:11px">
         </label>
       </div>
@@ -3700,7 +3735,7 @@ async function actualizarSkipHistorico() {
       if (!r.fecha || !r.winche) return;
       const key = r.fecha+'|'+r.winche;
       if (!fechasSet.has(key)) {
-        SKIP_R.push([r.fecha, r.winche, +(r.mineral||0), +(r.desmonte||0), +(r.total||0)]);
+        SKIP_R.push([r.fecha, r.winche, +(r.desmonte||0), +(r.mineral||0), +(r.total||0)]);
         fechasSet.add(key);
         added++;
       }
@@ -3731,7 +3766,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // — Calcular skip/volquete
   initFechaSelector();
   calcularSkipVolq();
-  if (APPSCRIPT_URL) cargarResumenMesDesdeAPI();
+  if (APPSCRIPT_URL) { cargarResumenMesDesdeAPI(); actualizarHistoricoDesdeAPI(); }
   updateDDHMainTable();
   if(window._segData) renderSeguridad(window._segData);
   else renderSeguridad();
@@ -3740,8 +3775,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (_initFecha && _initFecha.value) actualizarTablaLab(_initFecha.value);
   if (APPSCRIPT_URL_GEO) cargarGeoDesdAPI('');
   if (APPSCRIPT_URL_GEO) cargarGeoResumenMes();
-  if (APPSCRIPT_URL_IZ)  cargarSkipDesdAPI('');
-  if (APPSCRIPT_URL_IZ)  cargarSkipResumenDesdeAPI();
+  if (APPSCRIPT_URL_IZ)  { cargarSkipDesdAPI(''); actualizarSkipHistorico(); }
   if (APPSCRIPT_URL_VQ)  cargarVolqueteDesdAPI('');
   if (APPSCRIPT_URL_VQ)  cargarVQResumenDesdeAPI();
   if (APPSCRIPT_URL_SEG)      cargarSegDesdeAPI();
@@ -4438,7 +4472,7 @@ function renderDiaChart(){
     label: 'Periodo activo',
     data: labels.map(d => {
       const iso = d.split('/').reverse().join('-');
-      return (iso >= '2026-05-16' && iso <= '2026-06-24') ? (tipo==='tmh'?9999:0.99) : null;
+      return (iso >= '2026-05-16' && iso <= '2026-07-25') ? (tipo==='tmh'?9999:0.99) : null;
     }),
     backgroundColor: 'rgba(212,175,55,.08)',
     borderColor: 'rgba(212,175,55,.3)',
@@ -4758,7 +4792,7 @@ let skipDetSort = {col:'f', asc:true};
 
 function openSkip() {
   document.getElementById('skip-modal').classList.add('open');
-  if (!skipChartsBuilt) buildSkipCharts();
+  buildSkipCharts();
   updateSkipStats();
 }
 function closeSkip() {
@@ -4790,7 +4824,7 @@ function skipMonthlyData(piqueFilter) {
 }
 
 function buildSkipCharts() {
-  skipChartsBuilt = true;
+  if (skipMesChart) { skipMesChart.destroy(); skipMesChart = null; }
   const ctx = document.getElementById('chartSkipMes');
   if (!ctx) return;
   const {labels, minData, desData} = skipMonthlyData('all');
@@ -5580,7 +5614,7 @@ const VQ_WINCHE_NAMES = {
 
 function openVQ() {
   document.getElementById('vq-modal').classList.add('open');
-  if (!vqChartsBuilt) buildVQCharts();
+  buildVQCharts();
 }
 function closeVQ() { document.getElementById('vq-modal').classList.remove('open'); }
 function vqTab(id, el) {
@@ -5594,7 +5628,9 @@ function vqTab(id, el) {
 
 // ── Construir gráficos desde API ──────────────────────────────
 async function buildVQCharts() {
-  vqChartsBuilt = true;
+  // Destroy existing charts before rebuild
+  if (vqMesChart) { vqMesChart.destroy(); vqMesChart = null; }
+  if (vqEvolChart) { vqEvolChart.destroy(); vqEvolChart = null; }
 
   // Cargar resumen mensual desde API
   const data = await fetchAppScriptVQ({ accion: 'resumen_mes' });
@@ -5871,24 +5907,16 @@ function renderSeguridad(apiData) {
     if (apiData.ids_totales || apiData.empresa) {
       const t = apiData.ids_totales || {};
       const empresa = apiData.empresa || 'Cía. Sotrami';
-      const idx = SEG_DATA.findIndex(r => 
-        String(r[0]).toLowerCase().includes(empresa.toLowerCase().split(' ')[0].replace('cía','cia').replace('cia.','cia'))
-      );
+      const norm = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+      const empresasKey = norm(empresa).split(' ')[0].replace(/[^a-z0-9]/g,'');
+      const idx = SEG_DATA.findIndex(r => norm(r[0]).includes(empresasKey));
       if (idx >= 0) {
         SEG_DATA[idx] = [SEG_DATA[idx][0],
           t.ip||0, t.ie||0, t.rp||0, t.re||0, t.rip||0, t.rie||0, ''];
       }
       // Also update RACS / CAP in the summary rows
-      const sv = (id,v) => { const el=document.getElementById(id); if(el&&v!=null) el.textContent=v; };
-      sv('seg-racs-alto',  apiData.racs_alto||0);
-      sv('seg-racs-medio', apiData.racs_medio||0);
-      sv('seg-racs-bajo',  apiData.racs_bajo||0);
-      sv('seg-obs-abiertas', apiData.racs_abiertas||0);
-      sv('seg-cap-cursos', apiData.cap_cursos||0);
-      if(apiData.cap_pct_gral!=null) {
-        const cpEl = document.getElementById('seg-cap-pct');
-        if(cpEl) { cpEl.textContent = apiData.cap_pct_gral.toFixed(0)+'%'; }
-      }
+      const sv_api = (id,v) => { const el=document.getElementById(id); if(el&&v!=null) el.textContent=v; };
+      window._segRacsData = apiData;
     }
     // Format 2: empresas[] array
     else if (apiData.empresas?.length) {
@@ -5978,16 +6006,17 @@ function renderSeguridad(apiData) {
   const tGlob = valids.length ? Math.round(valids.reduce((s,v)=>s+v,0)/valids.length) : null;
   const tGBg  = tGlob===null?'':tGlob>=metaPct?'background:rgba(21,128,61,.15)':'background:rgba(220,38,38,.1)';
 
-  // Actualizar card Seguridad principal (nueva estructura)
+  // Actualizar card Seguridad principal
   const sv_card = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
-  // Los valores de RACS por nivel vienen de la hoja RACS_CIA
-  // Por ahora usamos los datos estáticos calculados
-  const racsAlto=19, racsMedio=39, racsB=26, obsAb=84, obsTot=98;
-  sv_card('seg-racs-alto', racsAlto);
-  sv_card('seg-racs-medio', racsMedio);
-  sv_card('seg-racs-bajo', racsB);
-  sv_card('seg-obs-abiertas', obsAb);
-  sv_card('seg-obs-total', obsTot);
+  const rAlto = apiData?.racs_alto || 19;
+  const rMedio = apiData?.racs_medio || 39;
+  const rBajo = apiData?.racs_bajo || 26;
+  const rAbiertas = apiData?.racs_abiertas || 84;
+  sv_card('seg-racs-alto', rAlto);
+  sv_card('seg-racs-medio', rMedio);
+  sv_card('seg-racs-bajo', rBajo);
+  sv_card('seg-obs-abiertas', rAbiertas);
+  sv_card('seg-obs-total', rAbiertas);
   // Insp y Reinst desde SEG_DATA[0]
   if(SEG_DATA[0]){
     const [,ip,ie,rp,re,rip,rie]=SEG_DATA[0];
@@ -6297,7 +6326,7 @@ function renderPBGraficos(datos) {
   const c2=document.getElementById('chartPB_recup');
   if(c2){ if(window._pbChart2) window._pbChart2.destroy();
     window._pbChart2=new Chart(c2,{type:'line',data:{labels,datasets:[
-      {label:'Recup.%',data:activos.map(d=>d.cianuracion.recuperacion_pct),
+      {label:'Recup.%',data:activos.map(d=>d.cianuracion?.recuperacion_pct||0),
        borderColor:SOTR.navy,backgroundColor:'rgba(0,51,102,0.07)',
        fill:true,tension:0.4,borderWidth:2,pointRadius:3},
       {label:'Meta 97%',data:activos.map(()=>97),
@@ -6445,24 +6474,24 @@ function buildAvModal() {
 function getAllAvRows() {
   const d = window._avData || {};
   const rows = [];
-  // CV rows
-  (d.cv||[]).forEach(z => rows.push({
+  // CV rows — stored as dcv
+  (d.dcv||d.cv||[]).forEach(z => rows.push({
     zona: z.zona||'—', tipo:'Convencional', ejecutor: z.ejecutor||'Sector IV',
     ejec_dia:z.ejec_dia||0, prog_dia:z.prog_dia||0, pct_dia:z.pct_dia||0,
     ejec_acum:z.ejec_acum||0, prog_acum:z.prog_acum||0, pct_acum:z.pct_acum||0,
     prog_mes:z.prog_mes||0, pct_mes:z.pct_mes||0,
   }));
-  // Copsem CV
-  (d.cop||[]).forEach(z => rows.push({
+  // Copsem CV — stored as dcop
+  (d.dcop||d.cop||[]).forEach(z => rows.push({
     zona: z.zona||'SANTA ROSA', tipo:'Convencional', ejecutor: 'Copsem',
     ejec_dia:z.ejec_dia||0, prog_dia:z.prog_dia||0, pct_dia:z.pct_dia||0,
     ejec_acum:z.ejec_acum||0, prog_acum:z.prog_acum||0, pct_acum:z.pct_acum||0,
     prog_mes:z.prog_mes||0, pct_mes:z.pct_mes||0,
   }));
-  // TL rows
-  (d.tl||[]).forEach(z => rows.push({
+  // TL rows — stored as dtl
+  (d.dtl||d.tl||[]).forEach(z => rows.push({
     zona: z.zona||'—', tipo:'Trackless',
-    ejecutor: ((z.ejecutor||'').toUpperCase().includes('CIA')||
+    ejecutor: ((z.ejecutor||'').toUpperCase().replace('Í','I').includes('CIA')||
                (z.ejecutor||'').toUpperCase().includes('SOTRAMI'))
               ? 'Cía. Sotrami' : 'Sector IV',
     ejec_dia:z.ejec_dia||0, prog_dia:z.prog_dia||0, pct_dia:z.pct_dia||0,
@@ -6965,6 +6994,39 @@ function renderMantenimiento(data) {
       '<td class="mono" style="text-align:center;font-size:9px">' + hrsStr + (e.obs?'<br><span style="font-size:8px;color:var(--t3)">'+e.obs+'</span>':'') + '</td>' +
       '</tr>';
   }).join('');
+  // Also populate modal detail table
+  renderMantDetalle(data);
+}
+
+function renderMantDetalle(data) {
+  const tbody = document.getElementById('tb-mant-det');
+  if (!tbody) return;
+  if (!data || !data.length) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:10px;color:var(--t3)">Sin datos</td></tr>';
+    return;
+  }
+  const cntEl = document.getElementById('mant-det-cnt');
+  if (cntEl) cntEl.textContent = data.length + ' equipos';
+  const fechaEl = document.getElementById('mant-modal-fecha');
+  if (fechaEl && data[0].fecha_inop) fechaEl.textContent = data[0].fecha_inop;
+  tbody.innerHTML = data.map(e => {
+    const fecha = e.fecha_inop||e.fecha||'—';
+    const dias = e.dias_parado || e.horas_inop ? Math.round((e.horas_inop||0)/24) : null;
+    const dCls = dias >= 30 ? 'pR' : dias >= 7 ? 'pY' : 'pN';
+    const dStr = dias !== null ? '<span class="'+dCls+'">'+dias+'d</span>' : '—';
+    const estado = e.estado || 'INOPERATIVO';
+    const eCls = estado==='INOPERATIVO'?'pR':estado==='OPERATIVO'?'pG':'pY';
+    return '<tr>' +
+      '<td style="font-weight:600;font-size:10px">' + (e.tipo||e.equipo||'—') + '</td>' +
+      '<td class="mono">' + (e.codigo||'—') + '</td>' +
+      '<td style="font-size:9px;color:var(--t3)">' + (e.ubicacion||'—') + '</td>' +
+      '<td class="mono" style="text-align:center">' + fecha + '</td>' +
+      '<td style="text-align:center"><span class="'+eCls+'">'+estado+'</span></td>' +
+      '<td style="text-align:center">' + dStr + '</td>' +
+      '<td style="font-size:9px;color:var(--t3)">' + (e.motivo||'—') + '</td>' +
+      '<td style="font-size:9px;color:var(--t3)">' + (e.obs||'—') + '</td>' +
+      '</tr>';
+  }).join('');
 }
 
 // ══ CARGAR MANTENIMIENTO ════════════════════════════════════════
@@ -6995,9 +7057,11 @@ async function cargarMantDesdeAPI(fecha) {
 
 // ══ CARGAR SEGURIDAD ════════════════════════════════════════════
 async function cargarSegDesdeAPI(fecha) {
-  // SEG scripts use mes/anio — derive from periodoActual or default JUNIO/2026
-  const _mes  = (window._periodoActual?.nombre || 'JUNIO').toUpperCase();
-  const _anio = String(new Date().getFullYear());
+  // SEG usa mes calendario según la fecha seleccionada
+  if (!fecha) { const sel = document.getElementById('hdr-fecha-sel'); if (sel) fecha = sel.value; }
+  const d = fecha ? parseFechaHdr(fecha) : new Date();
+  const _mes  = MESES_ES[d.getMonth() + 1].toUpperCase();
+  const _anio = String(d.getFullYear());
   const qMes  = '?accion=resumen&mes='+_mes+'&anio='+_anio;
   console.log('[SEG] Fetching mes='+_mes+' anio='+_anio);
   console.log('[SEG] URLs: CIA='+!!APPSCRIPT_URL_SEG+' COP='+!!APPSCRIPT_URL_SEG_COP+' TKL='+!!APPSCRIPT_URL_SEG_SIV_TKL+' CV='+!!APPSCRIPT_URL_SEG_SIV_CV);
@@ -7150,20 +7214,20 @@ function closeAlm(){document.getElementById("alm-modal")?.classList.remove("open
 function renderAlmDet(){const src=window._almRows||[];const tbody=document.getElementById("tb-alm-det");if(!tbody)return;if(!src.length){tbody.innerHTML="<tr><td colspan=\"9\" style=\"text-align:center;color:var(--t3);padding:12px\">Sin datos</td></tr>";return;}const sv=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};const cnt=t=>src.filter(e=>(e.estado_calc||"").toLowerCase().includes(t)||(e.estado_hoja||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").includes(t)).length;sv("alm-cnt-crit",cnt("critico"));sv("alm-cnt-prec",cnt("precaucion"));sv("alm-cnt-adeq",cnt("adecuado"));sv("alm-cnt-exc",cnt("excedente"));const estOrd=e=>{const s=String(e.estado_hoja||e.estado_calc||e.estado||"").toLowerCase().replace(/[^a-z]/g,"");return s.includes("critico")?0:s.includes("precaucion")?1:2;};const sorted=[...src].sort((a,b)=>estOrd(a)-estOrd(b));const fmtN2=n=>n>0?n.toLocaleString("es-PE",{minimumFractionDigits:1,maximumFractionDigits:1}):"—";tbody.innerHTML=sorted.map(e=>{const eN=String(e.estado_hoja||e.estado_calc||e.estado||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9 ]/g,"").trim();const iC=eN.includes("critico"),iP=eN.includes("precaucion");const bg=iC?"<span class=\"eCrit\">🔴 Crítico</span>":iP?"<span style=\"background:var(--Ybg);color:var(--Y);border:1px solid var(--Ybd);padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700\">🟡 Precaución</span>":"<span class=\"eoper\">🟢 Adecuado</span>";const d=e.diferencia||0;return "<tr><td style=\"font-size:9px;color:var(--t3)\">"+(e.anio||"—")+"</td><td style=\"font-size:9px;color:var(--t3)\">"+(e.periodo||"—")+"</td><td style=\"font-size:9px;color:var(--t3)\">"+(e.tipo||"—")+"</td><td style=\"font-weight:600;font-size:10px\">"+(e.mat||"—")+"</td><td class=\"mono\" style=\"text-align:center;font-size:9px\">"+(e.um||"—")+"</td><td class=\"mono\" style=\"text-align:center\">"+fmtN2(e.act)+"</td><td class=\"mono\" style=\"text-align:center\">"+fmtN2(e.min)+"</td><td class=\"mono\" style=\"text-align:center;color:"+(d<0?"#DC2626":"#15803D")+";font-weight:600\">"+(d<0?d.toFixed(1):"+"+d.toFixed(1))+"</td><td style=\"text-align:center\">"+bg+"</td></tr>";}).join("");}
 
 // ══ RB TUMI ════════════════════════════════════════════════════
-async function cargarRB_Tumi(fecha){if(!APPSCRIPT_URL_TUMI)return;try{const qs=fecha?"?accion=rb&fecha="+encodeURIComponent(fecha):"?accion=rb";let d=await fetch(APPSCRIPT_URL_TUMI+qs).then(r=>r.json()).catch(()=>null);if(d?.ok&&(!d.zonas?.length||!d.zonas.some(z=>z.ejec_dia>0||z.ejec_acum>0))&&fecha)d=await fetch(APPSCRIPT_URL_TUMI+"?accion=rb").then(r=>r.json()).catch(()=>null)||d;if(!d?.ok)return;const sv=(id,v)=>{const el=document.getElementById(id);if(el&&v!=null)el.textContent=v;};const f1=n=>n>0?n.toFixed(2):"—";const pC=(e,p)=>!p?"pN":e/p>=1?"pG":e/p>=0.85?"pY":"pR";sv("rb-act-fecha",d.fecha||"—");const tb=document.getElementById("tb-rb");if(tb&&d.zonas?.length){tb.innerHTML=d.zonas.map(z=>{const pD=z.prog_dia>0?(z.ejec_dia/z.prog_dia*100):null,pM=z.prog_mes>0?(z.ejec_acum/z.prog_mes*100):null,pP=z.prog_proy>0?(z.ejec_acum_proy/z.prog_proy*100):null,df=z.prog_proy-z.ejec_acum_proy;return "<tr><td>"+(z.zona||"—")+"</td><td>"+(z.proyecto||"—")+"</td><td style=\"font-size:9px;color:var(--t3)\">"+(z.tipo||"—")+"</td><td class=\"mono\" style=\"text-align:center\">"+f1(z.ejec_dia)+"</td><td class=\"mono\" style=\"text-align:center\">"+f1(z.prog_dia)+"</td><td style=\"text-align:center\"><span class=\""+pC(z.ejec_dia,z.prog_dia)+"\">"+(pD!=null?pD.toFixed(1)+"%":"—")+"</span></td><td class=\"mono\" style=\"text-align:center;font-weight:600;color:var(--gd)\">"+f1(z.ejec_acum)+"</td><td class=\"mono\" style=\"text-align:center\">"+f1(z.prog_mes)+"</td><td style=\"text-align:center\"><span class=\""+pC(z.ejec_acum,z.prog_mes)+"\">"+(pM!=null?pM.toFixed(1)+"%":"—")+"</span></td><td class=\"mono\" style=\"text-align:center\">"+f1(z.prog_proy)+"</td><td class=\"mono\" style=\"text-align:center;font-weight:600;color:var(--nv)\">"+f1(z.ejec_acum_proy)+"</td><td class=\"mono\" style=\"text-align:center;color:"+(df<0?"#15803D":"#DC2626")+"\">"+(df>=0?"+":"")+f1(df)+"</td><td style=\"text-align:center\"><span class=\""+pC(z.ejec_acum_proy,z.prog_proy)+"\">"+(pP!=null?pP.toFixed(1)+"%":"—")+"</span></td></tr>";}).join("");}const z0=d.zonas?.find(z=>z.ejec_dia>0||z.ejec_acum>0)||d.zonas?.[0]||{};sv("rb-ejec-dia",f1(z0.ejec_dia));sv("rb-prog-dia",f1(z0.prog_dia));sv("rb-ejec-acum",f1(z0.ejec_acum));sv("rb-prog-mes",f1(z0.prog_mes));sv("rb-ejec-proy",f1(z0.ejec_acum_proy));sv("rb-prog-proy",f1(z0.prog_proy));const p0=z0.prog_dia>0?(z0.ejec_dia/z0.prog_dia*100):null,pm0=z0.prog_mes>0?(z0.ejec_acum/z0.prog_mes*100):null,pp0=z0.prog_proy>0?(z0.ejec_acum_proy/z0.prog_proy*100):null;sv("rb-pct-dia",p0!=null?p0.toFixed(1)+"%":"—");sv("rb-pct-mes",pm0!=null?pm0.toFixed(1)+"%":"—");sv("rb-pct-proy",pp0!=null?pp0.toFixed(1)+"%":"—");const badge=document.getElementById("rb-pct-badge");if(badge&&pm0!=null){badge.textContent=(pm0>=100?"▲":pm0>=85?"●":"▼")+" "+pm0.toFixed(1)+"%";badge.className="kbdg "+(pm0>=100?"kG":pm0>=85?"kA":"kR");}console.log("[TUMI RB] OK");}catch(e){console.warn("[TUMI RB]",e.message);}}
+async function cargarRB_Tumi(fecha){if(!APPSCRIPT_URL_TUMI)return;try{const qs=fecha?"?accion=rb&fecha="+encodeURIComponent(fecha):"?accion=rb";let d=await fetch(APPSCRIPT_URL_TUMI+qs).then(r=>r.json()).catch(()=>null);if(d?.ok&&(!d.zonas?.length||!d.zonas.some(z=>z.ejec_dia>0||z.ejec_acum>0))&&fecha)d=await fetch(APPSCRIPT_URL_TUMI+"?accion=rb").then(r=>r.json()).catch(()=>null)||d;if(!d?.ok)return;const sv=(id,v)=>{const el=document.getElementById(id);if(el&&v!=null)el.textContent=v;};const f1=n=>n>0?n.toFixed(2):"—";const pC=(e,p)=>!p?"pN":e/p>=1?"pG":e/p>=0.85?"pY":"pR";    sv("rb-act-fecha",d.fecha||"—");const zSel=document.getElementById("rb-f-zona");if(zSel&&d.zonas?.length){const cur=zSel.value;zSel.innerHTML='<option value="">Todas</option>';d.zonas.forEach(z=>{const o=document.createElement("option");o.value=z.zona;o.textContent=z.zona||"—";zSel.appendChild(o);});if(cur)zSel.value=cur;}const tb=document.getElementById("tb-rb");if(tb&&d.zonas?.length){tb.innerHTML=d.zonas.map(z=>{const pD=z.prog_dia>0?(z.ejec_dia/z.prog_dia*100):null,pM=z.prog_mes>0?(z.ejec_acum/z.prog_mes*100):null,pP=z.prog_proy>0?(z.ejec_acum_proy/z.prog_proy*100):null,df=z.prog_proy-z.ejec_acum_proy;return "<tr><td>"+(z.zona||"—")+"</td><td>"+(z.proyecto||"—")+"</td><td style=\"font-size:9px;color:var(--t3)\">"+(z.tipo||"—")+"</td><td class=\"mono\" style=\"text-align:center\">"+f1(z.ejec_dia)+"</td><td class=\"mono\" style=\"text-align:center\">"+f1(z.prog_dia)+"</td><td style=\"text-align:center\"><span class=\""+pC(z.ejec_dia,z.prog_dia)+"\">"+(pD!=null?pD.toFixed(1)+"%":"—")+"</span></td><td class=\"mono\" style=\"text-align:center;font-weight:600;color:var(--gd)\">"+f1(z.ejec_acum)+"</td><td class=\"mono\" style=\"text-align:center\">"+f1(z.prog_mes)+"</td><td style=\"text-align:center\"><span class=\""+pC(z.ejec_acum,z.prog_mes)+"\">"+(pM!=null?pM.toFixed(1)+"%":"—")+"</span></td><td class=\"mono\" style=\"text-align:center\">"+f1(z.prog_proy)+"</td><td class=\"mono\" style=\"text-align:center;font-weight:600;color:var(--nv)\">"+f1(z.ejec_acum_proy)+"</td><td class=\"mono\" style=\"text-align:center;color:"+(df<0?"#15803D":"#DC2626")+"\">"+(df>=0?"+":"")+f1(df)+"</td><td style=\"text-align:center\"><span class=\""+pC(z.ejec_acum_proy,z.prog_proy)+"\">"+(pP!=null?pP.toFixed(1)+"%":"—")+"</span></td></tr>";}).join("");}const z0=d.zonas?.find(z=>z.ejec_dia>0||z.ejec_acum>0)||d.zonas?.[0]||{};sv("rb-ejec-dia",f1(z0.ejec_dia));sv("rb-prog-dia",f1(z0.prog_dia));sv("rb-ejec-acum",f1(z0.ejec_acum));sv("rb-prog-mes",f1(z0.prog_mes));sv("rb-ejec-proy",f1(z0.ejec_acum_proy));sv("rb-prog-proy",f1(z0.prog_proy));const p0=z0.prog_dia>0?(z0.ejec_dia/z0.prog_dia*100):null,pm0=z0.prog_mes>0?(z0.ejec_acum/z0.prog_mes*100):null,pp0=z0.prog_proy>0?(z0.ejec_acum_proy/z0.prog_proy*100):null;sv("rb-pct-dia",p0!=null?p0.toFixed(1)+"%":"—");sv("rb-pct-mes",pm0!=null?pm0.toFixed(1)+"%":"—");sv("rb-pct-proy",pp0!=null?pp0.toFixed(1)+"%":"—");const badge=document.getElementById("rb-pct-badge");if(badge&&pm0!=null){badge.textContent=(pm0>=100?"▲":pm0>=85?"●":"▼")+" "+pm0.toFixed(1)+"%";badge.className="kbdg "+(pm0>=100?"kG":pm0>=85?"kA":"kR");}console.log("[TUMI RB] OK");}catch(e){console.warn("[TUMI RB]",e.message);}}
 function openRB(){document.getElementById("rb-modal").classList.add("open");requestAnimationFrame(()=>requestAnimationFrame(()=>whenChartReady(()=>loadRBModal())));}
 function closeRB(){document.getElementById("rb-modal")?.classList.remove("open");}
 function rbTab(id,btn){document.querySelectorAll("#rb-modal .mtab").forEach(t=>t.classList.remove("on"));document.querySelectorAll("#rb-modal .mpanel").forEach(p=>p.classList.remove("on"));btn.classList.add("on");document.getElementById("rb-panel-"+id)?.classList.add("on");requestAnimationFrame(()=>requestAnimationFrame(()=>whenChartReady(()=>{if(id==="curvas")buildRBCharts();if(id==="kpis")renderRBKpis();if(id==="detalle")renderRBDetalle();})));}
 async function loadRBModal(){if(!APPSCRIPT_URL_TUMI)return;try{const data=await fetch(APPSCRIPT_URL_TUMI+"?accion=periodo").then(r=>r.json()).catch(()=>null);if(!data?.ok)return;window._rbPeriodo=data;buildRBCharts();renderRBKpis();}catch(e){console.warn("[RB]",e.message);}}
 function buildRBCharts(){const d=window._rbPeriodo;if(!d?.dias?.length)return;const GD="#C9A227",NV="#1B3A6B",SHADOW="rgba(201,162,39,0.15)";const dias=d.dias,r=d.resumen||{};const MR=["","Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Set","Oct","Nov","Dic"];const labels=dias.map(d2=>{const p=d2.fecha.split("/");return p[0]+"-"+MR[+p[1]];});const cXA={grid:{display:false},border:{display:false},ticks:{font:{size:8},maxRotation:90,minRotation:90,maxTicksLimit:20}};const cYA={grid:{color:"rgba(0,0,0,0.05)"},border:{display:false},ticks:{font:{size:9},callback:v=>v+"m"}};if(window._chartRBDiario)window._chartRBDiario.destroy();const c1=document.getElementById("chartRBDiario");if(c1)window._chartRBDiario=new Chart(c1,{data:{labels,datasets:[{type:"bar",label:"Ejec. Día",data:dias.map(d2=>d2.ejec_dia>0?d2.ejec_dia:null),backgroundColor:GD+"CC",borderRadius:2},{type:"line",label:"Prog. Promedio",data:dias.map(()=>r.prom_dia||0),borderColor:"#8B0000",backgroundColor:"transparent",borderWidth:2,pointRadius:0,tension:0,borderDash:[5,3]}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"bottom",labels:{font:{size:9},usePointStyle:true}}},scales:{x:cXA,y:cYA}}});if(window._chartRBCurvaS)window._chartRBCurvaS.destroy();const c2=document.getElementById("chartRBCurvaS");if(c2){const pAP=dias.map(d2=>(d2.prog_acum_proy||0)>0?d2.prog_acum_proy:null),eAP=dias.map(d2=>(d2.ejec_acum_proy||0)>0?d2.ejec_acum_proy:null),lE=eAP.reduce((a,v,i)=>v!=null?i:a,-1);window._chartRBCurvaS=new Chart(c2,{type:"line",data:{labels,datasets:[{label:"Prog. Acum. Proyecto",data:pAP,borderColor:NV,backgroundColor:"transparent",borderWidth:2,pointRadius:0,tension:0.3,spanGaps:false},{label:"Ejec. Acum. Proyecto",data:eAP,borderColor:GD,backgroundColor:SHADOW,borderWidth:2.5,tension:0.3,fill:true,spanGaps:false,pointRadius:eAP.map((_,i)=>i===lE?6:0),pointBackgroundColor:GD,pointBorderColor:"#fff",pointBorderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"bottom",labels:{font:{size:9},usePointStyle:true}}},scales:{x:cXA,y:cYA}}});}if(window._chartRBProy)window._chartRBProy.destroy();const c3=document.getElementById("chartRBProyeccion");if(c3){const lPA=dias.reduce((v,d2)=>d2.prog_acum_proy>0?d2.prog_acum_proy:v,0),lEA=dias.reduce((v,d2)=>d2.ejec_acum_proy>0?d2.ejec_acum_proy:v,0);window._chartRBProy=new Chart(c3,{type:"bar",data:{labels:["Prog. Acum. Proyecto","Ejec. Acum. Proyecto"],datasets:[{data:[lPA,lEA],backgroundColor:[NV+"CC",GD+"CC"],borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},border:{display:false},ticks:{font:{size:9}}},y:cYA}}});}const sv=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};const f1=n=>n>0?n.toFixed(2):"—";sv("rb-k-prog-mes",f1(r.prog_mes)+"m");sv("rb-k-ejec-acum",f1(r.acum_real)+"m");sv("rb-k-pct-mes",r.prog_mes>0?(r.acum_real/r.prog_mes*100).toFixed(1)+"%":"—");const lPA2=dias.reduce((v,d2)=>d2.prog_acum_proy>0?d2.prog_acum_proy:v,0),lEA2=dias.reduce((v,d2)=>d2.ejec_acum_proy>0?d2.ejec_acum_proy:v,0);sv("rb-k-pct-proy",lPA2>0?(lEA2/lPA2*100).toFixed(1)+"%":"—");}
 function renderRBKpis(){const d=window._rbPeriodo;if(!d)return;const r=d.resumen||{};const sv=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};const f1=n=>n>0?n.toFixed(2)+"m":"—",fP=n=>n!=null?n.toFixed(1)+"%":"—";sv("rb-kh-prog-mes",f1(r.prog_mes));sv("rb-kh-prom-dia",r.prom_dia>0?r.prom_dia.toFixed(2)+"m":"—");sv("rb-kh-ejec-acum",f1(r.acum_real));sv("rb-kh-prog-proy",f1(r.prog_proy));const pm=r.prog_mes>0?(r.acum_real/r.prog_mes*100):null,pp=r.prog_proy>0?(r.ejec_acum_proy/r.prog_proy*100):null;const pmEl=document.getElementById("rb-kh-pct-mes");if(pmEl){pmEl.textContent=fP(pm);pmEl.style.color=pm>=100?"#15803D":pm>=85?"#D97706":"#DC2626";}const ppEl=document.getElementById("rb-kh-pct-proy");if(ppEl){ppEl.textContent=fP(pp);ppEl.style.color=pp>=100?"#15803D":pp>=85?"#D97706":"#DC2626";}}
-function renderRBDetalle(){const d=window._rbPeriodo;if(!d?.dias?.length){const tb=document.getElementById("tb-rb-det");if(tb)tb.innerHTML="<tr><td colspan=\"11\" style=\"text-align:center;padding:14px;color:var(--t3)\">Sin datos</td></tr>";return;}const dias=d.dias,f1=n=>n>0?n.toFixed(2):"—",pC=(e,p)=>!p?"pN":e/p>=1?"pG":e/p>=0.85?"pY":"pR",fP=(e,p)=>p>0?(e/p*100).toFixed(1)+"%":"—";const tbody=document.getElementById("tb-rb-det");if(!tbody)return;tbody.innerHTML=dias.map(d2=>"<tr><td style=\"font-size:10px\">"+d2.fecha+"</td><td style=\"font-size:9px\">"+(d2.turnos||"—")+" turnos</td><td style=\"font-size:9px;color:var(--t3)\">RIMADO</td><td class=\"mono\">"+f1(d2.ejec_dia)+"</td><td class=\"mono\">"+f1(d2.prog_dia)+"</td><td><span class=\""+pC(d2.ejec_dia,d2.prog_dia)+"\">"+fP(d2.ejec_dia,d2.prog_dia)+"</span></td><td class=\"mono\" style=\"font-weight:600;color:var(--gd)\">"+f1(d2.ejec_acum)+"</td><td class=\"mono\">"+f1(d2.prog_acum)+"</td><td><span class=\""+pC(d2.ejec_acum,d2.prog_mes)+"\">"+fP(d2.ejec_acum,d2.prog_mes)+"</span></td><td class=\"mono\" style=\"color:var(--nv)\">"+f1(d2.ejec_acum_proy)+"</td><td><span class=\""+pC(d2.ejec_acum_proy,d2.prog_proy)+"\">"+fP(d2.ejec_acum_proy,d2.prog_proy)+"</span></td></tr>").join("");const cnt=document.getElementById("rb-det-cnt");if(cnt)cnt.textContent=dias.length+" días";}
+function renderRBDetalle(){const d=window._rbPeriodo;if(!d?.dias?.length){const tb=document.getElementById("tb-rb-det");if(tb)tb.innerHTML="<tr><td colspan=\"11\" style=\"text-align:center;padding:14px;color:var(--t3)\">Sin datos</td></tr>";return;}const f1=n=>n>0?n.toFixed(2):"—",pC=(e,p)=>!p?"pN":e/p>=1?"pG":e/p>=0.85?"pY":"pR",fP=(e,p)=>p>0?(e/p*100).toFixed(1)+"%":"—";const tbody=document.getElementById("tb-rb-det");if(!tbody)return;tbody.innerHTML=d.dias.map(d2=>"<tr><td style=\"font-size:10px\">"+d2.fecha+"</td><td style=\"font-size:9px\">"+(d2.turnos||"—")+" turnos</td><td style=\"font-size:9px;color:var(--t3)\">"+(d2.tipo||"RB")+"</td><td class=\"mono\">"+f1(d2.ejec_dia)+"</td><td class=\"mono\">"+f1(d2.prog_dia)+"</td><td><span class=\""+pC(d2.ejec_dia,d2.prog_dia)+"\">"+fP(d2.ejec_dia,d2.prog_dia)+"</span></td><td class=\"mono\" style=\"font-weight:600;color:var(--gd)\">"+f1(d2.ejec_acum)+"</td><td class=\"mono\">"+f1(d2.prog_acum)+"</td><td><span class=\""+pC(d2.ejec_acum,d2.prog_mes)+"\">"+fP(d2.ejec_acum,d2.prog_mes)+"</span></td><td class=\"mono\" style=\"color:var(--nv)\">"+f1(d2.ejec_acum_proy)+"</td><td><span class=\""+pC(d2.ejec_acum_proy,d2.prog_proy)+"\">"+fP(d2.ejec_acum_proy,d2.prog_proy)+"</span></td></tr>").join("");const cnt=document.getElementById("rb-det-cnt");if(cnt)cnt.textContent=d.dias.length+" días";}
 
 // ══ RRHH MODAL ══════════════════════════════════════════════════
 function openRRHH(){document.getElementById("rrhh-modal").classList.add("open");requestAnimationFrame(()=>requestAnimationFrame(()=>whenChartReady(()=>buildRRHHModal())));}
 function closeRRHH(){document.getElementById("rrhh-modal")?.classList.remove("open");}
 function rrhhTab(id,btn){document.querySelectorAll("#rrhh-modal .mtab").forEach(t=>t.classList.remove("on"));document.querySelectorAll("#rrhh-modal .mpanel").forEach(p=>p.classList.remove("on"));btn.classList.add("on");document.getElementById("rrhh-panel-"+id)?.classList.add("on");requestAnimationFrame(()=>requestAnimationFrame(()=>whenChartReady(()=>{if(id==="indicadores")buildRRHHCharts();if(id==="ausentismo")buildAusentismoCharts();if(id==="rotacion")buildRotacionCharts();})));}
-function buildRRHHModal(){const sv=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};const getV=id=>{const el=document.getElementById(id);return parseFloat(el?.textContent?.replace(/[^0-9.]/g,""))||0;};sv("rrhh-m-hc",getV("rrhh-tot-total")||"—");buildRRHHCharts();}
+function buildRRHHModal(){const sv=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};const getV=id=>{const el=document.getElementById(id);return parseFloat(el?.textContent?.replace(/[^0-9.]/g,""))||0;};sv("rrhh-m-hc",getV("rrhh-tot-total")||"—");const data=getRRHHEmpresaData();const tI=data.reduce((s,e)=>s+e.ing,0),tS=data.reduce((s,e)=>s+e.sal,0),tD=data.reduce((s,e)=>s+e.dm,0),tH=data.reduce((s,e)=>s+e.hc,0);sv("rrhh-m-ing",tI||"—");sv("rrhh-m-sal",tS||"—");sv("rrhh-m-aus",tH>0?(tD/tH*100).toFixed(1)+"%":"—");buildRRHHCharts();}
 function getRRHHEmpresaData(){const emp={Sotrami:{tot:"rrhh-sot-total",obr:"rrhh-sot-obr",emp:"rrhh-sot-empl",ing:"rrhh-sot-ingr",sal:"rrhh-sot-renun",dm:"rrhh-sot-dm"},"SIV TL":{tot:"rrhh-tl-total",obr:"rrhh-tl-obr",emp:"rrhh-tl-empl",ing:"rrhh-tl-ingr",sal:"rrhh-tl-renun",dm:"rrhh-tl-dm"},"SIV CV":{tot:"rrhh-cv-total",obr:"rrhh-cv-obr",emp:"rrhh-cv-empl",ing:"rrhh-cv-ingr",sal:"rrhh-cv-renun",dm:"rrhh-cv-dm"},Copsem:{tot:"rrhh-cop-total",obr:"rrhh-cop-obr",emp:"rrhh-cop-empl",ing:"rrhh-cop-ingr",sal:"rrhh-cop-renun",dm:"rrhh-cop-dm"},Tumi:{tot:"rrhh-tumi-total",obr:"rrhh-tumi-obr",emp:"rrhh-tumi-empl",ing:"rrhh-tumi-ingr",sal:"rrhh-tumi-renun",dm:"rrhh-tumi-dm"}};const getN=id=>{const el=document.getElementById(id);return parseFloat(el?.textContent?.replace(/[^0-9.-]/g,""))||0;};return Object.entries(emp).map(([n,ids])=>({nombre:n,hc:getN(ids.tot),obr:getN(ids.obr),emp:getN(ids.emp),ing:getN(ids.ing),sal:getN(ids.sal),dm:getN(ids.dm)})).filter(e=>e.hc>0);}
 function buildRRHHCharts(){const data=getRRHHEmpresaData();if(!data.length)return;const NV="#003366",GD="#C9A227",G="#15803D",Y="#D97706",T="#0E7490";const cols=[NV,GD,G,Y,T,"#7C3AED"];if(window._chartRRHHEmp)window._chartRRHHEmp.destroy();const c1=document.getElementById("chartRRHHEmpresa");if(c1)window._chartRRHHEmp=new Chart(c1,{type:"bar",data:{labels:data.map(e=>e.nombre),datasets:[{label:"HC Activo",data:data.map(e=>e.hc),backgroundColor:data.map((_,i)=>cols[i]+"CC"),borderRadius:3}]},options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:"rgba(0,0,0,0.05)"},border:{display:false},ticks:{font:{size:9}}},y:{grid:{display:false},border:{display:false},ticks:{font:{size:9}}}}}});if(window._chartRRHHTipo)window._chartRRHHTipo.destroy();const c2=document.getElementById("chartRRHHTipo");if(c2){const tO=data.reduce((s,e)=>s+e.obr,0),tE=data.reduce((s,e)=>s+e.emp,0);window._chartRRHHTipo=new Chart(c2,{type:"doughnut",data:{labels:["Obreros","Empleados"],datasets:[{data:[tO,tE],backgroundColor:[NV+"CC",GD+"CC"],borderWidth:2,borderColor:"#fff"}]},options:{responsive:true,maintainAspectRatio:false,cutout:"65%",plugins:{legend:{position:"bottom",labels:{font:{size:9},usePointStyle:true}}}}});}}
 function buildAusentismoCharts(){const data=getRRHHEmpresaData();const sv=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};const R="#DC2626",Y="#D97706",T="#0E7490";const tH=data.reduce((s,e)=>s+e.hc,0),tF=data.reduce((s,e)=>s+e.dm,0);sv("rrhh-m-fal",tF||"—");sv("rrhh-m-dm",tF||"—");sv("rrhh-m-iaus",tH>0?(tF/tH*100).toFixed(1)+"%":"—");if(window._chartAusComp)window._chartAusComp.destroy();const c1=document.getElementById("chartAusentismoComp");if(c1)window._chartAusComp=new Chart(c1,{type:"bar",data:{labels:data.map(e=>e.nombre),datasets:[{label:"DM/Sub.",data:data.map(e=>e.dm),backgroundColor:T+"CC",borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{font:{size:9},usePointStyle:true}}},scales:{x:{grid:{display:false},border:{display:false},ticks:{font:{size:9}}},y:{grid:{color:"rgba(0,0,0,0.05)"},border:{display:false},ticks:{font:{size:9}}}}}});if(window._chartAusEmp)window._chartAusEmp.destroy();const c2=document.getElementById("chartAusentismoEmp");if(c2){const aE=data.map(e=>e.hc>0?parseFloat((e.dm/e.hc*100).toFixed(1)):0);window._chartAusEmp=new Chart(c2,{type:"bar",data:{labels:data.map(e=>e.nombre),datasets:[{label:"% Ausentismo",data:aE,backgroundColor:aE.map(v=>v>10?R+"CC":v>5?Y+"CC":T+"CC"),borderRadius:3}]},options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:"rgba(0,0,0,0.05)"},border:{display:false},ticks:{font:{size:9},callback:v=>v+"%"}},y:{grid:{display:false},border:{display:false},ticks:{font:{size:9}}}}}});}}
@@ -7182,11 +7246,18 @@ function _mkFetch(url) {
       const qs = new URLSearchParams(
         Object.fromEntries(Object.entries(params).filter(([,v])=>v!=null&&v!==''))
       ).toString();
-      const res = await fetch(url + (qs ? '?' + qs : ''));
+      const controller = new AbortController();
+      const tmr = setTimeout(() => controller.abort(), 12000);
+      const res = await fetch(url + (qs ? '?' + qs : ''), { signal: controller.signal });
+      clearTimeout(tmr);
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const json = await res.json();
       return json.ok ? json : null;
-    } catch(e) { console.warn('[Fetch]', url.slice(-20), e.message); return null; }
+    } catch(e) {
+      if (e.name==='AbortError') console.warn('[Fetch] timeout', url.slice(-25));
+      else console.warn('[Fetch]', url.slice(-25), e.message);
+      return null;
+    }
   };
 }
 
@@ -7207,11 +7278,14 @@ async function fetchTUMI(params)            { return _mkFetch(APPSCRIPT_URL_TUMI
 
 
 
+let _rehabData = null; // cache for modal
+
 async function cargarRehab(fecha) {
   if (!APPSCRIPT_URL_COP) return;
   try {
     const qs = fecha ? '?accion=rehab&fecha='+encodeURIComponent(fecha) : '?accion=rehab';
     const data = await fetch(APPSCRIPT_URL_COP + qs).then(r=>r.json()).catch(()=>null);
+    _rehabData = data;
     // API returns {labores:[]} or {partidas:[]} — handle both
     const filas = (data.labores?.length ? data.labores : null) || (data.partidas?.length ? data.partidas : null) || null;
     if (!filas?.length) {
@@ -7262,8 +7336,100 @@ async function cargarRehab(fecha) {
     </tr>`;
     const rehabFecha = document.getElementById('rehab-act-fecha');
     if(rehabFecha) rehabFecha.textContent = data.fecha || '—';
-    console.log('[REHAB] Cargado:', data.partidas.length, 'partidas');
+    console.log('[REHAB] Cargado:', (data.partidas||data.labores||[]).length, 'registros');
   } catch(e) { console.warn('[REHAB]', e.message); }
+}
+
+// ── REHAB MODAL ─────────────────────────────────────────────────
+function openRehab() {
+  document.getElementById("rehab-modal").classList.add("open");
+  requestAnimationFrame(() => requestAnimationFrame(() => whenChartReady(() => buildRehabModal())));
+}
+function closeRehab() { document.getElementById("rehab-modal")?.classList.remove("open"); }
+function rehabTab(id, btn) {
+  document.querySelectorAll("#rehab-modal .mtab").forEach(t=>t.classList.remove("on"));
+  document.querySelectorAll("#rehab-modal .mpanel").forEach(p=>p.classList.remove("on"));
+  btn.classList.add("on"); document.getElementById("rehab-panel-"+id)?.classList.add("on");
+  requestAnimationFrame(() => requestAnimationFrame(() => whenChartReady(() => {
+    if(id==="resumen") buildRehabModal();
+    if(id==="detalle") renderRehabDetalle();
+  })));
+}
+function buildRehabModal() {
+  const d = _rehabData;
+  if (!d?.ok) return;
+  const filas = d.labores || d.partidas || [];
+  const res = d.resumen || d.totales || {};
+  const tED = res.ejec_dia_total || res.ejec_dia || filas.reduce((s,p)=>s+(p.ejec_dia||0),0);
+  const tPD = res.prog_dia_total || res.prog_dia || filas.reduce((s,p)=>s+(p.prog_dia||0),0);
+  const tEA = res.ejec_acum_total|| res.ejec_acum|| filas.reduce((s,p)=>s+(p.ejec_acum||0),0);
+  const tPA = res.prog_total     || res.prog_acum|| filas.reduce((s,p)=>s+(p.prog_total||p.prog_acum||0),0);
+  const pctA = tPA>0 ? (tEA/tPA*100) : null;
+  const f1 = n => n>0 ? n.toLocaleString('es-PE',{minimumFractionDigits:1,maximumFractionDigits:1})+"m" : "—";
+  const sv = (id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
+  sv("rehab-m-ejec-dia", f1(tED));
+  sv("rehab-m-prog-dia", f1(tPD));
+  sv("rehab-m-ejec-acum", f1(tEA));
+  sv("rehab-m-pct-acum", pctA!=null?pctA.toFixed(1)+"%":"—");
+  // Populate zone filter
+  const zSel = document.getElementById("rehab-f-zona");
+  if (zSel && filas.length) {
+    const zonas = [...new Set(filas.map(p=>p.zona).filter(Boolean))];
+    zSel.innerHTML = '<option value="">Todas</option>';
+    zonas.forEach(z => { const o=document.createElement("option"); o.value=z; o.textContent=z; zSel.appendChild(o); });
+  }
+  // Chart: bar chart of ejec_dia vs prog_dia per labor
+  if (window._chartRehab) window._chartRehab.destroy();
+  const c1 = document.getElementById("chartRehab");
+  if (c1 && filas.length) {
+    const labels = filas.map(p => p.labor || p.descripcion || p.partida || "—");
+    window._chartRehab = new Chart(c1, {
+      type: "bar",
+      data: {
+        labels,
+        datasets: [
+          { label: "Ejec. Día", data: filas.map(p=>p.ejec_dia||0), backgroundColor: "#C9A227CC", borderRadius: 2 },
+          { label: "Prog. Día", data: filas.map(p=>p.prog_dia||0), backgroundColor: "#1B3A6BCC", borderRadius: 2 },
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { position: "bottom", labels: { font: { size: 9 }, usePointStyle: true } } },
+        scales: {
+          x: { grid: { display: false }, border: { display: false }, ticks: { font: { size: 8 } } },
+          y: { grid: { color: "rgba(0,0,0,0.05)" }, border: { display: false }, ticks: { font: { size: 9 }, callback: v=>v+"m" } }
+        }
+      }
+    });
+  }
+  console.log("[REHAB Modal] OK");
+}
+function renderRehabDetalle() {
+  const d = _rehabData;
+  if (!d?.ok) { const tb=document.getElementById("tb-rehab-det"); if(tb) tb.innerHTML="<tr><td colspan=\"11\" style=\"text-align:center;padding:14px;color:var(--t3)\">Sin datos</td></tr>"; return; }
+  let filas = d.labores || d.partidas || [];
+  const zf = document.getElementById("rehab-f-zona")?.value || "";
+  if (zf) filas = filas.filter(p => (p.zona||"") === zf);
+  const f1 = n => n>0 ? n.toFixed(1) : "—";
+  const pC = (e,p) => !p?"pN":e/p>=1?"pG":e/p>=0.85?"pY":"pR";
+  const fP = (e,p) => p>0 ? (e/p*100).toFixed(1)+"%" : "—";
+  const tbody = document.getElementById("tb-rehab-det");
+  if (!tbody) return;
+  tbody.innerHTML = filas.map(p => `<tr>
+    <td>${p.zona||"—"}</td>
+    <td style="font-size:10px">${p.labor||p.descripcion||p.partida||"—"}</td>
+    <td style="font-size:9px;color:var(--t3)">${p.nivel||"—"}</td>
+    <td style="font-size:9px;color:var(--t3)">${p.tipo_sost||"—"}</td>
+    <td style="font-size:9px;color:var(--t3)">${p.cuadrillas||"—"}</td>
+    <td class="mono">${f1(p.ejec_dia)}</td>
+    <td class="mono">${f1(p.prog_dia)}</td>
+    <td><span class="${pC(p.ejec_dia,p.prog_dia)}">${fP(p.ejec_dia,p.prog_dia)}</span></td>
+    <td class="mono">${f1(p.ejec_acum)}</td>
+    <td class="mono">${f1(p.prog_total||p.prog_acum)}</td>
+    <td><span class="${pC(p.ejec_acum,p.prog_total||p.prog_acum)}">${fP(p.ejec_acum,p.prog_total||p.prog_acum)}</span></td>
+  </tr>`).join("");
+  const cnt = document.getElementById("rehab-det-cnt");
+  if (cnt) cnt.textContent = filas.length + " labores";
 }
 
 // ── Debug: Probar TUMI API desde consola del navegador ───────────
@@ -7430,15 +7596,30 @@ async function cargarSkipDesdAPI(fecha) {
   const el = document.getElementById('skip-last-fecha');
   if(el) el.textContent = lastFecha || '—';
   const sv = (id,v) => { const e2=document.getElementById(id); if(e2) e2.textContent=v; };
+
+  // Aggregate registros into per-pique totals
+  const regs = data.registros || [];
+  const piquesData = {};
+  regs.forEach(r => {
+    const pid = (r.winche||'').toLowerCase();
+    if (!pid || !['b04','b05','sal','esp'].includes(pid)) return;
+    if (!piquesData[pid]) piquesData[pid] = { mineral:0, desmonte:0 };
+    piquesData[pid].mineral += r.mineral||0;
+    piquesData[pid].desmonte += r.desmonte||0;
+  });
+
   const piques = ['b04','b05','sal','esp'];
+  const FMI=FACTOR_MIN_PQI, FDI=FACTOR_DES_PQI, FSA=FACTOR_DES_SAL;
+  let totMin=0, totDes=0, totTMin=0, totTDes=0;
   piques.forEach(pid => {
-    const rec = data.piques?.[pid] || {};
+    const rec = piquesData[pid] || {};
     const ejMin = rec.mineral||0, ejDes = rec.desmonte||0;
+    totMin+=ejMin; totDes+=ejDes;
     sv('sp-'+pid+'-ej-min', ejMin||'—');
     sv('sp-'+pid+'-ej-des', ejDes||'—');
-    const FMI=FACTOR_MIN_PQI, FDI=FACTOR_DES_PQI, FSA=FACTOR_DES_SAL;
     const tmhMin = pid==='sal'?0:+(ejMin*FMI).toFixed(1);
     const tmhDes = +(ejDes*(pid==='sal'?FSA:FDI)).toFixed(1);
+    totTMin+=tmhMin; totTDes+=tmhDes;
     sv('sp-'+pid+'-tmh-min', tmhMin||'—');
     sv('sp-'+pid+'-tmh-des', tmhDes||'—');
     const progMin = parseInt(document.getElementById('sp-'+pid+'-pm')?.textContent||0);
@@ -7450,9 +7631,24 @@ async function cargarSkipDesdAPI(fecha) {
       pEl.className = pct>=100?'pG':pct>=85?'pY':'pR';
     }
   });
+  // Totals row
+  sv('sp-tot-ej-min', totMin||'—');
+  sv('sp-tot-ej-des', totDes||'—');
+  sv('sp-tot-acum-min', totTMin>0?totTMin.toFixed(1):'—');
+  sv('sp-tot-acum-des', totTDes>0?totTDes.toFixed(1):'—');
+
   const vq = document.getElementById('vq-last-fecha');
   if(vq) vq.textContent = lastFecha||'—';
-  console.log('[SKIP] Cargado:', lastFecha);
+
+  // Update SKIP_R for charts
+  regs.forEach(r => {
+    if (!r.fecha || !r.winche) return;
+    if (!SKIP_R.some(s => s[0]===r.fecha && s[1]===r.winche)) {
+      SKIP_R.push([r.fecha, r.winche, r.desmonte||0, r.mineral||0, r.total||0]);
+    }
+  });
+  SKIP_R.sort((a,b)=>{const p=a[0].split('/'),q=b[0].split('/');return p[2]-q[2]||p[1]-q[1]||p[0]-q[0];});
+  console.log('[SKIP] Cargado:', lastFecha, 'mineral:', totMin, 'desmonte:', totDes, '| SKIP_R:', SKIP_R.length);
 }
 
 async function cargarSkipResumenDesdeAPI() {
@@ -7477,102 +7673,79 @@ async function cargarVolqueteDesdAPI(fecha) {
   const data = await fetchAppScriptVQ({ accion:'dia', fecha });
   if (!data?.ok) return;
   const sv = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
-  const lastFecha = data.fecha;
-  sv('vq-last-fecha', lastFecha||'—');
+  sv('vq-last-fecha', data.fecha||'—');
 
-  // Aggregate by pique + material from registros
-  // Also support OLD API format (no pique/material fields) via resumen.por_pique or piques
-  const byPique = {};
   const regs = data.registros || [];
-  console.log('[VQ debug] registros:', regs.length, '| hasMaterial:', regs.some(r=>r.material),
-    '| hasPique:', regs.some(r=>r.pique), '| sample:', JSON.stringify(regs[0]||data.piques||{}).substring(0,100));
-  const hasPique = regs.some(r => r.pique);
-  if (hasPique) {
-    regs.forEach(r => {
-      const pid = r.pique || 'otros';
-      const isMin = (r.material||'MINERAL') !== 'DESMONTE';
-      if (!byPique[pid]) byPique[pid] = {ejMin:0,ejDes:0,tonMin:0,tonDes:0};
-      byPique[pid][isMin?'ejMin':'ejDes']  += r.nro_volquete || 0;
-      byPique[pid][isMin?'tonMin':'tonDes'] += r.toneladas    || 0;
-    });
-  } else {
-    // OLD API: each record is already a summary row (no pique field)
-    // Detect mineral/desmonte from material field or use all as mineral
-    console.log('[VQ] Old API — registros:', regs.length, 
-      '| nro_volquete:', regs[0]?.nro_volquete, 
-      '| toneladas:', regs[0]?.toneladas,
-      '| winche:', regs[0]?.winche, '| full:', JSON.stringify(regs[0]||{}).substring(0,200));
-    regs.forEach(r => {
-      // Old API: winche is short code (B04, B05...) or full name
-      const w = String(r.winche||r.winche_nombre||r.pique||'').toUpperCase()
-                .replace(/[^A-Z0-9\/\s]/g,'').trim();
-      let pid = 'otros';
-      if(/B[- ]?0?4|BASE[- ]?4/.test(w)) pid='b04';
-      else if(/B[- ]?0?5|BASE[- ]?5/.test(w)) pid='b05';
-      else if(/SAL|SALIDA/.test(w)) pid='sal';
-      else if(/ESP|ESPERANZA/.test(w)) pid='esp';
-      const isMin = (r.material||'MINERAL').toUpperCase() !== 'DESMONTE';
-      if (!byPique[pid]) byPique[pid] = {ejMin:0,ejDes:0,tonMin:0,tonDes:0};
-      byPique[pid][isMin?'ejMin':'ejDes']  += r.nro_volquete || 0;
-      byPique[pid][isMin?'tonMin':'tonDes'] += r.toneladas    || 0;
-    });
-  }
+  const hasMat = regs.some(r=>r.material);
+  const FV = FACTOR_VOLQ || 25;
+  const dbg = document.getElementById('vq-debug');
+  if (dbg) dbg.textContent = (hasMat?'mat':'total')+' regs='+regs.length;
 
-  const FV = FACTOR_VOLQ;
-  console.log('[VQ byPique]', JSON.stringify(byPique));
-  ['b04','b05','sal','esp'].forEach(pid => {
-    const rec    = byPique[pid] || {};
-    const ejMin  = rec.ejMin  || 0;
-    const ejDes  = rec.ejDes  || 0;
-    const tonMin = rec.tonMin > 0 ? rec.tonMin : ejMin * FV;
-    const tonDes = rec.tonDes > 0 ? rec.tonDes : ejDes * FV;
-    sv('vq-'+pid+'-ej-min',  ejMin  > 0 ? ejMin  : '—');
-    sv('vq-'+pid+'-ej-des',  ejDes  > 0 ? ejDes  : '—');
-    sv('vq-'+pid+'-tmh-min', tonMin > 0 ? tonMin.toFixed(0) : '—');
-    sv('vq-'+pid+'-tmh-des', tonDes > 0 ? tonDes.toFixed(0) : '—');
-    const progMin = parseInt(document.getElementById('vq-'+pid+'-pm')?.textContent||0);
-    const progDes = parseInt(document.getElementById('vq-'+pid+'-pd')?.textContent||0);
-    const pEl = document.getElementById('vq-'+pid+'-pct');
-    if(pEl && (progMin+progDes)>0) {
-      const pct = Math.round((ejMin+ejDes)/(progMin+progDes)*100);
-      pEl.textContent = pct+'%'; pEl.className = pct>=100?'pG':pct>=85?'pY':'pR';
+  // Aggregate by pique & material (if available)
+  const pp = {};
+  regs.forEach(r => {
+    let pid = r.pique || r.winche || '';
+    pid = pid.toLowerCase().trim();
+    if (!pid || !['b04','b05','sal','esp'].includes(pid)) return;
+    if (!pp[pid]) pp[pid] = {vMin:0,tMin:0,vDes:0,tDes:0};
+    if (hasMat) {
+      const mat = (r.material||'MINERAL').toUpperCase();
+      if (mat==='MINERAL') { pp[pid].vMin += r.nro_volquete||0; pp[pid].tMin += r.toneladas||0; }
+      else                 { pp[pid].vDes += r.nro_volquete||0; pp[pid].tDes += r.toneladas||0; }
+    } else {
+      pp[pid].vMin += r.nro_volquete||0;
+      pp[pid].tMin += r.toneladas||0;
     }
   });
 
-  // Update totals from resumen
-  const res = data.resumen || {};
-  sv('vq-tot-ej-min',  res.mineral_volquetes  || '—');
-  sv('vq-tot-ej-des',  res.desmonte_volquetes || '—');
-  sv('vq-tot-tmh-min', res.mineral_toneladas  ? res.mineral_toneladas.toFixed(0)  : '—');
-  sv('vq-tot-tmh-des', res.desmonte_toneladas ? res.desmonte_toneladas.toFixed(0) : '—');
-  const totMin = res.mineral_volquetes||0, totDes = res.desmonte_volquetes||0;
-  const pTot = document.getElementById('vq-tot-pct');
-  const progTotMin = parseInt(document.getElementById('vq-tot-pm')?.textContent||0);
-  const progTotDes = parseInt(document.getElementById('vq-tot-pd')?.textContent||0);
-  if(pTot && (progTotMin+progTotDes)>0) {
-    const pct = Math.round((totMin+totDes)/(progTotMin+progTotDes)*100);
-    pTot.textContent=pct+'%'; pTot.className=pct>=100?'pG':pct>=85?'pY':'pR';
+  // Merge resumen.por_pique if present (new API format)
+  const porPique = data.resumen?.por_pique;
+  if (porPique) {
+    Object.entries(porPique).forEach(([pid,rec]) => {
+      if (!pp[pid]) pp[pid] = {vMin:0,tMin:0,vDes:0,tDes:0};
+      if (rec.vMin!=null) { pp[pid].vMin = rec.vMin; pp[pid].tMin = rec.tMin||rec.vMin*FV; }
+      if (rec.vDes!=null) { pp[pid].vDes = rec.vDes; pp[pid].tDes = rec.tDes||rec.vDes*FV; }
+    });
   }
 
-  // Calculate totals from byPique (reliable regardless of API version)
-  const vqTotMin = Object.values(byPique).reduce((s,r)=>s+(r.ejMin||0),0);
-  const vqTotDes = Object.values(byPique).reduce((s,r)=>s+(r.ejDes||0),0);
-  const vqTonMin = Object.values(byPique).reduce((s,r)=>s+(r.tonMin||0),0);
-  const vqTonDes = Object.values(byPique).reduce((s,r)=>s+(r.tonDes||0),0);
-  const vqTotTon = vqTonMin + vqTonDes || (vqTotMin+vqTotDes)*FACTOR_VOLQ;
-  // Also use resumen if available (new API)
-  const _resMin = res.mineral_volquetes  || vqTotMin;
-  const _resDes = res.desmonte_volquetes || vqTotDes;
-  // Update totals row
-  sv('vq-tot-ej-min',  _resMin>0 ? _resMin  : (vqTotMin||'—'));
-  sv('vq-tot-ej-des',  _resDes>0 ? _resDes  : (vqTotDes||'—'));
-  sv('vq-tot-tmh-min', vqTonMin>0 ? vqTonMin.toFixed(0) : (vqTotMin*FACTOR_VOLQ||'—'));
-  sv('vq-tot-tmh-des', vqTonDes>0 ? vqTonDes.toFixed(0) : (vqTotDes*FACTOR_VOLQ||'—'));
-  const vqKpiEl = document.getElementById('kpi-vq-tmh');
-  if(vqKpiEl) vqKpiEl.textContent = vqTotTon>0 ? vqTotTon.toFixed(0) : '—';
-  const vqBdg = document.getElementById('kpi-vq-badge');
-  if(vqBdg) { vqBdg.textContent='● '+(vqTotMin+vqTotDes)+' viajes ('+vqTotMin+'M/'+vqTotDes+'D)'; vqBdg.className='kbdg kA'; }
-  console.log('[VQ] Cargado:', lastFecha, '| Min:', vqTotMin, 'volq | Des:', vqTotDes, 'volq | Ton:', vqTotTon.toFixed(0),'| byPique:', JSON.stringify(byPique));
+  let vqTotMin=0, vqTotDes=0, vqTonMin=0, vqTonDes=0;
+  ['b04','b05','sal','esp'].forEach(pid => {
+    const rec = pp[pid] || {};
+    const vMin = rec.vMin||0, vDes = rec.vDes||0;
+    const tMin = rec.tMin||vMin*FV, tDes = rec.tDes||vDes*FV;
+    vqTotMin+=vMin; vqTotDes+=vDes; vqTonMin+=tMin; vqTonDes+=tDes;
+    sv('vq-'+pid+'-ej-min',  vMin>0  ? vMin  : '—');
+    sv('vq-'+pid+'-ej-des',  vDes>0  ? vDes  : '—');
+    sv('vq-'+pid+'-tmh-min', tMin>0  ? tMin.toFixed(0) : '—');
+    sv('vq-'+pid+'-tmh-des', tDes>0  ? tDes.toFixed(0) : '—');
+    const pMin = parseInt(document.getElementById('vq-'+pid+'-pm')?.textContent||0);
+    const pDes = parseInt(document.getElementById('vq-'+pid+'-pd')?.textContent||0);
+    const pEl = document.getElementById('vq-'+pid+'-pct');
+    if (pEl && pMin+pDes>0) {
+      const pc = Math.round((vMin+vDes)/(pMin+pDes)*100);
+      pEl.textContent=pc+'%'; pEl.className=pc>=100?'pG':pc>=85?'pY':'pR';
+    }
+  });
+
+  // Totals
+  const totMin = vqTotMin||'—', totDes = vqTotDes||'—';
+  sv('vq-tot-ej-min',  totMin); sv('vq-tot-ej-des',  totDes);
+  sv('vq-tot-tmh-min', vqTonMin>0?vqTonMin.toFixed(0):'—');
+  sv('vq-tot-tmh-des', vqTonDes>0?vqTonDes.toFixed(0):'—');
+  const pTot = document.getElementById('vq-tot-pct');
+  const pMinTot = parseInt(document.getElementById('vq-tot-pm')?.textContent||0);
+  const pDesTot = parseInt(document.getElementById('vq-tot-pd')?.textContent||0);
+  if (pTot && pMinTot+pDesTot>0) {
+    const pc = Math.round((vqTotMin+vqTotDes)/(pMinTot+pDesTot)*100);
+    pTot.textContent=pc+'%'; pTot.className=pc>=100?'pG':pc>=85?'pY':'pR';
+  }
+  const vqTotTon = vqTonMin+vqTonDes || (vqTotMin+vqTotDes)*FV;
+  const kpi = document.getElementById('kpi-vq-tmh');
+  if (kpi) kpi.textContent = vqTotTon>0 ? vqTotTon.toFixed(0) : '—';
+  const bdg = document.getElementById('kpi-vq-badge');
+  const totV = vqTotMin+vqTotDes;
+  if (bdg) { bdg.textContent='● '+totV+' viajes'+(hasMat?' ('+vqTotMin+'M/'+vqTotDes+'D)':''); bdg.className='kbdg kA'; }
+  console.log('[VQ] OK:', data.fecha, 'Min:', vqTotMin, 'Des:', vqTotDes, 'Ton:', vqTotTon.toFixed(0));
 }
 
 
@@ -7819,13 +7992,128 @@ function openSeg() {
 function closeSeg() { document.getElementById('seg-modal').classList.remove('open'); }
 
 function renderRacsPanel() {
-  // Build RACS table from window._segRacsData if available
   const data = window._segData || {};
   const racs = data.racs || [];
-  const tbody = document.getElementById('tb-racs');
+  const sv = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
+
+  // RACS summary counts from API or defaults
+  const racsAlto  = data.racs_alto  || 19;
+  const racsMedio = data.racs_medio || 39;
+  const racsBajo  = data.racs_bajo  || 26;
+  const obsAbiertas = data.racs_abiertas || 84;
+  const total = racsAlto + racsMedio + racsBajo;
+
+  // Update KPIs
+  sv('racs-kpi-total', total);
+  sv('racs-kpi-alto', racsAlto);
+  sv('racs-kpi-medio', racsMedio);
+  sv('racs-kpi-bajo', racsBajo);
+  sv('racs-kpi-abiertas', obsAbiertas);
+  if (total > 0) {
+    sv('racs-kpi-alto-pct', (racsAlto/total*100).toFixed(0)+'% del total');
+    sv('racs-kpi-medio-pct', (racsMedio/total*100).toFixed(0)+'% del total');
+    sv('racs-kpi-bajo-pct', (racsBajo/total*100).toFixed(0)+'% del total');
+  }
+
+  // Risk level distribution bar
+  const barAlto = document.getElementById('rbar-alto');
+  const barMedio = document.getElementById('rbar-medio');
+  const barBajo = document.getElementById('rbar-bajo');
+  if (barAlto && total > 0) {
+    barAlto.style.width = (racsAlto/total*100)+'%';
+    barMedio.style.width = (racsMedio/total*100)+'%';
+    barBajo.style.width = (racsBajo/total*100)+'%';
+  }
+  sv('rleg-alto', racsAlto);
+  sv('rleg-medio', racsMedio);
+  sv('rleg-bajo', racsBajo);
+
+  // Charts
+  whenChartReady(() => {
+    // Destroy existing chart instances if any
+    if (window._chartSegDonut) { window._chartSegDonut.destroy(); }
+    if (window._chartSegAreas) { window._chartSegAreas.destroy(); }
+
+    const cDonut = document.getElementById('chartSegDonut');
+    if (cDonut) {
+      window._chartSegDonut = new Chart(cDonut, {
+        type: 'doughnut',
+        data: {
+          labels: ['Alto', 'Medio', 'Bajo', 'Abiertas'],
+          datasets: [{
+            data: [racsAlto, racsMedio, racsBajo, obsAbiertas],
+            backgroundColor: ['#DC2626', '#D97706', '#15803D', '#6B7280'],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: { legend: { display: false } }
+        }
+      });
+    }
+
+    const cAreas = document.getElementById('chartSegAreas');
+    if (cAreas) {
+      // Aggregate RACS by área from detail data, or show summary
+      const byArea = {};
+      racs.forEach(r => {
+        const area = r.area || 'Sin área';
+        if (!byArea[area]) byArea[area] = { alto:0, medio:0, bajo:0 };
+        const nivel = (r.nivel||'').toUpperCase();
+        if (nivel==='ALTO') byArea[area].alto++;
+        else if (nivel==='MEDIO') byArea[area].medio++;
+        else byArea[area].bajo++;
+      });
+      const areas = Object.keys(byArea);
+      if (areas.length === 0) {
+        // No detail data — show placeholder
+        window._chartSegAreas = new Chart(cAreas, {
+          type: 'bar',
+          data: {
+            labels: ['Alto', 'Medio', 'Bajo'],
+            datasets: [{
+              label: 'Observaciones',
+              data: [racsAlto, racsMedio, racsBajo],
+              backgroundColor: ['#DC2626', '#D97706', '#15803D'],
+              borderRadius: 4
+            }]
+          },
+          options: {
+            responsive: true, maintainAspectRatio: false,
+            indexAxis: 'y',
+            plugins: { legend: { display: false } },
+            scales: { x: { beginAtZero: true, grid: { display: false } },
+                     y: { grid: { display: false } } }
+          }
+        });
+      } else {
+        window._chartSegAreas = new Chart(cAreas, {
+          type: 'bar',
+          data: {
+            labels: areas,
+            datasets: [
+              { label: 'Alto', data: areas.map(a => byArea[a].alto), backgroundColor: '#DC2626', borderRadius: 2 },
+              { label: 'Medio', data: areas.map(a => byArea[a].medio), backgroundColor: '#D97706', borderRadius: 2 },
+              { label: 'Bajo', data: areas.map(a => byArea[a].bajo), backgroundColor: '#15803D', borderRadius: 2 }
+            ]
+          },
+          options: {
+            responsive: true, maintainAspectRatio: false,
+            indexAxis: 'y',
+            scales: { x: { stacked: true, grid: { display: false } },
+                     y: { stacked: true, grid: { display: false } } }
+          }
+        });
+      }
+    }
+  });
+
+  // RACS detail table
+  const tbody = document.getElementById('tb-racs-det');
   if (!tbody) return;
   if (!racs.length) {
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:10px;color:var(--t3)">Sin datos RACS</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:10px;color:var(--t3)">Sin datos RACS — pendiente conectar API de detalle</td></tr>';
     return;
   }
   tbody.innerHTML = racs.map(r => `<tr>
@@ -7838,6 +8126,8 @@ function renderRacsPanel() {
   </tr>`).join('');
 }
 
+function renderRacsDetalle() { renderRACSTable(); }
+
 function renderSegDet() { renderSegDetalle(); }
 function renderSegDetalle() {
   const data = window._segData || {};
@@ -7845,24 +8135,37 @@ function renderSegDetalle() {
   const tbody = document.getElementById('tb-seg-det');
   if (!tbody) return;
   const metaPct = window._segMetaPct || 0;
+  const area = document.getElementById('seg-f-area');
+  const busq = document.getElementById('seg-f-busq');
+  const filtArea = area?.value||'';
+  const filtBusq = busq?.value?.toLowerCase()||'';
   const pBdg = (e,p) => {
     if(!p) return '<span style="color:var(--t3)">—</span>';
     const pct = Math.round(e/p*100);
     return `<span style="font-weight:700;color:${pct>=metaPct?'#15803D':'#DC2626'}">${pct}%</span>`;
   };
-  tbody.innerHTML = personas.map(p => `<tr>
-    <td style="font-size:10px;font-weight:600">${p.empresa||p.ejecutor||'—'}</td>
+  let filtered = personas;
+  if (filtArea) filtered = filtered.filter(p => (p.empresa||p.area||'').toLowerCase().includes(filtArea.toLowerCase()));
+  if (filtBusq) filtered = filtered.filter(p => (p.nombre||p.cargo||p.empresa||'').toLowerCase().includes(filtBusq));
+  const cntEl = document.getElementById('seg-det-cnt');
+  if (cntEl) cntEl.textContent = filtered.length + ' personas';
+  tbody.innerHTML = filtered.map(p => `<tr>
+    <td style="font-size:10px">${p.area||p.empresa||'—'}</td>
+    <td style="font-size:10px;color:var(--t3)">${p.cargo||'—'}</td>
+    <td style="font-weight:600;font-size:10px">${p.nombre||'—'}</td>
     <td class="mono" style="text-align:center">${p.insp_prog||0}</td>
     <td class="mono" style="text-align:center">${p.insp_ejec||0}</td>
     <td style="text-align:center">${pBdg(p.insp_ejec||0,p.insp_prog||0)}</td>
     <td class="mono" style="text-align:center">${p.racs_prog||0}</td>
     <td class="mono" style="text-align:center">${p.racs_ejec||0}</td>
     <td style="text-align:center">${pBdg(p.racs_ejec||0,p.racs_prog||0)}</td>
-    <td class="mono" style="text-align:center">${p.cap_prog_e||p.cap_e||0}</td>
-    <td style="text-align:center">${pBdg(p.cap_prog_e||p.cap_e||0,p.cap_prog_p||p.cap_p||0)}</td>
+    <td class="mono" style="text-align:center">${p.reinst_prog!=null?p.reinst_prog:p.cap_prog_p||p.cap_p||0}</td>
+    <td class="mono" style="text-align:center">${p.reinst_ejec!=null?p.reinst_ejec:p.cap_prog_e||p.cap_e||0}</td>
+    <td style="text-align:center">${pBdg(p.reinst_ejec!=null?p.reinst_ejec:p.cap_prog_e||p.cap_e||0,p.reinst_prog!=null?p.reinst_prog:p.cap_prog_p||p.cap_p||0)}</td>
     <td style="text-align:center;font-weight:700;color:var(--nv)">
       ${p.ids_pct!=null?(p.ids_pct<1?p.ids_pct*100:p.ids_pct).toFixed(0)+'%':'—'}
     </td>
+    <td style="font-size:9px;color:var(--t3);max-width:120px;overflow:hidden;text-overflow:ellipsis">${p.obs||'—'}</td>
   </tr>`).join('');
   const idsProm = data.totales?.pct_ids_promedio;
   const idsNorm = idsProm!=null?(idsProm<1?idsProm*100:idsProm):null;
@@ -7872,7 +8175,7 @@ function renderSegDetalle() {
     const svk = (id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
     svk('kpi-seg-ids', idsNorm.toFixed(1)+'%');
   }
-  console.log('[SEG DET] Personas:', personas.length, '| IDS:', idsDisplay+'%');
+  console.log('[SEG DET] Personas:', filtered.length, '| IDS:', idsDisplay+'%');
 }
 
 
@@ -7886,10 +8189,7 @@ function segTab(id, btn) {
   if(id==='racs')    renderRacsPanel();
 }
 
-async function fetchRRHHSiv(params={}) {
-  // SIV TL y SIV CV comparten el mismo endpoint de RRHH
-  // Si hay URL específica de SIV TL → usar; sino intentar con SIV CV
-  const url = APPSCRIPT_URL_SIV_TL || APPSCRIPT_URL_SIV_CV;
+async function fetchRRHHSiv(url, params={}) {
   if (!url) return null;
   return _mkFetch(url)({accion:'rrhh', ...params});
 }
@@ -7904,7 +8204,7 @@ function closeMant() {
 
 // ══ ESC ══
 document.addEventListener('keydown', e => {
-  if(e.key==='Escape'){closeProd();closeLab();closeSkip();closeDDH();closeVQ();closeSeg();closeMant();closeAlm();closeAv();closeRB();closeRRHH();}
+  if(e.key==='Escape'){closeProd();closeLab();closeSkip();closeDDH();closeVQ();closeSeg();closeMant();closeAlm();closeAv();closeRB();closeRRHH();closeRehab();}
 });
 </script>
 <!-- ══ AVANCES MODAL ══════════════════════════════════════════════ -->
@@ -8043,6 +8343,55 @@ document.addEventListener('keydown', e => {
 </div>
 
 
+<!-- ══ REHAB MODAL ═══════════════════════════════════════════ -->
+<div class="mwrap" id="rehab-modal" onclick="if(event.target===this)closeRehab()">
+  <div class="modal" style="max-width:950px">
+    <div class="mhead">
+      <span class="mtitle">&#128296; Rehabilitación – Detalle</span>
+      <button class="mclose" onclick="closeRehab()">&#10005;</button>
+    </div>
+    <div class="mtabs">
+      <button class="mtab on" onclick="rehabTab('resumen',this)">&#128202; Resumen</button>
+      <button class="mtab"    onclick="rehabTab('detalle',this)">&#128196; Detalle por Labor</button>
+    </div>
+    <!-- TAB 1: Resumen KPIs -->
+    <div class="mpanel on" id="rehab-panel-resumen" style="overflow-y:auto;max-height:75vh">
+      <div style="padding:10px 16px 6px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+        <div class="mstat"><div class="mstat-l">Ejec. Día</div><div class="mstat-v" id="rehab-m-ejec-dia">—</div><div class="mstat-s">metros</div></div>
+        <div class="mstat"><div class="mstat-l">Prog. Día</div><div class="mstat-v" id="rehab-m-prog-dia">—</div><div class="mstat-s">metros</div></div>
+        <div class="mstat"><div class="mstat-l">Ejec. Acum.</div><div class="mstat-v" id="rehab-m-ejec-acum">—</div><div class="mstat-s">metros</div></div>
+        <div class="mstat"><div class="mstat-l">% Cumpl. Acum.</div><div class="mstat-v" id="rehab-m-pct-acum">—</div><div class="mstat-s">del programa</div></div>
+      </div>
+      <div style="padding:6px 16px 10px">
+        <div style="background:var(--w);border-radius:8px;padding:10px;border:1px solid var(--bd)">
+          <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:6px;text-align:center">Avance por Labor – Ejec. vs Prog. (m)</div>
+          <div style="height:250px"><canvas id="chartRehab" style="display:block;width:100%;height:100%"></canvas></div>
+        </div>
+      </div>
+    </div>
+    <!-- TAB 2: Detalle -->
+    <div class="mpanel" id="rehab-panel-detalle" style="overflow-y:auto;max-height:75vh">
+      <div class="mfilter">
+        <span class="mf-lbl">Zona</span>
+        <select class="mf-sel" id="rehab-f-zona" onchange="renderRehabDetalle()">
+          <option value="">Todas</option>
+        </select>
+        <span class="mf-badge" id="rehab-det-cnt">—</span>
+      </div>
+      <div class="mscroll" style="padding:0 16px 10px;overflow-x:auto">
+        <table class="dtbl" style="min-width:780px">
+          <thead><tr>
+            <th>Zona</th><th>Labor</th><th>Nivel</th><th>Tipo</th><th>Cuadrilla</th>
+            <th class="tht">Ejec. Día</th><th class="tht">Prog. Día</th><th class="thm">% Día</th>
+            <th class="tht">Ejec. Acum.</th><th class="tht">Prog. Total</th><th class="thm">% Acum.</th>
+          </tr></thead>
+          <tbody id="tb-rehab-det"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ══ RAISE BORING TUMI MODAL ════════════════════════════════════ -->
 <div class="mwrap" id="rb-modal" onclick="if(event.target===this)closeRB()">
   <div class="modal" style="max-width:1100px">
@@ -8107,7 +8456,7 @@ document.addEventListener('keydown', e => {
       <div class="mfilter">
         <span class="mf-lbl">Zona</span>
         <select class="mf-sel" id="rb-f-zona" onchange="renderRBDetalle()">
-          <option value="">Todas</option><option value="chulbe">Chulbe</option>
+          <option value="">Todas</option>
         </select>
         <span class="mf-badge" id="rb-det-cnt">—</span>
       </div>
