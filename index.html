@@ -854,7 +854,7 @@ body { background:#eef1f6; }
     <div class="hdr-meta-div"></div>
     <div class="hdr-meta-item">
       <span class="hdr-meta-lbl">Días del periodo</span>
-      <span class="hdr-meta-val"><strong>40</strong></span>
+      <span class="hdr-meta-val"><strong id="meta-dias-periodo">30</strong></span>
     </div>
     <div class="hdr-meta-div"></div>
     <div class="hdr-meta-item">
@@ -3282,8 +3282,14 @@ function onFechaReporteChange(fechaSel) {
   if (!fechaSel) return;
 
   const d = parseFechaHdr(fechaSel);
-  const mesKey = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0');
-  const periodo = PERIODOS[mesKey] || PERIODOS[Object.keys(PERIODOS).sort().pop()] || PERIODOS[Object.keys(PERIODOS)[0]];
+  const keys = Object.keys(PERIODOS).sort();
+  let periodo = null;
+  for (const k of keys) {
+    const p = PERIODOS[k];
+    const pIni = parseFechaHdr(p.ini), pFin = parseFechaHdr(p.fin);
+    if (d >= pIni && d <= pFin) { periodo = p; break; }
+  }
+  if (!periodo) periodo = PERIODOS[keys[keys.length-1]] || PERIODOS[keys[0]];
 
   const semana = getSemanaISO(d);
   const mesNom = MESES_ES[d.getMonth()+1];
@@ -3300,6 +3306,7 @@ function onFechaReporteChange(fechaSel) {
 
   // Actualizar metabar
   sv('meta-dias-ejec', diasEjec);
+  sv('meta-dias-periodo', periodo.dias);
   sv('meta-periodo-lbl', periodo.ini.substring(0,5) + ' → ' + periodo.fin.substring(0,5) + '/' + periodo.fin.split('/')[2]);
 
   // Actualizar meta a la fecha
@@ -3536,8 +3543,8 @@ async function cargarDiaDesdeAPI(fecha) {
   const zA = dataAcum?.zona_23    || {};
   const sA = dataAcum?.santa_rosa || {};
   // Period index for Z23M/SRM monthly ley arrays
-  const _periodoKey2 = (window._periodoActual?.key || window._periodoActual?.nombre || 'JUNIO').toUpperCase();
-  const _pIdx2 = {ENERO:0,FEBRERO:1,MARZO:2,ABRIL:3,MAYO:4,JUNIO:5}[_periodoKey2] ?? 5;
+  const _periodoKey2 = getMesPeriodo(fecha);
+  const _pIdx2 = {ENERO:0,FEBRERO:1,MARZO:2,ABRIL:3,MAYO:4,JUNIO:5,JULIO:6}[_periodoKey2] ?? 6;
   console.log('[LAB acum] zA.ley_pond:', zA.ley_pond, '| sA.ley_pond:', sA.ley_pond, '| Z23M.ley['+_pIdx2+']:', Z23M.ley[_pIdx2]);
   const tA = dataAcum?.total      || {};
   const acumZ23    = zA.ejec_acum_tmh || 0;
@@ -3545,9 +3552,8 @@ async function cargarDiaDesdeAPI(fecha) {
   const progAcumZ23= zA.prog_acum_tmh || 0;
   const progAcumSR = sA.prog_acum_tmh || 0;
   // Monthly weighted average: API acumulado > Z23M (from resumen_mes) > 0
-  const _periodoKey = (fecha || '').split('/')[1] === '06' ? 'JUNIO'
-    : window._periodoActual?.key?.toUpperCase() || 'JUNIO';
-  const _pIdx = {ENERO:0,FEBRERO:1,MARZO:2,ABRIL:3,MAYO:4,JUNIO:5}[_periodoKey] ?? 5;
+  const _periodoKey = getMesPeriodo(fecha);
+  const _pIdx = {ENERO:0,FEBRERO:1,MARZO:2,ABRIL:3,MAYO:4,JUNIO:5,JULIO:6}[_periodoKey] ?? 6;
   const leyZ23Mes  = zA.ley_pond  || Z23M.ley[_pIdx] || 0;
   const leySRMes   = sA.ley_pond  || SRM.ley[_pIdx]  || 0;
   const pctDias    = dataAcum?.pct_dias || 0;
@@ -4572,7 +4578,7 @@ const PIQUES_SKIP = {
 // Programa mensual y días
 const PROG_Z23_MES = 5820;
 const PROG_SR_MES  = 1115;
-const DIAS_PERIODO = 40;
+const DIAS_PERIODO = CFG.diasPeriodo;
 
 function calcularSkipVolq() {
   const progZ23dia = PROG_Z23_MES / DIAS_PERIODO;
@@ -7531,19 +7537,20 @@ function renderLabCard(data) {
   const sv = (id,v) => { const el=document.getElementById(id); if(el&&v!=null) el.textContent=v; };
   const cls = v => v>=0.46?'ley-c lhigh':v>=0.44?'ley-c lmed':'ley-c llow';
   const lbl = v => v>=0.46?'ÓPTIMO':v>=0.44?'REGULAR':'BAJO';
-  const fmt = (n,d=3) => n>0?n.toFixed(d):'—';
+  const fmt = (n,d=3) => n!=null&&n>0?n.toFixed(d):(n===0?'0':'—');
+  const fmtT = (n,d=1) => n!=null?n.toFixed(d):'—';
 
   const z23 = data.resumen_z23 || {};
   const sr  = data.resumen_sr  || {};
   const tot = data.resumen_tot || {};
 
   sv('lab-act-fecha', data.fecha||'—');
-  sv('lab-z23-tmh',  fmt(z23.tmh_dia,1));   sv('lab-z23-h2o', fmt(z23.h2o_prom,2));
-  sv('lab-z23-tms',  fmt(z23.tms_dia,3));   sv('lab-z23-kg',  fmt(z23.kg_dia,1));
-  sv('lab-sr-tmh',   fmt(sr.tmh_dia,1));    sv('lab-sr-h2o',  fmt(sr.h2o_prom,2));
-  sv('lab-sr-tms',   fmt(sr.tms_dia,3));    sv('lab-sr-kg',   fmt(sr.kg_dia,1));
-  sv('lab-tot-tmh',  fmt(tot.tmh_dia||z23.tmh_dia+sr.tmh_dia,1));
-  sv('lab-tot-h2o',  fmt(tot.h2o_prom,2));  sv('lab-tot-kg',  fmt(tot.kg_dia,1));
+  sv('lab-z23-tmh',  fmtT(z23.tmh_dia,1));   sv('lab-z23-h2o', fmt(z23.h2o_prom,2));
+  sv('lab-z23-tms',  fmtT(z23.tms_dia,3));   sv('lab-z23-kg',  fmt(z23.kg_dia,1));
+  sv('lab-sr-tmh',   fmtT(sr.tmh_dia,1));    sv('lab-sr-h2o',  fmt(sr.h2o_prom,2));
+  sv('lab-sr-tms',   fmtT(sr.tms_dia,3));    sv('lab-sr-kg',   fmt(sr.kg_dia,1));
+  sv('lab-tot-tmh',  fmtT(tot.tmh_dia!=null?tot.tmh_dia:z23.tmh_dia+sr.tmh_dia,1));
+  sv('lab-tot-h2o',  fmt(tot.h2o_prom,2));  sv('lab-tot-kg',   fmt(tot.kg_dia,1));
 
   const setLey = (idAu, idMes, idClase, leyDia, leyMes) => {
     const el = document.getElementById(idAu);
@@ -7569,13 +7576,23 @@ function renderLabCard(data) {
 function renderLabCardFromLocal(fecha) {
   if (!fecha) return;
   const p = fecha.split('/'); const mMes=p[1],mAnio=p[2];
+  const sv=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
+  const fmt = (n,d=1) => n>0?n.toFixed(d):'—';
+  // TMH del día
+  const z23Dia = Z23R.filter(r=>r[0]===fecha);
+  const srDia  = SRR.filter(r=>r[0]===fecha);
+  const zTmh = z23Dia.reduce((s,r)=>s+(r[3]||0),0);
+  const sTmh = srDia.reduce((s,r)=>s+(r[3]||0),0);
+  sv('lab-z23-tmh', fmt(zTmh,1));
+  sv('lab-sr-tmh',  fmt(sTmh,1));
+  sv('lab-tot-tmh', fmt(zTmh+sTmh,1));
+  // Ley Au
   let z23S=0,z23W=0,srS=0,srW=0;
   Z23R.filter(r=>{const q=r[0].split('/');return q[1]===mMes&&q[2]===mAnio&&r[6]>0;})
     .forEach(r=>{z23S+=r[6]*r[3];z23W+=r[3];});
   SRR.filter(r=>{const q=r[0].split('/');return q[1]===mMes&&q[2]===mAnio&&r[6]>0;})
     .forEach(r=>{srS+=r[6]*r[3];srW+=r[3];});
   const z23Au=z23W>0?z23S/z23W:0, srAu=srW>0?srS/srW:0;
-  const sv=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
   sv('kpi-au-z23',z23Au>0?z23Au.toFixed(3):'—');
   sv('kpi-au-sr', srAu >0?srAu.toFixed(3) :'—');
 }
