@@ -846,7 +846,7 @@ body { background:#eef1f6; }
   <div class="hdr-meta">
     <div class="hdr-meta-item">
       <span class="hdr-meta-lbl">Periodo activo</span>
-      <span class="hdr-meta-val" id="meta-periodo-lbl">16/05 → 24/06/2026</span>
+      <span class="hdr-meta-val" id="meta-periodo-lbl">26/07 → 25/08/2026</span>
       <button onclick="togglePeriodoPanel()" class="hdr-meta-btn" title="Configurar periodo">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
       </button>
@@ -893,7 +893,7 @@ body { background:#eef1f6; }
     <div class="ch" style="flex-wrap:wrap;gap:6px;justify-content:space-between">
       <span class="ct">&#129302; Seguridad</span>
       <div style="display:flex;align-items:center;gap:8px">
-        <span class="csub">Cía. Sotrami &nbsp;·&nbsp; <span id="seg-act-fecha">Jun 2026</span></span>
+        <span class="csub">Cía. Sotrami &nbsp;·&nbsp; <span id="seg-act-fecha">ago 2026</span></span>
         <button class="ch-btn" onclick="openSeg()">&#128202; Ver detalle</button>
       </div>
     </div>
@@ -3176,6 +3176,11 @@ const PERIODOS = {
   '2026-05': { ini:'16/05/2026', fin:'15/06/2026', dias:31 },
   '2026-06': { ini:'21/05/2026', fin:'24/06/2026', dias:35 },
   '2026-07': { ini:'26/06/2026', fin:'25/07/2026', dias:30 },
+  '2026-08': { ini:'26/07/2026', fin:'25/08/2026', dias:31 },
+  '2026-09': { ini:'26/08/2026', fin:'25/09/2026', dias:31 },
+  '2026-10': { ini:'26/09/2026', fin:'25/10/2026', dias:30 },
+  '2026-11': { ini:'26/10/2026', fin:'25/11/2026', dias:31 },
+  '2026-12': { ini:'26/11/2026', fin:'25/12/2026', dias:30 },
 };
 
 // ══ CONFIGURACIÓN DEL PERIODO ══════════════════════════════════
@@ -3352,6 +3357,11 @@ function getMesPeriodo(fecha) {
     MAYO:    {ini:'30/04/2026',fin:'20/05/2026'},
     JUNIO:   {ini:'21/05/2026',fin:'24/06/2026'},
     JULIO:   {ini:'26/06/2026',fin:'25/07/2026'},
+    AGOSTO:   {ini:'26/07/2026',fin:'25/08/2026'},
+    SETIEMBRE:   {ini:'26/08/2026',fin:'25/09/2026'},
+    OCTUBRE:   {ini:'26/09/2026',fin:'25/10/2026'},
+    NOVIEMBRE:   {ini:'26/10/2026',fin:'25/11/2026'},
+    DICIEMBRE:   {ini:'26/11/2026',fin:'25/12/2026'},
   };
   if (!fecha) return 'JULIO';
   const d = parseFechaHdr(fecha);
@@ -4478,7 +4488,7 @@ function renderDiaChart(){
     label: 'Periodo activo',
     data: labels.map(d => {
       const iso = d.split('/').reverse().join('-');
-      return (iso >= '2026-05-16' && iso <= '2026-07-25') ? (tipo==='tmh'?9999:0.99) : null;
+      return (iso >= '2026-07-26' && iso <= '2026-08-25') ? (tipo==='tmh'?9999:0.99) : null;
     }),
     backgroundColor: 'rgba(212,175,55,.08)',
     borderColor: 'rgba(212,175,55,.3)',
