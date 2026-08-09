@@ -3546,15 +3546,15 @@ async function cargarDiaDesdeAPI(fecha) {
 
   // ── Prog. Día desde PROG_DIA configurado ─────────────────────
   // API PLANTA_CIA: PROG_DIA = {Z23:130, SR:80} TMH/día
-  const PROG_Z23_DIA = 130, PROG_SR_DIA = 80;
-  const PROG_Z23_MES = 5820, PROG_SR_MES = 1115;
+  const PROG_Z23_DIA = 144.16, PROG_SR_DIA = 32.25;
+  const PROG_Z23_MES = 4469.18, PROG_SR_MES = 1000;
 
   // ── Datos acumulados del período ──────────────────────────────
   const zA = dataAcum?.zona_23    || {};
   const sA = dataAcum?.santa_rosa || {};
   // Period index for Z23M/SRM monthly ley arrays
   const _periodoKey2 = getMesPeriodo(fecha);
-  const _pIdx2 = {ENERO:0,FEBRERO:1,MARZO:2,ABRIL:3,MAYO:4,JUNIO:5,JULIO:6}[_periodoKey2] ?? 6;
+  const _pIdx2 = {ENERO:0,FEBRERO:1,MARZO:2,ABRIL:3,MAYO:4,JUNIO:5,JULIO:6,AGOSTO:7}[_periodoKey2] ?? 8;
   console.log('[LAB acum] zA.ley_pond:', zA.ley_pond, '| sA.ley_pond:', sA.ley_pond, '| Z23M.ley['+_pIdx2+']:', Z23M.ley[_pIdx2]);
   const tA = dataAcum?.total      || {};
   const acumZ23    = zA.ejec_acum_tmh || 0;
@@ -3563,12 +3563,12 @@ async function cargarDiaDesdeAPI(fecha) {
   const progAcumSR = sA.prog_acum_tmh || 0;
   // Monthly weighted average: API acumulado > Z23M (from resumen_mes) > 0
   const _periodoKey = getMesPeriodo(fecha);
-  const _pIdx = {ENERO:0,FEBRERO:1,MARZO:2,ABRIL:3,MAYO:4,JUNIO:5,JULIO:6}[_periodoKey] ?? 6;
+  const _pIdx = {ENERO:0,FEBRERO:1,MARZO:2,ABRIL:3,MAYO:4,JUNIO:5,JULIO:6,AGOSTO:7}[_periodoKey2] ?? 8;
   const leyZ23Mes  = zA.ley_pond  || Z23M.ley[_pIdx] || 0;
   const leySRMes   = sA.ley_pond  || SRM.ley[_pIdx]  || 0;
   const pctDias    = dataAcum?.pct_dias || 0;
   const diasEjec   = dataAcum?.dias_ejecutados || 0;
-  const diasTotal  = dataAcum?.dias_total || 35;
+  const diasTotal  = dataAcum?.dias_total || 31;
 
   // Ley ponderada acumulada del mes (desde Z23R/SRR como fallback)
   const fechaActual = dataDia.fecha || fecha;
