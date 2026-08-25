@@ -1251,10 +1251,15 @@ body { background:#eef1f6; }
           <td style="text-align:center"><span class="pN" id="av-tl-cia-pct-mes">—</span></td>
         </tr>
         <tr>
-          <td>Chulbe</td><td>Avance – Trackless</td><td style="color:var(--t3)">—</td>
-          <td class="mono">—</td><td class="mono">—</td><td><span class="pN">—</span></td>
-          <td class="mono">—</td><td class="mono">—</td><td><span class="pN">—</span></td>
-          <td class="mono" style="color:var(--t3)">—</td><td><span class="pN">—</span></td>
+          <td>Chulbe</td><td>Avance – Trackless</td><td style="color:#0E7490;font-weight:600">Corimayo</td>
+          <td class="mono" id="av-cor-ejec">—</td>
+          <td class="mono" id="av-cor-prog">—</td>
+          <td><span class="pN" id="av-cor-pct">—</span></td>
+          <td class="mono" id="av-cor-acum">—</td>
+          <td class="mono" id="av-cor-pacum">—</td>
+          <td><span class="pN" id="av-cor-pct-acum">—</span></td>
+          <td class="mono" id="av-cor-pmes">—</td>
+          <td style="text-align:center"><span class="pN" id="av-cor-pct-mes">—</span></td>
         </tr>
         <tr>
           <td>Sta. Rosa</td><td>Avance – Conv.</td><td style="color:#7C5800;font-weight:600">Copsem</td>
@@ -1651,6 +1656,20 @@ body { background:#eef1f6; }
           <td class="mono" style="text-align:center">—</td>
           <td class="mono" style="text-align:center;color:#DC2626;font-weight:700" id="rrhh-tumi-deficit">—</td>
           <td style="text-align:center"><span class="pR" id="rrhh-tumi-pct">—</span></td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;font-size:10px;color:#0E7490">Corimayo</td>
+          <td class="mono" style="text-align:center" id="rrhh-cor-empl">—</td>
+          <td class="mono" style="text-align:center" id="rrhh-cor-obr">—</td>
+          <td class="mono" style="text-align:center" id="rrhh-cor-ingr">—</td>
+          <td class="mono" style="text-align:center" id="rrhh-cor-renun">—</td>
+          <td class="mono" style="text-align:center" id="rrhh-cor-dm">—</td>
+          <td class="mono" style="text-align:center">—</td>
+          <td class="mono" style="text-align:center">—</td>
+          <td class="mono" style="text-align:center;font-weight:700;color:var(--nv)" id="rrhh-cor-total">—</td>
+          <td class="mono" style="text-align:center">—</td>
+          <td class="mono" style="text-align:center;color:#DC2626;font-weight:700" id="rrhh-cor-deficit">—</td>
+          <td style="text-align:center"><span class="pR" id="rrhh-cor-pct">—</span></td>
         </tr>
         <tr class="tot">
           <td style="font-weight:700;font-size:10px">TOTAL</td>
@@ -3144,10 +3163,12 @@ const APPSCRIPT_URL_SIV_TL       = 'https://script.google.com/macros/s/AKfycbxQt
 const APPSCRIPT_URL_SIV_CV        = 'https://script.google.com/macros/s/AKfycbxbk0Nm02aO5l0EenGQw_4K7FfrRyTF8irKsNdYZev9yGsOyKa6jcy4OwfWe1Y1V2GW/exec';    // SIV Convencional RRHH + Avances
 const APPSCRIPT_URL_CIA_TL        = 'https://script.google.com/macros/s/AKfycbxjMNn543tpT6bbS8_ddQB2JJCe3zZFNryqCDeV3UXr-gbvIzE5KxHWLAOgJXD88SIcWg/exec';  // Cía. Sotrami Trackless (SOTRAMI_TRACKLESS)
 const APPSCRIPT_URL_TUMI         = 'https://script.google.com/macros/s/AKfycbxde2qApzQ_m-fXc2gYpJGWqkoIqt4KgkEtoiAXqqDxpCuHmfN4Ntq16B-CCG6rtjCOXw/exec';       // Tumi RB + RRHH
+const APPSCRIPT_URL_CORIMAYO      = 'https://script.google.com/macros/s/AKfycbwiowRXGVLFkRCGnRrsrt2Fy535dUVZlVX8PQWfEV9STclv-X4dJpiBOo4W5wewv4Qz/exec'; // Corimayo (Chulbe) RRHH + Avances
 const APPSCRIPT_URL_SEG           = 'https://script.google.com/macros/s/AKfycbxjwm6kVGp3kVcd9OEyI5EuKnMmlCG92azIPkKRXBT10PnjOgHV72krIXt-cUXlKSprGQ/exec';
 const APPSCRIPT_URL_SEG_COP        = 'https://script.google.com/macros/s/AKfycbxLjkkI6PGMsWDUwSr_t_SJJ0fquIB_TC8pzH-43RR6xX71BKuSRvd9uToqu53OHoMnCw/exec';
 const APPSCRIPT_URL_SEG_SIV_TKL    = 'https://script.google.com/macros/s/AKfycbyB8IGpi36D6pHHYQxKgsfx63LPZ8HH99EtsFVhTsLp3pS41qJvFQQQBcaTdtomaRU1_g/exec';
 const APPSCRIPT_URL_SEG_SIV_CV     = 'https://script.google.com/macros/s/AKfycbyTK4s1v7H1zXwc3lNI9btT3r7VmF-PFima-9IKl_kdfDpvwfgfEf4fr-uLvM1e9CMKYQ/exec';
+const APPSCRIPT_URL_SEG_CORIMAYO   = 'https://script.google.com/macros/s/AKfycbzOCvtyaMgmcPOpEU9H44XP9UKj5BEthrQQjyKe2CjijvNmf70lzPduyPV5_tvcU2Zx/exec'; // Corimayo (Chulbe) Seguridad
 const APPSCRIPT_URL_ALM = 'https://script.google.com/macros/s/AKfycbwO-n6nSodHviw8sLf-GzTKKAvn8bCPMT8wQTR3lFsdpA5cKJTrw57zVc6QmIorpmbF/exec'; // ← Implementar SOTRAMI_appscript_almacen.js en ALMACEN_SOTRAMI → ALMACEN_SOTRAMI // ← Pegar URL de Almacén cuando esté implementado
 const APPSCRIPT_URL_MANT = 'https://script.google.com/macros/s/AKfycbxITbH2SqU_Q-SWFKzWn14cJktHvJaT2G_btaeSrwWRPsP63Xpibc5l23s2XLTFzbJ2/exec'; // ← Implementar SOTRAMI_appscript_mantto.js en MANTTO_SOTRAMI → MANTTO // ← Pegar URL de Mantenimiento cuando esté implementado
 
@@ -5909,6 +5930,7 @@ const SEG_DATA=[
   ['Copsem',       0,0, 0,0, 0,0, ''],
   ['Sector IV TL', 0,0, 0,0, 0,0, ''],
   ['Sector IV CV', 0,0, 0,0, 0,0, ''],
+  ['Corimayo',     0,0, 0,0, 0,0, ''], // ← Chulbe — pendiente hoja/Apps Script de Seguridad
 ];
 const SEG_IDX_CONTRATISTAS = 1;
 
@@ -7081,12 +7103,13 @@ async function cargarSegDesdeAPI(fecha) {
   const qMes  = '?accion=resumen&mes='+_mes+'&anio='+_anio;
   console.log('[SEG] Fetching mes='+_mes+' anio='+_anio);
   console.log('[SEG] URLs: CIA='+!!APPSCRIPT_URL_SEG+' COP='+!!APPSCRIPT_URL_SEG_COP+' TKL='+!!APPSCRIPT_URL_SEG_SIV_TKL+' CV='+!!APPSCRIPT_URL_SEG_SIV_CV);
-  // Fetch all 4 in parallel
-  const [dataCia, dataCop, dataTKL, dataCV] = await Promise.all([
+  // Fetch all 5 in parallel
+  const [dataCia, dataCop, dataTKL, dataCV, dataCor] = await Promise.all([
     APPSCRIPT_URL_SEG         ? fetch(APPSCRIPT_URL_SEG         + qMes).then(r=>r.json()).catch(e=>{console.warn('[SEG CIA]',e.message);return null;}) : null,
     APPSCRIPT_URL_SEG_COP     ? fetch(APPSCRIPT_URL_SEG_COP     + qMes).then(r=>r.json()).catch(e=>{console.warn('[SEG COP]',e.message);return null;}) : null,
     APPSCRIPT_URL_SEG_SIV_TKL ? fetch(APPSCRIPT_URL_SEG_SIV_TKL+ qMes).then(r=>r.json()).catch(e=>{console.warn('[SEG TKL]',e.message);return null;}) : null,
     APPSCRIPT_URL_SEG_SIV_CV  ? fetch(APPSCRIPT_URL_SEG_SIV_CV + qMes).then(r=>r.json()).catch(e=>{console.warn('[SEG CV]', e.message);return null;}) : null,
+    APPSCRIPT_URL_SEG_CORIMAYO? fetch(APPSCRIPT_URL_SEG_CORIMAYO+qMes).then(r=>r.json()).catch(e=>{console.warn('[SEG COR]',e.message);return null;}) : null,
   ]);
 
   // Update SEG_DATA from each API
@@ -7099,6 +7122,7 @@ async function cargarSegDesdeAPI(fecha) {
   updateRow(1, dataCop);
   updateRow(2, dataTKL);
   updateRow(3, dataCV);
+  updateRow(4, dataCor);
   // Use CIA data as primary for RACS/CAP (most complete)
   const primary = dataCia || dataCop || dataTKL || dataCV;
   window._segData = primary;
@@ -7133,12 +7157,13 @@ async function cargarRRHH(fecha) {
   }
 
   // Fetch all company data in parallel
-  const [ds, dtl, dcv, dcop, dtumi] = await Promise.all([
+  const [ds, dtl, dcv, dcop, dtumi, dcor] = await Promise.all([
     fetchRRHH(APPSCRIPT_URL_RRHH_SOT),
     fetchRRHHSiv(APPSCRIPT_URL_SIV_TL),   // uses accion=rrhh
     fetchRRHHSiv(APPSCRIPT_URL_SIV_CV),   // uses accion=rrhh
     fetchRRHH(APPSCRIPT_URL_COP),
     fetchRRHH(APPSCRIPT_URL_TUMI),
+    fetchRRHHSiv(APPSCRIPT_URL_CORIMAYO), // uses accion=rrhh
   ]);
 
   // Helper to extract totals from each response
@@ -7196,8 +7221,18 @@ async function cargarRRHH(fecha) {
     sv('rrhh-tumi-dm',    fmt(getTot(dtumi,'obr_dm')     +getTot(dtumi,'emp_dm')));
   }
 
+  // Corimayo (Chulbe)
+  if (dcor) {
+    sv('rrhh-cor-total', fmt(getTot(dcor,'activo_total')||getTot(dcor,'total_hc')));
+    sv('rrhh-cor-obr',   fmt(getTot(dcor,'obr_activo')));
+    sv('rrhh-cor-empl',  fmt(getTot(dcor,'emp_activo')));
+    sv('rrhh-cor-ingr',  fmt(getTot(dcor,'obr_ingreso')+getTot(dcor,'emp_ingreso')));
+    sv('rrhh-cor-renun', fmt(getTot(dcor,'obr_salida') +getTot(dcor,'emp_salida')));
+    sv('rrhh-cor-dm',    fmt(getTot(dcor,'obr_dm')     +getTot(dcor,'emp_dm')));
+  }
+
   // Total row
-  const sources = [ds,dtl,dcv,dcop,dtumi].filter(Boolean);
+  const sources = [ds,dtl,dcv,dcop,dtumi,dcor].filter(Boolean);
   const total = (field) => sources.reduce((s,d)=>s+(getTot(d,'activo_total')||getTot(d,'total_hc')||0),0);
   const totHC  = sources.reduce((s,d)=>s+(getTot(d,'activo_total')||getTot(d,'total_hc')||0),0);
   const totObr = sources.reduce((s,d)=>s+getTot(d,'obr_activo'),0);
@@ -7244,7 +7279,7 @@ function openRRHH(){document.getElementById("rrhh-modal").classList.add("open");
 function closeRRHH(){document.getElementById("rrhh-modal")?.classList.remove("open");}
 function rrhhTab(id,btn){document.querySelectorAll("#rrhh-modal .mtab").forEach(t=>t.classList.remove("on"));document.querySelectorAll("#rrhh-modal .mpanel").forEach(p=>p.classList.remove("on"));btn.classList.add("on");document.getElementById("rrhh-panel-"+id)?.classList.add("on");requestAnimationFrame(()=>requestAnimationFrame(()=>whenChartReady(()=>{if(id==="indicadores")buildRRHHCharts();if(id==="ausentismo")buildAusentismoCharts();if(id==="rotacion")buildRotacionCharts();})));}
 function buildRRHHModal(){const sv=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};const getV=id=>{const el=document.getElementById(id);return parseFloat(el?.textContent?.replace(/[^0-9.]/g,""))||0;};sv("rrhh-m-hc",getV("rrhh-tot-total")||"—");const data=getRRHHEmpresaData();const tI=data.reduce((s,e)=>s+e.ing,0),tS=data.reduce((s,e)=>s+e.sal,0),tD=data.reduce((s,e)=>s+e.dm,0),tH=data.reduce((s,e)=>s+e.hc,0);sv("rrhh-m-ing",tI||"—");sv("rrhh-m-sal",tS||"—");sv("rrhh-m-aus",tH>0?(tD/tH*100).toFixed(1)+"%":"—");buildRRHHCharts();}
-function getRRHHEmpresaData(){const emp={Sotrami:{tot:"rrhh-sot-total",obr:"rrhh-sot-obr",emp:"rrhh-sot-empl",ing:"rrhh-sot-ingr",sal:"rrhh-sot-renun",dm:"rrhh-sot-dm"},"SIV TL":{tot:"rrhh-tl-total",obr:"rrhh-tl-obr",emp:"rrhh-tl-empl",ing:"rrhh-tl-ingr",sal:"rrhh-tl-renun",dm:"rrhh-tl-dm"},"SIV CV":{tot:"rrhh-cv-total",obr:"rrhh-cv-obr",emp:"rrhh-cv-empl",ing:"rrhh-cv-ingr",sal:"rrhh-cv-renun",dm:"rrhh-cv-dm"},Copsem:{tot:"rrhh-cop-total",obr:"rrhh-cop-obr",emp:"rrhh-cop-empl",ing:"rrhh-cop-ingr",sal:"rrhh-cop-renun",dm:"rrhh-cop-dm"},Tumi:{tot:"rrhh-tumi-total",obr:"rrhh-tumi-obr",emp:"rrhh-tumi-empl",ing:"rrhh-tumi-ingr",sal:"rrhh-tumi-renun",dm:"rrhh-tumi-dm"}};const getN=id=>{const el=document.getElementById(id);return parseFloat(el?.textContent?.replace(/[^0-9.-]/g,""))||0;};return Object.entries(emp).map(([n,ids])=>({nombre:n,hc:getN(ids.tot),obr:getN(ids.obr),emp:getN(ids.emp),ing:getN(ids.ing),sal:getN(ids.sal),dm:getN(ids.dm)})).filter(e=>e.hc>0);}
+function getRRHHEmpresaData(){const emp={Sotrami:{tot:"rrhh-sot-total",obr:"rrhh-sot-obr",emp:"rrhh-sot-empl",ing:"rrhh-sot-ingr",sal:"rrhh-sot-renun",dm:"rrhh-sot-dm"},"SIV TL":{tot:"rrhh-tl-total",obr:"rrhh-tl-obr",emp:"rrhh-tl-empl",ing:"rrhh-tl-ingr",sal:"rrhh-tl-renun",dm:"rrhh-tl-dm"},"SIV CV":{tot:"rrhh-cv-total",obr:"rrhh-cv-obr",emp:"rrhh-cv-empl",ing:"rrhh-cv-ingr",sal:"rrhh-cv-renun",dm:"rrhh-cv-dm"},Copsem:{tot:"rrhh-cop-total",obr:"rrhh-cop-obr",emp:"rrhh-cop-empl",ing:"rrhh-cop-ingr",sal:"rrhh-cop-renun",dm:"rrhh-cop-dm"},Tumi:{tot:"rrhh-tumi-total",obr:"rrhh-tumi-obr",emp:"rrhh-tumi-empl",ing:"rrhh-tumi-ingr",sal:"rrhh-tumi-renun",dm:"rrhh-tumi-dm"},Corimayo:{tot:"rrhh-cor-total",obr:"rrhh-cor-obr",emp:"rrhh-cor-empl",ing:"rrhh-cor-ingr",sal:"rrhh-cor-renun",dm:"rrhh-cor-dm"}};const getN=id=>{const el=document.getElementById(id);return parseFloat(el?.textContent?.replace(/[^0-9.-]/g,""))||0;};return Object.entries(emp).map(([n,ids])=>({nombre:n,hc:getN(ids.tot),obr:getN(ids.obr),emp:getN(ids.emp),ing:getN(ids.ing),sal:getN(ids.sal),dm:getN(ids.dm)})).filter(e=>e.hc>0);}
 function buildRRHHCharts(){const data=getRRHHEmpresaData();if(!data.length)return;const NV="#003366",GD="#C9A227",G="#15803D",Y="#D97706",T="#0E7490";const cols=[NV,GD,G,Y,T,"#7C3AED"];if(window._chartRRHHEmp)window._chartRRHHEmp.destroy();const c1=document.getElementById("chartRRHHEmpresa");if(c1)window._chartRRHHEmp=new Chart(c1,{type:"bar",data:{labels:data.map(e=>e.nombre),datasets:[{label:"HC Activo",data:data.map(e=>e.hc),backgroundColor:data.map((_,i)=>cols[i]+"CC"),borderRadius:3}]},options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:"rgba(0,0,0,0.05)"},border:{display:false},ticks:{font:{size:9}}},y:{grid:{display:false},border:{display:false},ticks:{font:{size:9}}}}}});if(window._chartRRHHTipo)window._chartRRHHTipo.destroy();const c2=document.getElementById("chartRRHHTipo");if(c2){const tO=data.reduce((s,e)=>s+e.obr,0),tE=data.reduce((s,e)=>s+e.emp,0);window._chartRRHHTipo=new Chart(c2,{type:"doughnut",data:{labels:["Obreros","Empleados"],datasets:[{data:[tO,tE],backgroundColor:[NV+"CC",GD+"CC"],borderWidth:2,borderColor:"#fff"}]},options:{responsive:true,maintainAspectRatio:false,cutout:"65%",plugins:{legend:{position:"bottom",labels:{font:{size:9},usePointStyle:true}}}}});}}
 function buildAusentismoCharts(){const data=getRRHHEmpresaData();const sv=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};const R="#DC2626",Y="#D97706",T="#0E7490";const tH=data.reduce((s,e)=>s+e.hc,0),tF=data.reduce((s,e)=>s+e.dm,0);sv("rrhh-m-fal",tF||"—");sv("rrhh-m-dm",tF||"—");sv("rrhh-m-iaus",tH>0?(tF/tH*100).toFixed(1)+"%":"—");if(window._chartAusComp)window._chartAusComp.destroy();const c1=document.getElementById("chartAusentismoComp");if(c1)window._chartAusComp=new Chart(c1,{type:"bar",data:{labels:data.map(e=>e.nombre),datasets:[{label:"DM/Sub.",data:data.map(e=>e.dm),backgroundColor:T+"CC",borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{font:{size:9},usePointStyle:true}}},scales:{x:{grid:{display:false},border:{display:false},ticks:{font:{size:9}}},y:{grid:{color:"rgba(0,0,0,0.05)"},border:{display:false},ticks:{font:{size:9}}}}}});if(window._chartAusEmp)window._chartAusEmp.destroy();const c2=document.getElementById("chartAusentismoEmp");if(c2){const aE=data.map(e=>e.hc>0?parseFloat((e.dm/e.hc*100).toFixed(1)):0);window._chartAusEmp=new Chart(c2,{type:"bar",data:{labels:data.map(e=>e.nombre),datasets:[{label:"% Ausentismo",data:aE,backgroundColor:aE.map(v=>v>10?R+"CC":v>5?Y+"CC":T+"CC"),borderRadius:3}]},options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:"rgba(0,0,0,0.05)"},border:{display:false},ticks:{font:{size:9},callback:v=>v+"%"}},y:{grid:{display:false},border:{display:false},ticks:{font:{size:9}}}}}});}}
 function buildRotacionCharts(){const data=getRRHHEmpresaData();const sv=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};const G="#15803D",R="#DC2626",Y="#D97706";const tH=data.reduce((s,e)=>s+e.hc,0),tI=data.reduce((s,e)=>s+e.ing,0),tS=data.reduce((s,e)=>s+e.sal,0);sv("rrhh-m-rot-ing",tI||"—");sv("rrhh-m-rot-sal",tS||"—");sv("rrhh-m-irot",tH>0?(((tI+tS)/2)/tH*100).toFixed(1)+"%":"—");if(window._chartRotEmp)window._chartRotEmp.destroy();const c1=document.getElementById("chartRotacionEmp");if(c1)window._chartRotEmp=new Chart(c1,{type:"bar",data:{labels:data.map(e=>e.nombre),datasets:[{label:"Ingresos",data:data.map(e=>e.ing),backgroundColor:G+"CC",borderRadius:2},{label:"Salidas",data:data.map(e=>e.sal),backgroundColor:R+"CC",borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{font:{size:9},usePointStyle:true}}},scales:{x:{grid:{display:false},border:{display:false},ticks:{font:{size:9}}},y:{grid:{color:"rgba(0,0,0,0.05)"},border:{display:false},ticks:{font:{size:9},stepSize:1}}}}});if(window._chartRotDet)window._chartRotDet.destroy();const c2=document.getElementById("chartRotacionDetalle");if(c2){const rP=data.map(e=>e.hc>0?parseFloat((((e.ing+e.sal)/2)/e.hc*100).toFixed(1)):0);window._chartRotDet=new Chart(c2,{type:"bar",data:{labels:data.map(e=>e.nombre),datasets:[{label:"% Rotación",data:rP,backgroundColor:rP.map(v=>v>5?R+"CC":v>2?Y+"CC":G+"CC"),borderRadius:3}]},options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:"rgba(0,0,0,0.05)"},border:{display:false},ticks:{font:{size:9},callback:v=>v+"%"}},y:{grid:{display:false},border:{display:false},ticks:{font:{size:9}}}}}});}}
@@ -7809,7 +7844,7 @@ async function cargarAvances(fecha) {
   const pCls = (e,p) => { if(!p||!e) return 'pN'; const r=e/p*100; return r>=100?'pG':r>=85?'pY':'pR'; };
   const normPct = p => p==null ? null : (Math.abs(p) <= 1.0 && p !== 0) ? p*100 : p;
 
-  let dcv=null, dtl=null, dcop=null, dcia=null;
+  let dcv=null, dtl=null, dcop=null, dcia=null, dcor=null;
 
   // ── SIV Convencional ──────────────────────────────────────────
   if (APPSCRIPT_URL_SIV_CV) {
@@ -7932,6 +7967,34 @@ async function cargarAvances(fecha) {
     }
   }
 
+  // ── Corimayo (Chulbe) ────────────────────────────────────────
+  if (APPSCRIPT_URL_CORIMAYO) {
+    dcor = await fetchAppScriptCorimayo({ accion:'avances', fecha }).catch(()=>null);
+  }
+  if (dcor?.ok && dcor.zonas?.length) {
+    // Corimayo → consolidate all zonas (normalmente solo "Chulbe") en la fila av-cor-*
+    const corEjec  = dcor.zonas.reduce((s,z)=>s+(z.ejec_dia ||0),0);
+    const corProg  = dcor.zonas.reduce((s,z)=>s+(z.prog_dia ||0),0);
+    const corAcum  = dcor.zonas.reduce((s,z)=>s+(z.ejec_acum||0),0);
+    const corPacum = dcor.zonas.reduce((s,z)=>s+(z.prog_acum||0),0);
+    const corPmes  = dcor.zonas.reduce((s,z)=>Math.max(s,z.prog_mes||0),0);
+    sv('av-cor-ejec',  fmtM(corEjec));
+    sv('av-cor-prog',  fmtM(corProg));
+    sv('av-cor-acum',  fmtM(corAcum));
+    sv('av-cor-pacum', fmtM(corPacum));
+    sv('av-cor-pmes',  fmtM(corPmes));
+    const cDia  = corProg  > 0 ? corEjec  / corProg  * 100 : null;
+    const cAcum = corPacum > 0 ? corAcum  / corPacum * 100 : null;
+    const cMes  = corPmes  > 0 ? corAcum  / corPmes  * 100 : null;
+    const elD = document.getElementById('av-cor-pct');
+    if(elD){ elD.textContent=(cDia!=null&&corEjec>0)?cDia.toFixed(1)+'%':'—'; elD.className=pCls(corEjec,corProg); }
+    const elA = document.getElementById('av-cor-pct-acum');
+    if(elA){ elA.textContent=(cAcum!=null&&corAcum>0)?cAcum.toFixed(1)+'%':'—'; elA.className=pCls(corAcum,corPacum); }
+    const elM = document.getElementById('av-cor-pct-mes');
+    if(elM){ elM.textContent=(cMes!=null&&corAcum>0)?cMes.toFixed(1)+'%':'—'; elM.className=pCls(corAcum,corPmes); }
+    console.log('[AVANCES CORIMAYO] Cargado:', dcor.zonas.length, 'zonas, Ejec:', corEjec.toFixed(1));
+  }
+
     // ── TOTAL AVANCE ──────────────────────────────────────────────
   // Calculate totals directly from API data (not DOM — avoids async read issues)
   const fmtT = n => n>0 ? n.toFixed(1) : '—';
@@ -7941,11 +8004,11 @@ async function cargarAvances(fecha) {
   const copA = dcop?.zonas?.reduce((s,z)=>s+(z.ejec_acum||0),0)||0;
   const copPA= dcop?.zonas?.reduce((s,z)=>s+(z.prog_acum||0),0)||0;
   const copPM= dcop?.zonas?.reduce((s,z)=>s+(z.prog_mes||0),0)||0;
-  const totEjec  = sumZ(dcv,'ejec_dia')  + sumZ(dtl,'ejec_dia')  + sumZ(dcia,'ejec_dia')  + copE;
-  const totProg  = sumZ(dcv,'prog_dia')  + sumZ(dtl,'prog_dia')  + sumZ(dcia,'prog_dia')  + copP;
-  const totAcum  = sumZ(dcv,'ejec_acum') + sumZ(dtl,'ejec_acum') + sumZ(dcia,'ejec_acum') + copA;
-  const totPacum = sumZ(dcv,'prog_acum') + sumZ(dtl,'prog_acum') + sumZ(dcia,'prog_acum') + copPA;
-  const totPmes  = sumZ(dcv,'prog_mes')  + sumZ(dtl,'prog_mes')  + sumZ(dcia,'prog_mes')  + copPM;
+  const totEjec  = sumZ(dcv,'ejec_dia')  + sumZ(dtl,'ejec_dia')  + sumZ(dcia,'ejec_dia')  + copE  + sumZ(dcor,'ejec_dia');
+  const totProg  = sumZ(dcv,'prog_dia')  + sumZ(dtl,'prog_dia')  + sumZ(dcia,'prog_dia')  + copP  + sumZ(dcor,'prog_dia');
+  const totAcum  = sumZ(dcv,'ejec_acum') + sumZ(dtl,'ejec_acum') + sumZ(dcia,'ejec_acum') + copA  + sumZ(dcor,'ejec_acum');
+  const totPacum = sumZ(dcv,'prog_acum') + sumZ(dtl,'prog_acum') + sumZ(dcia,'prog_acum') + copPA + sumZ(dcor,'prog_acum');
+  const totPmes  = sumZ(dcv,'prog_mes')  + sumZ(dtl,'prog_mes')  + sumZ(dcia,'prog_mes')  + copPM + sumZ(dcor,'prog_mes');
 
   sv('av-tot-ejec',  fmtT(totEjec));
   sv('av-tot-prog',  fmtT(totProg));
@@ -8008,6 +8071,7 @@ async function fetchAppScriptSivTL(params={}) { return _mkFetch(APPSCRIPT_URL_SI
 async function fetchAppScriptSegSivTKL(params={}) { return _mkFetch(APPSCRIPT_URL_SEG_SIV_TKL)(params); }
 async function fetchAppScriptSegSivCV(params={}) { return _mkFetch(APPSCRIPT_URL_SEG_SIV_CV)(params); }
 async function fetchAppScriptCiaTL(params={}) { return _mkFetch(APPSCRIPT_URL_CIA_TL)(params); }
+async function fetchAppScriptCorimayo(params={}) { return _mkFetch(APPSCRIPT_URL_CORIMAYO)(params); }
 
 // ══ SEGURIDAD MODAL ══════════════════════════════════════════════
 function openSeg() {
