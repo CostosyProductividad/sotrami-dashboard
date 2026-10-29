@@ -1253,14 +1253,25 @@ body { background:#eef1f6; }
         </tr>
         <tr>
           <td>Sta. Rosa</td><td>Avance – Conv.</td><td style="color:#7C5800;font-weight:600">Copsem</td>
-          <td class="mono" id="av-cop-ejec">—</td>
-          <td class="mono" id="av-cop-prog">—</td>
-          <td><span class="pN" id="av-cop-pct">—</span></td>
-          <td class="mono" id="av-cop-acum">—</td>
-          <td class="mono" id="av-cop-pacum">—</td>
-          <td><span class="pN" id="av-cop-pct-acum">—</span></td>
-          <td class="mono" id="av-cop-pmes">—</td>
-          <td style="text-align:center"><span class="pN" id="av-cop-pct-mes">—</span></td>
+          <td class="mono" id="av-cop-cnv-ejec">—</td>
+          <td class="mono" id="av-cop-cnv-prog">—</td>
+          <td><span class="pN" id="av-cop-cnv-pct">—</span></td>
+          <td class="mono" id="av-cop-cnv-acum">—</td>
+          <td class="mono" id="av-cop-cnv-pacum">—</td>
+          <td><span class="pN" id="av-cop-cnv-pct-acum">—</span></td>
+          <td class="mono" id="av-cop-cnv-pmes">—</td>
+          <td style="text-align:center"><span class="pN" id="av-cop-cnv-pct-mes">—</span></td>
+        </tr>
+        <tr>
+          <td>Sta. Rosa</td><td>Avance – Trackless</td><td style="color:#7C5800;font-weight:600">Copsem</td>
+          <td class="mono" id="av-cop-tkl-ejec">—</td>
+          <td class="mono" id="av-cop-tkl-prog">—</td>
+          <td><span class="pN" id="av-cop-tkl-pct">—</span></td>
+          <td class="mono" id="av-cop-tkl-acum">—</td>
+          <td class="mono" id="av-cop-tkl-pacum">—</td>
+          <td><span class="pN" id="av-cop-tkl-pct-acum">—</span></td>
+          <td class="mono" id="av-cop-tkl-pmes">—</td>
+          <td style="text-align:center"><span class="pN" id="av-cop-tkl-pct-mes">—</span></td>
         </tr>
         <tr class="tot">
           <td colspan="3">TOTAL AVANCE (m)</td>
@@ -5984,10 +5995,148 @@ function renderSeguridad(apiData) {
     return Math.round(ejec / prog * 100);
   }
   function badge(p) {
-      if (p === null || p === undefined) return '<span style="color:var(--t3)">—</span>';
-      const cls = p >= metaPct ? 'pG' : p >= metaPct * 0.85 ? 'pY' : 'pR';
-      return `<span class="${cls}">${p}%</span>`;
+    if (p === null || p === undefined) return '<span style="color:var(--t3)">—</span>';
+    const cls = p >= metaPct ? 'pG' : p >= metaPct * 0.85 ? 'pY' : 'pR';
+    return `<span class="${cls}">${p}%</span>`;
+  }
+
+  let totIP=0,totIE=0,totRP=0,totRE=0,totReP=0,totReE=0;
+
+  tbody.innerHTML = SEG_DATA.map(([emp, ip, ie, rp, re, reip, reie, obs]) => {
+    totIP+=ip; totIE+=ie; totRP+=rp; totRE+=re; totReP+=reip; totReE+=reie;
+
+    const pInsp  = pct(ie, ip);
+    const pRacs  = pct(re, rp);
+    const pReinst= pct(reie, reip);
+    // % Global ponderado: promedio de los 3 indicadores
+    const validPcts = [pInsp,pRacs,pReinst].filter(p=>p!==null);
+    const pGlobal = validPcts.length
+      ? Math.round(validPcts.reduce((s,v)=>s+v,0)/validPcts.length)
+      : null;
+
+    const globalBg = pGlobal===null ? '' :
+      pGlobal >= metaPct
+        ? 'background:rgba(21,128,61,.1)'
+        : 'background:rgba(220,38,38,.07)';
+
+    return `<tr>
+      <td style="font-weight:600;font-size:10px">${emp}</td>
+      <td class="mono" style="text-align:center">${ip.toLocaleString('es-PE')}</td>
+      <td class="tdt">${ie}</td>
+      <td style="text-align:center">${badge(pInsp)}</td>
+      <td class="mono" style="text-align:center">${rp.toLocaleString('es-PE')}</td>
+      <td class="tdt">${re}</td>
+      <td style="text-align:center">${badge(pRacs)}</td>
+      <td class="mono" style="text-align:center">${reip.toLocaleString('es-PE')}</td>
+      <td class="tdt">${reie}</td>
+      <td style="text-align:center">${badge(pReinst)}</td>
+      <td style="text-align:center;font-weight:700;font-size:11px;${globalBg}">
+        ${badge(pGlobal)}
+      </td>
+
+    </tr>`;
+  }).join('');
+
+  // Fila TOTAL
+  const tpI   = pct(totIE, totIP);
+  const tpR   = pct(totRE, totRP);
+  const tpRe  = pct(totReE, totReP);
+  const valids= [tpI,tpR,tpRe].filter(p=>p!==null);
+  const tGlob = valids.length ? Math.round(valids.reduce((s,v)=>s+v,0)/valids.length) : null;
+  const tGBg  = tGlob===null?'':tGlob>=metaPct?'background:rgba(21,128,61,.15)':'background:rgba(220,38,38,.1)';
+
+  // Actualizar card Seguridad principal
+  const sv_card = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
+  const rAlto = apiData?.racs_alto || 19;
+  const rMedio = apiData?.racs_medio || 39;
+  const rBajo = apiData?.racs_bajo || 26;
+  const rAbiertas = apiData?.racs_abiertas || 84;
+  sv_card('seg-racs-alto', rAlto);
+  sv_card('seg-racs-medio', rMedio);
+  sv_card('seg-racs-bajo', rBajo);
+  sv_card('seg-obs-abiertas', rAbiertas);
+  sv_card('seg-obs-total', rAbiertas);
+  // Insp y Reinst desde SEG_DATA[0]
+  if(SEG_DATA[0]){
+    const [,ip,ie,rp,re,rip,rie]=SEG_DATA[0];
+    sv_card('seg-insp-ejec', ie); sv_card('seg-insp-prog', ip);
+    const pInsp=ip>0?Math.round(ie/ip*100):0;
+    const elPI=document.getElementById('seg-insp-pct-card');
+    if(elPI){elPI.textContent=pInsp+'%'; elPI.className=pInsp>=metaPct?'pG':'pR';}
+    sv_card('seg-reinst-ejec', rie); sv_card('seg-reinst-prog', rip);
+    const pReinst=rip>0?Math.round(rie/rip*100):0;
+    const elRI=document.getElementById('seg-reinst-pct-card');
+    if(elRI){elRI.textContent=pReinst+'%'; elRI.className=pReinst>=metaPct?'pG':'pR';}
+  }
+
+  // ── Actualizar bloque 1: IDS (Herramientas de Gestión) ─────────
+  sv('seg-ip',  totIP); sv('seg-ie',  totIE);
+  sv('seg-rp',  totRP); sv('seg-re',  totRE);
+  sv('seg-rip', totReP); sv('seg-rie', totReE);
+  // Porcentajes con semáforo vs meta
+  function pBadge(e, p) {
+    if(!p) return null;
+    const pc=Math.round(e/p*100); return {pct:pc,ok:pc>=metaPct};
+  }
+  function setSpanSeg(id, pb) {
+    const el=document.getElementById(id); if(!el||!pb) return;
+    el.textContent=pb.pct+'%'; el.className=pb.ok?'pG':'pR';
+  }
+  setSpanSeg('seg-ip-pct',  pBadge(totIE,  totIP));
+  setSpanSeg('seg-rp-pct',  pBadge(totRE,  totRP));
+  setSpanSeg('seg-rip-pct', pBadge(totReE, totReP));
+  const gPcts=[pBadge(totIE,totIP),pBadge(totRE,totRP),pBadge(totReE,totReP)].filter(p=>p!==null);
+  const gPct=gPcts.length?Math.round(gPcts.reduce((s,p)=>s+p.pct,0)/gPcts.length):null;
+  const gElSeg=document.getElementById('seg-global-pct');
+  if(gElSeg&&gPct!==null){gElSeg.textContent=gPct+'%'; gElSeg.className=gPct>=metaPct?'pG':'pR';}
+
+  // Actualizar KPI card Seguridad con promedios globales
+  const totPInsp  = pct(totIE, totIP);
+  const totPRacs  = pct(totRE, totRP);
+  const totPReinst= pct(totReE, totReP);
+  // IDS viene de Copsem (se actualiza después) — usar window._segIDS si disponible
+  const idsVal = window._segIDS || null;
+  const validsKPI = [totPInsp, totPRacs, idsVal].filter(p=>p!==null);
+  const gKPI = validsKPI.length
+    ? Math.round(validsKPI.reduce((s,v)=>s+v,0)/validsKPI.length) : null;
+
+  const svk = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
+  svk('kpi-seg-insp',   totPInsp !== null ? totPInsp+'%' : '—%');
+  svk('kpi-seg-racs',   totPRacs !== null ? totPRacs+'%' : '—%');
+  // IDS se actualiza desde cargarSegCopsemDesdeAPI (usa pct_ids_promedio)
+  svk('kpi-seg-global', gKPI !== null ? gKPI+'%' : '—%');
+  svk('kpi-seg-lti',    gKPI !== null ? gKPI+'%' : '—%');
+  // Meta% (porcentaje esperado según días transcurridos)
+  svk('kpi-seg-meta', metaPct !== null ? metaPct+'%' : '—%');
+  window._segMetaPct = metaPct; // guardar para recalc cuando llegue IDS
+
+  // Badge global en KPI
+  const kpiBadge = document.getElementById('kpi-seg-badge');
+  if (kpiBadge && gKPI !== null) {
+    if (gKPI >= metaPct) {
+      kpiBadge.className = 'kbdg kG';
+      kpiBadge.textContent = '✓ ' + gKPI + '%';
+    } else {
+      kpiBadge.className = 'kbdg kR';
+      kpiBadge.innerHTML = '&#9660; ' + gKPI + '%';
     }
+  }
+
+  tbody.innerHTML += `<tr class="tot">
+    <td style="font-weight:700">TOTAL</td>
+    <td class="mono" style="text-align:center">${totIP.toLocaleString('es-PE')}</td>
+    <td class="tdt">${totIE}</td>
+    <td style="text-align:center">${badge(tpI)}</td>
+    <td class="mono" style="text-align:center">${totRP.toLocaleString('es-PE')}</td>
+    <td class="tdt">${totRE}</td>
+    <td style="text-align:center">${badge(tpR)}</td>
+    <td class="mono" style="text-align:center">${totReP.toLocaleString('es-PE')}</td>
+    <td class="tdt">${totReE}</td>
+    <td style="text-align:center">${badge(tpRe)}</td>
+    <td style="text-align:center;font-weight:700;font-size:11px;${tGBg}">${badge(tGlob)}</td>
+    <td></td>
+  </tr>`;
+}
 
 
 
@@ -7779,28 +7928,40 @@ async function cargarAvances(fecha) {
   if (APPSCRIPT_URL_AV_COP) {
     dcop = await fetchAppScriptCopAv({ accion:'avances', fecha }).catch(()=>null);
   }
-  if (dcop?.ok && dcop.zonas?.length) {
-    // Copsem → consolidate all zonas into single av-cop-* row
-    const copEjec  = dcop.zonas.reduce((s,z)=>s+(z.ejec_dia ||0),0);
-    const copProg  = dcop.zonas.reduce((s,z)=>s+(z.prog_dia ||0),0);
-    const copAcum  = dcop.zonas.reduce((s,z)=>s+(z.ejec_acum||0),0);
-    const copPacum = dcop.zonas.reduce((s,z)=>s+(z.prog_acum||0),0);
-    const copPmes  = dcop.zonas.reduce((s,z)=>s+(z.prog_mes ||0),0);
-    sv('av-cop-ejec',  fmtM(copEjec));
-    sv('av-cop-prog',  fmtM(copProg));
-    sv('av-cop-acum',  fmtM(copAcum));
-    sv('av-cop-pacum', fmtM(copPacum));
-    sv('av-cop-pmes',  fmtM(copPmes));
-    const cpDia  = copProg  > 0 ? copEjec  / copProg  * 100 : null;
-    const cpAcum = copPacum > 0 ? copAcum  / copPacum * 100 : null;
-    const cpMes  = copPmes  > 0 ? copAcum  / copPmes  * 100 : null;
-    const elD = document.getElementById('av-cop-pct');
-    if(elD){ elD.textContent=(cpDia!=null&&copEjec>0)?cpDia.toFixed(1)+'%':'—'; elD.className=pCls(copEjec,copProg); }
-    const elA = document.getElementById('av-cop-pct-acum');
-    if(elA){ elA.textContent=(cpAcum!=null&&copAcum>0)?cpAcum.toFixed(1)+'%':'—'; elA.className=pCls(copAcum,copPacum); }
-    const elM = document.getElementById('av-cop-pct-mes');
-    if(elM){ elM.textContent=(cpMes!=null&&copAcum>0)?cpMes.toFixed(1)+'%':'—'; elM.className=pCls(copAcum,copPmes); }
-    console.log('[AVANCES COP] Cargado:', dcop.zonas.length, 'zonas, Ejec:', copEjec.toFixed(1));
+    if (dcop?.ok && dcop.zonas?.length) {
+    // Copsem → separar por clasificacion: Convencional y Trackless
+    const isCNV = z => /conv/i.test(z.clasificacion||'');
+    const isTKL = z => /track/i.test(z.clasificacion||'');
+
+    function fillCopRow(pfx, zonas) {
+      const ejec  = zonas.reduce((s,z)=>s+(z.ejec_dia ||0),0);
+      const prog  = zonas.reduce((s,z)=>s+(z.prog_dia ||0),0);
+      const acum  = zonas.reduce((s,z)=>s+(z.ejec_acum||0),0);
+      const pacum = zonas.reduce((s,z)=>s+(z.prog_acum||0),0);
+      const pmes  = zonas.reduce((s,z)=>s+(z.prog_mes ||0),0);
+      sv('av-cop-'+pfx+'-ejec',  fmtM(ejec));
+      sv('av-cop-'+pfx+'-prog',  fmtM(prog));
+      sv('av-cop-'+pfx+'-acum',  fmtM(acum));
+      sv('av-cop-'+pfx+'-pacum', fmtM(pacum));
+      sv('av-cop-'+pfx+'-pmes',  fmtM(pmes));
+      const elD=document.getElementById('av-cop-'+pfx+'-pct');
+      if(elD){elD.textContent=(prog>0&&ejec>0)?(ejec/prog*100).toFixed(1)+'%':'—'; elD.className=pCls(ejec,prog);}
+      const elA=document.getElementById('av-cop-'+pfx+'-pct-acum');
+      if(elA){elA.textContent=(pacum>0&&acum>0)?(acum/pacum*100).toFixed(1)+'%':'—'; elA.className=pCls(acum,pacum);}
+      const elM=document.getElementById('av-cop-'+pfx+'-pct-mes');
+      if(elM){elM.textContent=(pmes>0&&acum>0)?(acum/pmes*100).toFixed(1)+'%':'—'; elM.className=pCls(acum,pmes);}
+      return {ejec, prog, acum, pacum, pmes};
+    }
+
+    const cnvZonas = dcop.zonas.filter(isCNV);
+    const tklZonas = dcop.zonas.filter(isTKL);
+    // Si no hay clasificacion definida, mostrar todo en CNV
+    const sinClasif = dcop.zonas.filter(z=>!isCNV(z)&&!isTKL(z));
+    const cnvAll = [...cnvZonas, ...sinClasif];
+
+    fillCopRow('cnv', cnvAll);
+    fillCopRow('tkl', tklZonas);
+    console.log('[AVANCES COP] Conv:', cnvAll.length, 'zonas | Trackless:', tklZonas.length, 'zonas');
   }
 
   // ── CIA Trackless (Sotrami) ─────────────────────────────────────
