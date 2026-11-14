@@ -1706,11 +1706,11 @@ body { background:#eef1f6; }
     <!-- TABS -->
     <div class="mtabs">
       <button class="mtab on" onclick="prodTab('graficos',this)"> Gráficos mensuales</button>
-      <button class="mtab" onclick="prodTab('pordia',this)">&#128197; Gráfico por día</button>
-      <button class="mtab" onclick="prodTab('zona23',this)">Zona 23 (699 reg.)</button>
-      <button class="mtab" onclick="prodTab('starosa',this)">Santa Rosa (154 reg.)</button>
+      <button class="mtab" onclick="prodTab('pordia',this)">Gráfico por día</button>
+      <button class="mtab" onclick="prodTab('zona23',this)" id="ptab-z23">Zona 23</button>
+      <button class="mtab" onclick="prodTab('starosa',this)" id="ptab-sr">Santa Rosa</button>
       <button class="mtab" onclick="prodTab('todos',this)">Todos los registros</button>
-      <button class="mtab" onclick="prodTab('fusion',this)">&#128279; Fusión Z23 + SR</button>
+      <button class="mtab" onclick="prodTab('fusion',this)">Fusión Z23 + SR</button>
     </div>
 
     <!-- ── TAB 1: GRÁFICOS ── -->
@@ -1721,9 +1721,9 @@ body { background:#eef1f6; }
       </div>
       <div class="chart-panel on" id="cp-z23">
         <div class="mstats" style="grid-template-columns:repeat(3,1fr)">
-          <div class="mstat"><div class="mstat-l">Acum. Ene–Jun (ejec.)</div><div class="mstat-v">21,323</div><div class="mstat-s">tmh ejecutadas</div><span class="mstat-b" style="background:var(--Ybg);color:var(--Y)">Zona 23</span></div>
-          <div class="mstat"><div class="mstat-l">Acum. Ene–Jun (prog.)</div><div class="mstat-v">24,070</div><div class="mstat-s">tmh programadas</div></div>
-          <div class="mstat"><div class="mstat-l">Ley Au prom. Ene–May</div><div class="mstat-v">0.393</div><div class="mstat-s">Oz/ton promedio</div></div>
+          <div class="mstat"><div class="mstat-l" id="ps-z23-ejec-l">Acum. (ejec.)</div><div class="mstat-v" id="ps-z23-ejec">—</div><div class="mstat-s">tmh ejecutadas</div><span class="mstat-b" style="background:var(--Ybg);color:var(--Y)">Zona 23</span></div>
+          <div class="mstat"><div class="mstat-l" id="ps-z23-prog-l">Acum. (prog.)</div><div class="mstat-v" id="ps-z23-prog">—</div><div class="mstat-s">tmh programadas</div></div>
+          <div class="mstat"><div class="mstat-l" id="ps-z23-ley-l">Ley Au prom.</div><div class="mstat-v" id="ps-z23-ley">—</div><div class="mstat-s">Oz/ton promedio</div></div>
         </div>
         <div style="padding:12px;position:relative"><div style="position:relative;width:100%;height:260px"><canvas id="chartZ23" role="img" aria-label="Resumen producción Zona 23 mensual 2026">Barras PROG y EJEC con línea de Ley Au por mes.</canvas></div></div>
         <div class="mleg">
@@ -1734,9 +1734,9 @@ body { background:#eef1f6; }
       </div>
       <div class="chart-panel" id="cp-sr">
         <div class="mstats" style="grid-template-columns:repeat(3,1fr)">
-          <div class="mstat"><div class="mstat-l">Acum. Ene–Jun (ejec.)</div><div class="mstat-v">4,151</div><div class="mstat-s">tmh ejecutadas</div><span class="mstat-b" style="background:var(--Gbg);color:var(--G)">Santa Rosa</span></div>
-          <div class="mstat"><div class="mstat-l">Acum. Ene–Jun (prog.)</div><div class="mstat-v">4,632</div><div class="mstat-s">tmh programadas</div></div>
-          <div class="mstat"><div class="mstat-l">Ley Au prom. Ene–May</div><div class="mstat-v">0.378</div><div class="mstat-s">Oz/ton promedio</div></div>
+          <div class="mstat"><div class="mstat-l" id="ps-sr-ejec-l">Acum. (ejec.)</div><div class="mstat-v" id="ps-sr-ejec">—</div><div class="mstat-s">tmh ejecutadas</div><span class="mstat-b" style="background:var(--Gbg);color:var(--G)">Santa Rosa</span></div>
+          <div class="mstat"><div class="mstat-l" id="ps-sr-prog-l">Acum. (prog.)</div><div class="mstat-v" id="ps-sr-prog">—</div><div class="mstat-s">tmh programadas</div></div>
+          <div class="mstat"><div class="mstat-l" id="ps-sr-ley-l">Ley Au prom.</div><div class="mstat-v" id="ps-sr-ley">—</div><div class="mstat-s">Oz/ton promedio</div></div>
         </div>
         <div style="padding:12px;position:relative"><div style="position:relative;width:100%;height:260px"><canvas id="chartSR" role="img" aria-label="Resumen producción Santa Rosa mensual 2026">Barras PROG y EJEC con línea de Ley Au por mes.</canvas></div></div>
         <div class="mleg">
@@ -1762,12 +1762,7 @@ body { background:#eef1f6; }
         </select>
         <span class="mf-lbl">Mes</span>
         <select class="mf-sel" id="fd-mo" onchange="renderDiaChart()">
-          <option value="">Todos (Ene–May)</option>
-          <option value="01">Enero</option>
-          <option value="02">Febrero</option>
-          <option value="03">Marzo</option>
-          <option value="04">Abril</option>
-          <option value="05">Mayo</option>
+          <option value="">Todos</option><option value="01">Enero</option><option value="02">Febrero</option><option value="03">Marzo</option><option value="04">Abril</option><option value="05">Mayo</option><option value="06">Junio</option><option value="07">Julio</option><option value="08">Agosto</option><option value="09">Setiembre</option><option value="10">Octubre</option><option value="11">Noviembre</option><option value="12">Diciembre</option>
         </select>
         <span class="mf-lbl">Tipo</span>
         <select class="mf-sel" id="fd-tipo" onchange="renderDiaChart()">
@@ -1779,7 +1774,7 @@ body { background:#eef1f6; }
       <div style="padding:0 12px 4px;display:flex;gap:12px;font-size:10px;color:var(--t2);flex-wrap:wrap" id="fd-legend">
         <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:3px;background:#003366;display:inline-block;border-radius:2px"></span>Zona 23</span>
         <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:3px;background:#D4AF37;display:inline-block;border-radius:2px"></span>Santa Rosa</span>
-        <span style="margin-left:auto;color:var(--t3)" id="fd-periodo">Periodo: 3/01/2026 – 31/05/2026</span>
+        <span style="margin-left:auto;color:var(--t3)" id="fd-periodo">Periodo: —</span>
       </div>
       <div style="padding:10px 12px;position:relative">
         <div style="position:relative;width:100%;height:280px">
@@ -1787,8 +1782,7 @@ body { background:#eef1f6; }
         </div>
       </div>
       <div style="padding:4px 12px 10px;font-size:10px;color:var(--t3)">
-        Cada punto = 1 registro de laboratorio. Periodo activo del dashboard: <strong id="fd-perDash">16/05 → 24/06/2026</strong>.
-        Los datos cubren 3/01/2026 – 31/05/2026.
+        Cada punto = 1 registro de laboratorio. Periodo activo del dashboard: <strong id="fd-perDash">—</strong>.
       </div>
     </div>
 
@@ -1800,8 +1794,7 @@ body { background:#eef1f6; }
         <span class="mf-lbl">Mes</span>
         <select class="mf-sel" id="f23-mo" onchange="renderZ23()">
           <option value="">Todos</option>
-          <option value="01">Enero</option><option value="02">Febrero</option><option value="03">Marzo</option>
-          <option value="04">Abril</option><option value="05">Mayo</option><option value="06">Junio</option>
+          <option value="01">Enero</option><option value="02">Febrero</option><option value="03">Marzo</option><option value="04">Abril</option><option value="05">Mayo</option><option value="06">Junio</option><option value="07">Julio</option><option value="08">Agosto</option><option value="09">Setiembre</option><option value="10">Octubre</option><option value="11">Noviembre</option><option value="12">Diciembre</option>
         </select>
         <span class="mf-lbl">Ley Au</span>
         <select class="mf-sel" id="f23-ley" onchange="renderZ23()">
@@ -1837,8 +1830,7 @@ body { background:#eef1f6; }
         <span class="mf-lbl">Mes</span>
         <select class="mf-sel" id="fsr-mo" onchange="renderSR()">
           <option value="">Todos</option>
-          <option value="01">Enero</option><option value="02">Febrero</option><option value="03">Marzo</option>
-          <option value="04">Abril</option><option value="05">Mayo</option><option value="06">Junio</option>
+          <option value="01">Enero</option><option value="02">Febrero</option><option value="03">Marzo</option><option value="04">Abril</option><option value="05">Mayo</option><option value="06">Junio</option><option value="07">Julio</option><option value="08">Agosto</option><option value="09">Setiembre</option><option value="10">Octubre</option><option value="11">Noviembre</option><option value="12">Diciembre</option>
         </select>
         <span class="mf-lbl">Ley Au</span>
         <select class="mf-sel" id="fsr-ley" onchange="renderSR()">
@@ -1874,8 +1866,7 @@ body { background:#eef1f6; }
         <span class="mf-lbl">Mes</span>
         <select class="mf-sel" id="fall-mo" onchange="renderAll()">
           <option value="">Todos</option>
-          <option value="01">Enero</option><option value="02">Febrero</option><option value="03">Marzo</option>
-          <option value="04">Abril</option><option value="05">Mayo</option><option value="06">Junio</option>
+          <option value="01">Enero</option><option value="02">Febrero</option><option value="03">Marzo</option><option value="04">Abril</option><option value="05">Mayo</option><option value="06">Junio</option><option value="07">Julio</option><option value="08">Agosto</option><option value="09">Setiembre</option><option value="10">Octubre</option><option value="11">Noviembre</option><option value="12">Diciembre</option>
         </select>
         <span class="mf-lbl">Zona</span>
         <select class="mf-sel" id="fall-zona" onchange="renderAll()">
@@ -1884,7 +1875,7 @@ body { background:#eef1f6; }
           <option value="SANTA ROSA">Santa Rosa</option>
         </select>
         <span class="mf-badge" id="cntall">— registros</span>
-        <button class="mf-clear" onclick="clearFAll()">Limpiar</button>
+        <button class="mf-clear" onclick="clearFAllProd()">Limpiar</button>
       </div>
       <div class="mscroll">
         <table class="dtbl" style="min-width:700px">
@@ -1914,9 +1905,7 @@ body { background:#eef1f6; }
         <span class="mf-lbl">Mes</span>
         <select class="mf-sel" id="ff-mo" onchange="renderFusion()">
           <option value="">Todos</option>
-          <option value="01">Enero</option><option value="02">Febrero</option>
-          <option value="03">Marzo</option><option value="04">Abril</option>
-          <option value="05">Mayo</option><option value="06">Junio</option>
+<option value="01">Enero</option><option value="02">Febrero</option><option value="03">Marzo</option><option value="04">Abril</option><option value="05">Mayo</option><option value="06">Junio</option><option value="07">Julio</option><option value="08">Agosto</option><option value="09">Setiembre</option><option value="10">Octubre</option><option value="11">Noviembre</option><option value="12">Diciembre</option>
         </select>
         <span class="mf-lbl">Fecha exacta</span>
         <input type="text" class="mf-sel" id="ff-fecha" placeholder="DD/MM/AAAA" oninput="renderFusion()" style="width:110px;font-family:'DM Mono',monospace">
@@ -1961,7 +1950,7 @@ body { background:#eef1f6; }
     </div>
 
     <div style="padding:6px 14px;font-size:10px;color:var(--t3);border-top:1px solid var(--bd);background:var(--bg)">
-      Datos: 3/01/2026 – 31/05/2026 &nbsp;·&nbsp; Zona 23: 699 registros (1-0001 a 1-0699) &nbsp;·&nbsp; Santa Rosa: 154 registros (5-0001 a 5-0154) &nbsp;·&nbsp; Mineral: ÓXIDO
+      <span id="prod-nota-datos">Datos: —</span> &nbsp;·&nbsp; Mineral: ÓXIDO
     </div>
   </div>
 </div>
@@ -2117,15 +2106,12 @@ body { background:#eef1f6; }
           <option value="SR">Santa Rosa</option>
         </select>
         <span class="mf-lbl">Año</span>
-        <select class="mf-sel" id="fall-yr" onchange="renderLabDet()">
+        <select class="mf-sel" id="flab-yr" onchange="renderLabDet()">
           <option value="2026">2026</option><option value="2025">2025</option>
         </select>
         <span class="mf-lbl">Mes</span>
-        <select class="mf-sel" id="fall-mo" onchange="renderLabDet()">
-          <option value="">Todos</option>
-          <option value="01">ENE</option><option value="02">FEB</option>
-          <option value="03">MAR</option><option value="04">ABR</option>
-          <option value="05">MAY</option><option value="06">JUN</option>
+        <select class="mf-sel" id="flab-mo" onchange="renderLabDet()">
+          <option value="">Todos</option><option value="01">Enero</option><option value="02">Febrero</option><option value="03">Marzo</option><option value="04">Abril</option><option value="05">Mayo</option><option value="06">Junio</option><option value="07">Julio</option><option value="08">Agosto</option><option value="09">Setiembre</option><option value="10">Octubre</option><option value="11">Noviembre</option><option value="12">Diciembre</option>
         </select>
         <span class="mf-badge" id="lab-det-cnt">— registros</span>
         <button class="mf-sel" style="cursor:pointer;margin-left:auto" onclick="clearFAll()">✕ Limpiar</button>
@@ -3371,7 +3357,7 @@ function onFechaReporteChange(fechaSel) {
 // ── Inicializar desplegable de fechas ─────────────────────────────────────
 function getMesPeriodo(fecha) {
   // Retorna el PERIODO contable correspondiente a la fecha
-  const PERIODOS_CIA = {
+  const PERIODOS_CIA = window._PERIODOS_CIA = {
     ENERO:   {ini:'03/01/2026',fin:'29/01/2026'},
     FEBRERO: {ini:'30/01/2026',fin:'28/02/2026'},
     MARZO:   {ini:'01/03/2026',fin:'29/03/2026'},
@@ -3576,7 +3562,7 @@ async function cargarDiaDesdeAPI(fecha) {
   const sA = dataAcum?.santa_rosa || {};
   // Period index for Z23M/SRM monthly ley arrays
   const _periodoKey2 = getMesPeriodo(fecha);
-  const _pIdx2 = {ENERO:0,FEBRERO:1,MARZO:2,ABRIL:3,MAYO:4,JUNIO:5,JULIO:6,AGOSTO:7}[_periodoKey2] ?? 8;
+  const _pIdx2 = PERIODO_IDX_12[_periodoKey2] ?? 11;
   console.log('[LAB acum] zA.ley_pond:', zA.ley_pond, '| sA.ley_pond:', sA.ley_pond, '| Z23M.ley['+_pIdx2+']:', Z23M.ley[_pIdx2]);
   const tA = dataAcum?.total      || {};
   const acumZ23    = zA.ejec_acum_tmh || 0;
@@ -3585,7 +3571,7 @@ async function cargarDiaDesdeAPI(fecha) {
   const progAcumSR = sA.prog_acum_tmh || 0;
   // Monthly weighted average: API acumulado > Z23M (from resumen_mes) > 0
   const _periodoKey = getMesPeriodo(fecha);
-  const _pIdx = {ENERO:0,FEBRERO:1,MARZO:2,ABRIL:3,MAYO:4,JUNIO:5,JULIO:6,AGOSTO:7}[_periodoKey2] ?? 8;
+  const _pIdx = PERIODO_IDX_12[_periodoKey2] ?? 11;
   const leyZ23Mes  = zA.ley_pond  || Z23M.ley[_pIdx] || 0;
   const leySRMes   = sA.ley_pond  || SRM.ley[_pIdx]  || 0;
   const pctDias    = dataAcum?.pct_dias || 0;
@@ -3697,15 +3683,47 @@ async function cargarResumenMesDesdeAPI() {
 
   console.log('[AppScript] Resumen mensual cargado:', data.meses.length, 'meses');
 
-  // Mapear períodos a índices (Z23M y SRM usan índices 0-5 = ENE-JUN)
-  const PERIODO_IDX = {ENERO:0,FEBRERO:1,MARZO:2,ABRIL:3,MAYO:4,JUNIO:5};
+  // Mapear períodos a índices 0-11 (ENE–DIC)
+  console.log('[AppScript] resumen_mes ejemplo:', JSON.stringify(data.meses[data.meses.length-1]));
+  const num = (...v) => { for (const x of v) { const n = parseFloat(x); if (n > 0) return n; } return 0; };
   data.meses.forEach(m => {
-    const idx = PERIODO_IDX[m.periodo?.toUpperCase()];
+    const idx = PERIODO_IDX_12[String(m.periodo||'').trim().toUpperCase()];
     if (idx === undefined) return;
-    // Actualizar Z23M
-    if (m.tmh_z23 > 0) { Z23M.ejec[idx] = m.tmh_z23; Z23M.ley[idx] = m.ley_pond_z23 || 0; }
-    // Actualizar SRM
-    if (m.tmh_sr  > 0) { SRM.ejec[idx]  = m.tmh_sr;  SRM.ley[idx]  = m.ley_pond_sr  || 0; }
+    const tz = num(m.tmh_z23), ts = num(m.tmh_sr);
+    if (tz > 0) { Z23M.ejec[idx] = tz; Z23M.ley[idx] = num(m.ley_pond_z23); }
+    if (ts > 0) { SRM.ejec[idx]  = ts; SRM.ley[idx]  = num(m.ley_pond_sr); }
+    const pz = num(m.prog_z23, m.prog_tmh_z23, m.prog_mes_z23);
+    const ps = num(m.prog_sr,  m.prog_tmh_sr,  m.prog_mes_sr);
+    if (pz > 0) Z23M.prog[idx] = pz;
+    if (ps > 0) SRM.prog[idx]  = ps;
+  });
+  if (document.getElementById('prod-modal')?.classList.contains('open')) buildProdCharts();
+}
+
+// Completa los meses sin dato mensual usando los registros diarios (Z23R / SRR),
+// agrupados por período contable (getMesPeriodo). Ley = ponderada por TMS.
+function completarMensualDesdeRegistros() {
+  const anios = [...Z23R, ...SRR].map(r => r[0].split('/')[2]).filter(Boolean).sort();
+  const anio = anios.length ? anios[anios.length-1] : '2026';
+  const agrupar = rows => {
+    const acc = Array.from({length:12}, () => ({tmh:0, w:0, lw:0}));
+    rows.forEach(r => {
+      if (r[0].split('/')[2] !== anio) return;
+      const idx = PERIODO_IDX_12[getMesPeriodo(r[0])];
+      if (idx === undefined) return;
+      const tmh = +r[3] || 0, peso = (+r[5] || 0) || tmh, ley = +r[6] || 0;
+      acc[idx].tmh += tmh;
+      if (ley > 0 && peso > 0) { acc[idx].w += peso; acc[idx].lw += peso * ley; }
+    });
+    return acc;
+  };
+  [[Z23M, agrupar(Z23R)], [SRM, agrupar(SRR)]].forEach(([M, acc]) => {
+    acc.forEach((a, i) => {
+      if (!(M.ejec[i] > 0) && a.tmh > 0) {
+        M.ejec[i] = +a.tmh.toFixed(1);
+        M.ley[i]  = a.w > 0 ? +(a.lw / a.w).toFixed(3) : 0;
+      }
+    });
   });
 }
 
@@ -3725,17 +3743,20 @@ async function actualizarHistoricoDesdeAPI() {
     const data = await fetchAppScript({ accion:'rango', desde, hasta });
     if (!data?.registros?.length) { console.log('[HISTORICO] Sin nuevos registros'); return; }
 
-    const fechasZ23 = new Set(Z23R.map(r=>r[0]));
-    const fechasSR  = new Set(SRR.map(r=>r[0]));
+    // Clave por lote (fecha + código + TMH): un mismo día tiene varios lotes
+    const kRow = r => r[0]+'|'+r[1]+'|'+(+r[3]).toFixed(3);
+    const vistosZ23 = new Set(Z23R.map(kRow));
+    const vistosSR  = new Set(SRR.map(kRow));
     let addedZ23=0, addedSR=0;
 
     data.registros.forEach(r => {
       if (!r.fecha) return;
       const row = [r.fecha, r.codigo||'', r.zona||'', +(r.tmh||0), +(r.h2o||0), +(r.tms||0), +(r.ley_au||0)];
+      const k = kRow(row);
       if ((r.zona||'').toUpperCase().includes('23')) {
-        if (!fechasZ23.has(r.fecha)) { Z23R.push(row); fechasZ23.add(r.fecha); addedZ23++; }
+        if (!vistosZ23.has(k)) { Z23R.push(row); vistosZ23.add(k); addedZ23++; }
       } else if ((r.zona||'').toUpperCase().includes('ROSA') || (r.zona||'').toUpperCase().includes('SR')) {
-        if (!fechasSR.has(r.fecha)) { SRR.push(row); fechasSR.add(r.fecha); addedSR++; }
+        if (!vistosSR.has(k)) { SRR.push(row); vistosSR.add(k); addedSR++; }
       }
     });
 
@@ -3837,6 +3858,8 @@ const SRR = []; // ← datos cargados desde API
 
 // ══ DATOS MENSUALES (de las imágenes del Excel) ══════════════════
 const MESES = ["ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SET","OCT","NOV","DIC"];
+const PERIODO_IDX_12 = {ENERO:0,FEBRERO:1,MARZO:2,ABRIL:3,MAYO:4,JUNIO:5,JULIO:6,AGOSTO:7,
+  SETIEMBRE:8,SEPTIEMBRE:8,OCTUBRE:9,NOVIEMBRE:10,DICIEMBRE:11};
 const Z23M = {
   prog: [4000,4000,4000,4350,2900,5820,0,0,0,0,0,0],
   ejec: [4171.2,3863.3,3935.0,4170.1,4183.9,647.9,0,0,0,0,0,0],
@@ -3903,17 +3926,42 @@ function chartZona(id,el){
   el.classList.add('on');document.getElementById('cp-'+id).classList.add('on');
 }
 
+
+// Textos del modal Producción calculados desde los datos cargados
+function actualizarTextosProd() {
+  const all = [...Z23R, ...SRR].map(r => r[0]);
+  const key = f => f.split('/').reverse().join('');
+  all.sort((a,b) => key(a).localeCompare(key(b)));
+  const ini = all[0] || '', fin = all[all.length-1] || '';
+  const set = (id, v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
+  set('ptab-z23', 'Zona 23 (' + Z23R.length + ' reg.)');
+  set('ptab-sr',  'Santa Rosa (' + SRR.length + ' reg.)');
+  set('prod-nota-datos', ini ? 'Datos: ' + ini + ' – ' + fin + ' · Zona 23: ' + Z23R.length + ' registros · Santa Rosa: ' + SRR.length + ' registros' : 'Datos: —');
+  set('fd-periodo', ini ? 'Periodo: ' + ini + ' – ' + fin : 'Periodo: —');
+  const fSel = document.getElementById('hdr-fecha-sel')?.value || fin;
+  const per = fSel ? getMesPeriodo(fSel) : '';
+  const cfg = per && window._PERIODOS_CIA ? window._PERIODOS_CIA[per] : null;
+  set('fd-perDash', cfg ? per.charAt(0) + per.slice(1).toLowerCase() + ': ' + cfg.ini + ' → ' + cfg.fin : '—');
+}
+
 function buildProdCharts(){
   // Always rebuild to reflect latest API data
   const c23=document.getElementById('chartZ23'), cSR=document.getElementById('chartSR');
   if(window._chartZ23inst){window._chartZ23inst.destroy();window._chartZ23inst=null;}
   if(window._chartSRinst){window._chartSRinst.destroy();window._chartSRinst=null;}
+  completarMensualDesdeRegistros();
+  // Mostrar desde ENE hasta el último mes con ejecución (Z23 o SR)
+  let ultMes = 0;
+  for (let i=0;i<12;i++) if ((Z23M.ejec[i]||0) > 0 || (SRM.ejec[i]||0) > 0) ultMes = i;
+  const nM = ultMes + 1;
+  const cut = a => a.slice(0, nM).map(v => v > 0 ? v : null);
   const buildChart=(canvasId, progData, ejecData, leyData, maxLeft)=>{
     const ctx=document.getElementById(canvasId);
-    if(!ctx)return;
-    new Chart(ctx,{
+    if(!ctx)return null;
+    const mx = Math.max(maxLeft, ...progData.filter(Boolean), ...ejecData.filter(Boolean));
+    return new Chart(ctx,{
       data:{
-        labels:MESES,
+        labels:MESES.slice(0, nM),
         datasets:[
           {type:'bar',label:'PROG TMH',data:progData,backgroundColor:'#003366',borderRadius:3,order:2,yAxisID:'y'},
           {type:'bar',label:'EJEC TMH',data:ejecData,backgroundColor:'#D4AF37',borderRadius:3,order:2,yAxisID:'y'},
@@ -3936,7 +3984,7 @@ function buildProdCharts(){
         scales:{
           y:{position:'left',grid:{color:'rgba(0,0,0,.04)'},
              ticks:{font:{size:10},color:'#7A8CA8',callback:v=>v.toLocaleString('es-PE')},
-             max:maxLeft*1.15},
+             max:Math.ceil(mx*1.15)},
           y2:{position:'right',grid:{display:false},
               ticks:{font:{size:10},color:'#7C4A00',callback:v=>v.toFixed(2)},
               min:0,max:0.55}
@@ -3945,8 +3993,24 @@ function buildProdCharts(){
     });
     // Add value labels on bars using Chart.js plugin or manual canvas
   };
-  window._chartZ23inst = buildChart('chartZ23', Z23M.prog, Z23M.ejec, Z23M.ley, 7000);
-  window._chartSRinst  = buildChart('chartSR',  SRM.prog,  SRM.ejec,  SRM.ley,  1300);
+  window._chartZ23inst = buildChart('chartZ23', cut(Z23M.prog), cut(Z23M.ejec), cut(Z23M.ley), 1000);
+  window._chartSRinst  = buildChart('chartSR',  cut(SRM.prog),  cut(SRM.ejec),  cut(SRM.ley),  200);
+
+  // Tarjetas resumen (antes fijas en Ene–Jun / Ene–May)
+  const MNOM = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Set','Oct','Nov','Dic'];
+  const rango = 'Ene–' + MNOM[ultMes];
+  const fmt0 = n => n > 0 ? Math.round(n).toLocaleString('es-PE') : '—';
+  [['z23', Z23M], ['sr', SRM]].forEach(([k, M]) => {
+    const ej = M.ejec.slice(0,nM).reduce((s,v)=>s+(v||0),0);
+    const pr = M.prog.slice(0,nM).reduce((s,v)=>s+(v||0),0);
+    let w=0, lw=0; M.ley.slice(0,nM).forEach((l,i)=>{ if(l>0 && M.ejec[i]>0){ w+=M.ejec[i]; lw+=M.ejec[i]*l; } });
+    const set = (id, v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
+    set('ps-'+k+'-ejec-l', 'Acum. '+rango+' (ejec.)'); set('ps-'+k+'-ejec', fmt0(ej));
+    let ultProg = -1; M.prog.slice(0,nM).forEach((v,i)=>{ if(v>0) ultProg=i; });
+    set('ps-'+k+'-prog-l', ultProg>=0 ? 'Acum. Ene–'+MNOM[ultProg]+' (prog.)' : 'Acum. (prog.)'); set('ps-'+k+'-prog', fmt0(pr));
+    set('ps-'+k+'-ley-l',  'Ley Au prom. '+rango);    set('ps-'+k+'-ley', w>0 ? (lw/w).toFixed(3) : '—');
+  });
+  actualizarTextosProd();
 
   // Initial renders for tables
   renderZ23(); renderSR(); renderAll();
@@ -4362,8 +4426,8 @@ function renderLabSR() {
 // ── TAB 4: Detalle combinado ──────────────────────────────────
 function renderLabDet() {
   const zona  = document.getElementById('fLab')?.value    || '';
-  const yr    = document.getElementById('fall-yr')?.value || '2026';
-  const mo    = document.getElementById('fall-mo')?.value || '';
+  const yr    = document.getElementById('flab-yr')?.value || '2026';
+  const mo    = document.getElementById('flab-mo')?.value || '';
   const tbody = document.getElementById('lbDet');
   const cntEl = document.getElementById('lab-det-cnt');
   if(!tbody) return;
@@ -4409,8 +4473,13 @@ function renderLabDet() {
 
 function clearFAll() {
   const set = (id,v) => { const el=document.getElementById(id); if(el) el.value=v; };
-  set('fall-yr','2026'); set('fall-mo',''); set('fLab','');
+  set('flab-yr','2026'); set('flab-mo',''); set('fLab','');
   renderLabDet();
+}
+function clearFAllProd() {
+  const set = (id,v) => { const el=document.getElementById(id); if(el) el.value=v; };
+  set('fall-yr','2026'); set('fall-mo',''); set('fall-zona','');
+  renderAll();
 }
 
 // ── labTab ────────────────────────────────────────────────────
@@ -4430,6 +4499,7 @@ function labTab(id, el) {
 let diaChart = null;
 
 function renderDiaChart(){
+  actualizarTextosProd();
   const zona  = document.getElementById('fd-zona').value;
   const mo    = document.getElementById('fd-mo').value;
   const tipo  = document.getElementById('fd-tipo').value;
