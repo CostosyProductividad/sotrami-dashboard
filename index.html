@@ -7167,24 +7167,28 @@ async function cargarRRHH(fecha) {
     } catch(e) { return null; }
   }
 
+  // RRHH con accion=rrhh; si la fecha elegida no tiene personal, usa la última fecha con datos
+  async function fetchRRHHAccion(url, tag) {
+    if (!url) return null;
+    const get = async q => {
+      try { const r = await fetch(url + q); const j = await r.json(); return j?.ok ? j : null; }
+      catch(e) { console.warn('[RRHH '+tag+']', e.message); return null; }
+    };
+    const hcOf = x => (x?.totales?.activo_total||0) + (x?.totales?.obr_activo||0) + (x?.totales?.emp_activo||0);
+    let d = await get('?accion=rrhh' + (fecha ? '&fecha='+encodeURIComponent(fecha) : ''));
+    if (fecha && !hcOf(d)) d = (await get('?accion=rrhh')) || d;
+    return d;
+  }
+
   // Fetch all company data in parallel
   const [ds, dtl, dcv, dcop, dtumi, dcor] = await Promise.all([
     fetchRRHH(APPSCRIPT_URL_RRHH_SOT),
     fetchRRHHSiv(APPSCRIPT_URL_SIV_TL),   // uses accion=rrhh
     fetchRRHHSiv(APPSCRIPT_URL_SIV_CV),   // uses accion=rrhh
-    // Copsem: su script responde RRHH solo con accion=rrhh (accion=dia devuelve Avances)
-    (async () => {
-      if (!APPSCRIPT_URL_COP) return null;
-      const get = async q => {
-        try { const r = await fetch(APPSCRIPT_URL_COP + q); const j = await r.json(); return j?.ok ? j : null; }
-        catch(e) { console.warn('[RRHH COP]', e.message); return null; }
-      };
-      const hcOf = x => (x?.totales?.activo_total||0) + (x?.totales?.obr_activo||0) + (x?.totales?.emp_activo||0);
-      let d = await get('?accion=rrhh' + (fecha ? '&fecha='+encodeURIComponent(fecha) : ''));
-      if (fecha && !hcOf(d)) d = (await get('?accion=rrhh')) || d;   // última fecha con datos
-      return d;
-    })(),
-    fetchRRHH(APPSCRIPT_URL_TUMI),
+    // Copsem y Tumi: su script responde RRHH solo con accion=rrhh
+    // (en Copsem accion=dia devuelve Avances; en Tumi accion=dia no existe)
+    fetchRRHHAccion(APPSCRIPT_URL_COP,  'COP'),
+    fetchRRHHAccion(APPSCRIPT_URL_TUMI, 'TUMI'),
     fetchRRHHSiv(APPSCRIPT_URL_CORIMAYO), // uses accion=rrhh
   ]);
 
@@ -7244,6 +7248,8 @@ async function cargarRRHH(fecha) {
     if (rrhhFechaEl && ds.fecha) rrhhFechaEl.textContent = ds.fecha;
   }
   console.log('[RRHH COP]', dcop ? JSON.stringify(dcop.totales||{}) : 'sin datos');
+  console.log('[RRHH TUMI]', dtumi ? JSON.stringify(dtumi.totales||{}) : 'sin datos');
+  console.log('[RRHH TL]', dtl ? JSON.stringify(dtl.totales||{}) : 'sin datos');
 
   // Fila TOTAL
   const sumK = k => rows.reduce((s,r)=>s+(r[k]||0),0);
