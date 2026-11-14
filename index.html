@@ -835,7 +835,7 @@ body { background:#eef1f6; }
         <span class="hdr-pill hdr-pill-mes" id="hdr-mes-badge">—</span>
         <span class="hdr-pill hdr-pill-api" id="hdr-api-status" title="Estado conexión API">⬤ API</span>
       </div>
-      <button onclick="printReport()" class="hdr-print-btn" title="Imprimir / Exportar PDF">
+      <button onclick="printReport()" class="hdr-print-btn" title="Descargar reporte en PDF (una sola hoja)">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
         <span>PDF</span>
       </button>
@@ -3806,8 +3806,82 @@ async function actualizarSkipHistorico() {
 
 
 // ── Print / PDF Export ──────────────────────────────────────────
-function printReport() {
-  window.print();
+// Genera el reporte como UNA sola hoja larga (ancho 600 px, igual que la captura
+// manual con F12), sin el glosario, y lo descarga directo como PDF.
+const PDF_ANCHO = 600;
+function _cargarScript(urls) {
+  return new Promise((res, rej) => {
+    const next = i => {
+      if (i >= urls.length) return rej(new Error('No se pudo cargar ' + urls[0]));
+      const s = document.createElement('script');
+      s.src = urls[i]; s.onload = () => res(); s.onerror = () => { s.remove(); next(i+1); };
+      document.head.appendChild(s);
+    };
+    next(0);
+  });
+}
+async function _libsPDF() {
+  if (!window.html2canvas) await _cargarScript([
+    'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',
+    'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js',
+    'https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.min.js']);
+  if (!window.jspdf) await _cargarScript([
+    'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',
+    'https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js',
+    'https://unpkg.com/jspdf@2.5.1/dist/jspdf.umd.min.js']);
+}
+function _nombrePDF() {
+  const M = ['','ene','feb','mar','abr','may','jun','jul','ago','set','oct','nov','dic'];
+  let f = document.getElementById('hdr-fecha-sel')?.value || '';
+  let p = f.split('/');
+  if (p.length !== 3) { const d = new Date(); p = [String(d.getDate()), String(d.getMonth()+1), String(d.getFullYear())]; }
+  return 'RDU_' + p[0].padStart(2,'0') + (M[+p[1]] || p[1]) + p[2] + '.pdf';
+}
+async function printReport() {
+  const btn = document.querySelector('.hdr-print-btn');
+  const lbl = btn ? btn.querySelector('span') : null;
+  if (btn && btn.disabled) return;
+  if (btn) btn.disabled = true;
+  if (lbl) lbl.textContent = 'Generando…';
+  try {
+    await _libsPDF();
+    if (document.fonts && document.fonts.ready) await document.fonts.ready;
+    const glos = document.getElementById('glosario');
+    const glosWrap = glos ? (glos.closest('.gfull') || glos) : null;
+    const canvas = await html2canvas(document.body, {
+      windowWidth: PDF_ANCHO, width: PDF_ANCHO,
+      scale: 2, useCORS: true, backgroundColor: '#ffffff', logging: false,
+      scrollX: 0, scrollY: 0, x: 0, y: 0,
+      ignoreElements: el => el === glosWrap || (el.classList && (el.classList.contains('mwrap') || el.id === 'periodo-panel')),
+      onclone: doc => {
+        const st = doc.createElement('style');
+        st.textContent = 'html,body{width:' + PDF_ANCHO + 'px!important;min-width:0!important;overflow:visible!important;height:auto!important}'
+          + '.hdr-wrap{position:static!important}'
+          + '*{animation:none!important;transition:none!important}';
+        doc.head.appendChild(st);
+        const l2 = doc.querySelector('.hdr-print-btn span'); if (l2) l2.textContent = 'PDF';
+      }
+    });
+    const { jsPDF } = window.jspdf;
+    const W = PDF_ANCHO, H = Math.round(canvas.height * PDF_ANCHO / canvas.width);
+    const pdf = new jsPDF({ unit: 'px', format: [W, H], orientation: 'portrait', hotfixes: ['px_scaling'], compress: true });
+    pdf.addImage(canvas.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, W, H, undefined, 'FAST');
+    pdf.save(_nombrePDF());
+  } catch (e) {
+    console.error('[PDF]', e);
+    alertaPDF('No se pudo generar el PDF (' + e.message + '). Revisa tu conexión e inténtalo otra vez.');
+  } finally {
+    if (btn) btn.disabled = false;
+    if (lbl) lbl.textContent = 'PDF';
+  }
+}
+function alertaPDF(msg) {
+  let t = document.getElementById('pdf-toast');
+  if (!t) { t = document.createElement('div'); t.id = 'pdf-toast';
+    t.style.cssText = 'position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#7F1D1D;color:#fff;padding:10px 16px;border-radius:8px;font-size:12px;z-index:99999;max-width:90vw';
+    document.body.appendChild(t); }
+  t.textContent = msg; t.style.display = 'block';
+  setTimeout(() => { t.style.display = 'none'; }, 6000);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -3861,12 +3935,12 @@ const MESES = ["ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SET","OCT","NOV"
 const PERIODO_IDX_12 = {ENERO:0,FEBRERO:1,MARZO:2,ABRIL:3,MAYO:4,JUNIO:5,JULIO:6,AGOSTO:7,
   SETIEMBRE:8,SEPTIEMBRE:8,OCTUBRE:9,NOVIEMBRE:10,DICIEMBRE:11};
 const Z23M = {
-  prog: [4000,4000,4000,4350,2900,5820,4000,4000,4000,4000,4000,0],
+  prog: [4000,4000,4000,4350,2900,5820,0,0,0,0,0,0],
   ejec: [4171.2,3863.3,3935.0,4170.1,4183.9,647.9,0,0,0,0,0,0],
   ley:  [0.421,0.328,0.370,0.415,0.408,0.315,0,0,0,0,0,0]
 };
 const SRM = {
-  prog: [700,700,700,850,567,1115,700,700,700,700,700,0],
+  prog: [700,700,700,850,567,1115,0,0,0,0,0,0],
   ejec: [769.2,719.6,795.0,1084.5,1111.0,117.3,0,0,0,0,0,0],
   ley:  [0.377,0.307,0.343,0.381,0.431,0.366,0,0,0,0,0,0]
 };
