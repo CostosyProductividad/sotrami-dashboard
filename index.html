@@ -3763,7 +3763,7 @@ async function actualizarHistoricoDesdeAPI() {
     if (addedZ23>0) Z23R.sort((a,b)=>parseF(a[0])-parseF(b[0]));
     if (addedSR>0)  SRR.sort((a,b)=>parseF(a[0])-parseF(b[0]));
     console.log('[HISTORICO] Z23R +'+addedZ23+' | SRR +'+addedSR+' | Total Z23:'+Z23R.length+' SR:'+SRR.length);
-    if (addedZ23>0||addedSR>0) initFechaSelector();
+    if (addedZ23>0||addedSR>0) { initFechaSelector(); refrescarLab(); }
   } catch(e) { console.warn('[HISTORICO API]', e.message); }
 }
 
@@ -7719,83 +7719,107 @@ async function cargarGeoResumenMes() {
 }
 
 // ══ LAB — ACTUALIZAR TABLA PRINCIPAL ════════════════════════════
+let _labFecha = '';
 async function actualizarTablaLab(fecha) {
+  _labFecha = fecha || _labFecha;
+  let data = null;
   if (APPSCRIPT_URL_LAB) {
-    const data = await fetchAppScriptLab({ accion: 'dia', fecha });
+    data = await fetchAppScriptLab({ accion: 'dia', fecha });
     if (data?.ok) {
       _labDia = data;
-      renderLabCard(data);
-      return;
-    }
+      if (!window._labLogOk) { window._labLogOk = true;
+        console.log('[LAB API] campos recibidos:', Object.keys(data).join(', '),
+          '| resumen_z23:', JSON.stringify(data.resumen_z23 || null)); }
+    } else data = null;
   }
-  // Fallback: usar datos de Z23R y SRR
-  renderLabCardFromLocal(fecha);
+  renderLabCard(data, _labFecha);
 }
+// Se llama cuando llegan registros nuevos de Planta
+function refrescarLab() { if (_labFecha) renderLabCard(_labDia?.ok ? _labDia : null, _labFecha); }
 
-function renderLabCard(data) {
-  if (!data) return;
-  const sv = (id,v) => { const el=document.getElementById(id); if(el&&v!=null) el.textContent=v; };
-  const cls = v => v>=0.46?'ley-c lhigh':v>=0.44?'ley-c lmed':'ley-c llow';
-  const lbl = v => v>=0.46?'ÓPTIMO':v>=0.44?'REGULAR':'BAJO';
-  const fmt = (n,d=3) => n!=null&&n>0?n.toFixed(d):(n===0?'0':'—');
-  const fmtT = (n,d=1) => n!=null?n.toFixed(d):'—';
-
-  const z23 = data.resumen_z23 || {};
-  const sr  = data.resumen_sr  || {};
-  const tot = data.resumen_tot || {};
-
-  sv('lab-act-fecha', data.fecha||'—');
-  sv('lab-z23-tmh',  fmtT(z23.tmh_dia,1));   sv('lab-z23-h2o', fmt(z23.h2o_prom,2));
-  sv('lab-z23-tms',  fmtT(z23.tms_dia,3));   sv('lab-z23-kg',  fmt(z23.kg_dia,1));
-  sv('lab-sr-tmh',   fmtT(sr.tmh_dia,1));    sv('lab-sr-h2o',  fmt(sr.h2o_prom,2));
-  sv('lab-sr-tms',   fmtT(sr.tms_dia,3));    sv('lab-sr-kg',   fmt(sr.kg_dia,1));
-  sv('lab-tot-tmh',  fmtT(tot.tmh_dia!=null?tot.tmh_dia:z23.tmh_dia+sr.tmh_dia,1));
-  sv('lab-tot-h2o',  fmt(tot.h2o_prom,2));  sv('lab-tot-kg',   fmt(tot.kg_dia,1));
-
-  const setLey = (idAu, idMes, idClase, leyDia, leyMes) => {
-    const el = document.getElementById(idAu);
-    if(el) { el.className=cls(leyDia||leyMes||0); el.textContent=fmt(leyDia||leyMes); }
-    sv(idMes, fmt(leyMes));
-    const ec = document.getElementById(idClase);
-    if(ec) { ec.className=cls(leyMes||0); ec.textContent=lbl(leyMes||0); }
+// Tabla Laboratorio Químico.
+// Usa el resumen de la API de Laboratorio cuando trae datos; si un campo falta,
+// lo calcula con los lotes de Planta (Z23R / SRR: fecha, código, zona, TMH, %H2O, TMS, Ley Au).
+// Peso kg = TMH × 1000 · %H2O ponderado por TMH · Ley Au ponderada por TMH
+// Ley mes = ponderada del período contable (getMesPeriodo) hasta la fecha.
+function _labLocal(rows, fecha) {
+  const key = f => { const p = String(f).split('/'); return p.length===3 ? p[2]+p[1].padStart(2,'0')+p[0].padStart(2,'0') : ''; };
+  const kF = key(fecha), per = getMesPeriodo(fecha), anio = String(fecha).split('/')[2];
+  const r = {tmh:0, tms:0, hw:0, lw:0, lwt:0, mlw:0, mlwt:0};
+  rows.forEach(x => {
+    const tmh = +x[3]||0, h2o = +x[4]||0, tms = (+x[5]||0) || (tmh*(1-h2o/100)), ley = +x[6]||0;
+    if (x[0] === fecha) {
+      r.tmh += tmh; r.tms += tms; r.hw += h2o*tmh;
+      if (ley > 0) { r.lw += ley*tmh; r.lwt += tmh; }
+    }
+    if (ley > 0 && String(x[0]).split('/')[2] === anio && key(x[0]) <= kF && getMesPeriodo(x[0]) === per) {
+      r.mlw += ley*tmh; r.mlwt += tmh;
+    }
+  });
+  return {
+    tmh_dia: r.tmh, tms_dia: r.tms, kg_dia: r.tmh*1000,
+    h2o_prom: r.tmh>0 ? r.hw/r.tmh : 0,
+    ley_au_dia: r.lwt>0 ? r.lw/r.lwt : 0,
+    ley_au_pond: r.mlwt>0 ? r.mlw/r.mlwt : 0,
+    _w_dia: r.lwt, _w_mes: r.mlwt
   };
-  setLey('lab-z23-au-dia','lab-z23-au-mes','lab-z23-clase', z23.ley_au_dia||0, z23.ley_au_pond||0);
-  setLey('lab-sr-au-dia', 'lab-sr-au-mes', 'lab-sr-clase',  sr.ley_au_dia||0,  sr.ley_au_pond||0);
-  setLey('lab-tot-au-dia','lab-tot-au-mes','lab-tot-clase',  tot.ley_au_dia||0, tot.ley_au_pond||0);
-
-  // Update kpi-au
-  const sv2 = (id,v) => { const el=document.getElementById(id); if(el&&v!=null) el.textContent=v; };
-  sv2('kpi-au-z23', z23.ley_au_pond>0?z23.ley_au_pond.toFixed(3):'—');
-  sv2('kpi-au-sr',  sr.ley_au_pond >0?sr.ley_au_pond.toFixed(3) :'—');
-  const clsEl23=document.getElementById('kpi-au-z23-clase');
-  if(clsEl23){clsEl23.className='ley-c '+(z23.ley_au_pond>0?cls(z23.ley_au_pond).replace('ley-c ',''):'');clsEl23.textContent=z23.ley_au_pond>0?lbl(z23.ley_au_pond):'—';}
-  const clsElSR=document.getElementById('kpi-au-sr-clase');
-  if(clsElSR){clsElSR.className='ley-c '+(sr.ley_au_pond>0?cls(sr.ley_au_pond).replace('ley-c ',''):'');clsElSR.textContent=sr.ley_au_pond>0?lbl(sr.ley_au_pond):'—';}
 }
+function renderLabCard(data, fecha) {
+  fecha = fecha || data?.fecha || '';
+  const sv = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
+  const pos = v => typeof v === 'number' && isFinite(v) && v > 0;
+  const f = (n,d) => pos(n) ? n.toLocaleString('es-PE',{minimumFractionDigits:d,maximumFractionDigits:d}) : '—';
+  const cls = v => !pos(v) ? 'ley-c' : v>=0.46?'ley-c lhigh':v>=0.44?'ley-c lmed':'ley-c llow';
+  const lbl = v => !pos(v) ? '—' : v>=0.46?'ÓPTIMO':v>=0.44?'REGULAR':'BAJO';
 
-function renderLabCardFromLocal(fecha) {
-  if (!fecha) return;
-  const p = fecha.split('/'); const mMes=p[1],mAnio=p[2];
-  const sv=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
-  const fmt = (n,d=1) => n>0?n.toFixed(d):'—';
-  // TMH del día
-  const z23Dia = Z23R.filter(r=>r[0]===fecha);
-  const srDia  = SRR.filter(r=>r[0]===fecha);
-  const zTmh = z23Dia.reduce((s,r)=>s+(r[3]||0),0);
-  const sTmh = srDia.reduce((s,r)=>s+(r[3]||0),0);
-  sv('lab-z23-tmh', fmt(zTmh,1));
-  sv('lab-sr-tmh',  fmt(sTmh,1));
-  sv('lab-tot-tmh', fmt(zTmh+sTmh,1));
-  // Ley Au
-  let z23S=0,z23W=0,srS=0,srW=0;
-  Z23R.filter(r=>{const q=r[0].split('/');return q[1]===mMes&&q[2]===mAnio&&r[6]>0;})
-    .forEach(r=>{z23S+=r[6]*r[3];z23W+=r[3];});
-  SRR.filter(r=>{const q=r[0].split('/');return q[1]===mMes&&q[2]===mAnio&&r[6]>0;})
-    .forEach(r=>{srS+=r[6]*r[3];srW+=r[3];});
-  const z23Au=z23W>0?z23S/z23W:0, srAu=srW>0?srS/srW:0;
-  sv('kpi-au-z23',z23Au>0?z23Au.toFixed(3):'—');
-  sv('kpi-au-sr', srAu >0?srAu.toFixed(3) :'—');
+  // Mezcla campo por campo: API si es válido, si no el cálculo local
+  const mix = (api, loc) => {
+    api = api || {};
+    const o = {};
+    ['tmh_dia','tms_dia','kg_dia','h2o_prom','ley_au_dia','ley_au_pond'].forEach(k => {
+      o[k] = pos(+api[k]) ? +api[k] : loc[k];
+    });
+    if (!pos(o.kg_dia) && pos(o.tmh_dia)) o.kg_dia = o.tmh_dia*1000;
+    o._w_dia = loc._w_dia || o.tmh_dia || 0; o._w_mes = loc._w_mes || 0;
+    return o;
+  };
+  const z23 = mix(data?.resumen_z23, _labLocal(Z23R, fecha));
+  const sr  = mix(data?.resumen_sr,  _labLocal(SRR,  fecha));
+
+  // Total ponderado
+  const tmh = (z23.tmh_dia||0) + (sr.tmh_dia||0);
+  const wd = (z23._w_dia||0) + (sr._w_dia||0), wm = (z23._w_mes||0) + (sr._w_mes||0);
+  const tot = {
+    tmh_dia: tmh, tms_dia: (z23.tms_dia||0) + (sr.tms_dia||0), kg_dia: tmh*1000,
+    h2o_prom: tmh>0 ? ((z23.h2o_prom||0)*(z23.tmh_dia||0) + (sr.h2o_prom||0)*(sr.tmh_dia||0)) / tmh : 0,
+    ley_au_dia: wd>0 ? ((z23.ley_au_dia||0)*(z23._w_dia||0) + (sr.ley_au_dia||0)*(sr._w_dia||0)) / wd : 0,
+    ley_au_pond: wm>0 ? ((z23.ley_au_pond||0)*(z23._w_mes||0) + (sr.ley_au_pond||0)*(sr._w_mes||0)) / wm : 0
+  };
+  if (pos(+data?.resumen_tot?.ley_au_pond)) tot.ley_au_pond = +data.resumen_tot.ley_au_pond;
+
+  sv('lab-act-fecha', fecha || data?.fecha || '—');
+  [['z23',z23],['sr',sr],['tot',tot]].forEach(([k,o]) => {
+    sv('lab-'+k+'-kg',  f(o.kg_dia,0));
+    sv('lab-'+k+'-tmh', f(o.tmh_dia,2));
+    sv('lab-'+k+'-h2o', f(o.h2o_prom,2));
+    sv('lab-'+k+'-tms', f(o.tms_dia,2));
+    const ed = document.getElementById('lab-'+k+'-au-dia');
+    if (ed) { ed.className = cls(o.ley_au_dia); ed.textContent = f(o.ley_au_dia,3); }
+    sv('lab-'+k+'-au-mes', f(o.ley_au_pond,3));
+    const ec = document.getElementById('lab-'+k+'-clase');
+    if (ec) { ec.className = cls(o.ley_au_pond); ec.textContent = lbl(o.ley_au_pond); }
+  });
+
+  // KPI de ley (mes)
+  sv('kpi-au-z23', f(z23.ley_au_pond,3));
+  sv('kpi-au-sr',  f(sr.ley_au_pond,3));
+  [['kpi-au-z23-clase',z23.ley_au_pond],['kpi-au-sr-clase',sr.ley_au_pond]].forEach(([id,v]) => {
+    const el = document.getElementById(id); if (el) { el.className = cls(v); el.textContent = lbl(v); }
+  });
+  console.log('[LAB] Tabla', fecha, '| Z23 TMH', (z23.tmh_dia||0).toFixed(2), 'ley día', (z23.ley_au_dia||0).toFixed(3), 'mes', (z23.ley_au_pond||0).toFixed(3),
+              '| SR TMH', (sr.tmh_dia||0).toFixed(2), 'ley día', (sr.ley_au_dia||0).toFixed(3), 'mes', (sr.ley_au_pond||0).toFixed(3));
 }
+function renderLabCardFromLocal(fecha) { renderLabCard(null, fecha); }
 
 // ══ FETCH IZ / SKIP ══════════════════════════════════════════════
 async function fetchAppScriptIz(params={}) {
