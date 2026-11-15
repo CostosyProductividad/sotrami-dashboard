@@ -3525,6 +3525,21 @@ async function fetchAppScript(params = {}) {
 }
 
 // Cargar datos del día desde Apps Script y actualizar el dashboard
+// ── Descarta respuestas que no son de la fecha seleccionada en la cabecera ──
+// (al abrir la página algunas APIs se consultan sin fecha y devuelven la última
+//  fila de la hoja, que puede ser una fecha futura vacía; si esa respuesta llega
+//  después que la buena, dejaría el cuadro en cero)
+function respuestaVigente(tag, fechaPedida, fechaResp) {
+  const sel = document.getElementById('hdr-fecha-sel')?.value || '';
+  if (!sel) return true;                          // aún no hay fecha elegida
+  const ref = fechaPedida || fechaResp || '';
+  if (ref && ref !== sel) {
+    console.log('['+tag+'] Respuesta descartada: '+(fechaResp||'?')+' (pedida '+(fechaPedida||'sin fecha')+') ≠ seleccionada '+sel);
+    return false;
+  }
+  return true;
+}
+
 async function cargarDiaDesdeAPI(fecha) {
   // Llamar API día Y acumulado en paralelo
   const [dataDia, dataAcum] = await Promise.all([
@@ -3536,6 +3551,7 @@ async function cargarDiaDesdeAPI(fecha) {
     console.warn('[KPI] dataDia no disponible — KPIs no actualizados');
     return;
   }
+  if (!respuestaVigente('Producción', fecha, dataDia.fecha)) return;
 
   const sv  = (id,v)=>{ const el=document.getElementById(id); if(el&&v!=null) el.textContent=v; };
   const scl = (id,cls)=>{ const el=document.getElementById(id); if(el) el.className=cls; };
@@ -3554,8 +3570,10 @@ async function cargarDiaDesdeAPI(fecha) {
 
   // ── Prog. Día desde PROG_DIA configurado ─────────────────────
   // API PLANTA_CIA: PROG_DIA = {Z23:130, SR:80} TMH/día
-  const PROG_Z23_DIA = 144.16, PROG_SR_DIA = 32.25;
-  const PROG_Z23_MES = 4469.18, PROG_SR_MES = 1000;
+  // Programa: viene de la API de Planta (hoja PROGRAMA_PLANTA); si no llega, valores de respaldo
+  const _pz = dataAcum?.zona_23 || {}, _ps = dataAcum?.santa_rosa || {};
+  const PROG_Z23_DIA = +_pz.prog_dia || 144.16, PROG_SR_DIA = +_ps.prog_dia || 32.25;
+  const PROG_Z23_MES = +_pz.prog_mes || 4469.18, PROG_SR_MES = +_ps.prog_mes || 1000;
 
   // ── Datos acumulados del período ──────────────────────────────
   const zA = dataAcum?.zona_23    || {};
@@ -6306,6 +6324,7 @@ async function cargarPB(fecha) {
   if (!APPSCRIPT_URL_PB) return;
   let data = await fetchPB({ accion:'dia', fecha });
   if (!data?.ok) { console.warn('[PB API] Sin datos para', fecha||'última'); return; }
+  if (!respuestaVigente('PB API', fecha, data.fecha)) return;
   // Normalizar campos por si el Apps Script usa nombres distintos
   if (data && !data.molienda && data.chancado === undefined) {
     // El script puede devolver campos planos en vez de anidados
@@ -7297,44 +7316,68 @@ async function cargarSegDesdeAPI(fecha) {
 
 // ══ CARGAR RRHH ═════════════════════════════════════════════════
 async function cargarRRHH(fecha) {
-  const qs = fecha ? '?accion=dia&fecha='+encodeURIComponent(fecha) : '?accion=dia';
   const sv = (id,v) => { const el=document.getElementById(id); if(el&&v!=null) el.textContent=v; };
   const fmt = n => n > 0 ? n.toLocaleString('es-PE') : '—';
 
-  async function fetchRRHH(url) {
-    if (!url) return null;
-    try {
-      const res = await fetch(url + qs);
-      if (!res.ok) return null;
-      const d = await res.json();
-      return d.ok ? d : null;
-    } catch(e) { return null; }
-  }
+  // Fecha base: la pedida → la seleccionada en la cabecera → hoy.
+  // Nunca se consulta "sin fecha": las hojas de RRHH tienen filas ya creadas hasta fin de mes
+  // (vacías), y sin fecha los scripts devuelven la última fila → todo en cero.
+  const hoy = (() => { const d = new Date(); return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear(); })();
+  const fBase = fecha || document.getElementById('hdr-fecha-sel')?.value || hoy;
+  const restarDias = (f, n) => { const p = f.split('/'); const d = new Date(+p[2], +p[1]-1, +p[0] - n);
+    return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear(); };
+  const hcOf = x => { const t = x?.totales || x || {};
+    return (+t.activo_total||0) || (+t.total_hc||0) || ((+t.obr_activo||0) + (+t.emp_activo||0)); };
+  const DIAS_ATRAS = 7;
 
-  // RRHH con accion=rrhh; si la fecha elegida no tiene personal, usa la última fecha con datos
-  async function fetchRRHHAccion(url, tag) {
+  // Pide la fecha base; si ese día está vacío, retrocede día por día (máx. 7) hasta encontrar registro
+  async function fetchRRHHFecha(url, tag, accion) {
     if (!url) return null;
-    const get = async q => {
-      try { const r = await fetch(url + q); const j = await r.json(); return j?.ok ? j : null; }
-      catch(e) { console.warn('[RRHH '+tag+']', e.message); return null; }
-    };
-    const hcOf = x => (x?.totales?.activo_total||0) + (x?.totales?.obr_activo||0) + (x?.totales?.emp_activo||0);
-    let d = await get('?accion=rrhh' + (fecha ? '&fecha='+encodeURIComponent(fecha) : ''));
-    if (fecha && !hcOf(d)) d = (await get('?accion=rrhh')) || d;
-    return d;
+    let ultimo = null;
+    for (let k = 0; k <= DIAS_ATRAS; k++) {
+      const f = restarDias(fBase, k);
+      let d = null;
+      try { const r = await fetch(url + '?accion=' + accion + '&fecha=' + encodeURIComponent(f)); const j = await r.json(); d = j?.ok ? j : null; }
+      catch(e) { console.warn('[RRHH '+tag+']', f, e.message); }
+      if (d) ultimo = d;
+      if (hcOf(d) > 0) {
+        d._fechaUsada = f;
+        if (k > 0) console.log('[RRHH '+tag+'] sin registro el '+fBase+' → se usa el '+f);
+        return d;
+      }
+    }
+    console.log('[RRHH '+tag+'] sin registro entre '+restarDias(fBase, DIAS_ATRAS)+' y '+fBase);
+    return ultimo;
   }
 
   // Fetch all company data in parallel
   const [ds, dtl, dcv, dcop, dtumi, dcor] = await Promise.all([
-    fetchRRHH(APPSCRIPT_URL_RRHH_SOT),
-    fetchRRHHSiv(APPSCRIPT_URL_SIV_TL),   // uses accion=rrhh
-    fetchRRHHSiv(APPSCRIPT_URL_SIV_CV),   // uses accion=rrhh
+    fetchRRHHFecha(APPSCRIPT_URL_RRHH_SOT,  'SOT',      'dia'),
+    fetchRRHHFecha(APPSCRIPT_URL_SIV_TL,    'TL',       'rrhh'),
+    fetchRRHHFecha(APPSCRIPT_URL_SIV_CV,    'CV',       'rrhh'),
     // Copsem y Tumi: su script responde RRHH solo con accion=rrhh
-    // (en Copsem accion=dia devuelve Avances; en Tumi accion=dia no existe)
-    fetchRRHHAccion(APPSCRIPT_URL_COP,  'COP'),
-    fetchRRHHAccion(APPSCRIPT_URL_TUMI, 'TUMI'),
-    fetchRRHHSiv(APPSCRIPT_URL_CORIMAYO), // uses accion=rrhh
+    fetchRRHHFecha(APPSCRIPT_URL_COP,       'COP',      'rrhh'),
+    fetchRRHHFecha(APPSCRIPT_URL_TUMI,      'TUMI',     'rrhh'),
+    fetchRRHHFecha(APPSCRIPT_URL_CORIMAYO,  'CORIMAYO', 'rrhh'),
   ]);
+  // Si mientras tanto se eligió otra fecha, no pintar datos viejos
+  const _selNow = document.getElementById('hdr-fecha-sel')?.value || '';
+  if (_selNow && fecha && _selNow !== fecha) { console.log('[RRHH] Respuesta descartada:', fecha, '≠', _selNow); return; }
+
+  // Marca la fecha usada cuando no es la seleccionada (ej. "Copsem · 12/11")
+  [['sot',ds],['tl',dtl],['cv',dcv],['cop',dcop],['tumi',dtumi],['cor',dcor]].forEach(([p,d]) => {
+    const c0 = document.getElementById('rrhh-'+p+'-empl')?.closest('tr')?.cells?.[0];
+    if (!c0) return;
+    c0.querySelector('.rrhh-fnote')?.remove();
+    if (d?._fechaUsada && d._fechaUsada !== fBase) {
+      const s = document.createElement('span');
+      s.className = 'rrhh-fnote';
+      s.style.cssText = 'font-size:8px;color:var(--t3);font-weight:400;margin-left:4px';
+      s.textContent = '· ' + d._fechaUsada.slice(0,5);
+      s.title = 'Sin registro el ' + fBase + '; se muestra el último día con datos';
+      c0.appendChild(s);
+    }
+  });
 
   // Helper to extract totals from each response
   const getTot = (d, field) => d?.totales?.[field] || d?.[field] || 0;
@@ -7389,7 +7432,7 @@ async function cargarRRHH(fecha) {
   ].filter(Boolean);
   if (ds) {
     const rrhhFechaEl = document.getElementById('rrhh-act-fecha');
-    if (rrhhFechaEl && ds.fecha) rrhhFechaEl.textContent = ds.fecha;
+    if (rrhhFechaEl) rrhhFechaEl.textContent = ds._fechaUsada || ds.fecha || fBase;
   }
   console.log('[RRHH COP]', dcop ? JSON.stringify(dcop.totales||{}) : 'sin datos');
   console.log('[RRHH TUMI]', dtumi ? JSON.stringify(dtumi.totales||{}) : 'sin datos');
@@ -7406,12 +7449,7 @@ async function cargarRRHH(fecha) {
   const rrhhHCEl = document.getElementById('kpi-rrhh-hc');
   if (rrhhHCEl) rrhhHCEl.textContent = totHC.toLocaleString('es-PE');
 
-  // If HC is 0 with a specific fecha, retry with latest available
-  if (totHC === 0 && fecha) {
-    console.log('[RRHH] HC=0 para', fecha, '— reintentando sin fecha');
-    return cargarRRHH('');
-  }
-  console.log('[RRHH] Total HC:', totHC);
+  console.log('[RRHH] Total HC:', totHC, '| fecha', fBase);
 }
 
 // ══ ALM MODAL ══════════════════════════════════════════════════
@@ -7859,6 +7897,7 @@ async function cargarSkipDesdAPI(fecha) {
   if (!APPSCRIPT_URL_IZ) return;
   const data = await fetchAppScriptIz({ accion:'dia', fecha, usuario:'SOTRAMI' });
   if (!data?.ok) return;
+  if (!respuestaVigente('SKIP', fecha, data.fecha)) return;
   const lastFecha = data.fecha;
   const el = document.getElementById('skip-last-fecha');
   if(el) el.textContent = lastFecha || '—';
@@ -7939,6 +7978,7 @@ async function cargarVolqueteDesdAPI(fecha) {
   if (!APPSCRIPT_URL_VQ) return;
   const data = await fetchAppScriptVQ({ accion:'dia', fecha });
   if (!data?.ok) return;
+  if (!respuestaVigente('VQ', fecha, data.fecha)) return;
   const sv = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
   sv('vq-last-fecha', data.fecha||'—');
 
