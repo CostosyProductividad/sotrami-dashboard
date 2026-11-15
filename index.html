@@ -243,6 +243,30 @@ html{
 .g2{display:contents;}
 .gf{overflow:hidden;grid-column:1/-1;}
 .gfull{grid-column:1/-1;}
+/* ── Control de reporte ── */
+.cr-ov{position:fixed;inset:0;background:rgba(0,20,45,.45);z-index:9000;display:none;align-items:flex-start;justify-content:center;padding:70px 16px 16px;}
+.cr-ov.open{display:flex;}
+.cr-box{background:var(--bg,#fff);border-radius:12px;width:min(980px,100%);max-height:calc(100vh - 90px);overflow:auto;box-shadow:0 18px 50px rgba(0,0,0,.3);}
+.cr-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#00264d;color:#F5ECC8;padding:10px 14px;border-radius:12px 12px 0 0;position:sticky;top:0;}
+.cr-title{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;flex:1;min-width:180px;}
+.cr-x{background:none;border:none;color:#F5ECC8;font-size:20px;line-height:1;cursor:pointer;padding:0 4px;}
+.hdr-ctrl-btn{position:relative;}
+.cr-badge{position:absolute;top:-6px;right:-6px;min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:#DC2626;color:#fff;font-size:9.5px;font-weight:700;line-height:16px;text-align:center;}
+.cr-badge.ok{background:#15803D;}
+.cr-res{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;border:1px solid;}
+.cr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:5px;padding:8px 10px 10px;}
+.cr-grp{grid-column:1/-1;font-size:8.5px;font-weight:700;letter-spacing:.12em;color:var(--t3);text-transform:uppercase;margin-top:4px;}
+.cr-it{display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:7px;border:1px solid;font-size:10.5px;line-height:1.2;min-width:0;}
+.cr-it b{font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.cr-it span{font-size:9.5px;white-space:nowrap;}
+.cr-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:currentColor;}
+.cr-ok{background:var(--Gbg);color:var(--G);border-color:var(--Gbd);}
+.cr-warn{background:var(--Ybg);color:var(--Y);border-color:var(--Ybd);}
+.cr-falta{background:var(--Rbg);color:var(--R);border-color:var(--Rbd);}
+.cr-wait{background:transparent;color:var(--t3);border-color:var(--bd,#d9dee7);}
+.cr-tog{background:rgba(255,255,255,.08);border:1px solid rgba(212,175,55,.45);border-radius:6px;font-size:9.5px;padding:2px 9px;cursor:pointer;color:#F5ECC8;}
+.cr-tog:hover{background:rgba(212,175,55,.2);}
+@media print{#ctrl-rep,.hdr-ctrl-btn{display:none!important;}}
 .col-full{grid-column:1/-1;}
 .col-pair{display:grid;grid-template-columns:1fr 1fr;gap:14px;grid-column:1/-1;}
 
@@ -835,6 +859,10 @@ body { background:#eef1f6; }
         <span class="hdr-pill hdr-pill-mes" id="hdr-mes-badge">—</span>
         <span class="hdr-pill hdr-pill-api" id="hdr-api-status" title="Estado conexión API">⬤ API</span>
       </div>
+      <button onclick="abrirCtrlRep()" class="hdr-print-btn hdr-ctrl-btn" title="Control: qué áreas faltan reportar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        <span>Control</span><b class="cr-badge" id="cr-badge" style="display:none">0</b>
+      </button>
       <button onclick="printReport()" class="hdr-print-btn" title="Descargar reporte en PDF (una sola hoja)">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
         <span>PDF</span>
@@ -885,6 +913,7 @@ body { background:#eef1f6; }
 </div><!-- /hdr-wrap -->
 
 <div class="page">
+
 
 
 <!-- SEGURIDAD + PRODUCCIÓN -->
@@ -3293,6 +3322,7 @@ function getDiasEjecPeriodo(fechaReporte, periodoIni) {
 // ── Actualizar todo el encabezado cuando cambia la fecha de reporte ───────
 function onFechaReporteChange(fechaSel) {
   if (!fechaSel) return;
+  if (typeof resetCtrlRep === 'function') resetCtrlRep();
 
   const d = parseFechaHdr(fechaSel);
   const keys = Object.keys(PERIODOS).sort();
@@ -3525,6 +3555,74 @@ async function fetchAppScript(params = {}) {
 }
 
 // Cargar datos del día desde Apps Script y actualizar el dashboard
+
+// ══ CONTROL DE REPORTE ═══════════════════════════════════════════
+// Cada área avisa con marcarEstado() qué fecha cargó y si trae datos.
+// Verde = registró la fecha seleccionada · Amarillo = registró pero falta algo (ej. ley)
+// Rojo = sin registro ese día (muestra el último día con datos si se conoce)
+const CTRL_AREAS = [
+  ['Mina', [['prod','Producción – Planta'],['skip','Izaje Skip'],['vq','Volquete – Cancha'],['rehab','Rehabilitación'],['rb','Raise Boring – Tumi']]],
+  ['Avances', [['av-cv','Avances – Sector IV CV'],['av-tl','Avances – Sector IV TL'],['av-cia','Avances – Cía. TL'],['av-cop','Avances – Copsem'],['av-cor','Avances – Corimayo']]],
+  ['Planta / Lab / Geología', [['pb','Planta Beneficio'],['lab','Laboratorio Químico'],['geo','Geología – DDH'],['mant','Mantenimiento']]],
+  ['RRHH', [['rh-sot','RRHH – Cía. Sotrami'],['rh-cv','RRHH – Sector IV CV'],['rh-tl','RRHH – Sector IV TL'],['rh-cop','RRHH – Copsem'],['rh-tumi','RRHH – Tumi'],['rh-cor','RRHH – Corimayo']]],
+];
+window._estadoRep = {};
+let _crSoloFaltan = true;
+function _crSel() { return document.getElementById('hdr-fecha-sel')?.value || ''; }
+function _crKey(f) { const p = String(f||'').split('/'); return p.length === 3 ? p[2]+p[1].padStart(2,'0')+p[0].padStart(2,'0') : ''; }
+// fechaDatos: fecha de los datos mostrados · conDatos: true si traen valores · extra: {warn:'texto'}
+function marcarEstado(clave, fechaDatos, conDatos, extra) {
+  window._estadoRep[clave] = { fecha: fechaDatos || '', ok: !!conDatos, warn: extra?.warn || '' };
+  clearTimeout(window._crT); window._crT = setTimeout(renderCtrlRep, 150);
+}
+function resetCtrlRep() {
+  window._estadoRep = {}; window._crIni = Date.now(); renderCtrlRep();
+  clearTimeout(window._crTO); window._crTO = setTimeout(renderCtrlRep, 30500);
+}
+function toggleCtrlRep() { _crSoloFaltan = !_crSoloFaltan; renderCtrlRep(); }
+function abrirCtrlRep()  { renderCtrlRep(); document.getElementById('ctrl-rep')?.classList.add('open'); }
+function cerrarCtrlRep() { document.getElementById('ctrl-rep')?.classList.remove('open'); }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') cerrarCtrlRep(); });
+function renderCtrlRep() {
+  const grid = document.getElementById('cr-grid'); if (!grid) return;
+  const sel = _crSel(), kSel = _crKey(sel);
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  set('cr-fecha', sel || '—');
+  let nOk = 0, nTot = 0, nWait = 0, html = '';
+  CTRL_AREAS.forEach(([grp, items]) => {
+    let gHtml = '';
+    items.forEach(([k, nom]) => {
+      nTot++;
+      const e = window._estadoRep[k];
+      let cls, txt, show = true;
+      if (!e && Date.now() - (window._crIni || 0) > 30000) { cls = 'cr-falta'; txt = 'sin respuesta'; }
+      else if (!e) { cls = 'cr-wait'; txt = 'cargando…'; nWait++; }
+      else if (e.ok && _crKey(e.fecha) === kSel) {
+        if (e.warn) { cls = 'cr-warn'; txt = e.warn; } else { cls = 'cr-ok'; txt = 'reportado'; }
+        nOk++; show = !_crSoloFaltan || !!e.warn;
+      } else if (e.ok && e.fecha && _crKey(e.fecha) < kSel) { cls = 'cr-falta'; txt = 'último ' + e.fecha.slice(0,5); }
+      else { cls = 'cr-falta'; txt = 'sin registro'; }
+      if (show) gHtml += '<div class="cr-it ' + cls + '" title="' + nom + (e?.fecha ? ' · datos del ' + e.fecha : '') + '"><i class="cr-dot"></i><b>' + nom + '</b><span>' + txt + '</span></div>';
+    });
+    if (gHtml) html += '<div class="cr-grp">' + grp + '</div>' + gHtml;
+  });
+  if (!html) html = '<div class="cr-grp" style="color:var(--G)">Todas las áreas registraron el ' + sel + '</div>';
+  grid.innerHTML = html;
+  const res = document.getElementById('cr-resumen');
+  if (res) {
+    const falta = nTot - nOk - nWait;
+    res.textContent = nOk + ' de ' + nTot + ' reportadas' + (falta > 0 ? ' · faltan ' + falta : '') + (nWait > 0 ? ' · ' + nWait + ' cargando' : '');
+    res.className = 'cr-res ' + (nWait > 0 ? 'cr-wait' : falta > 0 ? 'cr-falta' : 'cr-ok');
+    const bd = document.getElementById('cr-badge');
+    if (bd) {
+      if (nWait > 0 && falta === 0) bd.style.display = 'none';
+      else { bd.style.display = ''; bd.textContent = falta > 0 ? falta : '✓'; bd.className = 'cr-badge' + (falta > 0 ? '' : ' ok');
+             bd.parentElement.title = falta > 0 ? 'Faltan ' + falta + ' áreas por reportar' : 'Todas las áreas reportaron'; }
+    }
+  }
+  set('cr-tog', _crSoloFaltan ? 'Ver todo' : 'Solo faltantes');
+}
+
 // ── Descarta respuestas que no son de la fecha seleccionada en la cabecera ──
 // (al abrir la página algunas APIs se consultan sin fecha y devuelven la última
 //  fila de la hoja, que puede ser una fecha futura vacía; si esa respuesta llega
@@ -3552,6 +3650,7 @@ async function cargarDiaDesdeAPI(fecha) {
     return;
   }
   if (!respuestaVigente('Producción', fecha, dataDia.fecha)) return;
+  marcarEstado('prod', dataDia.fecha, ((dataDia.resumen_z23?.tmh_dia||0) + (dataDia.resumen_sr?.tmh_dia||0)) > 0);
 
   const sv  = (id,v)=>{ const el=document.getElementById(id); if(el&&v!=null) el.textContent=v; };
   const scl = (id,cls)=>{ const el=document.getElementById(id); if(el) el.className=cls; };
@@ -3870,14 +3969,26 @@ async function printReport() {
       windowWidth: PDF_ANCHO, width: PDF_ANCHO,
       scale: 2, useCORS: true, backgroundColor: '#ffffff', logging: false,
       scrollX: 0, scrollY: 0, x: 0, y: 0,
-      ignoreElements: el => el === glosWrap || (el.classList && (el.classList.contains('mwrap') || el.id === 'periodo-panel')),
+      ignoreElements: el => el === glosWrap || el.id === 'ctrl-rep' || (el.classList && (el.classList.contains('mwrap') || el.id === 'periodo-panel')),
       onclone: doc => {
         const st = doc.createElement('style');
         st.textContent = 'html,body{width:' + PDF_ANCHO + 'px!important;min-width:0!important;overflow:visible!important;height:auto!important}'
           + '.hdr-wrap{position:static!important}'
           + '*{animation:none!important;transition:none!important}';
         doc.head.appendChild(st);
-        const l2 = doc.querySelector('.hdr-print-btn span'); if (l2) l2.textContent = 'PDF';
+        // Título del reporte: a 600 px la parte central de la cabecera se oculta,
+        // así que en el PDF va como franja propia debajo del nombre de la empresa
+        const brand = doc.querySelector('.hdr-brand');
+        const tSrc = doc.querySelector('.hdr-report-title'), sSrc = doc.querySelector('.hdr-report-sub');
+        if (brand) {
+          const t = doc.createElement('div');
+          t.style.cssText = 'text-align:center;padding:6px 0 7px;border-top:1px solid rgba(212,175,55,.30);border-bottom:1px solid rgba(212,175,55,.30)';
+          t.innerHTML = '<div style="font-size:14px;font-weight:800;letter-spacing:.14em;color:#F5ECC8">' + (tSrc ? tSrc.textContent : 'REPORTE DIARIO DE UNIDAD') + '</div>'
+            + '<div style="font-size:8.5px;letter-spacing:.2em;color:rgba(212,175,55,.8);margin-top:2px">' + (sSrc ? sSrc.textContent : 'MINA / PLANTA') + '</div>';
+          brand.after(t);
+        }
+        // Controles que no aportan en el reporte impreso
+        doc.querySelectorAll('.hdr-print-btn,.hdr-ctrl-btn,.hdr-pill-api,.ch-btn').forEach(e => { e.style.display = 'none'; });
       }
     });
     const { jsPDF } = window.jspdf;
@@ -6367,6 +6478,7 @@ async function cargarPB(fecha) {
   }
   _pbData = data;
   renderPBCard(data);
+  marcarEstado('pb', data.fecha, (+data.molienda?.tonelaje_tmh || 0) > 0 || (+data.chancado?.total_ingreso_tmh || 0) > 0);
   console.log('[PB API] Cargado:', data.fecha,
     '| TMH:', data.molienda?.tonelaje_tmh,
     '| TMS:', data.molienda?.tonelaje_tms,
@@ -7253,6 +7365,7 @@ async function cargarMantDesdeAPI(fecha) {
     svk('mant-kpi-inop', inop.length);
     svk('mant-kpi-disp', data.disponibles_count || '—');
 
+    marcarEstado('mant', data.fecha || fecha, true);
     console.log('[MANT] Inoperativos:', inop.length);
   } catch(e) { console.warn('[MANT API]', e.message); }
 }
@@ -7364,6 +7477,8 @@ async function cargarRRHH(fecha) {
   const _selNow = document.getElementById('hdr-fecha-sel')?.value || '';
   if (_selNow && fecha && _selNow !== fecha) { console.log('[RRHH] Respuesta descartada:', fecha, '≠', _selNow); return; }
 
+  [['rh-sot',ds],['rh-tl',dtl],['rh-cv',dcv],['rh-cop',dcop],['rh-tumi',dtumi],['rh-cor',dcor]].forEach(([k,d]) =>
+    marcarEstado(k, d?._fechaUsada || fBase, !!d?._fechaUsada));
   // Marca la fecha usada cuando no es la seleccionada (ej. "Copsem · 12/11")
   [['sot',ds],['tl',dtl],['cv',dcv],['cop',dcop],['tumi',dtumi],['cor',dcor]].forEach(([p,d]) => {
     const c0 = document.getElementById('rrhh-'+p+'-empl')?.closest('tr')?.cells?.[0];
@@ -7458,7 +7573,7 @@ function closeAlm(){document.getElementById("alm-modal")?.classList.remove("open
 function renderAlmDet(){const src=window._almRows||[];const tbody=document.getElementById("tb-alm-det");if(!tbody)return;if(!src.length){tbody.innerHTML="<tr><td colspan=\"9\" style=\"text-align:center;color:var(--t3);padding:12px\">Sin datos</td></tr>";return;}const sv=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};const cnt=t=>src.filter(e=>(e.estado_calc||"").toLowerCase().includes(t)||(e.estado_hoja||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").includes(t)).length;sv("alm-cnt-crit",cnt("critico"));sv("alm-cnt-prec",cnt("precaucion"));sv("alm-cnt-adeq",cnt("adecuado"));sv("alm-cnt-exc",cnt("excedente"));const estOrd=e=>{const s=String(e.estado_hoja||e.estado_calc||e.estado||"").toLowerCase().replace(/[^a-z]/g,"");return s.includes("critico")?0:s.includes("precaucion")?1:2;};const sorted=[...src].sort((a,b)=>estOrd(a)-estOrd(b));const fmtN2=n=>n>0?n.toLocaleString("es-PE",{minimumFractionDigits:1,maximumFractionDigits:1}):"—";tbody.innerHTML=sorted.map(e=>{const eN=String(e.estado_hoja||e.estado_calc||e.estado||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9 ]/g,"").trim();const iC=eN.includes("critico"),iP=eN.includes("precaucion");const bg=iC?"<span class=\"eCrit\">🔴 Crítico</span>":iP?"<span style=\"background:var(--Ybg);color:var(--Y);border:1px solid var(--Ybd);padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700\">🟡 Precaución</span>":"<span class=\"eoper\">🟢 Adecuado</span>";const d=e.diferencia||0;return "<tr><td style=\"font-size:9px;color:var(--t3)\">"+(e.anio||"—")+"</td><td style=\"font-size:9px;color:var(--t3)\">"+(e.periodo||"—")+"</td><td style=\"font-size:9px;color:var(--t3)\">"+(e.tipo||"—")+"</td><td style=\"font-weight:600;font-size:10px\">"+(e.mat||"—")+"</td><td class=\"mono\" style=\"text-align:center;font-size:9px\">"+(e.um||"—")+"</td><td class=\"mono\" style=\"text-align:center\">"+fmtN2(e.act)+"</td><td class=\"mono\" style=\"text-align:center\">"+fmtN2(e.min)+"</td><td class=\"mono\" style=\"text-align:center;color:"+(d<0?"#DC2626":"#15803D")+";font-weight:600\">"+(d<0?d.toFixed(1):"+"+d.toFixed(1))+"</td><td style=\"text-align:center\">"+bg+"</td></tr>";}).join("");}
 
 // ══ RB TUMI ════════════════════════════════════════════════════
-async function cargarRB_Tumi(fecha){if(!APPSCRIPT_URL_TUMI)return;try{const qs=fecha?"?accion=rb&fecha="+encodeURIComponent(fecha):"?accion=rb";let d=await fetch(APPSCRIPT_URL_TUMI+qs).then(r=>r.json()).catch(()=>null);if(d?.ok&&(!d.zonas?.length||!d.zonas.some(z=>z.ejec_dia>0||z.ejec_acum>0))&&fecha)d=await fetch(APPSCRIPT_URL_TUMI+"?accion=rb").then(r=>r.json()).catch(()=>null)||d;if(!d?.ok)return;const sv=(id,v)=>{const el=document.getElementById(id);if(el&&v!=null)el.textContent=v;};const f1=n=>n>0?n.toFixed(2):"—";const pC=(e,p)=>!p?"pN":e/p>=1?"pG":e/p>=0.85?"pY":"pR";    sv("rb-act-fecha",d.fecha||"—");const zSel=document.getElementById("rb-f-zona");if(zSel&&d.zonas?.length){const cur=zSel.value;zSel.innerHTML='<option value="">Todas</option>';d.zonas.forEach(z=>{const o=document.createElement("option");o.value=z.zona;o.textContent=z.zona||"—";zSel.appendChild(o);});if(cur)zSel.value=cur;}const tb=document.getElementById("tb-rb");if(tb&&d.zonas?.length){tb.innerHTML=d.zonas.map(z=>{const pD=z.prog_dia>0?(z.ejec_dia/z.prog_dia*100):null,pM=z.prog_mes>0?(z.ejec_acum/z.prog_mes*100):null,pP=z.prog_proy>0?(z.ejec_acum_proy/z.prog_proy*100):null,df=z.prog_proy-z.ejec_acum_proy;return "<tr><td>"+(z.zona||"—")+"</td><td>"+(z.proyecto||"—")+"</td><td style=\"font-size:9px;color:var(--t3)\">"+(z.tipo||"—")+"</td><td class=\"mono\" style=\"text-align:center\">"+f1(z.prog_dia)+"</td><td class=\"mono\" style=\"text-align:center\">"+f1(z.ejec_dia)+"</td><td style=\"text-align:center\"><span class=\""+pC(z.ejec_dia,z.prog_dia)+"\">"+(pD!=null?pD.toFixed(1)+"%":"—")+"</span></td><td class=\"mono\" style=\"text-align:center\">"+f1(z.prog_mes)+"</td><td class=\"mono\" style=\"text-align:center;font-weight:600;color:var(--gd)\">"+f1(z.ejec_acum)+"</td><td style=\"text-align:center\"><span class=\""+pC(z.ejec_acum,z.prog_mes)+"\">"+(pM!=null?pM.toFixed(1)+"%":"—")+"</span></td><td class=\"mono\" style=\"text-align:center\">"+f1(z.prog_proy)+"</td><td class=\"mono\" style=\"text-align:center;font-weight:600;color:var(--nv)\">"+f1(z.ejec_acum_proy)+"</td><td class=\"mono\" style=\"text-align:center;color:"+(df<0?"#15803D":"#DC2626")+"\">"+(df>=0?"+":"")+f1(df)+"</td><td style=\"text-align:center\"><span class=\""+pC(z.ejec_acum_proy,z.prog_proy)+"\">"+(pP!=null?pP.toFixed(1)+"%":"—")+"</span></td></tr>";}).join("");}const z0=d.zonas?.find(z=>z.ejec_dia>0||z.ejec_acum>0)||d.zonas?.[0]||{};sv("rb-ejec-dia",f1(z0.ejec_dia));sv("rb-prog-dia",f1(z0.prog_dia));sv("rb-ejec-acum",f1(z0.ejec_acum));sv("rb-prog-mes",f1(z0.prog_mes));sv("rb-ejec-proy",f1(z0.ejec_acum_proy));sv("rb-prog-proy",f1(z0.prog_proy));const p0=z0.prog_dia>0?(z0.ejec_dia/z0.prog_dia*100):null,pm0=z0.prog_mes>0?(z0.ejec_acum/z0.prog_mes*100):null,pp0=z0.prog_proy>0?(z0.ejec_acum_proy/z0.prog_proy*100):null;sv("rb-pct-dia",p0!=null?p0.toFixed(1)+"%":"—");sv("rb-pct-mes",pm0!=null?pm0.toFixed(1)+"%":"—");sv("rb-pct-proy",pp0!=null?pp0.toFixed(1)+"%":"—");const badge=document.getElementById("rb-pct-badge");if(badge&&pm0!=null){badge.textContent=(pm0>=100?"▲":pm0>=85?"●":"▼")+" "+pm0.toFixed(1)+"%";badge.className="kbdg "+(pm0>=100?"kG":pm0>=85?"kA":"kR");}console.log("[TUMI RB] OK");}catch(e){console.warn("[TUMI RB]",e.message);}}
+async function cargarRB_Tumi(fecha){if(!APPSCRIPT_URL_TUMI)return;try{const qs=fecha?"?accion=rb&fecha="+encodeURIComponent(fecha):"?accion=rb";let d=await fetch(APPSCRIPT_URL_TUMI+qs).then(r=>r.json()).catch(()=>null);if(d?.ok&&(!d.zonas?.length||!d.zonas.some(z=>z.ejec_dia>0||z.ejec_acum>0))&&fecha)d=await fetch(APPSCRIPT_URL_TUMI+"?accion=rb").then(r=>r.json()).catch(()=>null)||d;if(!d?.ok)return;marcarEstado("rb",d.fecha,(d.zonas||[]).some(z=>(+z.ejec_dia||0)>0));const sv=(id,v)=>{const el=document.getElementById(id);if(el&&v!=null)el.textContent=v;};const f1=n=>n>0?n.toFixed(2):"—";const pC=(e,p)=>!p?"pN":e/p>=1?"pG":e/p>=0.85?"pY":"pR";    sv("rb-act-fecha",d.fecha||"—");const zSel=document.getElementById("rb-f-zona");if(zSel&&d.zonas?.length){const cur=zSel.value;zSel.innerHTML='<option value="">Todas</option>';d.zonas.forEach(z=>{const o=document.createElement("option");o.value=z.zona;o.textContent=z.zona||"—";zSel.appendChild(o);});if(cur)zSel.value=cur;}const tb=document.getElementById("tb-rb");if(tb&&d.zonas?.length){tb.innerHTML=d.zonas.map(z=>{const pD=z.prog_dia>0?(z.ejec_dia/z.prog_dia*100):null,pM=z.prog_mes>0?(z.ejec_acum/z.prog_mes*100):null,pP=z.prog_proy>0?(z.ejec_acum_proy/z.prog_proy*100):null,df=z.prog_proy-z.ejec_acum_proy;return "<tr><td>"+(z.zona||"—")+"</td><td>"+(z.proyecto||"—")+"</td><td style=\"font-size:9px;color:var(--t3)\">"+(z.tipo||"—")+"</td><td class=\"mono\" style=\"text-align:center\">"+f1(z.prog_dia)+"</td><td class=\"mono\" style=\"text-align:center\">"+f1(z.ejec_dia)+"</td><td style=\"text-align:center\"><span class=\""+pC(z.ejec_dia,z.prog_dia)+"\">"+(pD!=null?pD.toFixed(1)+"%":"—")+"</span></td><td class=\"mono\" style=\"text-align:center\">"+f1(z.prog_mes)+"</td><td class=\"mono\" style=\"text-align:center;font-weight:600;color:var(--gd)\">"+f1(z.ejec_acum)+"</td><td style=\"text-align:center\"><span class=\""+pC(z.ejec_acum,z.prog_mes)+"\">"+(pM!=null?pM.toFixed(1)+"%":"—")+"</span></td><td class=\"mono\" style=\"text-align:center\">"+f1(z.prog_proy)+"</td><td class=\"mono\" style=\"text-align:center;font-weight:600;color:var(--nv)\">"+f1(z.ejec_acum_proy)+"</td><td class=\"mono\" style=\"text-align:center;color:"+(df<0?"#15803D":"#DC2626")+"\">"+(df>=0?"+":"")+f1(df)+"</td><td style=\"text-align:center\"><span class=\""+pC(z.ejec_acum_proy,z.prog_proy)+"\">"+(pP!=null?pP.toFixed(1)+"%":"—")+"</span></td></tr>";}).join("");}const z0=d.zonas?.find(z=>z.ejec_dia>0||z.ejec_acum>0)||d.zonas?.[0]||{};sv("rb-ejec-dia",f1(z0.ejec_dia));sv("rb-prog-dia",f1(z0.prog_dia));sv("rb-ejec-acum",f1(z0.ejec_acum));sv("rb-prog-mes",f1(z0.prog_mes));sv("rb-ejec-proy",f1(z0.ejec_acum_proy));sv("rb-prog-proy",f1(z0.prog_proy));const p0=z0.prog_dia>0?(z0.ejec_dia/z0.prog_dia*100):null,pm0=z0.prog_mes>0?(z0.ejec_acum/z0.prog_mes*100):null,pp0=z0.prog_proy>0?(z0.ejec_acum_proy/z0.prog_proy*100):null;sv("rb-pct-dia",p0!=null?p0.toFixed(1)+"%":"—");sv("rb-pct-mes",pm0!=null?pm0.toFixed(1)+"%":"—");sv("rb-pct-proy",pp0!=null?pp0.toFixed(1)+"%":"—");const badge=document.getElementById("rb-pct-badge");if(badge&&pm0!=null){badge.textContent=(pm0>=100?"▲":pm0>=85?"●":"▼")+" "+pm0.toFixed(1)+"%";badge.className="kbdg "+(pm0>=100?"kG":pm0>=85?"kA":"kR");}console.log("[TUMI RB] OK");}catch(e){console.warn("[TUMI RB]",e.message);}}
 function openRB(){document.getElementById("rb-modal").classList.add("open");requestAnimationFrame(()=>requestAnimationFrame(()=>whenChartReady(()=>loadRBModal())));}
 function closeRB(){document.getElementById("rb-modal")?.classList.remove("open");}
 function rbTab(id,btn){document.querySelectorAll("#rb-modal .mtab").forEach(t=>t.classList.remove("on"));document.querySelectorAll("#rb-modal .mpanel").forEach(p=>p.classList.remove("on"));btn.classList.add("on");document.getElementById("rb-panel-"+id)?.classList.add("on");requestAnimationFrame(()=>requestAnimationFrame(()=>whenChartReady(()=>{if(id==="curvas")buildRBCharts();if(id==="kpis")renderRBKpis();if(id==="detalle")renderRBDetalle();})));}
@@ -7534,6 +7649,7 @@ async function cargarRehab(fecha) {
     const filas = (data.labores?.length ? data.labores : null) || (data.partidas?.length ? data.partidas : null) || null;
     if (!filas?.length) {
       console.warn('[REHAB] Sin partidas/labores. Keys recibidas:', Object.keys(data||{}).join(','));
+      marcarEstado('rehab', data?.fecha || fecha, false);
       return;
     }
     const tbody = document.getElementById('tb-rehab');
@@ -7580,6 +7696,7 @@ async function cargarRehab(fecha) {
     </tr>`;
     const rehabFecha = document.getElementById('rehab-act-fecha');
     if(rehabFecha) rehabFecha.textContent = data.fecha || '—';
+    marcarEstado('rehab', data.fecha || fecha, filas.some(x => (+x.ejec_dia||0) > 0));
     console.log('[REHAB] Cargado:', (data.partidas||data.labores||[]).length, 'registros');
   } catch(e) { console.warn('[REHAB]', e.message); }
 }
@@ -7702,9 +7819,11 @@ async function cargarGeoDesdAPI(fecha) {
     }
     const tb = document.getElementById('tb-ddh-body');
     if (tb) tb.innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--t3);padding:8px">Sin perforación registrada</td></tr>';
+    marcarEstado('geo', fecha, false);
     return;
   }
   const registros = data.registros;
+  marcarEstado('geo', data.fecha, registros.some(r => (+r.ejec_dia || +r.metros || +r.ejec || 0) > 0) || registros.length > 0);
   const actEl = document.getElementById('ddh-act-fecha');
   if (actEl) actEl.textContent = data.fecha;
   const apiMap = {};
@@ -7880,6 +7999,12 @@ function renderLabCard(data, fecha) {
   [['kpi-au-z23-clase',z23.ley_au_pond],['kpi-au-sr-clase',sr.ley_au_pond]].forEach(([id,v]) => {
     const el = document.getElementById(id); if (el) { el.className = cls(v); el.textContent = lbl(v); }
   });
+  {
+    const nM = (data?.muestras_z23||[]).length + (data?.muestras_sr||[]).length;
+    const conTMH = ((z23.tmh_dia||0) + (sr.tmh_dia||0)) > 0;
+    const sinLey = conTMH && !((z23.ley_au_dia||0) > 0 || (sr.ley_au_dia||0) > 0);
+    marcarEstado('lab', fecha, nM > 0 || conTMH, sinLey ? {warn:'sin ley aún'} : null);
+  }
   console.log('[LAB] Tabla', fecha, data ? '(API Lab: '+((data.muestras_z23||[]).length+(data.muestras_sr||[]).length)+' muestras)' : '(sin API, datos Planta)', '| Z23 TMH', (z23.tmh_dia||0).toFixed(2), 'ley día', (z23.ley_au_dia||0).toFixed(3), 'mes', (z23.ley_au_pond||0).toFixed(3),
               '| SR TMH', (sr.tmh_dia||0).toFixed(2), 'ley día', (sr.ley_au_dia||0).toFixed(3), 'mes', (sr.ley_au_pond||0).toFixed(3));
 }
@@ -7954,6 +8079,7 @@ async function cargarSkipDesdAPI(fecha) {
     }
   });
   SKIP_R.sort((a,b)=>{const p=a[0].split('/'),q=b[0].split('/');return p[2]-q[2]||p[1]-q[1]||p[0]-q[0];});
+  marcarEstado('skip', lastFecha, (totMin + totDes) > 0);
   console.log('[SKIP] Cargado:', lastFecha, 'mineral:', totMin, 'desmonte:', totDes, '| SKIP_R:', SKIP_R.length);
 }
 
@@ -8052,6 +8178,7 @@ async function cargarVolqueteDesdAPI(fecha) {
   const bdg = document.getElementById('kpi-vq-badge');
   const totV = vqTotMin+vqTotDes;
   if (bdg) { bdg.textContent='● '+totV+' viajes'+(hasMat?' ('+vqTotMin+'M/'+vqTotDes+'D)':''); bdg.className='kbdg kA'; }
+  marcarEstado('vq', data.fecha, (vqTotMin + vqTotDes) > 0);
   console.log('[VQ] OK:', data.fecha, 'Min:', vqTotMin, 'Des:', vqTotDes, 'Ton:', vqTotTon.toFixed(0));
 }
 
@@ -8318,6 +8445,8 @@ async function cargarAvances(fecha) {
   const cvCombined = {ok: cvZonas.length>0, zonas: cvZonas};
   updKPI('kpi-av-cv', cvCombined);
 
+  const _avEst = (k, d) => marcarEstado(k, d?.fecha || fecha, !!(d?.ok && (d.zonas||[]).some(z => (+z.ejec_dia||0) > 0)));
+  if (!fecha || fecha === _crSel()) { _avEst('av-cv', dcv); _avEst('av-tl', dtl); _avEst('av-cia', dcia); _avEst('av-cop', dcop); _avEst('av-cor', dcor); }
   console.log('[AV TOTAL] Ejec:', fmtT(totEjec), '| Prog:', fmtT(totProg), '| Acum:', fmtT(totAcum));
   } finally { setTimeout(()=>window._avLoading=false, 2000); }
 }
@@ -8766,132 +8895,3 @@ document.addEventListener('keydown', e => {
         </div>
         <div style="background:var(--w);border-radius:8px;padding:10px;border:1px solid var(--bd)">
           <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:6px;text-align:center">Curva S – Acumulado (m)</div>
-          <div style="height:220px"><canvas id="chartRBCurvaS" style="display:block;width:100%;height:100%"></canvas></div>
-        </div>
-        <div style="background:var(--w);border-radius:8px;padding:10px;border:1px solid var(--bd)">
-          <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:6px;text-align:center">Proyección Mes</div>
-          <div style="height:220px"><canvas id="chartRBProyeccion" style="display:block;width:100%;height:100%"></canvas></div>
-        </div>
-      </div>
-    </div>
-    <div class="mpanel" id="rb-panel-kpis" style="overflow-y:auto;max-height:75vh">
-      <div style="padding:10px 16px">
-        <div style="border:1px solid var(--bd);border-radius:8px;overflow:hidden;margin-bottom:10px">
-          <div style="display:grid;grid-template-columns:1fr 1fr;background:var(--nv)">
-            <div style="padding:6px 14px;color:#fff;font-size:10px;font-weight:700;text-align:center;border-right:1px solid rgba(255,255,255,.15)">PROGRAMA</div>
-            <div style="padding:6px 14px;color:#fff;font-size:10px;font-weight:700;text-align:center">CUMPLIMIENTO</div>
-          </div>
-          <div style="display:grid;grid-template-columns:repeat(6,1fr);background:var(--gd)">
-            <div style="padding:5px 8px;font-size:9px;font-weight:700;color:var(--nv);text-align:center;border-right:1px solid rgba(0,0,0,.1)">Prog. Mes</div>
-            <div style="padding:5px 8px;font-size:9px;font-weight:700;color:var(--nv);text-align:center;border-right:1px solid rgba(0,0,0,.1)">Prom. Día</div>
-            <div style="padding:5px 8px;font-size:9px;font-weight:700;color:var(--nv);text-align:center;border-right:1px solid rgba(0,0,0,.1)">Ejec. Acum.</div>
-            <div style="padding:5px 8px;font-size:9px;font-weight:700;color:var(--nv);text-align:center;border-right:1px solid rgba(0,0,0,.1)">% Mes</div>
-            <div style="padding:5px 8px;font-size:9px;font-weight:700;color:var(--nv);text-align:center;border-right:1px solid rgba(0,0,0,.1)">Prog. Proy.</div>
-            <div style="padding:5px 8px;font-size:9px;font-weight:700;color:var(--nv);text-align:center">% Proy.</div>
-          </div>
-          <div style="display:grid;grid-template-columns:repeat(6,1fr);background:var(--w);border-top:1px solid var(--bd)">
-            <div class="mono" style="padding:8px;text-align:center;font-size:13px;font-weight:700;color:var(--nv);border-right:1px solid var(--bd)" id="rb-kh-prog-mes">—</div>
-            <div class="mono" style="padding:8px;text-align:center;font-size:13px;font-weight:700;color:var(--t2);border-right:1px solid var(--bd)" id="rb-kh-prom-dia">—</div>
-            <div class="mono" style="padding:8px;text-align:center;font-size:13px;font-weight:700;color:var(--gd);border-right:1px solid var(--bd)" id="rb-kh-ejec-acum">—</div>
-            <div class="mono" style="padding:8px;text-align:center;font-size:14px;font-weight:700;border-right:1px solid var(--bd)" id="rb-kh-pct-mes">—</div>
-            <div class="mono" style="padding:8px;text-align:center;font-size:13px;font-weight:700;color:var(--nv);border-right:1px solid var(--bd)" id="rb-kh-prog-proy">—</div>
-            <div class="mono" style="padding:8px;text-align:center;font-size:14px;font-weight:700" id="rb-kh-pct-proy">—</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="mpanel" id="rb-panel-detalle" style="overflow-y:auto;max-height:75vh">
-      <div class="mfilter">
-        <span class="mf-lbl">Zona</span>
-        <select class="mf-sel" id="rb-f-zona" onchange="renderRBDetalle()">
-          <option value="">Todas</option>
-        </select>
-        <span class="mf-badge" id="rb-det-cnt">—</span>
-      </div>
-      <div class="mscroll" style="padding:0 16px 10px;overflow-x:auto">
-        <table class="dtbl" style="min-width:820px">
-          <thead><tr>
-            <th>Fecha</th><th>Turno</th><th>Tipo</th>
-            <th>Prog. Día</th><th>Ejec. Día</th><th>% Día</th>
-            <th>Prog. Acum.</th><th>Ejec. Acum.</th><th>% Mes</th>
-            <th>Ejec. Proy.</th><th>% Proy.</th>
-          </tr></thead>
-          <tbody id="tb-rb-det"></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- ══ RRHH MODAL ══════════════════════════════════════════════════ -->
-<div class="mwrap" id="rrhh-modal" onclick="if(event.target===this)closeRRHH()">
-  <div class="modal" style="max-width:1100px">
-    <div class="mhead">
-      <span class="mtitle"> RRHH – Recursos Humanos &nbsp;&#xB7;&nbsp; Indicadores</span>
-      <button class="mclose" onclick="closeRRHH()">&#10005;</button>
-    </div>
-    <div class="mtabs">
-      <button class="mtab on" onclick="rrhhTab('indicadores',this)"> Índices</button>
-      <button class="mtab"    onclick="rrhhTab('ausentismo',this)">&#128197; Ausentismo</button>
-      <button class="mtab"    onclick="rrhhTab('rotacion',this)">&#128260; Rotación</button>
-    </div>
-    <div class="mpanel on" id="rrhh-panel-indicadores" style="overflow-y:auto;max-height:75vh">
-      <div style="padding:10px 16px 6px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
-        <div class="mstat"><div class="mstat-l">HC Activo</div><div class="mstat-v" id="rrhh-m-hc">—</div><div class="mstat-s">personas</div></div>
-        <div class="mstat"><div class="mstat-l">Ingresos</div><div class="mstat-v" id="rrhh-m-ing">—</div><div class="mstat-s">del día</div></div>
-        <div class="mstat"><div class="mstat-l">Salidas</div><div class="mstat-v" id="rrhh-m-sal">—</div><div class="mstat-s">del día</div></div>
-        <div class="mstat"><div class="mstat-l">Ausentismo</div><div class="mstat-v" id="rrhh-m-aus">—</div><div class="mstat-s">% del total</div></div>
-      </div>
-      <div style="padding:6px 16px 10px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
-        <div style="background:var(--w);border-radius:8px;padding:12px;border:1px solid var(--bd)">
-          <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:8px">HC por Empresa</div>
-          <div style="height:220px"><canvas id="chartRRHHEmpresa" style="display:block;width:100%;height:100%"></canvas></div>
-        </div>
-        <div style="background:var(--w);border-radius:8px;padding:12px;border:1px solid var(--bd)">
-          <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:8px">Obreros vs Empleados</div>
-          <div style="height:220px"><canvas id="chartRRHHTipo" style="display:block;width:100%;height:100%"></canvas></div>
-        </div>
-      </div>
-    </div>
-    <div class="mpanel" id="rrhh-panel-ausentismo" style="overflow-y:auto;max-height:75vh">
-      <div style="padding:10px 16px 6px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
-        <div class="mstat" style="border-left:3px solid #DC2626"><div class="mstat-l">Faltas/DM</div><div class="mstat-v" id="rrhh-m-fal" style="color:#DC2626">—</div><div class="mstat-s">personas</div></div>
-        <div class="mstat" style="border-left:3px solid #D97706"><div class="mstat-l">Vacaciones</div><div class="mstat-v" id="rrhh-m-vac" style="color:#D97706">—</div><div class="mstat-s">personas</div></div>
-        <div class="mstat" style="border-left:3px solid #0E7490"><div class="mstat-l">DM / Sub.</div><div class="mstat-v" id="rrhh-m-dm" style="color:#0E7490">—</div><div class="mstat-s">personas</div></div>
-        <div class="mstat" style="border-left:3px solid #7C3AED"><div class="mstat-l">Índice Ausentismo</div><div class="mstat-v" id="rrhh-m-iaus" style="color:#7C3AED">—</div><div class="mstat-s">%</div></div>
-      </div>
-      <div style="padding:6px 16px 10px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
-        <div style="background:var(--w);border-radius:8px;padding:12px;border:1px solid var(--bd)">
-          <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:8px">Composición Ausentismo</div>
-          <div style="height:220px"><canvas id="chartAusentismoComp" style="display:block;width:100%;height:100%"></canvas></div>
-        </div>
-        <div style="background:var(--w);border-radius:8px;padding:12px;border:1px solid var(--bd)">
-          <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:8px">% Ausentismo por Empresa</div>
-          <div style="height:220px"><canvas id="chartAusentismoEmp" style="display:block;width:100%;height:100%"></canvas></div>
-        </div>
-      </div>
-    </div>
-    <div class="mpanel" id="rrhh-panel-rotacion" style="overflow-y:auto;max-height:75vh">
-      <div style="padding:10px 16px 6px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
-        <div class="mstat" style="border-left:3px solid #15803D"><div class="mstat-l">Ingresos</div><div class="mstat-v" id="rrhh-m-rot-ing" style="color:#15803D">—</div><div class="mstat-s">del día</div></div>
-        <div class="mstat" style="border-left:3px solid #DC2626"><div class="mstat-l">Salidas</div><div class="mstat-v" id="rrhh-m-rot-sal" style="color:#DC2626">—</div><div class="mstat-s">del día</div></div>
-        <div class="mstat" style="border-left:3px solid #D97706"><div class="mstat-l">Suspendidos</div><div class="mstat-v" id="rrhh-m-sus">—</div><div class="mstat-s">personas</div></div>
-        <div class="mstat" style="border-left:3px solid #003366"><div class="mstat-l">Índice Rotación</div><div class="mstat-v" id="rrhh-m-irot" style="color:#003366">—</div><div class="mstat-s">%</div></div>
-      </div>
-      <div style="padding:6px 16px 10px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
-        <div style="background:var(--w);border-radius:8px;padding:12px;border:1px solid var(--bd)">
-          <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:8px">Rotación por Empresa</div>
-          <div style="height:220px"><canvas id="chartRotacionEmp" style="display:block;width:100%;height:100%"></canvas></div>
-        </div>
-        <div style="background:var(--w);border-radius:8px;padding:12px;border:1px solid var(--bd)">
-          <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:8px">Ingresos vs Salidas</div>
-          <div style="height:220px"><canvas id="chartRotacionDetalle" style="display:block;width:100%;height:100%"></canvas></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-</div><!-- /page-content -->
-</body>
-</html>
