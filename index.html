@@ -33,10 +33,8 @@
 })();
 </script>
 <style>
-/* ═══════════════════════════════════════════════════════════════════
-   SOTRAMI DASHBOARD — Design System v2
-   Colores: Navy #003366 · Gold #D4AF37 · Fondo #F0F3F8
-═══════════════════════════════════════════════════════════════════ */
+/* SOTRAMI DASHBOARD — Design System v2
+   Colores: Navy #003366 · Gold #D4AF37 · Fondo #F0F3F8 */
 
 :root{
   /* Brand */
@@ -80,7 +78,7 @@ html{
 }
 ::selection{background:rgba(0,51,102,.12);color:var(--nv);}
 
-/* ═══ CABECERA ═══════════════════════════════════════════════════ */
+/* CABECERA */
 .hdr-wrap{
   position:sticky; top:0; z-index:100;
   background:linear-gradient(135deg,#00264D 0%,#003366 50%,#004080 100%);
@@ -177,7 +175,7 @@ html{
 .hdr-print-btn:hover{background:rgba(212,175,55,.25);border-color:rgba(212,175,55,.6);}
 .hdr-print-btn svg{width:14px;height:14px;}
 
-/* ═══ LEGACY TOPBAR (compat) ═════════════════════════════════════ */
+/* LEGACY TOPBAR (compat) */
 .topbar{background:var(--nv);border-bottom:3px solid var(--gd);min-height:56px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;gap:8px;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.2)}
 .brand{display:flex;align-items:center;gap:10px}
 .logo-img{width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0;}
@@ -192,7 +190,7 @@ html{
 .mi strong{color:rgba(255,255,255,.82);font-weight:600}
 .ms{color:rgba(255,255,255,.15)}
 
-/* ═══ PAGE LAYOUT ════════════════════════════════════════════════ */
+/* PAGE LAYOUT */
 .page{
   max-width:1280px;
   margin:0 auto;
@@ -203,7 +201,7 @@ html{
   align-items:start;
 }
 
-/* ═══ KPI CARDS ══════════════════════════════════════════════════ */
+/* KPI CARDS */
 .krow{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:0;grid-column:1/-1;}
 .kcard{
   background:var(--w);
@@ -239,11 +237,24 @@ html{
 .kR{background:var(--Rbg);color:var(--R);border-color:var(--Rbd);}
 .kN{background:var(--w2);color:var(--t3);border-color:var(--bd);}
 
-/* ═══ GRID LAYOUT ════════════════════════════════════════════════ */
+/* GRID LAYOUT */
 .g2{display:contents;}
 .gf{overflow:hidden;grid-column:1/-1;}
 .gfull{grid-column:1/-1;}
-/* ── Control de reporte ── */
+/* Cabecera y pie uniformes de cada tabla */
+.ch{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;}
+.ch-r{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.note{font-style:normal!important;line-height:1.55;}
+.note b{font-weight:700;}
+.lg-g{color:var(--G);} .lg-y{color:var(--Y);} .lg-r{color:var(--R);}
+.dot-r,.dot-y,.dot-g,.dot-b{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;vertical-align:middle;}
+#tbl-rb th{white-space:normal;line-height:1.2;padding-left:4px;padding-right:4px;}
+#tbl-rb td{padding-left:4px;padding-right:4px;}
+@media (max-width:700px){#tbl-rb th,#tbl-rb td{padding-left:2px!important;padding-right:2px!important;font-size:8.5px!important;}}
+.dot-r{background:#DC2626;}
+.lab-fd{font-size:8px;font-weight:400;opacity:.8;}
+.note .pG,.note .pY,.note .pR,.note .ley-c{font-size:8.5px;padding:0 6px;line-height:14px;vertical-align:1px;} .dot-y{background:#D97706;} .dot-g{background:#15803D;} .dot-b{background:#1D4ED8;}
+/* Control de reporte */
 .cr-ov{position:fixed;inset:0;background:rgba(0,20,45,.45);z-index:9000;display:none;align-items:flex-start;justify-content:center;padding:70px 16px 16px;}
 .cr-ov.open{display:flex;}
 .cr-box{background:var(--bg,#fff);border-radius:12px;width:min(980px,100%);max-height:calc(100vh - 90px);overflow:auto;box-shadow:0 18px 50px rgba(0,0,0,.3);}
@@ -271,7 +282,7 @@ html{
 .col-pair{display:grid;grid-template-columns:1fr 1fr;gap:14px;grid-column:1/-1;}
 
 
-/* ═══ DATA CARDS ══════════════════════════════════════════════════ */
+/* DATA CARDS */
 .card{
   min-width:0;background:var(--w);
   border:1px solid var(--bd);border-radius:var(--rr2);
@@ -311,7 +322,7 @@ html{
 }
 .ch-btn:hover{background:rgba(255,255,255,.2);border-color:rgba(212,175,55,.5);}
 
-/* ═══ TABLES ══════════════════════════════════════════════════════ */
+/* TABLES */
 .tbl{min-width:420px;width:100%;border-collapse:collapse;font-size:10.5px;}
 .tbl th{
   background:var(--bg2);color:var(--t3);font-weight:700;
@@ -338,7 +349,7 @@ html{
 .tw{overflow-x:auto;-webkit-overflow-scrolling:touch;}
 .mono{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.02em;}
 
-/* ═══ STATUS PILLS ════════════════════════════════════════════════ */
+/* STATUS PILLS */
 .pG,.pY,.pR,.pN{
   display:inline-block;padding:2px 9px;border-radius:20px;
   font-size:9.5px;font-weight:700;font-family:'DM Mono',monospace;
@@ -349,7 +360,7 @@ html{
 .pR{background:var(--Rbg);color:var(--R);border-color:var(--Rbd);}
 .pN{background:var(--w2);color:var(--t3);border-color:var(--bd);}
 
-/* ═══ SKIP SPECIAL HEADERS ═══════════════════════════════════════ */
+/* SKIP SPECIAL HEADERS */
 .thm{background:var(--glt)!important;color:#7C5800!important;}
 .thd{background:#E4EDF8!important;color:var(--nv)!important;}
 .tht{background:var(--glt)!important;color:var(--nv)!important;}
@@ -357,22 +368,22 @@ html{
 .tdd{color:var(--nv)!important;font-family:'DM Mono',monospace;font-weight:600;}
 .tdt{color:var(--nv)!important;font-family:'DM Mono',monospace;font-weight:700;}
 
-/* ═══ NOTE / FOOTER LINE ══════════════════════════════════════════ */
+/* NOTE / FOOTER LINE */
 .note{padding:6px 14px;font-size:10px;color:var(--t3);font-style:italic;border-top:1px solid var(--bd);background:var(--w2);}
 
-/* ═══ ESTADO BADGES ══════════════════════════════════════════════ */
+/* ESTADO BADGES */
 .einop{background:var(--Rbg);color:var(--R);border:1px solid var(--Rbd);padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;}
 .eoper{background:var(--Gbg);color:var(--G);border:1px solid var(--Gbd);padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;}
 .eCrit{background:var(--Rbg);color:var(--R);border:1px solid var(--Rbd);padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;}
 .eEst{background:var(--Gbg);color:var(--G);border:1px solid var(--Gbd);padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;}
 
-/* ═══ LEY CHIPS ══════════════════════════════════════════════════ */
+/* LEY CHIPS */
 .ley-c{display:inline-block;padding:2px 7px;border-radius:20px;font-size:10px;font-family:'DM Mono',monospace;font-weight:600;border:1px solid transparent;}
 .lhigh{background:#E8F8EE;color:#0D6832;border-color:#A3DFBA;}
 .lmed{background:#FFFBEA;color:#7C5800;border-color:#F0D060;}
 .llow{background:#FDEAEA;color:#871A1A;border-color:#F0A0A0;}
 
-/* ═══ MODAL ══════════════════════════════════════════════════════ */
+/* MODAL */
 .mwrap{
   display:none;position:fixed;inset:0;
   background:rgba(0,0,0,.4);
@@ -406,7 +417,7 @@ html{
 }
 .mclose:hover{background:rgba(255,255,255,.22);transform:rotate(90deg);}
 
-/* ═══ MODAL TABS ═════════════════════════════════════════════════ */
+/* MODAL TABS */
 .mtabs{display:flex;background:var(--w2);border-bottom:1px solid var(--bd);}
 .mtab{
   padding:9px 18px;font-size:11px;font-weight:500;
@@ -418,7 +429,7 @@ html{
 .mtab.on{color:var(--nv);border-bottom-color:var(--gd);font-weight:700;background:var(--w);}
 .mpanel{display:none;}.mpanel.on{display:block;}
 
-/* ═══ MODAL FILTERS ══════════════════════════════════════════════ */
+/* MODAL FILTERS */
 .mfilter{
   display:flex;align-items:center;gap:10px;
   padding:10px 16px;background:var(--w2);
@@ -444,7 +455,7 @@ html{
 }
 .mf-clear:hover{border-color:var(--gd);color:var(--nv);}
 
-/* ═══ MODAL STATS ════════════════════════════════════════════════ */
+/* MODAL STATS */
 .mstats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:14px;}
 .mstat{
   background:var(--w2);border-radius:var(--rr);
@@ -458,7 +469,7 @@ html{
 .mstat-s{font-size:9px;color:var(--t3);margin-top:3px;}
 .mstat-b{font-size:9px;padding:2px 6px;border-radius:20px;margin-top:5px;display:inline-block;font-weight:600;}
 
-/* ═══ MODAL DETAIL TABLE ══════════════════════════════════════════ */
+/* MODAL DETAIL TABLE */
 .mscroll{overflow-x:auto;max-height:380px;overflow-y:auto;}
 .dtbl{width:100%;border-collapse:collapse;font-size:11px;min-width:640px;}
 .dtbl th{
@@ -476,7 +487,7 @@ html{
 .sortarr{font-size:9px;margin-left:3px;opacity:.5;}
 .sortarr.on{opacity:1;color:var(--gd);}
 
-/* ═══ MODAL PONDERADAS ═══════════════════════════════════════════ */
+/* MODAL PONDERADAS */
 .mpnd{margin:0 14px 14px;background:var(--w2);border-radius:var(--rr2);padding:14px;border:1px solid var(--bd);display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
 .mpnd-d{border-right:1px solid var(--bd);padding-right:12px;}
 .mpnd-d:last-child{border-right:none;padding-right:0;}
@@ -484,7 +495,7 @@ html{
 .mpnd-v{font-size:16px;font-weight:700;color:var(--t1);font-family:'DM Mono',monospace;}
 .mpnd-s{font-size:9px;color:var(--t3);margin-top:2px;}
 
-/* ═══ CHART SECTIONS ══════════════════════════════════════════════ */
+/* CHART SECTIONS */
 .chart-section{padding:10px;}
 .chart-tabs{display:flex;gap:6px;padding:10px 14px 0;border-bottom:1px solid var(--bd);}
 .chart-tab{padding:5px 14px;font-size:11px;font-weight:500;cursor:pointer;border:none;border-bottom:2px solid transparent;background:none;font-family:inherit;color:var(--t2);transition:all .12s;}
@@ -495,7 +506,7 @@ html{
 .mleg-i{display:flex;align-items:center;gap:4px;}
 .mleg-d{width:10px;height:3px;border-radius:2px;display:inline-block;}
 
-/* ═══ FOOTER ═════════════════════════════════════════════════════ */
+/* FOOTER */
 .footer{
   background:var(--nv);
   border-top:2px solid var(--gd);
@@ -508,7 +519,7 @@ html{
   height:2px;background:linear-gradient(90deg,transparent,rgba(212,175,55,.3),transparent);}
 .footer span{color:var(--gd);font-weight:600;}
 
-/* ═══ RESPONSIVE ══════════════════════════════════════════════════ */
+/* RESPONSIVE */
 @media(min-width:1200px){.krow{grid-template-columns:repeat(4,1fr);} .page{grid-template-columns:1fr 1fr;}}
 @media(max-width:900px){
   .page{grid-template-columns:1fr;}
@@ -523,6 +534,7 @@ html{
   .krow{grid-template-columns:repeat(2,1fr)!important;}
   .modal{width:95vw!important;max-width:95vw!important;margin:8px!important;border-radius:10px!important;}
   .mscroll{max-height:50vh!important;overflow-x:auto!important;-webkit-overflow-scrolling:touch!important;}
+  .par2{grid-template-columns:1fr!important;}
   /* Colapsar wrappers de 2 columnas a 1 columna */
   .page > div[style*="grid-template-columns:"]{
     grid-template-columns:1fr!important;
@@ -625,7 +637,7 @@ html{
   .mono{font-size:7px!important;}
 }
 
-/* ═══ EXTRAS ═════════════════════════════════════════════════════ */
+/* EXTRAS */
 .tbl th[colspan]{font-size:9px;padding:5px 6px;text-align:center;}
 .tbl th[rowspan]{vertical-align:middle;}
 
@@ -639,7 +651,7 @@ html{
 
 
 
-/* ══ SOTRAMI — ajustes de apariencia ════════════════ */
+/* SOTRAMI — ajustes de apariencia */
 body { background:#eef1f6; }
 
 /* Header card — navy con gradiente sutil */
@@ -725,7 +737,7 @@ body { background:#eef1f6; }
 .g2 { min-width:0; }
 .gf { min-width:0; overflow:hidden; }
 
-/* ═══ PRINT STYLES — PDF Export ════════════════════════════════ */
+/* PRINT STYLES — PDF Export */
 @media print{
   @page{size:tabloid landscape;margin:5mm 6mm;}
   *{background:transparent!important;box-shadow:none!important;text-shadow:none!important;}
@@ -739,7 +751,7 @@ body { background:#eef1f6; }
   canvas,.chart-section,.chart-tabs,.chart-panel,
   #glosario{display:none!important;}
 
-  /* ── Header compact ── */
+  /* Header compact */
   .hdr-wrap{position:static!important;border-bottom:1px solid #003366!important;margin-bottom:1px!important;padding:0!important;}
   .hdr-brand{padding:0!important;min-height:auto!important;border:none!important;}
   .hdr-brand::after{display:none!important;}
@@ -754,21 +766,21 @@ body { background:#eef1f6; }
   .hdr-pills{display:flex!important;flex-direction:row!important;gap:1px!important;}
   .hdr-pill-semana,.hdr-pill-mes{background:#f5f5f5!important;color:#333!important;border:1px solid #ddd!important;font-size:4px!important;padding:0 2px!important;}
 
-  /* ── Meta bar compact ── */
+  /* Meta bar compact */
   .hdr-meta{background:#f8f8f8!important;border-bottom:1px solid #ddd!important;min-height:auto!important;padding:0!important;backdrop-filter:none!important;}
   .hdr-meta-lbl{color:#666!important;font-size:4px!important;}
   .hdr-meta-val{color:#333!important;font-size:5px!important;}
   .hdr-meta-meta{color:#003366!important;font-size:4px!important;}
   .hdr-meta-div{background:#ddd!important;height:5px!important;}
 
-  /* ── Page: preserve 2‑column grid instead of multi‑column ── */
+  /* Page: preserve 2‑column grid instead of multi‑column */
   .page{max-width:100%!important;padding:0!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:4px!important;align-items:start!important;}
 
   /* Keep sub‑grids side‑by‑side */
   .gf,.gfull,.g2{display:block!important;width:100%!important;}
   .page > div[style*="grid-template-columns"]{display:grid!important;grid-template-columns:1fr 1fr!important;gap:4px!important;width:100%!important;column-gap:4px!important;}
 
-  /* ── Cards compact ── */
+  /* Cards compact */
   .card{border:1px solid #ddd!important;border-radius:1px!important;margin-bottom:2px!important;break-inside:avoid!important;padding:0!important;}
   .ch{background:#003366!important;padding:0 4px!important;border-bottom:1px solid #D4AF37!important;min-height:auto!important;}
   .chg{background:#F5ECC8!important;}
@@ -777,7 +789,7 @@ body { background:#eef1f6; }
   .csub{font-size:5px!important;color:rgba(255,255,255,.7)!important;}
   .card > div:not(.ch){padding:1px 4px!important;}
 
-  /* ── KPI row ── */
+  /* KPI row */
   .krow{display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:2px!important;margin-bottom:2px!important;}
   .kcard{border:1px solid #ddd!important;border-radius:1px!important;padding:1px 3px!important;border-top:2px solid #003366!important;break-inside:avoid!important;}
   .kcard::before{display:none!important;}
@@ -788,7 +800,7 @@ body { background:#eef1f6; }
   .kprog-lbl{font-size:4px!important;color:#999!important;}
   .kprog-val{font-size:4px!important;color:#555!important;}
 
-  /* ── Tables compact ── */
+  /* Tables compact */
   .tw{overflow:visible!important;}
   .tbl,.dtbl{width:auto!important;font-size:6px!important;border-collapse:collapse!important;}
   .tbl th,.dtbl th{background:#f0f2f5!important;color:#333!important;font-size:5.5px!important;padding:1px 3px!important;border-bottom:1px solid #003366!important;letter-spacing:.2px!important;}
@@ -919,17 +931,14 @@ body { background:#eef1f6; }
 <!-- SEGURIDAD + PRODUCCIÓN -->
 <div class="gf" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start">
   <div class="card">
-    <div class="ch" style="flex-wrap:wrap;gap:6px;justify-content:space-between">
-      <span class="ct"> Seguridad</span>
-      <div style="display:flex;align-items:center;gap:8px">
-        <span class="csub">Cía. Sotrami &nbsp;·&nbsp; <span id="seg-act-fecha">oct 2026</span></span>
-        <button class="ch-btn" onclick="openSeg()"> Ver detalle</button>
-      </div>
+    <div class="ch">
+      <span class="ct">Seguridad</span>
+      <div class="ch-r"><span class="csub">Act. <span id="seg-act-fecha">—</span></span><button class="ch-btn" onclick="openSeg()">Ver detalle / Gráficos</button></div>
     </div>
     <div class="tw" style="overflow-x:auto">
       <table class="tbl" id="tbl-seg-main" style="min-width:640px;border-collapse:collapse">
 
-        <!-- ── BLOQUE 1: Herramientas de Gestión ── -->
+        <!-- BLOQUE 1: Herramientas de Gestión -->
         <thead>
           <tr>
             <th rowspan="2" style="vertical-align:middle;font-size:8px;width:14%">IDS</th>
@@ -937,7 +946,6 @@ body { background:#eef1f6; }
               Herramientas de Gestión
             </th>
             <th rowspan="2" style="vertical-align:middle;text-align:center;font-size:8px;width:6%">%</th>
-            <th rowspan="2" style="vertical-align:middle;font-size:8px;width:10%">Observación</th>
           </tr>
           <tr>
             <th colspan="3" style="background:rgba(0,51,102,.07);text-align:center;font-size:8px">Insp.</th>
@@ -949,7 +957,7 @@ body { background:#eef1f6; }
             <th class="thm" style="font-size:7px">Prog.</th><th class="tht" style="font-size:7px">Ejec.</th><th class="thd" style="font-size:7px">%</th>
             <th class="thm" style="font-size:7px">Prog.</th><th class="tht" style="font-size:7px">Ejec.</th><th class="thd" style="font-size:7px">%</th>
             <th class="thm" style="font-size:7px">Prog.</th><th class="tht" style="font-size:7px">Ejec.</th><th class="thd" style="font-size:7px">%</th>
-            <th></th><th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody id="tb-seg-ids">
@@ -965,29 +973,26 @@ body { background:#eef1f6; }
             <td class="tdt" id="seg-rie">—</td>
             <td style="text-align:center"><span class="pR" id="seg-rip-pct">14%</span></td>
             <td style="text-align:center"><span class="pR" id="seg-global-pct">16%</span></td>
-            <td style="font-size:9px;color:var(--t3)" id="seg-obs-txt">—</td>
           </tr>
         </tbody>
 
-        <!-- ── SEPARADOR ── -->
+        <!-- SEPARADOR -->
         <tbody>
-          <tr><td colspan="12" style="padding:0;height:6px;background:rgba(0,51,102,.04)"></td></tr>
+          <tr><td colspan="11" style="padding:0;height:6px;background:rgba(0,51,102,.04)"></td></tr>
         </tbody>
 
-        <!-- ── BLOQUE 2: RACS + CAPACITACIÓN ── -->
+        <!-- BLOQUE 2: RACS + CAPACITACIÓN -->
 
       </table>
     </div>
+    <div class="note">% = Ejec. ÷ Prog. del mes · Frente a la meta a la fecha: <span class="pG">≥ meta</span> <span class="pY">85–99% de la meta</span> <span class="pR">&lt;85% de la meta</span></div>
   </div>
 
   <!-- PRODUCCIÓN con desplegable -->
   <div class="card">
-    <div class="ch" style="justify-content:space-between">
-      <span class="ct"> Producción – Enviado a Planta</span>
-      <div style="display:flex;align-items:center;gap:8px">
-        <span class="csub">Act. <span id="prod-act-fecha">08/08/2026</span></span>
-        <button class="ch-btn" onclick="openProd()"> Ver detalle / Gráficos</button>
-      </div>
+    <div class="ch">
+      <span class="ct">Producción – Enviado a Planta</span>
+      <div class="ch-r"><span class="csub">Act. <span id="prod-act-fecha">—</span></span><button class="ch-btn" onclick="openProd()">Ver detalle / Gráficos</button></div>
     </div>
     <div class="tw"><table class="tbl" id="tbl-prod">
       <thead>
@@ -1030,22 +1035,18 @@ body { background:#eef1f6; }
         </tr>
       </tbody>
     </table></div>
-    <div class="note">Prog. Día = Prog. Mes ÷ días periodo &nbsp;·&nbsp; Semáforo: &#9650;&#8805;100% &#9679;95-99% &#9660;&lt;95%</div>
+    <div class="note">Prog. Día = Prog. Mes ÷ días del período · <span class="pG">≥100%</span> <span class="pY">95–99%</span> <span class="pR">&lt;95%</span></div>
   </div>
 </div>
 
-<!-- SKIP / VOLQUETE -->
-<div class="gf">
+<!-- IZAJE SKIP + VOLQUETE (tarjetas independientes) -->
+<div style="grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start">
   <div class="card">
-    <div class="skip-split" style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--bd)">
-      <div style="border-right:1px solid var(--bd)">
-        <div class="ch chg"><span class="ct ctg"> Izaje Skip – Superficie</span> <button class="ch-btn" onclick="openSkip()" style="margin-left:auto"> Ver detalle / Gráficos</button>
-      <span class="csub csubg" style="color:#fff;font-size:9px;background:rgba(0,51,102,.85);padding:3px 10px;border-radius:5px;display:inline-block;width:100%">
-        &#9888; Prog. estimado = cap×densidad &nbsp;|&nbsp; Rel. Des:Min = 3.5 &nbsp;|&nbsp;
-        Datos reales: SOTRAMI NV. 0 &nbsp;|&nbsp;
-        Última fecha: <strong id="skip-last-fecha">—</strong>
-      </span></div>
-      <div class="tw"><table class="tbl">
+    <div class="ch">
+      <span class="ct">Izaje Skip – Superficie</span>
+      <div class="ch-r"><span class="csub">Act. <span id="skip-last-fecha">—</span></span><button class="ch-btn" onclick="openSkip()">Ver detalle / Gráficos</button></div>
+    </div>
+    <div class="tw"><table class="tbl">
         <thead>
           <tr>
             <th rowspan="2">Zona</th>
@@ -1108,19 +1109,14 @@ body { background:#eef1f6; }
           </tr>
         </tbody>
       </table></div>
-      </div>
-      <div>
-        <div class="ch chg" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
-          <span class="ct ctg"> Volquete – Cancha</span>
-          <div style="display:flex;align-items:center;gap:8px">
-            <span class="csub csubg" style="color:#666;font-size:9px">Factor ×25.0 TMH/Volq. &nbsp;·&nbsp; <span id="vq-last-fecha">—</span> <span id="vq-debug" style="font-size:8px;color:var(--t3)"></span></span>
-            <button class="ch-btn" onclick="openVQ()"> Ver detalle / Gráficos</button>
-          </div>
-        </div>
-        <div style="padding:3px 12px 6px;font-size:9px;color:var(--t3)">
-          &#9888; Prog. estimado &nbsp;|&nbsp; Rel. Des:Min = 3.5 &nbsp;|&nbsp; Capacidad: 25 TM/viaje
-        </div>
-        <div class="tw"><table class="tbl">
+    <div class="note">Prog. estimado = capacidad × densidad · Rel. Des:Min = 3.5 · Datos reales: SOTRAMI NV. 0 · TMH = (Mineral + Desmonte) × Factor · <b style="color:#B8962A">&#9632;</b> Mineral · <b style="color:var(--nv)">&#9632;</b> Desmonte · <span class="pG">≥100%</span> <span class="pY">85–99%</span> <span class="pR">&lt;85%</span></div>
+  </div>
+  <div class="card">
+    <div class="ch">
+      <span class="ct">Volquete – Cancha</span>
+      <div class="ch-r"><span class="csub">Act. <span id="vq-last-fecha">—</span></span><button class="ch-btn" onclick="openVQ()">Ver detalle / Gráficos</button></div>
+    </div>
+    <div class="tw"><table class="tbl">
           <thead>
             <tr>
               <th rowspan="2">Zona</th>
@@ -1177,21 +1173,16 @@ body { background:#eef1f6; }
             </tr>
           </tbody>
         </table></div>
-      </div>
-    </div>
-    <div class="note">TMH = (Mineral + Desmonte) × Factor &nbsp;·&nbsp; <span style="color:var(--G);font-weight:700">&#9632;</span> Mineral &nbsp;·&nbsp; <span style="color:var(--R);font-weight:700">&#9632;</span> Desmonte</div>
+    <div class="note">Prog. estimado · Rel. Des:Min = 3.5 · Capacidad: 25 TM/viaje (factor ×25.0 TMH por volquete) · <b style="color:#B8962A">&#9632;</b> Mineral · <b style="color:var(--nv)">&#9632;</b> Desmonte · <span class="pG">≥100%</span> <span class="pY">85–99%</span> <span class="pR">&lt;85%</span></div>
   </div>
 </div>
 
 <!-- AVANCES + REHAB/RAISE -->
 <div style="grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start">
   <div class="card col-full">
-    <div class="ch" style="justify-content:space-between">
-      <span class="ct"> Avances</span>
-      <div style="display:flex;align-items:center;gap:8px">
-        <span class="csub" id="av-act-fecha">Act. —</span>
-        <button class="ch-btn" onclick="openAv()"> Ver detalle / Gráficos</button>
-      </div>
+    <div class="ch">
+      <span class="ct">Avances</span>
+      <div class="ch-r"><span class="csub">Act. <span id="av-act-fecha">—</span></span><button class="ch-btn" onclick="openAv()">Ver detalle / Gráficos</button></div>
     </div>
     <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:6px">
     <table class="tbl" id="tbl-av" style="width:100%;min-width:700px">
@@ -1314,35 +1305,30 @@ body { background:#eef1f6; }
           <td style="text-align:center"><span class="pN" id="av-tot-pct-mes">—</span></td>
         </tr>
       </tbody>
-    </table>
-    <div class="note">Prog. Día = Prog. Mes ÷ 40 días &nbsp;·&nbsp; Meta a la fecha: 43%</div>
+    </table></div>
+    <div class="note">Unidad: metros · % = Ejec. ÷ Prog. · <span class="pG">≥100%</span> <span class="pY">85–99%</span> <span class="pR">&lt;85%</span></div>
   </div>
-  <div style="display:flex;flex-direction:column;gap:12px">
+  <div class="par2" style="grid-column:1/-1;display:grid;grid-template-columns:1fr;gap:10px;align-items:start">
     <div class="card">
-      <div class="ch" style="justify-content:space-between">
-        <span class="ct"> Rehabilitación</span>
-        <div style="display:flex;align-items:center;gap:8px">
-          <span class="csub" id="rehab-act-fecha">—</span>
-          <button class="ch-btn" onclick="openRehab()"> Ver detalle</button>
-        </div>
-      </div>
+      <div class="ch">
+      <span class="ct">Rehabilitación</span>
+      <div class="ch-r"><span class="csub">Act. <span id="rehab-act-fecha">—</span></span><button class="ch-btn" onclick="openRehab()">Ver detalle / Gráficos</button></div>
+    </div>
       <div class="tw"><table class="tbl">
         <thead><tr><th>Zona</th><th>Descripción</th><th>Prog.Día</th><th>Ejec.Día</th><th>%Día</th><th>Prog.Mes</th><th>Ejec.Acum</th><th>%Acum</th><th>%Mes</th></tr></thead>
         <tbody id="tb-rehab">
           <tr><td colspan="9" style="text-align:center;color:var(--t3);padding:8px">Cargando...</td></tr>
         </tbody>
       </table></div>
-    </div>
+    <div class="note">% Día = Ejec. Día ÷ Prog. Día · % Acum. = Ejec. Acum. ÷ Prog. Acum. · % Mes = Ejec. Acum. ÷ Prog. Mes · <span class="pG">≥100%</span> <span class="pY">85–99%</span> <span class="pR">&lt;85%</span></div>
+  </div>
     <div class="card">
-      <div class="ch" style="justify-content:space-between">
-        <span class="ct"> Raise Boring – Tumi</span>
-        <div style="display:flex;align-items:center;gap:8px">
-          <span class="csub" id="rb-act-fecha">—</span>
-          <button class="ch-btn" onclick="openRB()"> Curva S / Detalle</button>
-        </div>
-      </div>
-      <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
-      <table class="tbl" id="tbl-rb" style="min-width:780px">
+      <div class="ch">
+      <span class="ct">Raise Boring – Tumi</span>
+      <div class="ch-r"><span class="csub">Act. <span id="rb-act-fecha">—</span></span><button class="ch-btn" onclick="openRB()">Ver detalle / Gráficos</button></div>
+    </div>
+      <div class="tw">
+      <table class="tbl" id="tbl-rb" style="width:100%">
         <thead><tr>
           <th style="text-align:left">Zona</th>
           <th style="text-align:left">Proyecto</th>
@@ -1362,41 +1348,18 @@ body { background:#eef1f6; }
           <tr><td colspan="13" style="text-align:center;color:var(--t3);padding:12px">Cargando...</td></tr>
         </tbody>
       </table></div>
-      <div class="tw" style="padding:6px 10px 8px;display:flex;flex-wrap:wrap;gap:6px;align-items:center">
-        <span class="kbdg" id="rb-pct-badge">—</span>
-        <span class="ms" style="font-size:9px;color:var(--t2)">Prog. Día:</span>
-        <span class="ms" style="font-size:10px;font-weight:700" id="rb-prog-dia">—</span>
-        <span class="ms" style="font-size:9px;color:var(--t2)">Ejec. Día:</span>
-        <span class="ms" style="font-size:10px;font-weight:700" id="rb-ejec-dia">—</span>
-        <span class="ms" style="font-size:9px;color:var(--t2)">% Día:</span>
-        <span class="ms" style="font-size:10px;font-weight:700" id="rb-pct-dia">—</span>
-        <span class="ms" style="font-size:9px;color:var(--t2)">Prog. Mes:</span>
-        <span class="ms" style="font-size:10px;font-weight:700" id="rb-prog-mes">—</span>
-        <span class="ms" style="font-size:9px;color:var(--t2)">Acum.:</span>
-        <span class="ms" style="font-size:10px;font-weight:700;color:var(--gd)" id="rb-ejec-acum">—</span>
-        <span class="ms" style="font-size:9px;color:var(--t2)">% Mes:</span>
-        <span class="ms" style="font-size:10px;font-weight:700" id="rb-pct-mes">—</span>
-        <span class="ms" style="font-size:9px;color:var(--t2)">Proy.:</span>
-        <span class="ms" style="font-size:10px;font-weight:700;color:var(--nv)" id="rb-ejec-proy">—</span>
-        <span class="ms" style="font-size:9px;color:var(--t2)">Prog. Proy.:</span>
-        <span class="ms" style="font-size:10px;font-weight:700" id="rb-prog-proy">—</span>
-        <span class="ms" style="font-size:9px;color:var(--t2)">% Proy.:</span>
-        <span class="ms" style="font-size:10px;font-weight:700" id="rb-pct-proy">—</span>
-      </div>
-    </div>
+    <div class="note">Unidad: metros · % = Ejec. ÷ Prog. · <span class="pG">≥100%</span> <span class="pY">85–99%</span> <span class="pR">&lt;85%</span></div>
+  </div>
   </div>
 </div>
-</div><!-- /g2-avances -->
+
 
 <!-- GEO + LAB -->
 <div style="grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start">
   <div class="card">
-    <div class="ch" style="justify-content:space-between;flex-wrap:wrap;gap:6px">
-      <span class="ct"> Planta Beneficio</span>
-      <div style="display:flex;align-items:center;gap:8px">
-        <span class="csub">Act. <span id="pb-act-fecha">—</span></span>
-        <button class="ch-btn" onclick="openPB()"> Ver detalle</button>
-      </div>
+    <div class="ch">
+      <span class="ct">Planta Beneficio</span>
+      <div class="ch-r"><span class="csub">Act. <span id="pb-act-fecha">—</span></span><button class="ch-btn" onclick="openPB()">Ver detalle / Gráficos</button></div>
     </div>
     <div class="tw" style="overflow-x:auto">
       <table class="tbl" style="min-width:620px">
@@ -1430,12 +1393,9 @@ body { background:#eef1f6; }
   </div>
   <div class="card">
     <!-- DDH Header -->
-    <div class="ch" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
-      <span class="ct"> Geología – DDH Exploraciones</span>
-      <div style="display:flex;align-items:center;gap:8px">
-        <span class="csub" id="ddh-act-fecha">05/06/2026</span>
-        <button class="ch-btn" onclick="openDDH()"> Ver detalle / Gráficos</button>
-      </div>
+    <div class="ch">
+      <span class="ct">Geología – DDH Exploraciones</span>
+      <div class="ch-r"><span class="csub">Act. <span id="ddh-act-fecha">—</span></span><button class="ch-btn" onclick="openDDH()">Ver detalle / Gráficos</button></div>
     </div>
 
     <!-- Tabla DDH -->
@@ -1463,25 +1423,22 @@ body { background:#eef1f6; }
         <!-- Each row shows Tipo + Equipo + Prog.Mes + Ejec.Día + Acum.Mes + Meta Anual + Acum.Anual + %Cumpl.Mes + %Cumpl.Anual -->
       </tbody>
     </table></div>
+    <div class="note">Unidad: metros perforados · % Cumpl. Mes = Acum. Mes ÷ Prog. Mes · % Cumpl. Anual = Acum. Anual ÷ Meta Anual · <span class="pG">≥100%</span> <span class="pY">70–99%</span> <span class="pR">&lt;70%</span></div>
   </div>
 </div>
 
 <!-- LABORATORIO -->
 <div class="gf">
   <div class="card">
-    <div class="ch" style="justify-content:space-between;flex-wrap:wrap;gap:6px">
-      <span class="ct"> Laboratorio Químico</span>
-      <div style="display:flex;align-items:center;gap:8px">
-        <span class="csub">Act. <span id="lab-act-fecha">—</span></span>
-        <button class="ch-btn" onclick="openLab()"> Ver detalle</button>
-      </div>
+    <div class="ch">
+      <span class="ct">Laboratorio Químico</span>
+      <div class="ch-r"><span class="csub">Act. <span id="lab-act-fecha">—</span></span><button class="ch-btn" onclick="openLab()">Ver detalle / Gráficos</button></div>
     </div>
     <div class="tw"><table class="tbl" id="tbl-lab">
       <thead>
         <tr>
           <th>Zona</th>
           <th style="text-align:center;font-size:8px">L.Base Au</th>
-          <th style="text-align:center;font-size:8px">Peso kg Día</th>
           <th style="text-align:center;font-size:8px">TMH Día</th>
           <th style="text-align:center;font-size:8px">%H₂O Día</th>
           <th style="text-align:center;font-size:8px">TMS Día</th>
@@ -1494,7 +1451,6 @@ body { background:#eef1f6; }
         <tr>
           <td>Zona 23</td>
           <td class="mono" style="text-align:center;color:var(--t3)" id="lab-z23-lbase">0.46</td>
-          <td class="mono" style="text-align:center" id="lab-z23-kg">—</td>
           <td class="mono" style="text-align:center" id="lab-z23-tmh">—</td>
           <td class="mono" style="text-align:center" id="lab-z23-h2o">—</td>
           <td class="mono" style="text-align:center" id="lab-z23-tms">—</td>
@@ -1505,7 +1461,6 @@ body { background:#eef1f6; }
         <tr>
           <td>Santa Rosa</td>
           <td class="mono" style="text-align:center;color:var(--t3)" id="lab-sr-lbase">0.46</td>
-          <td class="mono" style="text-align:center" id="lab-sr-kg">—</td>
           <td class="mono" style="text-align:center" id="lab-sr-tmh">—</td>
           <td class="mono" style="text-align:center" id="lab-sr-h2o">—</td>
           <td class="mono" style="text-align:center" id="lab-sr-tms">—</td>
@@ -1516,7 +1471,6 @@ body { background:#eef1f6; }
         <tr class="tot">
           <td>TOTAL / POND.</td>
           <td class="mono" style="text-align:center;color:var(--t3)">0.46</td>
-          <td class="mono" style="text-align:center" id="lab-tot-kg">—</td>
           <td class="mono" style="text-align:center" id="lab-tot-tmh">—</td>
           <td class="mono" style="text-align:center" id="lab-tot-h2o">—</td>
           <td class="mono" style="text-align:center" id="lab-tot-tms">—</td>
@@ -1526,23 +1480,16 @@ body { background:#eef1f6; }
         </tr>
       </tbody>
     </table></div>
-    <div class="note">
-      Datos en tiempo real desde PLANTA · Ley Au ponderada por TMH ·
-      L.Cabeza: 0.46 Oz/ton · <span style="color:#0D6832;font-weight:600">≥0.46 ÓPTIMO</span> ·
-      <span style="color:#B8962A;font-weight:600">0.44-0.459 REGULAR</span> ·
-      <span style="color:#DC2626;font-weight:600">&lt;0.44 BAJO</span>
-    </div>
+    <div class="note">Ley Au ponderada por TMH · Ley Au Día con fecha (dd/mm) = último día con resultados de laboratorio (desfase de 1 día) · Ley Mes = período contable hasta la fecha · L.Base 0.46 Oz/tc: <span class="ley-c lhigh">ÓPTIMO</span> ≥0.46 · <span class="ley-c lmed">REGULAR</span> 0.44–0.459 · <span class="ley-c llow">BAJO</span> &lt;0.44</div>
   </div>
 </div>
 
 <!-- MANT + ALM -->
 <div style="grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start">
   <div class="card">
-    <div class="ch"><span class="ct"> Mantenimiento</span>
-      <div style="display:flex;align-items:center;gap:8px;margin-left:auto">
-        <span class="csub" id="mant-act-fecha">07/06/2026</span>
-        <button class="ch-btn" onclick="openMant()"> Ver detalle</button>
-      </div>
+    <div class="ch">
+      <span class="ct">Mantenimiento</span>
+      <div class="ch-r"><span class="csub">Act. <span id="mant-act-fecha">—</span></span><button class="ch-btn" onclick="openMant()">Ver detalle</button></div>
     </div>
     <!-- Solo INOPERATIVOS en la vista principal -->
     <div class="tw"><table class="tbl" id="tbl-mant">
@@ -1555,17 +1502,9 @@ body { background:#eef1f6; }
     </table></div>
   </div>
   <div class="card">
-    <div class="ch" style="justify-content:space-between">
-      <span class="ct"> Almacén – Materiales Críticos</span>
-      <div style="display:flex;align-items:center;gap:10px">
-        <span style="font-size:10px">
-          <span style="color:#DC2626;font-weight:700" id="alm-kpi-crit">—</span> 🔴
-          &nbsp;<span style="color:#D97706;font-weight:700" id="alm-kpi-pre">—</span> 🟡
-        </span>
-        <span class="csub">Solo Crítico <span style="color:#666;font-weight:400">· Detalle muestra todo</span></span>
-        <span class="csub" id="alm-act-fecha">—</span>
-        <button class="ch-btn" onclick="openAlm()"> Ver detalle</button>
-      </div>
+    <div class="ch">
+      <span class="ct">Almacén – Materiales Críticos</span>
+      <div class="ch-r"><span class="csub">Act. <span id="alm-act-fecha">—</span></span><button class="ch-btn" onclick="openAlm()">Ver detalle</button></div>
     </div>
     <div class="tw"><table class="tbl" id="tbl-alm">
       <thead>
@@ -1582,18 +1521,16 @@ body { background:#eef1f6; }
         <tr><td colspan="6" style="text-align:center;color:var(--t3);padding:12px">Cargando...</td></tr>
       </tbody>
     </table></div>
+    <div class="note">Vista principal: solo materiales críticos · El detalle muestra todos · <i class=dot-r></i>Críticos: <b><span id="alm-kpi-crit">—</span></b> · <i class=dot-y></i>Precaución: <b><span id="alm-kpi-pre">—</span></b></div>
   </div>
 </div>
 
 <!-- RRHH -->
 <div class="gf">
   <div class="card">
-    <div class="ch" style="justify-content:space-between">
-      <span class="ct"> RRHH – Recursos Humanos</span>
-      <div style="display:flex;align-items:center;gap:8px">
-        <span class="csub" id="rrhh-act-fecha">—</span>
-        <button class="ch-btn" onclick="openRRHH()"> Detalle / Gráficos</button>
-      </div>
+    <div class="ch">
+      <span class="ct">RRHH – Recursos Humanos</span>
+      <div class="ch-r"><span class="csub">Act. <span id="rrhh-act-fecha">—</span></span><button class="ch-btn" onclick="openRRHH()">Ver detalle / Gráficos</button></div>
     </div>
     <div class="tw"><table class="tbl" id="tbl-rrhh">
       <thead>
@@ -1717,14 +1654,15 @@ body { background:#eef1f6; }
         </tr>
       </tbody>
     </table></div>
+    <div class="note">HC = personal activo · Déficit = HC Prog. − Total HC (<b class="lg-r">−n</b> = falta personal) · % Cumpl. = Total HC ÷ HC Prog. · <span class="pG">≥100%</span> <span class="pY">85–99%</span> <span class="pR">&lt;85%</span></div>
   </div>
 </div>
 
 </div><!-- /page -->
 
-<!-- ════════════════════════════════════════════════════
+<!--
      MODAL PRODUCCIÓN — Gráficos + Detalle por registro
-════════════════════════════════════════════════════ -->
+-->
 <div class="mwrap" id="prod-modal" onclick="if(event.target===this)closeProd()">
   <div class="modal" style="max-width:1200px">
     <div class="mhead">
@@ -1742,7 +1680,7 @@ body { background:#eef1f6; }
       <button class="mtab" onclick="prodTab('fusion',this)">Fusión Z23 + SR</button>
     </div>
 
-    <!-- ── TAB 1: GRÁFICOS ── -->
+    <!-- TAB 1: GRÁFICOS -->
     <div class="mpanel on" id="pp-graficos">
       <div class="chart-tabs">
         <button class="chart-tab on" onclick="chartZona('z23',this)">Zona 23</button>
@@ -1752,7 +1690,7 @@ body { background:#eef1f6; }
         <div class="mstats" style="grid-template-columns:repeat(3,1fr)">
           <div class="mstat"><div class="mstat-l" id="ps-z23-ejec-l">Acum. (ejec.)</div><div class="mstat-v" id="ps-z23-ejec">—</div><div class="mstat-s">tmh ejecutadas</div><span class="mstat-b" style="background:var(--Ybg);color:var(--Y)">Zona 23</span></div>
           <div class="mstat"><div class="mstat-l" id="ps-z23-prog-l">Acum. (prog.)</div><div class="mstat-v" id="ps-z23-prog">—</div><div class="mstat-s">tmh programadas</div></div>
-          <div class="mstat"><div class="mstat-l" id="ps-z23-ley-l">Ley Au prom.</div><div class="mstat-v" id="ps-z23-ley">—</div><div class="mstat-s">Oz/ton promedio</div></div>
+          <div class="mstat"><div class="mstat-l" id="ps-z23-ley-l">Ley Au prom.</div><div class="mstat-v" id="ps-z23-ley">—</div><div class="mstat-s">Oz/tc promedio</div></div>
         </div>
         <div style="padding:12px;position:relative"><div style="position:relative;width:100%;height:260px"><canvas id="chartZ23" role="img" aria-label="Resumen producción Zona 23 mensual 2026">Barras PROG y EJEC con línea de Ley Au por mes.</canvas></div></div>
         <div class="mleg">
@@ -1765,7 +1703,7 @@ body { background:#eef1f6; }
         <div class="mstats" style="grid-template-columns:repeat(3,1fr)">
           <div class="mstat"><div class="mstat-l" id="ps-sr-ejec-l">Acum. (ejec.)</div><div class="mstat-v" id="ps-sr-ejec">—</div><div class="mstat-s">tmh ejecutadas</div><span class="mstat-b" style="background:var(--Gbg);color:var(--G)">Santa Rosa</span></div>
           <div class="mstat"><div class="mstat-l" id="ps-sr-prog-l">Acum. (prog.)</div><div class="mstat-v" id="ps-sr-prog">—</div><div class="mstat-s">tmh programadas</div></div>
-          <div class="mstat"><div class="mstat-l" id="ps-sr-ley-l">Ley Au prom.</div><div class="mstat-v" id="ps-sr-ley">—</div><div class="mstat-s">Oz/ton promedio</div></div>
+          <div class="mstat"><div class="mstat-l" id="ps-sr-ley-l">Ley Au prom.</div><div class="mstat-v" id="ps-sr-ley">—</div><div class="mstat-s">Oz/tc promedio</div></div>
         </div>
         <div style="padding:12px;position:relative"><div style="position:relative;width:100%;height:260px"><canvas id="chartSR" role="img" aria-label="Resumen producción Santa Rosa mensual 2026">Barras PROG y EJEC con línea de Ley Au por mes.</canvas></div></div>
         <div class="mleg">
@@ -1776,7 +1714,7 @@ body { background:#eef1f6; }
       </div>
     </div>
 
-    <!-- ── TAB EXTRA: GRÁFICO POR DÍA ── -->
+    <!-- TAB EXTRA: GRÁFICO POR DÍA -->
     <div class="mpanel" id="pp-pordia">
       <div class="mfilter" style="gap:8px">
         <span class="mf-lbl">Zona</span>
@@ -1815,7 +1753,7 @@ body { background:#eef1f6; }
       </div>
     </div>
 
-        <!-- ── TAB 2: ZONA 23 registros ── -->
+        <!-- TAB 2: ZONA 23 registros -->
     <div class="mpanel" id="pp-zona23">
       <div class="mfilter">
         <span class="mf-lbl">Año</span>
@@ -1851,7 +1789,7 @@ body { background:#eef1f6; }
       </div>
     </div>
 
-    <!-- ── TAB 3: SANTA ROSA registros ── -->
+    <!-- TAB 3: SANTA ROSA registros -->
     <div class="mpanel" id="pp-starosa">
       <div class="mfilter">
         <span class="mf-lbl">Año</span>
@@ -1887,7 +1825,7 @@ body { background:#eef1f6; }
       </div>
     </div>
 
-    <!-- ── TAB 4: TODOS ── -->
+    <!-- TAB 4: TODOS -->
     <div class="mpanel" id="pp-todos">
       <div class="mfilter">
         <span class="mf-lbl">Año</span>
@@ -1917,7 +1855,7 @@ body { background:#eef1f6; }
       </div>
     </div>
     
-    <!-- ── TAB FUSIÓN Z23 + SR ── -->
+    <!-- TAB FUSIÓN Z23 + SR -->
     <div class="mpanel" id="pp-fusion">
       <div class="mfilter" style="flex-wrap:wrap;gap:8px">
         <span class="mf-lbl">Zona</span>
@@ -1984,9 +1922,9 @@ body { background:#eef1f6; }
   </div>
 </div>
 
-<!-- ════════════════════════════════════════════════════
+<!--
      MODAL LABORATORIO
-════════════════════════════════════════════════════ -->
+-->
 <div class="mwrap" id="lab-modal" onclick="if(event.target===this)closeLab()">
   <div class="modal" style="max-width:1100px">
     <div class="mhead">
@@ -1997,7 +1935,7 @@ body { background:#eef1f6; }
       <button class="mtab on" onclick="labTab('resumen',this)"> Resumen Mes</button>
       <button class="mtab"    onclick="labTab('zona23',this)">&#9883; Zona 23</button>
       <button class="mtab"    onclick="labTab('starosa',this)">&#9883; Santa Rosa</button>
-      <button class="mtab"    onclick="labTab('detalle',this)">&#128196; Detalle</button>
+      <button class="mtab"    onclick="labTab('detalle',this)">Detalle</button>
     </div>
 
     <!-- TAB 1: Resumen mensual -->
@@ -2030,12 +1968,12 @@ body { background:#eef1f6; }
         <div class="mstat">
           <div class="mstat-l">Ley Au Pond. Z23 (mes)</div>
           <div class="mstat-v" id="lm-z23-au">—</div>
-          <div class="mstat-s">Oz/ton &nbsp;·&nbsp; <span id="lm-z23-clase">—</span></div>
+          <div class="mstat-s">Oz/tc &nbsp;·&nbsp; <span id="lm-z23-clase">—</span></div>
         </div>
         <div class="mstat">
           <div class="mstat-l">Ley Au Pond. SR (mes)</div>
           <div class="mstat-v" id="lm-sr-au">—</div>
-          <div class="mstat-s">Oz/ton &nbsp;·&nbsp; <span id="lm-sr-clase">—</span></div>
+          <div class="mstat-s">Oz/tc &nbsp;·&nbsp; <span id="lm-sr-clase">—</span></div>
         </div>
         <div class="mstat">
           <div class="mstat-l">Total TMH mes</div>
@@ -2054,14 +1992,14 @@ body { background:#eef1f6; }
           <canvas id="chartLab" role="img"></canvas>
         </div>
         <div style="font-size:9px;color:var(--t3);text-align:center;margin-top:4px">
-          Ley Au ponderada diaria (Oz/ton) &nbsp;·&nbsp; Z23 Navy · SR Gold · Meta 0.46 Rojo
+          Ley Au ponderada diaria (Oz/tc) &nbsp;·&nbsp; Z23 Navy · SR Gold · Meta 0.46 Rojo
         </div>
       </div>
       <!-- Stats ponderados -->
       <div class="mstats" style="padding:8px 16px 12px">
-        <div class="mpnd-d"><div class="mpnd-l">Au pond. Z23</div><div class="mpnd-v" id="lm-z23-pon">—</div><div class="mpnd-s" id="lm-z23-rng">Oz/ton</div></div>
+        <div class="mpnd-d"><div class="mpnd-l">Au pond. Z23</div><div class="mpnd-v" id="lm-z23-pon">—</div><div class="mpnd-s" id="lm-z23-rng">Oz/tc</div></div>
         <div class="mpnd-d"><div class="mpnd-l">%H₂O prom. Z23</div><div class="mpnd-v" id="lm-z23-h2o">—</div><div class="mpnd-s">%</div></div>
-        <div class="mpnd-d"><div class="mpnd-l">Au pond. SR</div><div class="mpnd-v" id="lm-sr-pon">—</div><div class="mpnd-s" id="lm-sr-rng">Oz/ton</div></div>
+        <div class="mpnd-d"><div class="mpnd-l">Au pond. SR</div><div class="mpnd-v" id="lm-sr-pon">—</div><div class="mpnd-s" id="lm-sr-rng">Oz/tc</div></div>
         <div class="mpnd-d"><div class="mpnd-l">%H₂O prom. SR</div><div class="mpnd-v" id="lm-sr-h2o">—</div><div class="mpnd-s">%</div></div>
       </div>
     </div>
@@ -2158,7 +2096,7 @@ body { background:#eef1f6; }
     </div>
 
     <div style="padding:5px 14px;font-size:10px;color:var(--t3);border-top:1px solid var(--bd);background:var(--bg)">
-      Datos en tiempo real desde hoja PLANTA · L.Cabeza 0.46 Oz/ton ·
+      Datos en tiempo real desde hoja PLANTA · L.Base 0.46 Oz/tc ·
       <span style="color:#0D6832;font-weight:600">≥0.46 ÓPTIMO</span> ·
       <span style="color:#B8962A;font-weight:600">0.44–0.459 REGULAR</span> ·
       <span style="color:#DC2626;font-weight:600">&lt;0.44 BAJO</span>
@@ -2178,9 +2116,9 @@ body { background:#eef1f6; }
     </div>
     <div class="mtabs">
       <button class="mtab on"  onclick="skipTab('resumen',this)"> Resumen mensual</button>
-      <button class="mtab"     onclick="skipTab('pordia',this)">&#128197; Por día</button>
+      <button class="mtab"     onclick="skipTab('pordia',this)">Por día</button>
       <button class="mtab"     onclick="skipTab('porwinche',this)"> Por winche</button>
-      <button class="mtab"     onclick="skipTab('detalle',this)">&#128196; Detalle registros</button>
+      <button class="mtab"     onclick="skipTab('detalle',this)">Detalle registros</button>
     </div>
 
     <!-- TAB 1: Resumen mensual -->
@@ -2306,8 +2244,8 @@ body { background:#eef1f6; }
     </div>
     <div class="mtabs">
       <button class="mtab on"  onclick="ddhTab('resumen',this)"> Resumen Mes</button>
-      <button class="mtab"     onclick="ddhTab('evolucion',this)">&#128197; Evolución diaria</button>
-      <button class="mtab"     onclick="ddhTab('detalle',this)">&#128196; Detalle registros</button>
+      <button class="mtab"     onclick="ddhTab('evolucion',this)">Evolución diaria</button>
+      <button class="mtab"     onclick="ddhTab('detalle',this)">Detalle registros</button>
     </div>
 
     <!-- TAB 1: Resumen mensual por equipo -->
@@ -2433,8 +2371,8 @@ body { background:#eef1f6; }
     </div>
     <div class="mtabs">
       <button class="mtab on"  onclick="vqTab('resumen',this)"> Resumen Mes</button>
-      <button class="mtab"     onclick="vqTab('evolucion',this)">&#128197; Evolución diaria</button>
-      <button class="mtab"     onclick="vqTab('detalle',this)">&#128196; Detalle registros</button>
+      <button class="mtab"     onclick="vqTab('evolucion',this)">Evolución diaria</button>
+      <button class="mtab"     onclick="vqTab('detalle',this)">Detalle registros</button>
     </div>
 
     <!-- TAB 1: Resumen mensual -->
@@ -2568,13 +2506,13 @@ body { background:#eef1f6; }
     </div>
     <div class="mtabs">
       <button class="mtab on" onclick="segTab('racs',this)">&#9888; RACS</button>
-      <button class="mtab"    onclick="segTab('capacitacion',this)">&#127891; Capacitaciones</button>
+      <button class="mtab"    onclick="segTab('capacitacion',this)">Capacitaciones</button>
       <button class="mtab"    onclick="segTab('resumen',this)"> Insp/RACS/Reinst</button>
-      <button class="mtab"    onclick="segTab('detalle',this)">&#128196; Detalle CIA</button>
+      <button class="mtab"    onclick="segTab('detalle',this)">Detalle CIA</button>
       <button class="mtab"    onclick="segTab('copsem',this)"> Contratistas</button>
     </div>
 
-    <!-- ══ TAB 1: RACS (modelo SafeReport) ══════════════════════════ -->
+    <!-- TAB 1: RACS (modelo SafeReport) -->
     <div class="mpanel on" id="seg-racs">
       <!-- KPI row -->
       <div style="padding:12px 16px 6px;display:grid;grid-template-columns:repeat(5,1fr);gap:8px">
@@ -2690,7 +2628,7 @@ body { background:#eef1f6; }
       </div>
     </div>
 
-    <!-- ══ TAB 2: CAPACITACIONES (modelo SafeReport) ════════════════ -->
+    <!-- TAB 2: CAPACITACIONES (modelo SafeReport) -->
     <div class="mpanel" id="seg-capacitacion">
       <!-- KPI row -->
       <div style="padding:12px 16px 8px;display:grid;grid-template-columns:240px 1fr 1fr 1fr;gap:8px">
@@ -2733,7 +2671,7 @@ body { background:#eef1f6; }
       </div>
     </div>
 
-    <!-- ══ TAB 3: Insp/RACS/Reinst ══════════════════════════════════ -->
+    <!-- TAB 3: Insp/RACS/Reinst -->
     <div class="mpanel" id="seg-resumen">
       <div style="padding:10px 16px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
         <div class="mstat"><div class="mstat-l">Total Inspecciones</div>
@@ -2767,7 +2705,7 @@ body { background:#eef1f6; }
       </div>
     </div>
 
-    <!-- ══ TAB 4: Detalle por Persona ══════════════════════════════ -->
+    <!-- TAB 4: Detalle por Persona -->
     <div class="mpanel" id="seg-detalle">
       <div class="mfilter">
         <span class="mf-lbl">Área</span>
@@ -2790,7 +2728,7 @@ body { background:#eef1f6; }
       </div>
     </div>
 
-    <!-- ══ TAB 5: Contratistas ══════════════════════════════════════ -->
+    <!-- TAB 5: Contratistas -->
     <div class="mpanel" id="seg-copsem">
       <div style="padding:10px 16px 6px;font-size:10px;color:var(--t3)">
         Datos de contratistas — COPSEM / Sector IV / Tumi
@@ -2830,7 +2768,7 @@ body { background:#eef1f6; }
     <div style="padding:8px 16px 0;display:flex;align-items:center;gap:12px">
       <span class="mf-badge" id="mant-det-cnt">—</span>
       <span style="font-size:9px;color:var(--t3)">
-        🔴 &gt;30 días parado &nbsp;·&nbsp; 🟡 &gt;7 días &nbsp;·&nbsp; Sin color &lt;7 días
+        <i class=dot-r></i>&gt;30 días parado &nbsp;·&nbsp; <i class=dot-y></i>&gt;7 días &nbsp;·&nbsp; Sin color &lt;7 días
       </span>
     </div>
     <div class="mscroll" style="padding:12px 16px">
@@ -2867,22 +2805,22 @@ id="alm-modal" onclick="if(event.target===this)closeAlm()">
     <!-- KPIs -->
     <div style="padding:10px 16px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
       <div class="mstat" style="border-left:3px solid #DC2626">
-        <div class="mstat-l">🔴 Crítico</div>
+        <div class="mstat-l"><i class=dot-r></i>Crítico</div>
         <div class="mstat-v" id="alm-cnt-crit" style="color:#DC2626">—</div>
         <div class="mstat-s">ítems · compra urgente</div>
       </div>
       <div class="mstat" style="border-left:3px solid #D97706">
-        <div class="mstat-l">🟡 Precaución</div>
+        <div class="mstat-l"><i class=dot-y></i>Precaución</div>
         <div class="mstat-v" id="alm-cnt-prec" style="color:#D97706">—</div>
         <div class="mstat-s">ítems · revisar compras</div>
       </div>
       <div class="mstat" style="border-left:3px solid #15803D">
-        <div class="mstat-l">🟢 Adecuado</div>
+        <div class="mstat-l"><i class=dot-g></i>Adecuado</div>
         <div class="mstat-v" id="alm-cnt-adeq" style="color:#15803D">—</div>
         <div class="mstat-s">ítems · sin acción</div>
       </div>
       <div class="mstat" style="border-left:3px solid #1D4ED8">
-        <div class="mstat-l">🔵 Excedente</div>
+        <div class="mstat-l"><i class=dot-b></i>Excedente</div>
         <div class="mstat-v" id="alm-cnt-exc" style="color:#1D4ED8">—</div>
         <div class="mstat-s">ítems · evaluar rotación</div>
       </div>
@@ -2905,7 +2843,7 @@ id="alm-modal" onclick="if(event.target===this)closeAlm()">
       </table>
     </div>
     <div style="padding:5px 14px;font-size:10px;color:var(--t3);border-top:1px solid var(--bd);background:var(--bg)">
-      🔴 Stock ≤ Min. · 🟡 Min &lt; Stock ≤ Min×1.5 · 🟢 Stock &gt; Min×1.5 · 🔵 Excedente
+      <i class=dot-r></i>Stock ≤ Min. · <i class=dot-y></i>Min &lt; Stock ≤ Min×1.5 · <i class=dot-g></i>Stock &gt; Min×1.5 · <i class=dot-b></i>Excedente
     </div>
   </div>
 </div>
@@ -2920,7 +2858,7 @@ id="alm-modal" onclick="if(event.target===this)closeAlm()">
     <div class="mtabs">
       <button class="mtab on" onclick="pbTab('resumen',this)"> Resumen Día</button>
       <button class="mtab"    onclick="pbTab('graficos',this)"> Gráficos</button>
-      <button class="mtab"    onclick="pbTab('historico',this)">&#128196; Histórico</button>
+      <button class="mtab"    onclick="pbTab('historico',this)">Histórico</button>
     </div>
 
     <!-- TAB 1: Resumen del día -->
@@ -3026,110 +2964,95 @@ id="alm-modal" onclick="if(event.target===this)closeAlm()">
 <!-- GLOSARIO -->
 <div class="gfull">
   <div class="card" id="glosario">
-    <div class="ch"><span class="ct">&#128218; Glosario de Abreviaturas</span></div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:4px 16px;padding:8px 14px 12px;font-size:10px">
-      <!-- Producción -->
-      <div style="grid-column:1/-1;font-size:9px;font-weight:700;color:var(--nv);text-transform:uppercase;letter-spacing:1px;margin-top:6px;border-bottom:1px solid var(--bd)">Producción y Lab</div>
-      <div><strong>TMH</strong> — Toneladas Métricas Húmedas</div>
-      <div><strong>TMS</strong> — Toneladas Métricas Secas</div>
-      <div><strong>%H₂O</strong> — Porcentaje de Humedad</div>
-      <div><strong>Ley Au</strong> — Ley de Oro (Oz/ton)</div>
-      <div><strong>L.Cabeza</strong> — Ley de Cabeza (meta 0.46 Oz/ton)</div>
-      <div><strong>Z23</strong> — Zona 23 (yacimiento)</div>
-      <div><strong>SR / S.Rosa</strong> — Santa Rosa (yacimiento)</div>
-      <div><strong>Oz/ton</strong> — Onzas por tonelada métrica</div>
-      <div><strong>ÓPTIMO</strong> — Ley Au ≥ 0.46 Oz/ton</div>
-      <div><strong>REGULAR</strong> — Ley Au 0.44–0.459 Oz/ton</div>
-      <div><strong>BAJO</strong> — Ley Au &lt; 0.44 Oz/ton</div>
-      <!-- Geología -->
+    <div class="ch"><span class="ct">Glosario de Abreviaturas</span></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:4px 16px;padding:8px 14px 12px;font-size:10px">
+      <div style="grid-column:1/-1;font-size:9px;font-weight:700;color:var(--nv);text-transform:uppercase;letter-spacing:1px;margin-top:6px;border-bottom:1px solid var(--bd)">Generales</div>
+      <div><strong>Act.</strong> — Fecha de actualización de los datos de la tabla</div>
+      <div><strong>Prog. / Ejec.</strong> — Programado / Ejecutado</div>
+      <div><strong>Acum.</strong> — Acumulado del período contable hasta la fecha</div>
+      <div><strong>% Cumpl.</strong> — Porcentaje de cumplimiento (Ejec. ÷ Prog.)</div>
+      <div><strong>Pond.</strong> — Promedio ponderado por tonelaje</div>
+      <div><strong>Proy.</strong> — Proyecto (meta total del proyecto)</div>
+      <div><strong>Dif.</strong> — Diferencia entre lo programado y lo ejecutado</div>
+      <div><strong>~Est.</strong> — Valor estimado</div>
+      <div><strong>Período activo</strong> — Período contable (no coincide con el mes calendario)</div>
+      <div><strong>Meta a la fecha</strong> — Días ejecutados ÷ días del período</div>
+      <div><strong>Cía.</strong> — Compañía (Minera Sotrami S.A.)</div>
+      <div><strong>U.M.</strong> — Unidad Minera Santa Filomena</div>
+      <div style="grid-column:1/-1;font-size:9px;font-weight:700;color:var(--nv);text-transform:uppercase;letter-spacing:1px;margin-top:6px;border-bottom:1px solid var(--bd)">Producción, Laboratorio y Planta</div>
+      <div><strong>TMH</strong> — Toneladas métricas húmedas</div>
+      <div><strong>TMS</strong> — Toneladas métricas secas</div>
+      <div><strong>%H₂O</strong> — Porcentaje de humedad</div>
+      <div><strong>Ley Au</strong> — Ley de oro, en Oz/tc</div>
+      <div><strong>Ley Ag</strong> — Ley de plata</div>
+      <div><strong>Oz/tc</strong> — Onzas troy por tonelada corta</div>
+      <div><strong>g/t</strong> — Gramos por tonelada</div>
+      <div><strong>L.Base Au</strong> — Ley base de referencia: 0.46 Oz/tc</div>
+      <div><strong>ÓPTIMO</strong> — Ley Au ≥ 0.46 Oz/tc</div>
+      <div><strong>REGULAR</strong> — Ley Au 0.44 – 0.459 Oz/tc</div>
+      <div><strong>BAJO</strong> — Ley Au &lt; 0.44 Oz/tc</div>
+      <div><strong>Z23 / SR</strong> — Zona 23 / Santa Rosa</div>
+      <div><strong>Recup.%</strong> — Recuperación metalúrgica</div>
+      <div><strong>Chancado · Molienda · Cianuración</strong> — Etapas del proceso en Planta Beneficio</div>
+      <div style="grid-column:1/-1;font-size:9px;font-weight:700;color:var(--nv);text-transform:uppercase;letter-spacing:1px;margin-top:6px;border-bottom:1px solid var(--bd)">Izaje y Volquete</div>
+      <div><strong>Skip</strong> — Balde de izaje que sube el material por el pique</div>
+      <div><strong>Pique</strong> — Excavación vertical por donde se iza el material</div>
+      <div><strong>Winche</strong> — Equipo de izaje que mueve el skip</div>
+      <div><strong>Min. / Des.</strong> — Mineral / Desmonte</div>
+      <div><strong>Rel. Des:Min</strong> — Relación desmonte : mineral</div>
+      <div><strong>Volq.</strong> — Volquete</div>
+      <div><strong>Guard.</strong> — Guardia (turno)</div>
+      <div><strong>NV.</strong> — Nivel</div>
+      <div style="grid-column:1/-1;font-size:9px;font-weight:700;color:var(--nv);text-transform:uppercase;letter-spacing:1px;margin-top:6px;border-bottom:1px solid var(--bd)">Avances, Rehabilitación y Raise Boring</div>
+      <div><strong>SIV</strong> — Sector IV</div>
+      <div><strong>TL / Trackless</strong> — Minado con equipo sobre llantas (sin rieles)</div>
+      <div><strong>Conv.</strong> — Minado convencional (sobre rieles)</div>
+      <div><strong>Chulbe</strong> — Zona de trabajo de Corimayo</div>
+      <div><strong>Ejecutor</strong> — Empresa que ejecuta la labor</div>
+      <div><strong>Rehab.</strong> — Rehabilitación de labores</div>
+      <div><strong>GL</strong> — Galería</div>
+      <div><strong>Cimbra</strong> — Sostenimiento con arcos metálicos</div>
+      <div><strong>P. Helicoidal</strong> — Perno helicoidal (anclaje de roca)</div>
+      <div><strong>Bolsacrete</strong> — Bolsas rellenas de concreto para sostenimiento</div>
+      <div><strong>Cable Bolting</strong> — Sostenimiento con pernos de cable</div>
+      <div><strong>RB</strong> — Raise Boring: perforación mecanizada de chimeneas</div>
+      <div><strong>Piloto / Rimado</strong> — Etapas del RB: taladro guía y ensanche</div>
       <div style="grid-column:1/-1;font-size:9px;font-weight:700;color:var(--nv);text-transform:uppercase;letter-spacing:1px;margin-top:6px;border-bottom:1px solid var(--bd)">Geología</div>
       <div><strong>DDH</strong> — Diamond Drill Hole (sondaje diamantino)</div>
-      <div><strong>BROWNFIELD</strong> — Perforación en zona de producción existente</div>
-      <div><strong>INFILL</strong> — Perforación de relleno / densificación</div>
-      <div><strong>LF</strong> — Labor de Fresado</div>
-      <div><strong>CS</strong> — Crucero Santa Rosa</div>
-      <div><strong>PHC</strong> — Perforación Horizontal de Control</div>
-      <div><strong>U</strong> — Unidad / nivel de perforación</div>
-      <!-- Skip/Izaje -->
-      <div style="grid-column:1/-1;font-size:9px;font-weight:700;color:var(--nv);text-transform:uppercase;letter-spacing:1px;margin-top:6px;border-bottom:1px solid var(--bd)">Izaje</div>
-      <div><strong>Skip</strong> — Carro de izaje (extracción vertical)</div>
-      <div><strong>Pique</strong> — Chimenea vertical de extracción</div>
-      <div><strong>Coche</strong> — Vagón de transporte subterráneo</div>
-      <div><strong>Prog./Ejec.</strong> — Programado / Ejecutado</div>
-      <!-- Avances -->
-      <div style="grid-column:1/-1;font-size:9px;font-weight:700;color:var(--nv);text-transform:uppercase;letter-spacing:1px;margin-top:6px;border-bottom:1px solid var(--bd)">Avances y Minado</div>
-      <div><strong>SIV</strong> — Sector IV</div>
-      <div><strong>TL / Trackless</strong> — Minado con equipo motorizado (sin rieles)</div>
-      <div><strong>Conv.</strong> — Convencional (con locomotoras y rieles)</div>
-      <div><strong>RB 2000</strong> — Raise Boring 2000 HP (equipo Chulbe)</div>
-      <div><strong>Rimado</strong> — Proceso de ensanche de chimenea con RB</div>
-      <div><strong>Chulbe</strong> — Nombre de zona del proyecto RB 2000</div>
-      <div><strong>Acum.</strong> — Acumulado del periodo</div>
-      <!-- Rehabilitación -->
-      <div style="grid-column:1/-1;font-size:9px;font-weight:700;color:var(--nv);text-transform:uppercase;letter-spacing:1px;margin-top:6px;border-bottom:1px solid var(--bd)">Rehabilitación y Sostenimiento</div>
-      <div><strong>Rehab.</strong> — Rehabilitación de labores mineras</div>
-      <div><strong>GL</strong> — Galería (labor horizontal principal)</div>
-      <div><strong>Cimbra</strong> — Tipo de sostenimiento metálico en arco</div>
-      <div><strong>Seccionamiento</strong> — División de labor con sostenimiento</div>
-      <div><strong>P. Helicoidal</strong> — Perno helicoidal (anclaje de roca)</div>
-      <div><strong>Bolsacrete</strong> — Bolsa de cemento para relleno/shotcrete</div>
-      <div><strong>Cable Bolting</strong> — Pernos de cable para sostenimiento</div>
-      <!-- RRHH -->
+      <div><strong>Brownfield</strong> — Exploración cerca de zonas en producción</div>
+      <div><strong>Infill</strong> — Perforación de relleno para densificar información</div>
+      <div><strong>LF 160 · CS 140 · PHC 06 · U…</strong> — Código del equipo de perforación DDH</div>
+      <div style="grid-column:1/-1;font-size:9px;font-weight:700;color:var(--nv);text-transform:uppercase;letter-spacing:1px;margin-top:6px;border-bottom:1px solid var(--bd)">Seguridad</div>
+      <div><strong>IDS</strong> — Índice de desempeño del supervisor</div>
+      <div><strong>Insp.</strong> — Inspecciones</div>
+      <div><strong>RACS</strong> — Reporte de actos y condiciones subestándar</div>
+      <div><strong>Reinst.</strong> — Reinstrucciones</div>
+      <div><strong>IPERC</strong> — Identificación de peligros, evaluación de riesgos y controles</div>
+      <div><strong>Cap.</strong> — Capacitaciones</div>
+      <div><strong>% / % Global</strong> — Promedio del cumplimiento de Insp., RACS y Reinst.</div>
       <div style="grid-column:1/-1;font-size:9px;font-weight:700;color:var(--nv);text-transform:uppercase;letter-spacing:1px;margin-top:6px;border-bottom:1px solid var(--bd)">RRHH</div>
-      <div><strong>HC</strong> — Headcount (total personas activas)</div>
-      <div><strong>Empl.</strong> — Empleados (planilla mensual)</div>
-      <div><strong>Obr.</strong> — Obreros (planilla diaria)</div>
+      <div><strong>HC</strong> — Headcount: personal activo</div>
+      <div><strong>HC Prog.</strong> — Personal programado</div>
+      <div><strong>Total HC</strong> — Personal activo del día</div>
+      <div><strong>Empl. / Obr.</strong> — Empleados / Obreros</div>
       <div><strong>Ingr.</strong> — Ingresos del día</div>
-      <div><strong>Renun.</strong> — Renuncias del día</div>
+      <div><strong>Renun.</strong> — Salidas del día (renuncias y ceses)</div>
       <div><strong>D.Méd.</strong> — Descanso médico</div>
-      <div><strong>DM/SUB</strong> — Descanso médico / Subsidio</div>
       <div><strong>Vac.</strong> — Vacaciones</div>
       <div><strong>P.Obs.</strong> — Personal con observación médica</div>
-      <div><strong>TR</strong> — Trabajo restringido</div>
-      <div><strong>LCG</strong> — Licencia con goce de haber</div>
-      <div><strong>Copsem</strong> — Contratista Copsem (convencional)</div>
-      <div><strong>Tumi</strong> — Contratista Tumi (Raise Boring)</div>
-      <!-- Seguridad -->
-      <div style="grid-column:1/-1;font-size:9px;font-weight:700;color:var(--nv);text-transform:uppercase;letter-spacing:1px;margin-top:6px;border-bottom:1px solid var(--bd)">Seguridad</div>
-      <div><strong>Insp.</strong> — Inspecciones de seguridad</div>
-      <div><strong>RACS</strong> — Reporte de Actos y Condiciones Sub-estándar</div>
-      <div><strong>Reinst.</strong> — Reinstrucciones de seguridad</div>
-      <div><strong>LTI</strong> — Lost Time Injury (accidente con tiempo perdido)</div>
-      <div><strong>No LTI</strong> — Accidente sin tiempo perdido</div>
-      <div><strong>% Global</strong> — Promedio de cumplimiento Insp+RACS+Reinst</div>
-      <!-- Almacén -->
+      <div><strong>Déficit</strong> — HC Prog. − Total HC (−n = falta personal)</div>
+      <div><strong>Copsem · Tumi · Corimayo</strong> — Empresas contratistas</div>
       <div style="grid-column:1/-1;font-size:9px;font-weight:700;color:var(--nv);text-transform:uppercase;letter-spacing:1px;margin-top:6px;border-bottom:1px solid var(--bd)">Almacén</div>
-      <div><strong>Stock Act.</strong> — Stock actual disponible</div>
-      <div><strong>Stock Mín.</strong> — Stock mínimo operacional</div>
-      <div><strong>gln</strong> — Galones (unidad para combustible)</div>
-      <div><strong>und</strong> — Unidad</div>
-      <div><strong>caja</strong> — Caja (explosivos)</div>
-      <div><strong>rollo</strong> — Rollo (malla electrosoldada)</div>
-      <div><strong>🔴 Crítico</strong> — Stock ≤ mínimo</div>
-      <div><strong>🟡 Precaución</strong> — Stock entre mínimo y 1.5× mínimo</div>
-      <div><strong>🟢 Adecuado/Estable</strong> — Stock normal</div>
-      <div><strong>🔵 Excedente</strong> — Stock sobre máximo</div>
-      <!-- Mantenimiento -->
+      <div><strong>Stock Act. / Stock Mín.</strong> — Stock actual / Stock mínimo</div>
+      <div><strong>UM</strong> — Unidad de medida</div>
+      <div><strong><i class=dot-r></i>Crítico</strong> — Stock ≤ mínimo</div>
+      <div><strong><i class=dot-y></i>Precaución</strong> — Mínimo &lt; stock ≤ 1.5 × mínimo</div>
+      <div><strong><i class=dot-g></i>Adecuado</strong> — Stock &gt; 1.5 × mínimo</div>
+      <div><strong><i class=dot-b></i>Excedente</strong> — Stock por encima de lo requerido</div>
       <div style="grid-column:1/-1;font-size:9px;font-weight:700;color:var(--nv);text-transform:uppercase;letter-spacing:1px;margin-top:6px;border-bottom:1px solid var(--bd)">Mantenimiento</div>
-      <div><strong>INOP / INOPERATIVO</strong> — Equipo fuera de servicio</div>
-      <div><strong>OPERATIVO</strong> — Equipo en servicio</div>
-      <div><strong>STAND BY</strong> — Equipo en espera / reserva</div>
-      <div><strong>Overhaul</strong> — Mantenimiento mayor (reparación general)</div>
-      <div><strong>LH</strong> — Scoop LH-203 (cargador frontal)</div>
-      <div><strong>LB</strong> — Locomotora de bajo perfil</div>
-      <div><strong>JB</strong> — Jumbo de perforación</div>
-      <div><strong>SC</strong> — Scoop convencional</div>
-      <!-- Periodo -->
-      <div style="grid-column:1/-1;font-size:9px;font-weight:700;color:var(--nv);text-transform:uppercase;letter-spacing:1px;margin-top:6px;border-bottom:1px solid var(--bd)">Periodo y Métricas</div>
-      <div><strong>U.M.</strong> — Unidad Minera (Santa Filomena)</div>
-      <div><strong>Prog.</strong> — Programado</div>
-      <div><strong>Ejec.</strong> — Ejecutado</div>
-      <div><strong>Acum.</strong> — Acumulado</div>
-      <div><strong>Pond.</strong> — Ponderado</div>
-      <div><strong>Sem.</strong> — Semana</div>
-      <div><strong>Meta</strong> — Objetivo del periodo</div>
-      <div><strong>% Cumpl.</strong> — Porcentaje de cumplimiento</div>
-      <div><strong>Déficit</strong> — Diferencia HC programado vs real (negativo = falta)</div>
+      <div><strong>INOPERATIVO / OPERATIVO</strong> — Equipo fuera de servicio / en servicio</div>
+      <div><strong>Overhaul</strong> — Reparación general (mantenimiento mayor)</div>
+      <div><strong>LH-203 · LB-9 …</strong> — Código interno del equipo</div>
     </div>
   </div>
 </div>
@@ -3137,7 +3060,7 @@ id="alm-modal" onclick="if(event.target===this)closeAlm()">
 <script>
 const DDH_R=[]; // datos desde API
 
-// ── Helpers globales (disponibles antes de cualquier función) ──────────────
+// Helpers globales (disponibles antes de cualquier función)
 const L_CABEZA = 0.46;
 
 function whenChartReady(fn, retries) {
@@ -3149,7 +3072,7 @@ function whenChartReady(fn, retries) {
 const fmtN = (n, d=2) => n>0 ? n.toLocaleString('es-PE',{minimumFractionDigits:d,maximumFractionDigits:Math.max(d,3)}) : '—';
 const fmtN0 = n => fmtN(n, 0);
 
-// ── Datos Mantenimiento inicial (hoja MANTTO de MANTTO_SOTRAMI) ─────────────
+// Datos Mantenimiento inicial (hoja MANTTO de MANTTO_SOTRAMI)
 // Formato: [fecha, turno, equipo, codigo, ubicacion, fecha_inop, estado, motivo, atenciones, obs]
 const MANT_DATA = [
   ['07/06/2026','DIA','SCOOP-SANDVICK','LH-203','SANTA ROSA','29/05/2026','INOPERATIVO','FALLAS EN MOTOR DIESEL','','ALQUILADO'],
@@ -3166,7 +3089,7 @@ const MANT_OBJS = MANT_DATA.map(r => ({
   obs: r[9] || ''
 }));
 
-// ══ APPS SCRIPT — URL DE LA API ═════════════════════════════════════
+// APPS SCRIPT — URL DE LA API
 const APPSCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwCTBZ6b9eJnfPnplU95m_780grItPpM67ElNEefxadpbhpw7JhVEqzHGD6Fbwqmezdgg/exec';
 const APPSCRIPT_URL_GEO          = 'https://script.google.com/macros/s/AKfycbzSZT1WkoMjgh5EgyyLgrCUAlecKEeHSVU4c2khFWbUviU-rlmINGtEP8OP3lIORDUX/exec';
 const APPSCRIPT_URL_IZ  = 'https://script.google.com/macros/s/AKfycbzah0mHlWL95TbO3ZsdizhecwHggrmUCVBDoVJV9fbUTsGPXsbh4FqvWVKW61YTpKys2g/exec';
@@ -3188,7 +3111,7 @@ const APPSCRIPT_URL_SEG_CORIMAYO   = 'https://script.google.com/macros/s/AKfycbz
 const APPSCRIPT_URL_ALM = 'https://script.google.com/macros/s/AKfycbwO-n6nSodHviw8sLf-GzTKKAvn8bCPMT8wQTR3lFsdpA5cKJTrw57zVc6QmIorpmbF/exec'; // ← Implementar SOTRAMI_appscript_almacen.js en ALMACEN_SOTRAMI → ALMACEN_SOTRAMI // ← Pegar URL de Almacén cuando esté implementado
 const APPSCRIPT_URL_MANT = 'https://script.google.com/macros/s/AKfycbxITbH2SqU_Q-SWFKzWn14cJktHvJaT2G_btaeSrwWRPsP63Xpibc5l23s2XLTFzbJ2/exec'; // ← Implementar SOTRAMI_appscript_mantto.js en MANTTO_SOTRAMI → MANTTO // ← Pegar URL de Mantenimiento cuando esté implementado
 
-// ══ PALETA CORPORATIVA SOTRAMI ═══════════════════════════════════
+// PALETA CORPORATIVA SOTRAMI
 const SOTRAMI = {
   navy    : '#003366',               // Principal — barras prog, líneas Z23, BF
   gold    : '#D4AF37',               // Secundario — barras ejec, líneas SR, Infill
@@ -3202,7 +3125,7 @@ const SOTRAMI = {
                body:'#E8F0FE', border:'rgba(212,175,55,0.3)' },
 };
 
-// ══ CONFIGURACIÓN PERIODOS ════════════════════════════════════════════════
+// CONFIGURACIÓN PERIODOS
 // Definir los periodos por mes (pueden variar cada periodo)
 const PERIODOS = {
   // Formato: 'YYYY-MM': { ini: 'DD/MM/YYYY', fin: 'DD/MM/YYYY', dias: N }
@@ -3220,7 +3143,7 @@ const PERIODOS = {
   '2026-12': { ini:'26/11/2026', fin:'25/12/2026', dias:30 },
 };
 
-// ══ CONFIGURACIÓN DEL PERIODO ══════════════════════════════════
+// CONFIGURACIÓN DEL PERIODO
 const _ultPeriodo = (() => { const k=Object.keys(PERIODOS).sort().pop(); return PERIODOS[k]; })();
 const CFG = {
   periodoInicio : parseFechaHdr(_ultPeriodo.ini),
@@ -3234,7 +3157,7 @@ const META_PCT  = Math.round(diasEjec / CFG.diasPeriodo * 100);
 const MESES_ES = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio',
                   'Julio','Agosto','Setiembre','Octubre','Noviembre','Diciembre'];
 
-// ── Obtener todas las fechas únicas del historial Z23R + SRR ───────────────
+// Obtener todas las fechas únicas del historial Z23R + SRR
 function getFechasHistorial() {
   const set = new Set();
   // Datos locales (histórico)
@@ -3297,7 +3220,7 @@ function addFechaToSelector(fecha) {
   sel.value = cur || fechas[fechas.length-1] || '';
 }
 
-// ── Calcular número de semana ISO ─────────────────────────────────────────
+// Calcular número de semana ISO
 function getSemanaISO(d) {
   const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
   date.setUTCDate(date.getUTCDate() + 4 - (date.getUTCDay()||7));
@@ -3305,13 +3228,13 @@ function getSemanaISO(d) {
   return Math.ceil((((date - yearStart) / 86400000) + 1)/7);
 }
 
-// ── Parsear fecha DD/MM/YYYY → Date ──────────────────────────────────────
+// Parsear fecha DD/MM/YYYY → Date
 function parseFechaHdr(s) {
   const p = s.split('/');
   return new Date(parseInt(p[2]), parseInt(p[1])-1, parseInt(p[0]));
 }
 
-// ── Calcular días ejecutados en el periodo activo ────────────────────────
+// Calcular días ejecutados en el periodo activo
 function getDiasEjecPeriodo(fechaReporte, periodoIni) {
   const dRep = parseFechaHdr(fechaReporte);
   const dIni = parseFechaHdr(periodoIni);
@@ -3319,7 +3242,7 @@ function getDiasEjecPeriodo(fechaReporte, periodoIni) {
   return Math.max(1, diff);
 }
 
-// ── Actualizar todo el encabezado cuando cambia la fecha de reporte ───────
+// Actualizar todo el encabezado cuando cambia la fecha de reporte
 function onFechaReporteChange(fechaSel) {
   if (!fechaSel) return;
   if (typeof resetCtrlRep === 'function') resetCtrlRep();
@@ -3384,7 +3307,7 @@ function onFechaReporteChange(fechaSel) {
   if (APPSCRIPT_URL_SEG)      cargarSegDesdeAPI(fechaSel);
 }
 
-// ── Inicializar desplegable de fechas ─────────────────────────────────────
+// Inicializar desplegable de fechas
 function getMesPeriodo(fecha) {
   // Retorna el PERIODO contable correspondiente a la fecha
   const PERIODOS_CIA = window._PERIODOS_CIA = {
@@ -3442,7 +3365,7 @@ function initFechaSelector() {
   }
 }
 
-// ── Actualizar KPIs del día seleccionado ──────────────────────────────────
+// Actualizar KPIs del día seleccionado
 function actualizarKPIsDia(fecha) {
   // Filtrar registros del día
   const z23Day = Z23R.filter(r => r[0] === fecha);
@@ -3466,7 +3389,7 @@ function actualizarKPIsDia(fecha) {
   sv('kpi-au-dia',  auPond);
 }
 
-// ── Panel de configuración de periodo (modal sencillo) ────────────────────
+// Panel de configuración de periodo (modal sencillo)
 function togglePeriodoPanel() {
   let panel = document.getElementById('periodo-panel');
   if (!panel) {
@@ -3477,7 +3400,7 @@ function togglePeriodoPanel() {
       'z-index:300;min-width:340px;box-shadow:0 8px 32px rgba(0,0,0,.15)';
     panel.innerHTML = `
       <div style="font-weight:600;font-size:13px;color:var(--nv);margin-bottom:12px">
-        ⚙ Configurar Periodo Activo
+        Configurar Periodo Activo
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:11px;margin-bottom:12px">
         <label>Fecha inicio<br>
@@ -3532,7 +3455,7 @@ function aplicarPeriodo() {
 
 
 
-// ══ FETCH DESDE APPS SCRIPT ══════════════════════════════════════════════
+// FETCH DESDE APPS SCRIPT
 async function fetchAppScript(params = {}) {
   const apiEl = document.getElementById('hdr-api-status');
   if (!APPSCRIPT_URL) {
@@ -3556,7 +3479,7 @@ async function fetchAppScript(params = {}) {
 
 // Cargar datos del día desde Apps Script y actualizar el dashboard
 
-// ══ CONTROL DE REPORTE ═══════════════════════════════════════════
+// CONTROL DE REPORTE
 // Cada área avisa con marcarEstado() qué fecha cargó y si trae datos.
 // Verde = registró la fecha seleccionada · Amarillo = registró pero falta algo (ej. ley)
 // Rojo = sin registro ese día (muestra el último día con datos si se conoce)
@@ -3623,7 +3546,7 @@ function renderCtrlRep() {
   set('cr-tog', _crSoloFaltan ? 'Ver todo' : 'Solo faltantes');
 }
 
-// ── Descarta respuestas que no son de la fecha seleccionada en la cabecera ──
+// Descarta respuestas que no son de la fecha seleccionada en la cabecera
 // (al abrir la página algunas APIs se consultan sin fecha y devuelven la última
 //  fila de la hoja, que puede ser una fecha futura vacía; si esa respuesta llega
 //  después que la buena, dejaría el cuadro en cero)
@@ -3659,7 +3582,7 @@ async function cargarDiaDesdeAPI(fecha) {
   const arrow  = p => p>=100?'▲':p>=95?'●':'▼';
   const badgeCls = p => p>=100?'kbdg kG':p>=95?'kbdg kY':'kbdg kR';
 
-  // ── Datos del día ─────────────────────────────────────────────
+  // Datos del día
   const rzDia = dataDia.resumen_z23 || {};
   const rsDia = dataDia.resumen_sr  || {};
   const ejZ23Dia = rzDia.tmh_dia || 0;
@@ -3667,14 +3590,14 @@ async function cargarDiaDesdeAPI(fecha) {
   const leyZ23Dia = rzDia.ley_pond_dia || 0;
   const leySRDia  = rsDia.ley_pond_dia || 0;
 
-  // ── Prog. Día desde PROG_DIA configurado ─────────────────────
+  // Prog. Día desde PROG_DIA configurado
   // API PLANTA_CIA: PROG_DIA = {Z23:130, SR:80} TMH/día
   // Programa: viene de la API de Planta (hoja PROGRAMA_PLANTA); si no llega, valores de respaldo
   const _pz = dataAcum?.zona_23 || {}, _ps = dataAcum?.santa_rosa || {};
   const PROG_Z23_DIA = +_pz.prog_dia || 144.16, PROG_SR_DIA = +_ps.prog_dia || 32.25;
   const PROG_Z23_MES = +_pz.prog_mes || 4469.18, PROG_SR_MES = +_ps.prog_mes || 1000;
 
-  // ── Datos acumulados del período ──────────────────────────────
+  // Datos acumulados del período
   const zA = dataAcum?.zona_23    || {};
   const sA = dataAcum?.santa_rosa || {};
   // Period index for Z23M/SRM monthly ley arrays
@@ -3710,36 +3633,36 @@ async function cargarDiaDesdeAPI(fecha) {
     return srw>0?srauSum/srw:0;
   })();
 
-  // ── % Día ─────────────────────────────────────────────────────
+  // % Día
   const pctZ23Dia = PROG_Z23_DIA ? Math.round(ejZ23Dia/PROG_Z23_DIA*100) : 0;
   const pctSRDia  = PROG_SR_DIA  ? Math.round(ejSRDia /PROG_SR_DIA *100) : 0;
   const pctTotDia = (PROG_Z23_DIA+PROG_SR_DIA) ? Math.round((ejZ23Dia+ejSRDia)/(PROG_Z23_DIA+PROG_SR_DIA)*100) : 0;
 
-  // ── % Acumulado (vs prog acum) ────────────────────────────────
+  // % Acumulado (vs prog acum)
   const pctZ23Acum = progAcumZ23 ? Math.round(acumZ23/progAcumZ23*100) : 0;
   const pctSRAcum  = progAcumSR  ? Math.round(acumSR /progAcumSR *100) : 0;
   const pctTotAcum = (progAcumZ23+progAcumSR) ? Math.round((acumZ23+acumSR)/(progAcumZ23+progAcumSR)*100) : 0;
 
-  // ── % Mes (vs prog total periodo) ────────────────────────────
+  // % Mes (vs prog total periodo)
   const metaPct   = Math.round(pctDias); // días ejec / días período
   const mCls = p => p>=metaPct?'pG':'pR';
   const pctZ23Mes = PROG_Z23_MES ? Math.round(acumZ23/PROG_Z23_MES*100) : 0;
   const pctSRMes  = PROG_SR_MES  ? Math.round(acumSR /PROG_SR_MES *100) : 0;
   const pctTotMes = (PROG_Z23_MES+PROG_SR_MES) ? Math.round((acumZ23+acumSR)/(PROG_Z23_MES+PROG_SR_MES)*100) : 0;
 
-  // ── KPI Z23 ───────────────────────────────────────────────────
+  // KPI Z23
   sv('kpi-z23-tmh',  fmtT(ejZ23Dia));
   sv('kpi-z23-prog', fmtT(PROG_Z23_DIA));
   const bz=document.getElementById('kpi-z23-badge');
   if(bz){bz.className=badgeCls(pctZ23Dia);bz.innerHTML=arrow(pctZ23Dia)+' <span id="kpi-z23-pct">'+pctZ23Dia+'</span>%';}
 
-  // ── KPI SR ────────────────────────────────────────────────────
+  // KPI SR
   sv('kpi-sr-tmh',  fmtT(ejSRDia));
   sv('kpi-sr-prog', fmtT(PROG_SR_DIA));
   const bs=document.getElementById('kpi-sr-badge');
   if(bs){bs.className=badgeCls(pctSRDia);bs.innerHTML=arrow(pctSRDia)+' <span id="kpi-sr-pct">'+pctSRDia+'</span>%';}
 
-  // ── KPI Ley Au ────────────────────────────────────────────────
+  // KPI Ley Au
   function leyClsKpi(v){return v>=L_CABEZA?'lhigh':v>=L_CABEZA-0.02?'lmed':'llow';}
   function leyLbl(v){return v>=L_CABEZA?'ÓPTIMO':v>=L_CABEZA-0.02?'REGULAR':'BAJO';}
   sv('kpi-au-z23', leyZ23>0?leyZ23.toFixed(3):'—');
@@ -3753,7 +3676,7 @@ async function cargarDiaDesdeAPI(fecha) {
   const bsr=document.getElementById('kpi-au-sr-badge');
   if(bsr){const ok=leySR>=L_CABEZA;bsr.className='kbdg '+(ok?'kG':'kR');bsr.textContent=(ok?'▲ ':'▼ ')+(leySR>0?leySR.toFixed(3):'—')+' vs '+L_CABEZA;}
 
-  // ── Tabla Producción ──────────────────────────────────────────
+  // Tabla Producción
   sv('prod-act-fecha', fechaActual);
   sv('pt-z23-prog-dia',  fmtT(PROG_Z23_DIA));
   sv('pt-z23-ejec-dia',  fmtT(ejZ23Dia));
@@ -3884,10 +3807,10 @@ async function actualizarHistoricoDesdeAPI() {
   } catch(e) { console.warn('[HISTORICO API]', e.message); }
 }
 
-// ── Actualizar Z23R y SRR con datos recientes desde la API ────────
+// Actualizar Z23R y SRR con datos recientes desde la API
 
 
-// ── Actualizar SKIP_R con datos del IZ API ─────────────────────────
+// Actualizar SKIP_R con datos del IZ API
 async function actualizarSkipHistorico() {
   if (!APPSCRIPT_URL_IZ) return;
   try {
@@ -3922,7 +3845,7 @@ async function actualizarSkipHistorico() {
 }
 
 
-// ── Print / PDF Export ──────────────────────────────────────────
+// Print / PDF Export
 // Genera el reporte como UNA sola hoja larga (ancho 600 px, igual que la captura
 // manual con F12), sin el glosario, y lo descarga directo como PDF.
 const PDF_ANCHO = 600;
@@ -3986,6 +3909,39 @@ async function printReport() {
           t.innerHTML = '<div style="font-size:14px;font-weight:800;letter-spacing:.14em;color:#F5ECC8">' + (tSrc ? tSrc.textContent : 'REPORTE DIARIO DE UNIDAD') + '</div>'
             + '<div style="font-size:8.5px;letter-spacing:.2em;color:rgba(212,175,55,.8);margin-top:2px">' + (sSrc ? sSrc.textContent : 'MINA / PLANTA') + '</div>';
           brand.after(t);
+        }
+        // Cabecera estática para el PDF: empresa a la izquierda, fecha/semana/mes a la derecha
+        const right = doc.querySelector('.hdr-brand-right');
+        if (brand && right) {
+          const fSel  = document.getElementById('hdr-fecha-sel')?.value || '';
+          const sem   = (document.getElementById('hdr-semana')?.textContent || '').trim();
+          const mes   = (document.getElementById('hdr-mes-badge')?.textContent || '').trim();
+          brand.style.cssText += ';display:flex!important;flex-wrap:nowrap!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;padding:10px 16px!important';
+          const center = doc.querySelector('.hdr-brand-center'); if (center) center.style.display = 'none';
+          const r = doc.createElement('div');
+          r.style.cssText = 'margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:2px;text-align:right;white-space:nowrap';
+          r.innerHTML = '<span style="font-size:7.5px;letter-spacing:.2em;color:rgba(212,175,55,.85)">FECHA DEL REPORTE</span>'
+            + '<span style="font-size:16px;font-weight:700;color:#F5ECC8;font-family:\'DM Mono\',monospace;line-height:1.1">' + fSel + '</span>'
+            + '<span style="font-size:8px;letter-spacing:.1em;color:rgba(245,236,200,.75)">'
+            + (sem && sem !== '—' ? 'SEMANA ' + sem : '') + (sem && sem !== '—' && mes && mes !== '—' ? ' · ' : '') + (mes && mes !== '—' ? mes.toUpperCase() : '') + '</span>';
+          right.replaceWith(r);
+        }
+        // Franja del período: sin botón de configuración, sin "datos en vivo", repartida a lo ancho
+        const meta = doc.querySelector('.hdr-meta');
+        if (meta) {
+          meta.querySelectorAll('.hdr-meta-btn').forEach(e => e.remove());
+          const live = meta.querySelector('.hdr-live-dot')?.parentElement; if (live) live.remove();
+          const area = doc.getElementById('hdr-area')?.closest('.hdr-meta-item');
+          if (area) { const prev = area.previousElementSibling; if (prev && prev.classList.contains('hdr-meta-div')) prev.remove(); area.remove(); }
+          meta.style.cssText += ';display:flex!important;flex-wrap:nowrap!important;justify-content:space-between!important;padding:7px 16px!important';
+        }
+        // Pie del PDF: identificación + nota de leyes + fecha y hora de generación
+        const foot = doc.querySelector('.footer');
+        if (foot) {
+          const d = new Date(), z = n => String(n).padStart(2,'0');
+          const gen = z(d.getDate())+'/'+z(d.getMonth()+1)+'/'+d.getFullYear()+' '+z(d.getHours())+':'+z(d.getMinutes());
+          foot.innerHTML = '<span>Minera Sotrami S.A.</span> &nbsp;|&nbsp; U.M. Santa Filomena · Sancos – Ayacucho &nbsp;|&nbsp; Leyes con 1 día de desfase &nbsp;|&nbsp; Generado: ' + gen;
+          foot.style.color = 'rgba(255,255,255,.65)';
         }
         // Controles que no aportan en el reporte impreso
         doc.querySelectorAll('.hdr-print-btn,.hdr-ctrl-btn,.hdr-pill-api,.ch-btn').forEach(e => { e.style.display = 'none'; });
@@ -4059,26 +4015,26 @@ let _labDia = null; // Cache Lab día desde API
 let _labPer = null; // Cache Lab período desde API
 const SRR = []; // ← datos cargados desde API
 
-// ══ DATOS MENSUALES (de las imágenes del Excel) ══════════════════
+// DATOS MENSUALES (de las imágenes del Excel)
 const MESES = ["ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SET","OCT","NOV","DIC"];
 const PERIODO_IDX_12 = {ENERO:0,FEBRERO:1,MARZO:2,ABRIL:3,MAYO:4,JUNIO:5,JULIO:6,AGOSTO:7,
   SETIEMBRE:8,SEPTIEMBRE:8,OCTUBRE:9,NOVIEMBRE:10,DICIEMBRE:11};
 const Z23M = {
   prog: [4000,4000,4000,4350,2900,5820,0,0,0,0,0,0],
-  ejec: [4171.2,3863.3,3935.0,4170.1,4183.9,647.9,0,0,0,0,0,0],
-  ley:  [0.421,0.328,0.370,0.415,0.408,0.315,0,0,0,0,0,0]
+  ejec: [0,0,0,0,0,0,0,0,0,0,0,0],   // se llena con resumen_mes (API Planta)
+  ley:  [0,0,0,0,0,0,0,0,0,0,0,0]
 };
 const SRM = {
   prog: [700,700,700,850,567,1115,0,0,0,0,0,0],
-  ejec: [769.2,719.6,795.0,1084.5,1111.0,117.3,0,0,0,0,0,0],
-  ley:  [0.377,0.307,0.343,0.381,0.431,0.366,0,0,0,0,0,0]
+  ejec: [0,0,0,0,0,0,0,0,0,0,0,0],   // se llena con resumen_mes (API Planta)
+  ley:  [0,0,0,0,0,0,0,0,0,0,0,0]
 };
 // Cols: [fecha, cod, zona, tmh, h2o, tms, ley]
 // índices: 0=fecha, 1=cod, 2=zona, 3=tmh, 4=h2o, 5=tms, 6=ley
 
-// ══ HELPERS ══════════════════════════════════════════════════════
+// HELPERS
 function auC(v){
-  // Ley de Cabeza: 0.46 Oz/ton
+  // Ley de Cabeza: 0.46 Oz/tc
   // ÓPTIMO   >= 0.46  → verde
   // REGULAR  0.44 – 0.45999 → ámbar
   // BAJO     < 0.44  → rojo
@@ -4087,7 +4043,7 @@ function auC(v){
 function getYear(r){return r[0].split('/')[2];}
 function getMon(r){return r[0].split('/')[1];}
 
-// ══ SORT STATE ═══════════════════════════════════════════════════
+// SORT STATE
 const sortState = {z23:{col:'fecha',asc:true}, sr:{col:'fecha',asc:true}};
 
 function sortDet(zone, col) {
@@ -4109,7 +4065,7 @@ function applySort(data, zone) {
   });
 }
 
-// ══ PROD MODAL ════════════════════════════════════════════════════
+// PROD MODAL
 // charts rebuilt on each open
 function openProd(){document.getElementById('prod-modal').classList.add('open');buildProdCharts();}
 function closeProd(){document.getElementById('prod-modal').classList.remove('open');}
@@ -4179,7 +4135,7 @@ function buildProdCharts(){
           legend:{display:false},
           tooltip:{callbacks:{
             label:pt=>{
-              if(pt.datasetIndex===2) return `Ley Au: ${pt.parsed.y!=null?pt.parsed.y.toFixed(3):'—'} Oz/ton`;
+              if(pt.datasetIndex===2) return `Ley Au: ${pt.parsed.y!=null?pt.parsed.y.toFixed(3):'—'} Oz/tc`;
               return `${pt.dataset.label}: ${pt.parsed.y!=null?pt.parsed.y.toLocaleString('es-PE'):0} TMH`;
             }
           }}
@@ -4219,7 +4175,7 @@ function buildProdCharts(){
   renderZ23(); renderSR(); renderAll();
 }
 
-// ── RENDER Z23 TABLE ─────────────────────────────────────────────
+// RENDER Z23 TABLE
 function renderZ23(){
   const yr=document.getElementById('f23-yr').value;
   const mo=document.getElementById('f23-mo').value;
@@ -4250,7 +4206,7 @@ function clearF23(){
   renderZ23();
 }
 
-// ── RENDER SR TABLE ──────────────────────────────────────────────
+// RENDER SR TABLE
 function renderSR(){
   const yr=document.getElementById('fsr-yr').value;
   const mo=document.getElementById('fsr-mo').value;
@@ -4281,7 +4237,7 @@ function clearFSR(){
   renderSR();
 }
 
-// ── RENDER ALL TABLE ─────────────────────────────────────────────
+// RENDER ALL TABLE
 function renderAll(){
   const yr=document.getElementById('fall-yr').value;
   const mo=document.getElementById('fall-mo').value;
@@ -4303,12 +4259,12 @@ function renderAll(){
     <td>${r[6]>0?'<span class="ley-c '+auC(r[6])+'">'+r[6].toFixed(3)+'</span>':'<span style="color:var(--t3)">—</span>'}</td>
   </tr>`).join('');
 }
-// ══ LAB MODAL ════════════════════════════════════════════════════
+// LAB MODAL
 const LZ23 = []; // ← datos cargados desde API
 const LSR = []; // ← datos cargados desde API
 
 
-// ── Render Lab Resumen desde API ──────────────────────────────────
+// Render Lab Resumen desde API
 function renderLabResumenAPI(data) {
   if (!data?.periodos?.length) return;
   const sv = (id,v) => { const el=document.getElementById(id); if(el&&v!=null) el.textContent=v; };
@@ -4398,7 +4354,7 @@ function buildLabCharts(){
   renderLabSR();
 }
 
-// ── Helpers ley ──────────────────────────────────────────────
+// Helpers ley
 function leyClsLab(v) {
   if(!v||v<=0) return '';
   return v>=0.46?'lhigh':v>=0.44?'lmed':'llow';
@@ -4408,7 +4364,7 @@ function leyTxtLab(v) {
   return v>=0.46?'ÓPTIMO':v>=0.44?'REGULAR':'BAJO';
 }
 
-// ── TAB 1: Resumen mensual ────────────────────────────────────
+// TAB 1: Resumen mensual
 function renderLabResumen() {
   // Usar los datos ya en Z23R y SRR
   const sv  = (id,v) => { const el=document.getElementById(id); if(el&&v!=null) el.textContent=v; };
@@ -4458,12 +4414,12 @@ function renderLabResumen() {
   const elSRc  = document.getElementById('lm-sr-clase');
   if(elSRc){  elSRc.className ='ley-c '+leyClsLab(srAu);  elSRc.textContent =leyTxtLab(srAu);  }
 
-  // ── Actualizar título del modal ─────────────────────────────
+  // Actualizar título del modal
   const MESES_N=['','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Set','Oct','Nov','Dic'];
   const sv2 = (id,v)=>{ const el=document.getElementById(id); if(el) el.textContent=v; };
   sv2('lab-modal-fecha', MESES_N[parseInt(mMes)]+' '+mAnio+' · '+totMuestras+' muestras');
 
-  // ── Gráfico líneas diario ──────────────────────────────────
+  // Gráfico líneas diario
   // Obtener todos los días del mes con datos
   const allDias = [...new Set([
     ...Z23R.filter(r=>{ const p=r[0].split('/'); return p[1]===mMes&&p[2]===mAnio&&r[6]>0; }).map(r=>r[0]),
@@ -4508,7 +4464,7 @@ function renderLabResumen() {
           pointBackgroundColor:'#D4AF37', pointBorderColor:'#fff',
           pointBorderWidth:1.5, pointRadius:4, pointHoverRadius:6,
           spanGaps:true },
-        { label:'L.Cabeza 0.46', data:metaLine,
+        { label:'L.Base 0.46', data:metaLine,
           borderColor:'#E24B4A', borderDash:[6,3],
           borderWidth:1.5, pointRadius:0, fill:false, tension:0 }
       ]
@@ -4530,7 +4486,7 @@ function renderLabResumen() {
           borderColor:'rgba(212,175,55,0.3)', borderWidth:1, padding:10,
           callbacks:{
             label: pt => pt.datasetIndex===2 ? null
-              : `  ${pt.dataset.label}: ${pt.parsed.y!=null?pt.parsed.y.toFixed(3):'—'} Oz/ton`
+              : `  ${pt.dataset.label}: ${pt.parsed.y!=null?pt.parsed.y.toFixed(3):'—'} Oz/tc`
           }
         }
       },
@@ -4542,13 +4498,13 @@ function renderLabResumen() {
           border:{display:false},
           ticks:{font:{size:10}, color:'#7A8CA8',
             callback: v => v.toFixed(2)},
-          title:{display:true, text:'Oz/ton', font:{size:10}} }
+          title:{display:true, text:'Oz/tc', font:{size:10}} }
       }
     }
   });
 }
 
-// ── TAB 2: Zona 23 ────────────────────────────────────────────
+// TAB 2: Zona 23
 function renderLabZ23() {
   const yr  = document.getElementById('lab-f-yr')?.value  || '2026';
   const mo  = document.getElementById('lab-f-mo')?.value  || '';
@@ -4587,7 +4543,7 @@ function renderLabZ23() {
   }).join('');
 }
 
-// ── TAB 3: Santa Rosa ─────────────────────────────────────────
+// TAB 3: Santa Rosa
 function renderLabSR() {
   const yr  = document.getElementById('lab-f-yr-sr')?.value || '2026';
   const mo  = document.getElementById('lab-f-mo-sr')?.value || '';
@@ -4626,7 +4582,7 @@ function renderLabSR() {
   }).join('');
 }
 
-// ── TAB 4: Detalle combinado ──────────────────────────────────
+// TAB 4: Detalle combinado
 function renderLabDet() {
   const zona  = document.getElementById('fLab')?.value    || '';
   const yr    = document.getElementById('flab-yr')?.value || '2026';
@@ -4685,7 +4641,7 @@ function clearFAllProd() {
   renderAll();
 }
 
-// ── labTab ────────────────────────────────────────────────────
+// labTab
 function labTab(id, el) {
   document.querySelectorAll('#lab-modal .mtab').forEach(t=>t.classList.remove('on'));
   document.querySelectorAll('#lab-modal .mpanel').forEach(p=>p.classList.remove('on'));
@@ -4698,7 +4654,7 @@ function labTab(id, el) {
 }
 
 
-// ══ GRÁFICO POR DÍA ══════════════════════════════════════════════
+// GRÁFICO POR DÍA
 let diaChart = null;
 
 function renderDiaChart(){
@@ -4795,7 +4751,7 @@ function renderDiaChart(){
 
   document.getElementById('fd-badge').textContent = labels.length + ' días';
 
-  const yLabel = tipo==='tmh' ? 'TMH / día' : 'Ley Au (Oz/ton)';
+  const yLabel = tipo==='tmh' ? 'TMH / día' : 'Ley Au (Oz/tc)';
   const yMin   = tipo==='tmh' ? 0 : 0.10;
   const yMax   = tipo==='tmh' ? null : 0.95;
   const yFmt   = tipo==='tmh' ? v=>v.toLocaleString('es-PE') : v=>v.toFixed(3);
@@ -4823,7 +4779,7 @@ function renderDiaChart(){
               if(c.parsed.y==null) return null;
               return tipo==='tmh'
                 ? `${c.dataset.label}: ${c.parsed.y.toLocaleString('es-PE')} TMH`
-                : `${c.dataset.label}: ${c.parsed.y.toFixed(3)} Oz/ton`;
+                : `${c.dataset.label}: ${c.parsed.y.toFixed(3)} Oz/tc`;
             }
           }
         }
@@ -4849,17 +4805,15 @@ function renderDiaChart(){
 }
 
 
-// ══════════════════════════════════════════════════════════════════
 // CÁLCULO AUTOMÁTICO — SKIP y VOLQUETE PROGRAMADOS
 // Lógica:
 //   Prog. Skip Mineral  = Prog.TMH.Día.Zona / Factor_pique
 //   Prog. Skip Desmonte = Prog.Skip.Mineral × 3  (relación 1:3)
 //   Prog. Volq. Mineral  = Prog.TMH.Día.Zona / 25
 //   Prog. Volq. Desmonte = Prog.Volq.Mineral × 3
-// ══════════════════════════════════════════════════════════════════
 
 // Configuración de piques
-// ── Factores reales de conversión (capacidad × densidad) ─────────
+// Factores reales de conversión (capacidad × densidad)
 //   Mineral  Pq.Incl.:  cap 1.10 t × dens 2.79 t/m³ = 3.069 TMH/Skip
 //   Desmonte Pq.Incl.:  cap 1.10 t × dens 2.30 t/m³ = 2.530 TMH/Skip
 //   Desmonte Salvador:  cap 1.72 t × dens 2.30 t/m³ = 3.956 TMH/Skip
@@ -4925,7 +4879,7 @@ function calcularSkipVolq() {
   s('sp-tot-pm', totSkipM); s('sp-tot-pd', totSkipD);
   s('vq-tot-pm', totVolqM); s('vq-tot-pd', totVolqD);
 
-  // ── Cargar datos reales SKIP_R en tabla principal ──────────────
+  // Cargar datos reales SKIP_R en tabla principal
   // Obtener fecha más reciente disponible en SKIP_R
   const skipFechas = [...new Set(SKIP_R.map(r=>r[0]))].sort((a,b)=>{
     return a.split('/').reverse().join('').localeCompare(b.split('/').reverse().join(''));
@@ -4989,9 +4943,7 @@ function calcPct(ejec,prog){
 
 
 
-// ══════════════════════════════════════════════════════════════════
 // TAB FUSIÓN Z23 + SR — selector de fecha y resumen
-// ══════════════════════════════════════════════════════════════════
 let ffSort = {col:'fecha', asc:true};
 
 function renderFusion() {
@@ -5054,7 +5006,7 @@ function renderFusion() {
     sumEl.style.display = 'grid';
     document.getElementById('ff-tmh').textContent = sumTMH.toFixed(2) + ' tmh';
     document.getElementById('ff-tms').textContent = sumTMS > 0 ? sumTMS.toFixed(2) + ' tms' : '—';
-    document.getElementById('ff-au').textContent  = auPond > 0 ? auPond.toFixed(3) + ' Oz/ton' : '—';
+    document.getElementById('ff-au').textContent  = auPond > 0 ? auPond.toFixed(3) + ' Oz/tc' : '—';
     document.getElementById('ff-h2o').textContent = h2oAvg > 0 ? h2oAvg.toFixed(2) + ' %' : '—';
   }
 
@@ -5091,9 +5043,7 @@ function clearFusion() {
 }
 
 
-// ══════════════════════════════════════════════════════════════════
 // SKIP MODAL — IZAJE SUPERFICIE
-// ══════════════════════════════════════════════════════════════════
 const PIQUE_NAMES = {b04:'Base 04',b05:'Base 05',sal:'Salvador',esp:'Esperanza'};
 let skipChartsBuilt = false;
 let skipDiaChart = null;
@@ -5119,7 +5069,7 @@ function skipTab(id, el) {
   if (id==='detalle')    renderSkipDet();
 }
 
-// ── Aggregate SKIP_R by month for chart ──────────────────────────
+// Aggregate SKIP_R by month for chart
 function skipMonthlyData(piqueFilter) {
   const months = ['01','02','03','04','05','06','07','08','09','10','11','12'];
   const labels = ['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SET','OCT','NOV','DIC'];
@@ -5188,7 +5138,7 @@ function updateSkipStats() {
   sv('sk-tmh-des', tmhDes.toFixed(1));
 }
 
-// ── Gráfico por día ───────────────────────────────────────────────
+// Gráfico por día
 function renderSkipDia() {
   const pique = document.getElementById('sk-f-pique').value;
   const mes   = document.getElementById('sk-f-mes').value;
@@ -5218,7 +5168,7 @@ function renderSkipDia() {
   if (!ctx) return;
   if (skipDiaChart) skipDiaChart.destroy();
 
-  // ── Modo apilado: Mineral + Desmonte con etiqueta total ────────
+  // Modo apilado: Mineral + Desmonte con etiqueta total
   if (tipo === 'tot') {
     const minVals = dates.map(d => byDate[d].min);
     const desVals = dates.map(d => byDate[d].des);
@@ -5269,7 +5219,7 @@ function renderSkipDia() {
     return;
   }
 
-  // ── Modo línea suave — igual al gráfico de Laboratorio ─────────
+  // Modo línea suave — igual al gráfico de Laboratorio
   //    Mineral = línea dorada sólida con área
   //    Desmonte = línea navy punteada
   //    Prog. estimado = línea roja punteada (referencia)
@@ -5441,7 +5391,7 @@ function sortSkipDet(col) {
 }
 
 
-// ── Gráfico por winche — líneas suaves estilo lab ─────────────────
+// Gráfico por winche — líneas suaves estilo lab
 let skipWincheChart = null;
 
 function renderSkipWinche() {
@@ -5570,7 +5520,7 @@ function renderSkipWinche() {
 }
 
 
-// ══ DDH EXPLORACIONES ══════════════════════════════════════════
+// DDH EXPLORACIONES
 // DDH_R cols: [0=fecha,1=turno,2=tipo,3=equipo,4=prog_mes,
 //              5=ejec_dia,6=acum_mes,7=meta_anual,8=total_acum_anual,
 //              9=pct_mes,10=pct_anual,11=obs]
@@ -5606,14 +5556,14 @@ function ddhTab(id, el) {
   if (id==='detalle')   renderDDHDet();
 }
 
-// ── Obtener última fecha disponible en DDH_R ──────────────────
+// Obtener última fecha disponible en DDH_R
 function getDDHLastFecha() {
   const dates = [...new Set(DDH_R.map(r=>r[0]))].sort((a,b)=>
     a.split('/').reverse().join('').localeCompare(b.split('/').reverse().join('')));
   return dates[dates.length-1] || '';
 }
 
-// ── Actualizar tabla principal + KPIs ────────────────────────
+// Actualizar tabla principal + KPIs
 function updateDDHMainTable(fecha) {
   const f = fecha || getDDHLastFecha();
   const day = DDH_R.filter(r => r[0]===f);
@@ -5626,7 +5576,7 @@ function updateDDHMainTable(fecha) {
   const operativos = day.filter(r=>(r[5]||0)>0).length;
   const total5  = [...new Set(DDH_R.map(r=>r[3]))].length;
 
-  sv('ddh-act-fecha', f);
+  sv('ddh-act-fecha', f || '—');
   sv('ddh-kpi-ejec-total', totEjec.toFixed(1));
   sv('ddh-kpi-bf', bfEjec.toFixed(1));
   sv('ddh-kpi-if', ifEjec.toFixed(1));
@@ -5670,7 +5620,7 @@ function updateDDHMainTable(fecha) {
   }).join('');
 }
 
-// ── Gráfico de barras resumen mensual ─────────────────────────
+// Gráfico de barras resumen mensual
 function buildDDHCharts() {
   ddhChartsBuilt = true;
 
@@ -5771,7 +5721,7 @@ function updateDDHResumenModal(lastByEq, equipos) {
   }).join('');
 }
 
-// ── Gráfico evolución diaria ──────────────────────────────────
+// Gráfico evolución diaria
 function renderDDHEvol() {
   const equipoFil = document.getElementById('ddh-f-equipo').value;
   const tipoFil   = document.getElementById('ddh-f-tipo').value;
@@ -5854,7 +5804,7 @@ function renderDDHEvol() {
   });
 }
 
-// ── Tabla detalle registros ───────────────────────────────────
+// Tabla detalle registros
 function renderDDHDet() {
   const equipoFil = document.getElementById('ddh-d-equipo').value;
   const tipoFil   = document.getElementById('ddh-d-tipo').value;
@@ -5902,13 +5852,13 @@ function renderDDHDet() {
 
 
 
-// ══ FETCH GEOLOGÍA DDH ═══════════════════════════════════════════
+// FETCH GEOLOGÍA DDH
 
 
 
 
 
-// ══ VOLQUETE CANCHA ══════════════════════════════════════════════
+// VOLQUETE CANCHA
 // Datos locales en VOLQ_R: [fecha, zona_key, winche, guardia, turno,
 //                            jefe, nro_volq, placa, toneladas, obs]
 // Se llena dinámicamente desde la API
@@ -5937,7 +5887,7 @@ function vqTab(id, el) {
   if (id==='detalle')   renderVQDet();
 }
 
-// ── Construir gráficos desde API ──────────────────────────────
+// Construir gráficos desde API
 async function buildVQCharts() {
   // Destroy existing charts before rebuild
   if (vqMesChart) { vqMesChart.destroy(); vqMesChart = null; }
@@ -6049,7 +5999,7 @@ async function buildVQCharts() {
   }
 }
 
-// ── Gráfico evolución diaria ──────────────────────────────────
+// Gráfico evolución diaria
 function renderVQEvol() {
   if (!VOLQ_DATA.length) return;
   const zonaFil   = document.getElementById('vq-f-zona')?.value   || '';
@@ -6133,7 +6083,7 @@ function renderVQEvol() {
   });
 }
 
-// ── Tabla detalle desde API ───────────────────────────────────
+// Tabla detalle desde API
 async function renderVQDet() {
   const zonaFil   = document.getElementById('vq-d-zona')?.value    || '';
   const wincheFil = document.getElementById('vq-d-winche')?.value  || '';
@@ -6193,10 +6143,10 @@ async function renderVQDet() {
 
 
 
-// ══ SEGURIDAD Y MEDIO AMBIENTE ══════════════════════════════════
+// SEGURIDAD Y MEDIO AMBIENTE
 // Datos: [empresa, insp_prog, insp_ejec, racs_prog, racs_ejec,
 //         reinst_prog, reinst_ejec, obs]
-// ── Datos detalle por persona (para modal) ──────────────────
+// Datos detalle por persona (para modal)
 const SEG_DETALLE = []; // ← datos cargados desde API
 
 const SEG_DATA=[
@@ -6210,7 +6160,7 @@ const SEG_IDX_CONTRATISTAS = 1;
 
 
 
-// ── Datos tabla resumen (empresa + área) ─────────────────────
+// Datos tabla resumen (empresa + área)
 
 function renderSeguridad(apiData) {
   // Update SEG_DATA from API — handle both flat and empresas[] formats
@@ -6287,10 +6237,6 @@ function renderSeguridad(apiData) {
       ? Math.round(validPcts.reduce((s,v)=>s+v,0)/validPcts.length)
       : null;
 
-    const globalBg = pGlobal===null ? '' :
-      pGlobal >= metaPct
-        ? 'background:rgba(21,128,61,.1)'
-        : 'background:rgba(220,38,38,.07)';
 
     return `<tr>
       <td style="font-weight:600;font-size:10px">${emp}</td>
@@ -6303,7 +6249,7 @@ function renderSeguridad(apiData) {
       <td class="mono" style="text-align:center">${reip.toLocaleString('es-PE')}</td>
       <td class="tdt">${reie}</td>
       <td style="text-align:center">${badge(pReinst)}</td>
-      <td style="text-align:center;font-weight:700;font-size:11px;${globalBg}">
+      <td style="text-align:center;font-weight:700;font-size:11px">
         ${badge(pGlobal)}
       </td>
 
@@ -6316,7 +6262,6 @@ function renderSeguridad(apiData) {
   const tpRe  = pct(totReE, totReP);
   const valids= [tpI,tpR,tpRe].filter(p=>p!==null);
   const tGlob = valids.length ? Math.round(valids.reduce((s,v)=>s+v,0)/valids.length) : null;
-  const tGBg  = tGlob===null?'':tGlob>=metaPct?'background:rgba(21,128,61,.15)':'background:rgba(220,38,38,.1)';
 
   // Actualizar card Seguridad principal
   const sv_card = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
@@ -6342,7 +6287,7 @@ function renderSeguridad(apiData) {
     if(elRI){elRI.textContent=pReinst+'%'; elRI.className=pReinst>=metaPct?'pG':'pR';}
   }
 
-  // ── Actualizar bloque 1: IDS (Herramientas de Gestión) ─────────
+  // Actualizar bloque 1: IDS (Herramientas de Gestión)
   sv('seg-ip',  totIP); sv('seg-ie',  totIE);
   sv('seg-rp',  totRP); sv('seg-re',  totRE);
   sv('seg-rip', totReP); sv('seg-rie', totReE);
@@ -6406,8 +6351,7 @@ function renderSeguridad(apiData) {
     <td class="mono" style="text-align:center">${totReP.toLocaleString('es-PE')}</td>
     <td class="tdt">${totReE}</td>
     <td style="text-align:center">${badge(tpRe)}</td>
-    <td style="text-align:center;font-weight:700;font-size:11px;${tGBg}">${badge(tGlob)}</td>
-    <td></td>
+    <td style="text-align:center;font-weight:700;font-size:11px">${badge(tGlob)}</td>
   </tr>`;
 }
 
@@ -6416,7 +6360,7 @@ function renderSeguridad(apiData) {
 
 
 
-// ══ PLANTA BENEFICIO ═════════════════════════════════════════════
+// PLANTA BENEFICIO
 const APPSCRIPT_URL_PB = 'https://script.google.com/macros/s/AKfycbyQwr75RGlc2Mw5eiEjvNpH4ZAt4SU-ey8LfsC83D5TlUBc2EZDn5S39PqKOCsyRfBUrg/exec';
 
 async function fetchPB(params={}) {
@@ -6539,7 +6483,7 @@ function renderPBCard(d) {
   if (noteEl) noteEl.textContent = 'Datos: '+d.fecha+' · Acum. TMS mes: '+fmt(mo.ejecutado_acum_tms,1)+' · Cumpl: '+(mo.cumplimiento_pct>0?mo.cumplimiento_pct.toFixed(1)+'%':'—');
 }
 
-// ── Modal ──────────────────────────────────────────────────────────
+// Modal
 function openPB() {
   document.getElementById('pb-modal').classList.add('open');
   if (_pbData) renderPBModal(_pbData);
@@ -6699,7 +6643,7 @@ function renderPBHistorico() {
 
 
 
-// ══ DATOS RACS CIA (hoja RACS_CIA de SEGURIDAD_SOTRAMI) ══════════
+// DATOS RACS CIA (hoja RACS_CIA de SEGURIDAD_SOTRAMI)
 // Formato: [nro, fecha, hora, area, nivel, tipo_ubicacion, tipo_reporte,
 //           descripcion, accion, estado, fecha_acordada, trabajador_resp, area_resp]
 const RACS_CIA = []; // ← datos cargados desde API
@@ -6737,15 +6681,9 @@ function renderRACSTable() {
   }).join('');
 }
 
-function initRACSSel() {
-  const sel = document.getElementById('racs-f-area');
-  if(!sel||sel.options.length>1) return;
-  const areas=[...new Set(RACS_CIA.map(r=>r[3]))].sort();
-  areas.forEach(a=>{const o=document.createElement('option');o.value=a;o.textContent=a;sel.appendChild(o);});
-}
 
 
-// ══ AVANCES MODAL ════════════════════════════════════════════════
+// AVANCES MODAL
 
 function openAv() {
   document.getElementById('av-modal').classList.add('open');
@@ -6820,7 +6758,7 @@ function buildAvCharts() {
   const NV='#003366', GD='#D4AF37', G='#15803D', R='#DC2626', Y='#D97706';
   const EJEC_COLS = [NV+'CC','#0E7490CC','#15803DCC','#D97706CC','#7C3AEDCC'];
 
-  // ── Chart 1: Ejec. Día por Ejecutor (horizontal bar) ─────────
+  // Chart 1: Ejec. Día por Ejecutor (horizontal bar)
   const byEjec = {};
   rows.forEach(r => {
     if(!byEjec[r.ejecutor]) byEjec[r.ejecutor]={ejec:0,prog:0};
@@ -6849,7 +6787,7 @@ function buildAvCharts() {
       }}
   });
 
-  // ── Chart 2: Ejec. Día por Tipo (donut) ──────────────────────
+  // Chart 2: Ejec. Día por Tipo (donut)
   const byTipo = {};
   rows.forEach(r => {
     if(!byTipo[r.tipo]) byTipo[r.tipo]=0;
@@ -6871,7 +6809,7 @@ function buildAvCharts() {
       }}
   });
 
-  // ── Chart 3: Zona — Ejec vs Prog barras agrupadas ────────────
+  // Chart 3: Zona — Ejec vs Prog barras agrupadas
   const byZona = {};
   rows.forEach(r => {
     const k = r.zona+'|'+r.tipo;
@@ -6981,7 +6919,7 @@ function buildAvAcumChart() {
 }
 
 
-// ══ AVANCES — DETALLE POR PERÍODO ════════════════════════════════
+// AVANCES — DETALLE POR PERÍODO
 let _avPerData = null; // cache: {dias, resumen}
 
 async function loadAvPeriodo() {
@@ -7010,7 +6948,7 @@ async function loadAvPeriodo() {
   const dias = data.dias || [];
   const lastDay = dias[dias.length-1] || {};
 
-  // ── KPI header ─────────────────────────────────────────────────
+  // KPI header
   // Prog.Mes: first non-zero value from period (fixed monthly target)
   // Prog.Mes: take from resumen (last day's value = fixed monthly target)
   // Also try any non-zero value in dias
@@ -7043,7 +6981,7 @@ async function loadAvPeriodo() {
 
   sv('av-per-dias', dias.length+' días');
 
-  // ── Populate zona filter ────────────────────────────────────────
+  // Populate zona filter
   const sel = document.getElementById('av-per-zona');
   if(sel) {
     sel.innerHTML = '<option value="">Todas</option>';
@@ -7139,7 +7077,7 @@ function buildAvPerCharts(dias, resumen) {
     }
   };
 
-  // ── Chart 1: Diario — barras ejec + línea prog promedio ──────
+  // Chart 1: Diario — barras ejec + línea prog promedio
   if(window._chartAvPerDiario) window._chartAvPerDiario.destroy();
   const ctx1 = document.getElementById('chartAvPerDiario');
   if(ctx1) window._chartAvPerDiario = new Chart(ctx1, {
@@ -7155,7 +7093,7 @@ function buildAvPerCharts(dias, resumen) {
     options:{...commonOpts}
   });
 
-  // ── Chart 2: Acumulado — lineas prog vs real ──────────────────
+  // Chart 2: Acumulado — lineas prog vs real
   if(window._chartAvPerAcum) window._chartAvPerAcum.destroy();
   const ctx2 = document.getElementById('chartAvPerAcum');
   if(ctx2) {
@@ -7178,7 +7116,7 @@ function buildAvPerCharts(dias, resumen) {
     });
   }
 
-  // ── Chart 3: Proyección — barras prog_mes vs proyección ───────
+  // Chart 3: Proyección — barras prog_mes vs proyección
   if(window._chartAvPerProyeccion) window._chartAvPerProyeccion.destroy();
   const ctx3 = document.getElementById('chartAvPerProyeccion');
   if(ctx3) {
@@ -7209,7 +7147,7 @@ function buildAvPerCharts(dias, resumen) {
 
 
 
-// ══ RENDER ALMACEN (card table) ═════════════════════════════════
+// RENDER ALMACEN (card table)
 function renderAlmacen(rows) {
   const tbody = document.getElementById('tb-alm');
   if (!tbody) return;
@@ -7226,7 +7164,7 @@ function renderAlmacen(rows) {
     return est.includes('critico') || (parseFloat(e.min||0)>0 && parseFloat(e.act||0)<=parseFloat(e.min||0));
   });
   if (!criticos.length) {
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--t3);padding:10px">Sin materiales críticos hoy 🟢</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--t3);padding:10px">Sin materiales críticos hoy</td></tr>';
     return;
   }
   const fmtN = n => n > 0 ? n.toLocaleString('es-PE', {minimumFractionDigits:1, maximumFractionDigits:1}) : '—';
@@ -7238,12 +7176,12 @@ function renderAlmacen(rows) {
       '<td class="mono" style="text-align:center;font-size:9px">' + (e.um||'—') + '</td>' +
       '<td class="mono" style="text-align:center">' + fmtN(act) + '</td>' +
       '<td class="mono" style="text-align:center">' + fmtN(min) + '</td>' +
-      '<td style="text-align:center"><span class="eCrit">🔴 Crítico</span></td>' +
+      '<td style="text-align:center"><span class="eCrit"><i class=dot-r></i>Crítico</span></td>' +
       '</tr>';
   }).join('');
 }
 
-// ══ CARGAR ALMACEN ══════════════════════════════════════════════
+// CARGAR ALMACEN
 async function cargarAlmacenDesdeAPI(fecha) {
   if (!APPSCRIPT_URL_ALM) { renderAlmacen(null); return; }
   try {
@@ -7287,7 +7225,7 @@ async function cargarAlmacenDesdeAPI(fecha) {
   } catch(e) { console.warn('[ALM API]', e.message); renderAlmacen(null); }
 }
 
-// ══ RENDER MANTENIMIENTO ════════════════════════════════════════
+// RENDER MANTENIMIENTO
 function renderMantenimiento(data) {
   const tbody = document.getElementById('tb-mant-body') || document.getElementById('tb-mant');
   if (!tbody) return;
@@ -7343,7 +7281,7 @@ function renderMantDetalle(data) {
   }).join('');
 }
 
-// ══ CARGAR MANTENIMIENTO ════════════════════════════════════════
+// CARGAR MANTENIMIENTO
 async function cargarMantDesdeAPI(fecha) {
   if (!APPSCRIPT_URL_MANT) return;
   try {
@@ -7370,7 +7308,7 @@ async function cargarMantDesdeAPI(fecha) {
   } catch(e) { console.warn('[MANT API]', e.message); }
 }
 
-// ══ CARGAR SEGURIDAD ════════════════════════════════════════════
+// CARGAR SEGURIDAD
 async function cargarSegDesdeAPI(fecha) {
   // SEG usa mes calendario según la fecha seleccionada
   if (!fecha) { const sel = document.getElementById('hdr-fecha-sel'); if (sel) fecha = sel.value; }
@@ -7378,6 +7316,7 @@ async function cargarSegDesdeAPI(fecha) {
   const _mes  = MESES_ES[d.getMonth() + 1].toUpperCase();
   const _anio = String(d.getFullYear());
   const qMes  = '?accion=resumen&mes='+_mes+'&anio='+_anio;
+  { const el = document.getElementById('seg-act-fecha'); if (el && _mes) el.textContent = _mes.charAt(0) + _mes.slice(1,3).toLowerCase() + ' ' + _anio; }
   console.log('[SEG] Fetching mes='+_mes+' anio='+_anio);
   console.log('[SEG] URLs: CIA='+!!APPSCRIPT_URL_SEG+' COP='+!!APPSCRIPT_URL_SEG_COP+' TKL='+!!APPSCRIPT_URL_SEG_SIV_TKL+' CV='+!!APPSCRIPT_URL_SEG_SIV_CV);
   // Fetch all 5 in parallel
@@ -7427,7 +7366,7 @@ async function cargarSegDesdeAPI(fecha) {
   console.log('[SEG] CV:',  JSON.stringify(dataCV).substring(0,100));
 }
 
-// ══ CARGAR RRHH ═════════════════════════════════════════════════
+// CARGAR RRHH
 async function cargarRRHH(fecha) {
   const sv = (id,v) => { const el=document.getElementById(id); if(el&&v!=null) el.textContent=v; };
   const fmt = n => n > 0 ? n.toLocaleString('es-PE') : '—';
@@ -7497,7 +7436,7 @@ async function cargarRRHH(fecha) {
   // Helper to extract totals from each response
   const getTot = (d, field) => d?.totales?.[field] || d?.[field] || 0;
 
-  // ── Llenado uniforme por empresa: Prog → Ejec (HC) → Déficit → % ──
+  // Llenado uniforme por empresa: Prog → Ejec (HC) → Déficit → %
   const pctCls = p => p >= 100 ? 'pG' : p >= 85 ? 'pY' : 'pR';
   function fillRRHH(pfx, d) {
     if (!d) return null;
@@ -7567,12 +7506,12 @@ async function cargarRRHH(fecha) {
   console.log('[RRHH] Total HC:', totHC, '| fecha', fBase);
 }
 
-// ══ ALM MODAL ══════════════════════════════════════════════════
+// ALM MODAL
 function openAlm(){document.getElementById("alm-modal").classList.add("open");if(window._almRows?.length>0){renderAlmDet();}else{const tb=document.getElementById("tb-alm-det");if(tb)tb.innerHTML="<tr><td colspan=\"9\" style=\"text-align:center;padding:14px;color:var(--t3)\">Cargando...</td></tr>";cargarAlmacenDesdeAPI("").then(()=>renderAlmDet());}}
 function closeAlm(){document.getElementById("alm-modal")?.classList.remove("open");}
-function renderAlmDet(){const src=window._almRows||[];const tbody=document.getElementById("tb-alm-det");if(!tbody)return;if(!src.length){tbody.innerHTML="<tr><td colspan=\"9\" style=\"text-align:center;color:var(--t3);padding:12px\">Sin datos</td></tr>";return;}const sv=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};const cnt=t=>src.filter(e=>(e.estado_calc||"").toLowerCase().includes(t)||(e.estado_hoja||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").includes(t)).length;sv("alm-cnt-crit",cnt("critico"));sv("alm-cnt-prec",cnt("precaucion"));sv("alm-cnt-adeq",cnt("adecuado"));sv("alm-cnt-exc",cnt("excedente"));const estOrd=e=>{const s=String(e.estado_hoja||e.estado_calc||e.estado||"").toLowerCase().replace(/[^a-z]/g,"");return s.includes("critico")?0:s.includes("precaucion")?1:2;};const sorted=[...src].sort((a,b)=>estOrd(a)-estOrd(b));const fmtN2=n=>n>0?n.toLocaleString("es-PE",{minimumFractionDigits:1,maximumFractionDigits:1}):"—";tbody.innerHTML=sorted.map(e=>{const eN=String(e.estado_hoja||e.estado_calc||e.estado||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9 ]/g,"").trim();const iC=eN.includes("critico"),iP=eN.includes("precaucion");const bg=iC?"<span class=\"eCrit\">🔴 Crítico</span>":iP?"<span style=\"background:var(--Ybg);color:var(--Y);border:1px solid var(--Ybd);padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700\">🟡 Precaución</span>":"<span class=\"eoper\">🟢 Adecuado</span>";const d=e.diferencia||0;return "<tr><td style=\"font-size:9px;color:var(--t3)\">"+(e.anio||"—")+"</td><td style=\"font-size:9px;color:var(--t3)\">"+(e.periodo||"—")+"</td><td style=\"font-size:9px;color:var(--t3)\">"+(e.tipo||"—")+"</td><td style=\"font-weight:600;font-size:10px\">"+(e.mat||"—")+"</td><td class=\"mono\" style=\"text-align:center;font-size:9px\">"+(e.um||"—")+"</td><td class=\"mono\" style=\"text-align:center\">"+fmtN2(e.act)+"</td><td class=\"mono\" style=\"text-align:center\">"+fmtN2(e.min)+"</td><td class=\"mono\" style=\"text-align:center;color:"+(d<0?"#DC2626":"#15803D")+";font-weight:600\">"+(d<0?d.toFixed(1):"+"+d.toFixed(1))+"</td><td style=\"text-align:center\">"+bg+"</td></tr>";}).join("");}
+function renderAlmDet(){const src=window._almRows||[];const tbody=document.getElementById("tb-alm-det");if(!tbody)return;if(!src.length){tbody.innerHTML="<tr><td colspan=\"9\" style=\"text-align:center;color:var(--t3);padding:12px\">Sin datos</td></tr>";return;}const sv=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};const cnt=t=>src.filter(e=>(e.estado_calc||"").toLowerCase().includes(t)||(e.estado_hoja||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").includes(t)).length;sv("alm-cnt-crit",cnt("critico"));sv("alm-cnt-prec",cnt("precaucion"));sv("alm-cnt-adeq",cnt("adecuado"));sv("alm-cnt-exc",cnt("excedente"));const estOrd=e=>{const s=String(e.estado_hoja||e.estado_calc||e.estado||"").toLowerCase().replace(/[^a-z]/g,"");return s.includes("critico")?0:s.includes("precaucion")?1:2;};const sorted=[...src].sort((a,b)=>estOrd(a)-estOrd(b));const fmtN2=n=>n>0?n.toLocaleString("es-PE",{minimumFractionDigits:1,maximumFractionDigits:1}):"—";tbody.innerHTML=sorted.map(e=>{const eN=String(e.estado_hoja||e.estado_calc||e.estado||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9 ]/g,"").trim();const iC=eN.includes("critico"),iP=eN.includes("precaucion");const bg=iC?"<span class=\"eCrit\"><i class=dot-r></i>Crítico</span>":iP?"<span style=\"background:var(--Ybg);color:var(--Y);border:1px solid var(--Ybd);padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700\"><i class=dot-y></i>Precaución</span>":"<span class=\"eoper\"><i class=dot-g></i>Adecuado</span>";const d=e.diferencia||0;return "<tr><td style=\"font-size:9px;color:var(--t3)\">"+(e.anio||"—")+"</td><td style=\"font-size:9px;color:var(--t3)\">"+(e.periodo||"—")+"</td><td style=\"font-size:9px;color:var(--t3)\">"+(e.tipo||"—")+"</td><td style=\"font-weight:600;font-size:10px\">"+(e.mat||"—")+"</td><td class=\"mono\" style=\"text-align:center;font-size:9px\">"+(e.um||"—")+"</td><td class=\"mono\" style=\"text-align:center\">"+fmtN2(e.act)+"</td><td class=\"mono\" style=\"text-align:center\">"+fmtN2(e.min)+"</td><td class=\"mono\" style=\"text-align:center;color:"+(d<0?"#DC2626":"#15803D")+";font-weight:600\">"+(d<0?d.toFixed(1):"+"+d.toFixed(1))+"</td><td style=\"text-align:center\">"+bg+"</td></tr>";}).join("");}
 
-// ══ RB TUMI ════════════════════════════════════════════════════
+// RB TUMI
 async function cargarRB_Tumi(fecha){if(!APPSCRIPT_URL_TUMI)return;try{const qs=fecha?"?accion=rb&fecha="+encodeURIComponent(fecha):"?accion=rb";let d=await fetch(APPSCRIPT_URL_TUMI+qs).then(r=>r.json()).catch(()=>null);if(d?.ok&&(!d.zonas?.length||!d.zonas.some(z=>z.ejec_dia>0||z.ejec_acum>0))&&fecha)d=await fetch(APPSCRIPT_URL_TUMI+"?accion=rb").then(r=>r.json()).catch(()=>null)||d;if(!d?.ok)return;marcarEstado("rb",d.fecha,(d.zonas||[]).some(z=>(+z.ejec_dia||0)>0));const sv=(id,v)=>{const el=document.getElementById(id);if(el&&v!=null)el.textContent=v;};const f1=n=>n>0?n.toFixed(2):"—";const pC=(e,p)=>!p?"pN":e/p>=1?"pG":e/p>=0.85?"pY":"pR";    sv("rb-act-fecha",d.fecha||"—");const zSel=document.getElementById("rb-f-zona");if(zSel&&d.zonas?.length){const cur=zSel.value;zSel.innerHTML='<option value="">Todas</option>';d.zonas.forEach(z=>{const o=document.createElement("option");o.value=z.zona;o.textContent=z.zona||"—";zSel.appendChild(o);});if(cur)zSel.value=cur;}const tb=document.getElementById("tb-rb");if(tb&&d.zonas?.length){tb.innerHTML=d.zonas.map(z=>{const pD=z.prog_dia>0?(z.ejec_dia/z.prog_dia*100):null,pM=z.prog_mes>0?(z.ejec_acum/z.prog_mes*100):null,pP=z.prog_proy>0?(z.ejec_acum_proy/z.prog_proy*100):null,df=z.prog_proy-z.ejec_acum_proy;return "<tr><td>"+(z.zona||"—")+"</td><td>"+(z.proyecto||"—")+"</td><td style=\"font-size:9px;color:var(--t3)\">"+(z.tipo||"—")+"</td><td class=\"mono\" style=\"text-align:center\">"+f1(z.prog_dia)+"</td><td class=\"mono\" style=\"text-align:center\">"+f1(z.ejec_dia)+"</td><td style=\"text-align:center\"><span class=\""+pC(z.ejec_dia,z.prog_dia)+"\">"+(pD!=null?pD.toFixed(1)+"%":"—")+"</span></td><td class=\"mono\" style=\"text-align:center\">"+f1(z.prog_mes)+"</td><td class=\"mono\" style=\"text-align:center;font-weight:600;color:var(--gd)\">"+f1(z.ejec_acum)+"</td><td style=\"text-align:center\"><span class=\""+pC(z.ejec_acum,z.prog_mes)+"\">"+(pM!=null?pM.toFixed(1)+"%":"—")+"</span></td><td class=\"mono\" style=\"text-align:center\">"+f1(z.prog_proy)+"</td><td class=\"mono\" style=\"text-align:center;font-weight:600;color:var(--nv)\">"+f1(z.ejec_acum_proy)+"</td><td class=\"mono\" style=\"text-align:center;color:"+(df<0?"#15803D":"#DC2626")+"\">"+(df>=0?"+":"")+f1(df)+"</td><td style=\"text-align:center\"><span class=\""+pC(z.ejec_acum_proy,z.prog_proy)+"\">"+(pP!=null?pP.toFixed(1)+"%":"—")+"</span></td></tr>";}).join("");}const z0=d.zonas?.find(z=>z.ejec_dia>0||z.ejec_acum>0)||d.zonas?.[0]||{};sv("rb-ejec-dia",f1(z0.ejec_dia));sv("rb-prog-dia",f1(z0.prog_dia));sv("rb-ejec-acum",f1(z0.ejec_acum));sv("rb-prog-mes",f1(z0.prog_mes));sv("rb-ejec-proy",f1(z0.ejec_acum_proy));sv("rb-prog-proy",f1(z0.prog_proy));const p0=z0.prog_dia>0?(z0.ejec_dia/z0.prog_dia*100):null,pm0=z0.prog_mes>0?(z0.ejec_acum/z0.prog_mes*100):null,pp0=z0.prog_proy>0?(z0.ejec_acum_proy/z0.prog_proy*100):null;sv("rb-pct-dia",p0!=null?p0.toFixed(1)+"%":"—");sv("rb-pct-mes",pm0!=null?pm0.toFixed(1)+"%":"—");sv("rb-pct-proy",pp0!=null?pp0.toFixed(1)+"%":"—");const badge=document.getElementById("rb-pct-badge");if(badge&&pm0!=null){badge.textContent=(pm0>=100?"▲":pm0>=85?"●":"▼")+" "+pm0.toFixed(1)+"%";badge.className="kbdg "+(pm0>=100?"kG":pm0>=85?"kA":"kR");}console.log("[TUMI RB] OK");}catch(e){console.warn("[TUMI RB]",e.message);}}
 function openRB(){document.getElementById("rb-modal").classList.add("open");requestAnimationFrame(()=>requestAnimationFrame(()=>whenChartReady(()=>loadRBModal())));}
 function closeRB(){document.getElementById("rb-modal")?.classList.remove("open");}
@@ -7582,7 +7521,7 @@ function buildRBCharts(){const d=window._rbPeriodo;if(!d?.dias?.length)return;co
 function renderRBKpis(){const d=window._rbPeriodo;if(!d)return;const r=d.resumen||{};const sv=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};const f1=n=>n>0?n.toFixed(2)+"m":"—",fP=n=>n!=null?n.toFixed(1)+"%":"—";sv("rb-kh-prog-mes",f1(r.prog_mes));sv("rb-kh-prom-dia",r.prom_dia>0?r.prom_dia.toFixed(2)+"m":"—");sv("rb-kh-ejec-acum",f1(r.acum_real));sv("rb-kh-prog-proy",f1(r.prog_proy));const pm=r.prog_mes>0?(r.acum_real/r.prog_mes*100):null,pp=r.prog_proy>0?(r.ejec_acum_proy/r.prog_proy*100):null;const pmEl=document.getElementById("rb-kh-pct-mes");if(pmEl){pmEl.textContent=fP(pm);pmEl.style.color=pm>=100?"#15803D":pm>=85?"#D97706":"#DC2626";}const ppEl=document.getElementById("rb-kh-pct-proy");if(ppEl){ppEl.textContent=fP(pp);ppEl.style.color=pp>=100?"#15803D":pp>=85?"#D97706":"#DC2626";}}
 function renderRBDetalle(){const d=window._rbPeriodo;if(!d?.dias?.length){const tb=document.getElementById("tb-rb-det");if(tb)tb.innerHTML="<tr><td colspan=\"11\" style=\"text-align:center;padding:14px;color:var(--t3)\">Sin datos</td></tr>";return;}const f1=n=>n>0?n.toFixed(2):"—",pC=(e,p)=>!p?"pN":e/p>=1?"pG":e/p>=0.85?"pY":"pR",fP=(e,p)=>p>0?(e/p*100).toFixed(1)+"%":"—";const tbody=document.getElementById("tb-rb-det");if(!tbody)return;tbody.innerHTML=d.dias.map(d2=>"<tr><td style=\"font-size:10px\">"+d2.fecha+"</td><td style=\"font-size:9px\">"+(d2.turnos||"—")+" turnos</td><td style=\"font-size:9px;color:var(--t3)\">"+(d2.tipo||"RB")+"</td><td class=\"mono\">"+f1(d2.prog_dia)+"</td><td class=\"mono\">"+f1(d2.ejec_dia)+"</td><td><span class=\""+pC(d2.ejec_dia,d2.prog_dia)+"\">"+fP(d2.ejec_dia,d2.prog_dia)+"</span></td><td class=\"mono\">"+f1(d2.prog_acum)+"</td><td class=\"mono\" style=\"font-weight:600;color:var(--gd)\">"+f1(d2.ejec_acum)+"</td><td><span class=\""+pC(d2.ejec_acum,d2.prog_mes)+"\">"+fP(d2.ejec_acum,d2.prog_mes)+"</span></td><td class=\"mono\" style=\"color:var(--nv)\">"+f1(d2.ejec_acum_proy)+"</td><td><span class=\""+pC(d2.ejec_acum_proy,d2.prog_proy)+"\">"+fP(d2.ejec_acum_proy,d2.prog_proy)+"</span></td></tr>").join("");const cnt=document.getElementById("rb-det-cnt");if(cnt)cnt.textContent=d.dias.length+" días";}
 
-// ══ RRHH MODAL ══════════════════════════════════════════════════
+// RRHH MODAL
 function openRRHH(){document.getElementById("rrhh-modal").classList.add("open");requestAnimationFrame(()=>requestAnimationFrame(()=>whenChartReady(()=>buildRRHHModal())));}
 function closeRRHH(){document.getElementById("rrhh-modal")?.classList.remove("open");}
 function rrhhTab(id,btn){document.querySelectorAll("#rrhh-modal .mtab").forEach(t=>t.classList.remove("on"));document.querySelectorAll("#rrhh-modal .mpanel").forEach(p=>p.classList.remove("on"));btn.classList.add("on");document.getElementById("rrhh-panel-"+id)?.classList.add("on");requestAnimationFrame(()=>requestAnimationFrame(()=>whenChartReady(()=>{if(id==="indicadores")buildRRHHCharts();if(id==="ausentismo")buildAusentismoCharts();if(id==="rotacion")buildRotacionCharts();})));}
@@ -7592,12 +7531,12 @@ function buildRRHHCharts(){const data=getRRHHEmpresaData();if(!data.length)retur
 function buildAusentismoCharts(){const data=getRRHHEmpresaData();const sv=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};const R="#DC2626",Y="#D97706",T="#0E7490";const tH=data.reduce((s,e)=>s+e.hc,0),tF=data.reduce((s,e)=>s+e.dm,0);sv("rrhh-m-fal",tF||"—");sv("rrhh-m-dm",tF||"—");sv("rrhh-m-iaus",tH>0?(tF/tH*100).toFixed(1)+"%":"—");if(window._chartAusComp)window._chartAusComp.destroy();const c1=document.getElementById("chartAusentismoComp");if(c1)window._chartAusComp=new Chart(c1,{type:"bar",data:{labels:data.map(e=>e.nombre),datasets:[{label:"DM/Sub.",data:data.map(e=>e.dm),backgroundColor:T+"CC",borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{font:{size:9},usePointStyle:true}}},scales:{x:{grid:{display:false},border:{display:false},ticks:{font:{size:9}}},y:{grid:{color:"rgba(0,0,0,0.05)"},border:{display:false},ticks:{font:{size:9}}}}}});if(window._chartAusEmp)window._chartAusEmp.destroy();const c2=document.getElementById("chartAusentismoEmp");if(c2){const aE=data.map(e=>e.hc>0?parseFloat((e.dm/e.hc*100).toFixed(1)):0);window._chartAusEmp=new Chart(c2,{type:"bar",data:{labels:data.map(e=>e.nombre),datasets:[{label:"% Ausentismo",data:aE,backgroundColor:aE.map(v=>v>10?R+"CC":v>5?Y+"CC":T+"CC"),borderRadius:3}]},options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:"rgba(0,0,0,0.05)"},border:{display:false},ticks:{font:{size:9},callback:v=>v+"%"}},y:{grid:{display:false},border:{display:false},ticks:{font:{size:9}}}}}});}}
 function buildRotacionCharts(){const data=getRRHHEmpresaData();const sv=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};const G="#15803D",R="#DC2626",Y="#D97706";const tH=data.reduce((s,e)=>s+e.hc,0),tI=data.reduce((s,e)=>s+e.ing,0),tS=data.reduce((s,e)=>s+e.sal,0);sv("rrhh-m-rot-ing",tI||"—");sv("rrhh-m-rot-sal",tS||"—");sv("rrhh-m-irot",tH>0?(((tI+tS)/2)/tH*100).toFixed(1)+"%":"—");if(window._chartRotEmp)window._chartRotEmp.destroy();const c1=document.getElementById("chartRotacionEmp");if(c1)window._chartRotEmp=new Chart(c1,{type:"bar",data:{labels:data.map(e=>e.nombre),datasets:[{label:"Ingresos",data:data.map(e=>e.ing),backgroundColor:G+"CC",borderRadius:2},{label:"Salidas",data:data.map(e=>e.sal),backgroundColor:R+"CC",borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{font:{size:9},usePointStyle:true}}},scales:{x:{grid:{display:false},border:{display:false},ticks:{font:{size:9}}},y:{grid:{color:"rgba(0,0,0,0.05)"},border:{display:false},ticks:{font:{size:9},stepSize:1}}}}});if(window._chartRotDet)window._chartRotDet.destroy();const c2=document.getElementById("chartRotacionDetalle");if(c2){const rP=data.map(e=>e.hc>0?parseFloat((((e.ing+e.sal)/2)/e.hc*100).toFixed(1)):0);window._chartRotDet=new Chart(c2,{type:"bar",data:{labels:data.map(e=>e.nombre),datasets:[{label:"% Rotación",data:rP,backgroundColor:rP.map(v=>v>5?R+"CC":v>2?Y+"CC":G+"CC"),borderRadius:3}]},options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:"rgba(0,0,0,0.05)"},border:{display:false},ticks:{font:{size:9},callback:v=>v+"%"}},y:{grid:{display:false},border:{display:false},ticks:{font:{size:9}}}}}});}}
 
-// ══ DDH PERIODO ═════════════════════════════════════════════════
+// DDH PERIODO
 async function cargarDDHPeriodoData(){if(!APPSCRIPT_URL_GEO)return;try{const p2={"2026-05":{ini:"30/04/2026"},"2026-06":{ini:"21/05/2026"},"2026-07":{ini:"26/06/2026"}};const n2=new Date();const pk=n2.getFullYear()+"-"+(n2.getMonth()+1+"").padStart(2,"0");const desde=p2[pk]?.ini||"01/"+(n2.getMonth()+1+"").padStart(2,"0")+"/"+n2.getFullYear();const rd=await fetchAppScriptGeo({accion:"rango",desde,hasta:""});if(rd?.ok&&rd.registros?.length){window._ddhAllData=rd.registros.map(r=>[r.fecha,r.turno,r.tipo,r.equipo,r.prog_mes||0,r.ejec_dia||0,r.acum_mes||0,r.meta_anual||0,r.total_acum_anual||0,r.pct_cumpl_mes||0,r.pct_cumpl_anual||0,r.obs||""]);console.log("[DDH Período]",window._ddhAllData.length,"registros");renderDDHDet();}}catch(e){console.warn("[DDH Período]",e.message);}}
 
 
 
-// ══ FETCH HELPERS ═══════════════════════════════════════════════
+// FETCH HELPERS
 function _mkFetch(url) {
   return async function(params = {}) {
     if (!url) return null;
@@ -7622,15 +7561,8 @@ function _mkFetch(url) {
 
 // Each section's fetch helper uses its URL constant
 async function fetchAppScriptGeo(params)    { return _mkFetch(APPSCRIPT_URL_GEO)(params); }
-async function fetchAppScriptSeg(params)    { return _mkFetch(APPSCRIPT_URL_SEG)(params); }
-async function fetchAppScriptMant(params)   { return _mkFetch(APPSCRIPT_URL_MANT)(params); }
-async function fetchAppScriptAlm(params)    { return _mkFetch(APPSCRIPT_URL_ALM)(params); }
-async function fetchAppScriptIzaje(params)  { return _mkFetch(APPSCRIPT_URL_IZ)(params); }
 async function fetchAppScriptVQ(params)     { return _mkFetch(APPSCRIPT_URL_VQ)(params); }
-async function fetchAppScriptCop(params)    { return _mkFetch(APPSCRIPT_URL_COP)(params); }
 async function fetchAppScriptCopAv(params)  { return _mkFetch(APPSCRIPT_URL_AV_COP)(params); }
-async function fetchAppScriptTumi(params)   { return _mkFetch(APPSCRIPT_URL_TUMI)(params); }
-async function fetchTUMI(params)            { return _mkFetch(APPSCRIPT_URL_TUMI)(params); }
 
 
 
@@ -7701,7 +7633,7 @@ async function cargarRehab(fecha) {
   } catch(e) { console.warn('[REHAB]', e.message); }
 }
 
-// ── REHAB MODAL ─────────────────────────────────────────────────
+// REHAB MODAL
 function openRehab() {
   document.getElementById("rehab-modal").classList.add("open");
   requestAnimationFrame(() => requestAnimationFrame(() => whenChartReady(() => buildRehabModal())));
@@ -7793,7 +7725,7 @@ function renderRehabDetalle() {
   if (cnt) cnt.textContent = filas.length + " labores";
 }
 
-// ── Debug: Probar TUMI API desde consola del navegador ───────────
+// Debug: Probar TUMI API desde consola del navegador
 async function probarTUMI(accion) {
   const url = APPSCRIPT_URL_TUMI + '?accion=' + (accion||'rb');
   console.log('[TUMI TEST] Calling:', url);
@@ -7809,7 +7741,7 @@ async function probarTUMI(accion) {
 }
 // Usage from browser console: probarTUMI() or probarTUMI('periodo')
 
-// ══ FETCH GEO DDH ════════════════════════════════════════════════
+// FETCH GEO DDH
 async function cargarGeoDesdAPI(fecha) {
   const data = await fetchAppScriptGeo({ accion: 'dia', fecha });
   if (!data?.ok || !data.registros?.length) {
@@ -7825,7 +7757,7 @@ async function cargarGeoDesdAPI(fecha) {
   const registros = data.registros;
   marcarEstado('geo', data.fecha, registros.some(r => (+r.ejec_dia || +r.metros || +r.ejec || 0) > 0) || registros.length > 0);
   const actEl = document.getElementById('ddh-act-fecha');
-  if (actEl) actEl.textContent = data.fecha;
+  if (actEl) actEl.textContent = data.fecha || '—';
   const apiMap = {};
   registros.forEach(r => { apiMap[r.equipo] = r; });
   const knownOrder = ['DDH - LF 160','DDH - CS 140','DDH - PHC 06','DDH - U 232','DDH - PACKSACK Z23','DDH - PACKSACK SR'];
@@ -7875,7 +7807,7 @@ async function cargarGeoResumenMes() {
   console.log('[GEO] Resumen mes cargado:', data.equipos?.length, 'equipos');
 }
 
-// ══ LAB — ACTUALIZAR TABLA PRINCIPAL ════════════════════════════
+// LAB — ACTUALIZAR TABLA PRINCIPAL
 let _labFecha = '';
 async function actualizarTablaLab(fecha) {
   _labFecha = fecha || _labFecha;
@@ -7968,6 +7900,31 @@ function renderLabCard(data, fecha) {
   const z23 = mix(desdeAPI('resumen_z23','muestras_z23','ZONA 23'),    _labLocal(Z23R, fecha));
   const sr  = mix(desdeAPI('resumen_sr', 'muestras_sr', 'SANTA ROSA'), _labLocal(SRR,  fecha));
 
+  // Ley Au Día pendiente (resultados con 1 día de desfase): se muestra la ley del último
+  // día anterior con resultados, marcada con su fecha. Fuente: Laboratorio; si no, lotes de Planta.
+  const sinLeyHoy = ((z23.tmh_dia||0) + (sr.tmh_dia||0)) > 0 && !((z23.ley_au_dia||0) > 0 || (sr.ley_au_dia||0) > 0);
+  const _k = s => { const p = String(s||'').split('/'); return p.length === 3 ? p[2]+p[1].padStart(2,'0')+p[0].padStart(2,'0') : ''; };
+  const _kLim = (() => { const p = String(fecha).split('/'); const d = new Date(+p[2], +p[1]-1, +p[0] - 7);
+    return d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0'); })();
+  function leyUltimoDia(zona, filasLocal) {
+    const calc = filas => {               // filas: [fecha, tmh, ley]
+      const by = {};
+      filas.forEach(([fe, t, l]) => {
+        const k = _k(fe); if (!k || k >= _k(fecha) || k < _kLim || !(t > 0 && l > 0)) return;
+        (by[k] = by[k] || {fe, w:0, lw:0}); by[k].w += t; by[k].lw += t*l;
+      });
+      const ks = Object.keys(by).sort(); if (!ks.length) return null;
+      const u = by[ks[ks.length-1]]; return {ley: u.lw/u.w, fecha: u.fe, w: u.w};
+    };
+    return calc((data?._mes?.registros || []).filter(r => r.zona === zona).map(r => [r.fecha, +r.tmh, +r.ley_au]))
+        || calc(filasLocal.map(x => [x[0], +x[3], +x[6]]));
+  }
+  [[z23, 'ZONA 23', Z23R], [sr, 'SANTA ROSA', SRR]].forEach(([o, zona, loc]) => {
+    if ((o.ley_au_dia||0) > 0) return;
+    const u = leyUltimoDia(zona, loc);
+    if (u) { o.ley_au_dia = u.ley; o._w_dia = u.w; o._ley_fecha = u.fecha; }
+  });
+
   // Total ponderado
   const tmh = (z23.tmh_dia||0) + (sr.tmh_dia||0);
   const wd = (z23._w_dia||0) + (sr._w_dia||0), wm = (z23._w_mes||0) + (sr._w_mes||0);
@@ -7978,7 +7935,9 @@ function renderLabCard(data, fecha) {
     ley_au_pond: wm>0 ? ((z23.ley_au_pond||0)*(z23._w_mes||0) + (sr.ley_au_pond||0)*(sr._w_mes||0)) / wm : 0
   };
   if (pos(+data?._mes?.resumen_total?.ley_au_pond)) tot.ley_au_pond = +data._mes.resumen_total.ley_au_pond;
-  if (pos(+data?.resumen_total?.ley_au_pond))       tot.ley_au_dia  = +data.resumen_total.ley_au_pond;
+  if (pos(+data?.resumen_total?.ley_au_pond) && !z23._ley_fecha && !sr._ley_fecha) tot.ley_au_dia = +data.resumen_total.ley_au_pond;
+  { const fs = [...new Set([z23._ley_fecha, sr._ley_fecha].filter(Boolean))];
+    if (fs.length) tot._ley_fecha = fs.sort((a,b) => _k(a).localeCompare(_k(b)))[0]; }
 
   sv('lab-act-fecha', fecha || data?.fecha || '—');
   [['z23',z23],['sr',sr],['tot',tot]].forEach(([k,o]) => {
@@ -7987,7 +7946,14 @@ function renderLabCard(data, fecha) {
     sv('lab-'+k+'-h2o', f(o.h2o_prom,2));
     sv('lab-'+k+'-tms', f(o.tms_dia,2));
     const ed = document.getElementById('lab-'+k+'-au-dia');
-    if (ed) { ed.className = cls(o.ley_au_dia); ed.textContent = f(o.ley_au_dia,3); }
+    if (ed) {
+      ed.className = cls(o.ley_au_dia);
+      ed.textContent = f(o.ley_au_dia,3);
+      if (o._ley_fecha && pos(o.ley_au_dia)) {
+        const s = document.createElement('span'); s.className = 'lab-fd'; s.textContent = ' (' + o._ley_fecha.slice(0,5) + ')';
+        ed.appendChild(s); ed.title = 'Ley del ' + o._ley_fecha + ' (último día con resultados de laboratorio)';
+      } else ed.title = '';
+    }
     sv('lab-'+k+'-au-mes', f(o.ley_au_pond,3));
     const ec = document.getElementById('lab-'+k+'-clase');
     if (ec) { ec.className = cls(o.ley_au_pond); ec.textContent = lbl(o.ley_au_pond); }
@@ -8002,15 +7968,14 @@ function renderLabCard(data, fecha) {
   {
     const nM = (data?.muestras_z23||[]).length + (data?.muestras_sr||[]).length;
     const conTMH = ((z23.tmh_dia||0) + (sr.tmh_dia||0)) > 0;
-    const sinLey = conTMH && !((z23.ley_au_dia||0) > 0 || (sr.ley_au_dia||0) > 0);
+    const sinLey = sinLeyHoy;
     marcarEstado('lab', fecha, nM > 0 || conTMH, sinLey ? {warn:'sin ley aún'} : null);
   }
   console.log('[LAB] Tabla', fecha, data ? '(API Lab: '+((data.muestras_z23||[]).length+(data.muestras_sr||[]).length)+' muestras)' : '(sin API, datos Planta)', '| Z23 TMH', (z23.tmh_dia||0).toFixed(2), 'ley día', (z23.ley_au_dia||0).toFixed(3), 'mes', (z23.ley_au_pond||0).toFixed(3),
               '| SR TMH', (sr.tmh_dia||0).toFixed(2), 'ley día', (sr.ley_au_dia||0).toFixed(3), 'mes', (sr.ley_au_pond||0).toFixed(3));
 }
-function renderLabCardFromLocal(fecha) { renderLabCard(null, fecha); }
 
-// ══ FETCH IZ / SKIP ══════════════════════════════════════════════
+// FETCH IZ / SKIP
 async function fetchAppScriptIz(params={}) {
   return _mkFetch(APPSCRIPT_URL_IZ)(params);
 }
@@ -8083,22 +8048,6 @@ async function cargarSkipDesdAPI(fecha) {
   console.log('[SKIP] Cargado:', lastFecha, 'mineral:', totMin, 'desmonte:', totDes, '| SKIP_R:', SKIP_R.length);
 }
 
-async function cargarSkipResumenDesdeAPI() {
-  if (!APPSCRIPT_URL_IZ) return;
-  const data = await fetchAppScriptIz({ accion:'resumen_mes', usuario:'SOTRAMI' });
-  if (!data?.ok) return;
-  // Populate SKIP_R with monthly data
-  if (data.registros?.length) {
-    data.registros.forEach(r => {
-      const key = r.fecha+'|'+r.winche;
-      if (!SKIP_R.some(s=>s[0]===r.fecha&&s[1]===r.winche)) {
-        SKIP_R.push([r.fecha, r.winche, r.desmonte||0, r.mineral||0, r.total||0]);
-      }
-    });
-  }
-  updateSkipStats();
-  console.log('[SKIP] Resumen cargado:', SKIP_R.length, 'registros');
-}
 
 async function cargarVolqueteDesdAPI(fecha) {
   if (!APPSCRIPT_URL_VQ) return;
@@ -8111,8 +8060,6 @@ async function cargarVolqueteDesdAPI(fecha) {
   const regs = data.registros || [];
   const hasMat = regs.some(r=>r.material);
   const FV = FACTOR_VOLQ || 25;
-  const dbg = document.getElementById('vq-debug');
-  if (dbg) dbg.textContent = (hasMat?'mat':'total')+' regs='+regs.length;
 
   // Aggregate by pique & material (if available)
   const pp = {};
@@ -8192,18 +8139,8 @@ async function cargarVQResumenDesdeAPI() {
 }
 
 
-// ══ CARGAR AVANCES (SIV CV + SIV TL + COPSEM) ═══════════════════
+// CARGAR AVANCES (SIV CV + SIV TL + COPSEM)
 // Debug: test SIV TL API from browser console
-async function probarSIVTL(fecha) {
-  const url = APPSCRIPT_URL_SIV_TL + '?accion=avances' + (fecha?'&fecha='+fecha:'');
-  console.log('[SIV TL test] URL:', url);
-  try {
-    const r = await fetch(url);
-    const t = await r.text();
-    console.log('[SIV TL test] Status:', r.status, '| Response:', t.substring(0,300));
-    return JSON.parse(t);
-  } catch(e) { console.error('[SIV TL test] Error:', e.message); }
-}
 
 async function cargarAvances(fecha) {
   // Debounce: skip if a call is already in flight
@@ -8218,7 +8155,7 @@ async function cargarAvances(fecha) {
 
   let dcv=null, dtl=null, dcop=null, dcia=null, dcor=null;
 
-  // ── SIV Convencional ──────────────────────────────────────────
+  // SIV Convencional
   if (APPSCRIPT_URL_SIV_CV) {
     dcv = await fetchAppScriptSivCV({ accion:'avances', fecha }).catch(()=>null);
   }
@@ -8242,7 +8179,7 @@ async function cargarAvances(fecha) {
     });
   }
 
-  // ── SIV Trackless ─────────────────────────────────────────────
+  // SIV Trackless
   if (APPSCRIPT_URL_SIV_TL) {
     try {
       const _qs = '?accion=avances' + (fecha ? '&fecha='+encodeURIComponent(fecha) : '');
@@ -8285,7 +8222,7 @@ async function cargarAvances(fecha) {
     console.log('[AVANCES TL] Cargado:', dtl.zonas.length, 'zonas');
   }
 
-  // ── Copsem Avances ────────────────────────────────────────────
+  // Copsem Avances
   if (APPSCRIPT_URL_AV_COP) {
     dcop = await fetchAppScriptCopAv({ accion:'avances', fecha }).catch(()=>null);
   }
@@ -8325,7 +8262,7 @@ async function cargarAvances(fecha) {
     console.log('[AVANCES COP] Conv:', cnvAll.length, 'zonas | Trackless:', tklZonas.length, 'zonas');
   }
 
-  // ── CIA Trackless (Sotrami) ─────────────────────────────────────
+  // CIA Trackless (Sotrami)
   if (APPSCRIPT_URL_CIA_TL) {
     dcia = await fetchAppScriptCiaTL({ accion:'dia', fecha }).catch(()=>null);
     if (dcia?.ok && dcia.zonas?.length) {
@@ -8351,7 +8288,7 @@ async function cargarAvances(fecha) {
     }
   }
 
-  // ── Corimayo (Chulbe) ────────────────────────────────────────
+  // Corimayo (Chulbe)
   if (APPSCRIPT_URL_CORIMAYO) {
     dcor = await fetchAppScriptCorimayo({ accion:'avances', fecha }).catch(()=>null);
   }
@@ -8379,7 +8316,7 @@ async function cargarAvances(fecha) {
     console.log('[AVANCES CORIMAYO] Cargado:', dcor.zonas.length, 'zonas, Ejec:', corEjec.toFixed(1));
   }
 
-    // ── TOTAL AVANCE ──────────────────────────────────────────────
+    // TOTAL AVANCE
   // Calculate totals directly from API data (not DOM — avoids async read issues)
   const fmtT = n => n>0 ? n.toFixed(1) : '—';
   const sumZ = (api, fld) => (api?.zonas||[]).reduce((s,z)=>s+(z[fld]||0),0);
@@ -8409,13 +8346,13 @@ async function cargarAvances(fecha) {
   // Update fecha
   const avFecha = dcv?.fecha || dtl?.fecha || dcop?.fecha;
   const avFechaEl = document.getElementById('av-act-fecha');
-  if(avFechaEl && avFecha) avFechaEl.textContent = 'Act. '+avFecha;
+  if(avFechaEl && avFecha) avFechaEl.textContent = avFecha;
 
   // Store for modal
   window._avData = { fecha: avFecha, resumen:{ ejec:totEjec, prog:totProg, acum:totAcum, pmes:totPmes },
     dcv, dtl, dcop };
 
-  // ── KPI Cards: Avance TL y CV ───────────────────────────────
+  // KPI Cards: Avance TL y CV
   const updKPI = (prefix, api) => {
     if (!api?.ok || !api.zonas?.length) return;
     const ejec = (api.zonas||[]).reduce((s,z)=>s+(z.ejec_dia||0),0);
@@ -8453,13 +8390,10 @@ async function cargarAvances(fecha) {
 
 // Fetch helpers for SIV
 async function fetchAppScriptSivCV(params={}) { return _mkFetch(APPSCRIPT_URL_SIV_CV)(params); }
-async function fetchAppScriptSivTL(params={}) { return _mkFetch(APPSCRIPT_URL_SIV_TL)(params); }
-async function fetchAppScriptSegSivTKL(params={}) { return _mkFetch(APPSCRIPT_URL_SEG_SIV_TKL)(params); }
-async function fetchAppScriptSegSivCV(params={}) { return _mkFetch(APPSCRIPT_URL_SEG_SIV_CV)(params); }
 async function fetchAppScriptCiaTL(params={}) { return _mkFetch(APPSCRIPT_URL_CIA_TL)(params); }
 async function fetchAppScriptCorimayo(params={}) { return _mkFetch(APPSCRIPT_URL_CORIMAYO)(params); }
 
-// ══ SEGURIDAD MODAL ══════════════════════════════════════════════
+// SEGURIDAD MODAL
 function openSeg() {
   document.getElementById('seg-modal').classList.add('open');
   requestAnimationFrame(() => requestAnimationFrame(() => {
@@ -8666,10 +8600,6 @@ function segTab(id, btn) {
   if(id==='racs')    renderRacsPanel();
 }
 
-async function fetchRRHHSiv(url, params={}) {
-  if (!url) return null;
-  return _mkFetch(url)({accion:'rrhh', ...params});
-}
 
 function openMant() {
   document.getElementById('mant-modal')?.classList.add('open');
@@ -8679,12 +8609,12 @@ function closeMant() {
   document.getElementById('mant-modal')?.classList.remove('open');
 }
 
-// ══ ESC ══
+// ESC
 document.addEventListener('keydown', e => {
   if(e.key==='Escape'){closeProd();closeLab();closeSkip();closeDDH();closeVQ();closeSeg();closeMant();closeAlm();closeAv();closeRB();closeRRHH();closeRehab();}
 });
 </script>
-<!-- ══ AVANCES MODAL ══════════════════════════════════════════════ -->
+<!-- AVANCES MODAL -->
 <div class="mwrap" id="av-modal" onclick="if(event.target===this)closeAv()">
   <div class="modal" style="max-width:1160px">
     <div class="mhead">
@@ -8693,8 +8623,8 @@ document.addEventListener('keydown', e => {
     </div>
     <div class="mtabs">
       <button class="mtab on" onclick="avTab('resumen',this)"> Resumen / Gr&#xE1;ficos</button>
-      <button class="mtab"    onclick="avTab('periodo',this)">&#128197; Detalle por Per&#xED;odo</button>
-      <button class="mtab"    onclick="avTab('detalle',this)">&#128196; Detalle por Ejecutor</button>
+      <button class="mtab"    onclick="avTab('periodo',this)">Detalle por Per&#xED;odo</button>
+      <button class="mtab"    onclick="avTab('detalle',this)">Detalle por Ejecutor</button>
       <button class="mtab"    onclick="avTab('acum',this)"> Acumulado Mes</button>
     </div>
     <div class="mpanel on" id="av-panel-resumen" style="overflow-y:auto;max-height:75vh">
@@ -8820,7 +8750,7 @@ document.addEventListener('keydown', e => {
 </div>
 
 
-<!-- ══ REHAB MODAL ═══════════════════════════════════════════ -->
+<!-- REHAB MODAL -->
 <div class="mwrap" id="rehab-modal" onclick="if(event.target===this)closeRehab()">
   <div class="modal" style="max-width:950px">
     <div class="mhead">
@@ -8829,7 +8759,7 @@ document.addEventListener('keydown', e => {
     </div>
     <div class="mtabs">
       <button class="mtab on" onclick="rehabTab('resumen',this)"> Resumen</button>
-      <button class="mtab"    onclick="rehabTab('detalle',this)">&#128196; Detalle por Labor</button>
+      <button class="mtab"    onclick="rehabTab('detalle',this)">Detalle por Labor</button>
     </div>
     <!-- TAB 1: Resumen KPIs -->
     <div class="mpanel on" id="rehab-panel-resumen" style="overflow-y:auto;max-height:75vh">
@@ -8869,7 +8799,7 @@ document.addEventListener('keydown', e => {
   </div>
 </div>
 
-<!-- ══ RAISE BORING TUMI MODAL ════════════════════════════════════ -->
+<!-- RAISE BORING TUMI MODAL -->
 <div class="mwrap" id="rb-modal" onclick="if(event.target===this)closeRB()">
   <div class="modal" style="max-width:1100px">
     <div class="mhead">
@@ -8879,7 +8809,7 @@ document.addEventListener('keydown', e => {
     <div class="mtabs">
       <button class="mtab on" onclick="rbTab('curvas',this)"> Curva S – Avance</button>
       <button class="mtab"    onclick="rbTab('kpis',this)"> KPIs del Período</button>
-      <button class="mtab"    onclick="rbTab('detalle',this)">&#128196; Detalle por Fecha</button>
+      <button class="mtab"    onclick="rbTab('detalle',this)">Detalle por Fecha</button>
     </div>
     <div class="mpanel on" id="rb-panel-curvas" style="overflow-y:auto;max-height:75vh">
       <div style="padding:10px 16px 6px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
@@ -8895,3 +8825,73 @@ document.addEventListener('keydown', e => {
         </div>
         <div style="background:var(--w);border-radius:8px;padding:10px;border:1px solid var(--bd)">
           <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:6px;text-align:center">Curva S – Acumulado (m)</div>
+          <div style="height:220px"><canvas id="chartRBCurvaS" style="display:block;width:100%;height:100%"></canvas></div>
+        </div>
+        <div style="background:var(--w);border-radius:8px;padding:10px;border:1px solid var(--bd)">
+          <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:6px;text-align:center">Proyección Mes</div>
+          <div style="height:220px"><canvas id="chartRBProyeccion" style="display:block;width:100%;height:100%"></canvas></div>
+        </div>
+      </div>
+    </div>
+    <div class="mpanel" id="rb-panel-kpis" style="overflow-y:auto;max-height:75vh">
+      <div style="padding:10px 16px">
+        <div style="border:1px solid var(--bd);border-radius:8px;overflow:hidden;margin-bottom:10px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;background:var(--nv)">
+            <div style="padding:6px 14px;color:#fff;font-size:10px;font-weight:700;text-align:center;border-right:1px solid rgba(255,255,255,.15)">PROGRAMA</div>
+            <div style="padding:6px 14px;color:#fff;font-size:10px;font-weight:700;text-align:center">CUMPLIMIENTO</div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(6,1fr);background:var(--gd)">
+            <div style="padding:5px 8px;font-size:9px;font-weight:700;color:var(--nv);text-align:center;border-right:1px solid rgba(0,0,0,.1)">Prog. Mes</div>
+            <div style="padding:5px 8px;font-size:9px;font-weight:700;color:var(--nv);text-align:center;border-right:1px solid rgba(0,0,0,.1)">Prom. Día</div>
+            <div style="padding:5px 8px;font-size:9px;font-weight:700;color:var(--nv);text-align:center;border-right:1px solid rgba(0,0,0,.1)">Ejec. Acum.</div>
+            <div style="padding:5px 8px;font-size:9px;font-weight:700;color:var(--nv);text-align:center;border-right:1px solid rgba(0,0,0,.1)">% Mes</div>
+            <div style="padding:5px 8px;font-size:9px;font-weight:700;color:var(--nv);text-align:center;border-right:1px solid rgba(0,0,0,.1)">Prog. Proy.</div>
+            <div style="padding:5px 8px;font-size:9px;font-weight:700;color:var(--nv);text-align:center">% Proy.</div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(6,1fr);background:var(--w);border-top:1px solid var(--bd)">
+            <div class="mono" style="padding:8px;text-align:center;font-size:13px;font-weight:700;color:var(--nv);border-right:1px solid var(--bd)" id="rb-kh-prog-mes">—</div>
+            <div class="mono" style="padding:8px;text-align:center;font-size:13px;font-weight:700;color:var(--t2);border-right:1px solid var(--bd)" id="rb-kh-prom-dia">—</div>
+            <div class="mono" style="padding:8px;text-align:center;font-size:13px;font-weight:700;color:var(--gd);border-right:1px solid var(--bd)" id="rb-kh-ejec-acum">—</div>
+            <div class="mono" style="padding:8px;text-align:center;font-size:14px;font-weight:700;border-right:1px solid var(--bd)" id="rb-kh-pct-mes">—</div>
+            <div class="mono" style="padding:8px;text-align:center;font-size:13px;font-weight:700;color:var(--nv);border-right:1px solid var(--bd)" id="rb-kh-prog-proy">—</div>
+            <div class="mono" style="padding:8px;text-align:center;font-size:14px;font-weight:700" id="rb-kh-pct-proy">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mpanel" id="rb-panel-detalle" style="overflow-y:auto;max-height:75vh">
+      <div class="mfilter">
+        <span class="mf-lbl">Zona</span>
+        <select class="mf-sel" id="rb-f-zona" onchange="renderRBDetalle()">
+          <option value="">Todas</option>
+        </select>
+        <span class="mf-badge" id="rb-det-cnt">—</span>
+      </div>
+      <div class="mscroll" style="padding:0 16px 10px;overflow-x:auto">
+        <table class="dtbl" style="min-width:820px">
+          <thead><tr>
+            <th>Fecha</th><th>Turno</th><th>Tipo</th>
+            <th>Prog. Día</th><th>Ejec. Día</th><th>% Día</th>
+            <th>Prog. Acum.</th><th>Ejec. Acum.</th><th>% Mes</th>
+            <th>Ejec. Proy.</th><th>% Proy.</th>
+          </tr></thead>
+          <tbody id="tb-rb-det"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- RRHH MODAL -->
+<div class="mwrap" id="rrhh-modal" onclick="if(event.target===this)closeRRHH()">
+  <div class="modal" style="max-width:1100px">
+    <div class="mhead">
+      <span class="mtitle"> RRHH – Recursos Humanos &nbsp;&#xB7;&nbsp; Indicadores</span>
+      <button class="mclose" onclick="closeRRHH()">&#10005;</button>
+    </div>
+    <div class="mtabs">
+      <button class="mtab on" onclick="rrhhTab('indicadores',this)"> Índices</button>
+      <button class="mtab"    onclick="rrhhTab('ausentismo',this)">Ausentismo</button>
+      <button class="mtab"    onclick="rrhhTab('rotacion',this)">Rotación</button>
+    </div>
+    <div class="mpanel on" id="rrhh-panel-indicadores" style="overflow-y:auto;max-height:75vh">
+      <div style="padding:10px 16px 6px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
