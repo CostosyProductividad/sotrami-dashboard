@@ -693,9 +693,9 @@ body { background:#eef1f6; }
 /* Tables */
 .tbl thead th { background:#f0f3f8; color:#1a2b4a; font-size:9px; font-weight:700;
   text-transform:uppercase; letter-spacing:.5px; padding:8px 10px;
-  border-bottom:2px solid #D4AF37; position:relative; }
-.tbl thead th::after { content:'';position:absolute;bottom:-2px;left:0;right:0;
-  height:1px;background:rgba(212,175,55,.15); }
+  border-bottom:1px solid #dfe5ee; }
+/* Una sola línea dorada entre el encabezado y la primera fila de datos */
+.tbl > tbody:first-of-type > tr:first-child > td { border-top:2px solid #D4AF37; }
 .tbl td { padding:7px 10px; border-bottom:1px solid #f3f4f6;
   color:#1f2e46; font-size:10px; }
 .tbl tbody tr:hover td { background:rgba(0,51,102,.03); }
@@ -8895,3 +8895,74 @@ document.addEventListener('keydown', e => {
     </div>
     <div class="mpanel on" id="rrhh-panel-indicadores" style="overflow-y:auto;max-height:75vh">
       <div style="padding:10px 16px 6px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+        <div class="mstat"><div class="mstat-l">HC Activo</div><div class="mstat-v" id="rrhh-m-hc">—</div><div class="mstat-s">personas</div></div>
+        <div class="mstat"><div class="mstat-l">Ingresos</div><div class="mstat-v" id="rrhh-m-ing">—</div><div class="mstat-s">del día</div></div>
+        <div class="mstat"><div class="mstat-l">Salidas</div><div class="mstat-v" id="rrhh-m-sal">—</div><div class="mstat-s">del día</div></div>
+        <div class="mstat"><div class="mstat-l">Ausentismo</div><div class="mstat-v" id="rrhh-m-aus">—</div><div class="mstat-s">% del total</div></div>
+      </div>
+      <div style="padding:6px 16px 10px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div style="background:var(--w);border-radius:8px;padding:12px;border:1px solid var(--bd)">
+          <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:8px">HC por Empresa</div>
+          <div style="height:220px"><canvas id="chartRRHHEmpresa" style="display:block;width:100%;height:100%"></canvas></div>
+        </div>
+        <div style="background:var(--w);border-radius:8px;padding:12px;border:1px solid var(--bd)">
+          <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:8px">Obreros vs Empleados</div>
+          <div style="height:220px"><canvas id="chartRRHHTipo" style="display:block;width:100%;height:100%"></canvas></div>
+        </div>
+      </div>
+    </div>
+    <div class="mpanel" id="rrhh-panel-ausentismo" style="overflow-y:auto;max-height:75vh">
+      <div style="padding:10px 16px 6px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+        <div class="mstat" style="border-left:3px solid #DC2626"><div class="mstat-l">Faltas/DM</div><div class="mstat-v" id="rrhh-m-fal" style="color:#DC2626">—</div><div class="mstat-s">personas</div></div>
+        <div class="mstat" style="border-left:3px solid #D97706"><div class="mstat-l">Vacaciones</div><div class="mstat-v" id="rrhh-m-vac" style="color:#D97706">—</div><div class="mstat-s">personas</div></div>
+        <div class="mstat" style="border-left:3px solid #0E7490"><div class="mstat-l">DM / Sub.</div><div class="mstat-v" id="rrhh-m-dm" style="color:#0E7490">—</div><div class="mstat-s">personas</div></div>
+        <div class="mstat" style="border-left:3px solid #7C3AED"><div class="mstat-l">Índice Ausentismo</div><div class="mstat-v" id="rrhh-m-iaus" style="color:#7C3AED">—</div><div class="mstat-s">%</div></div>
+      </div>
+      <div style="padding:6px 16px 10px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div style="background:var(--w);border-radius:8px;padding:12px;border:1px solid var(--bd)">
+          <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:8px">Composición Ausentismo</div>
+          <div style="height:220px"><canvas id="chartAusentismoComp" style="display:block;width:100%;height:100%"></canvas></div>
+        </div>
+        <div style="background:var(--w);border-radius:8px;padding:12px;border:1px solid var(--bd)">
+          <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:8px">% Ausentismo por Empresa</div>
+          <div style="height:220px"><canvas id="chartAusentismoEmp" style="display:block;width:100%;height:100%"></canvas></div>
+        </div>
+      </div>
+    </div>
+    <div class="mpanel" id="rrhh-panel-rotacion" style="overflow-y:auto;max-height:75vh">
+      <div style="padding:10px 16px 6px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+        <div class="mstat" style="border-left:3px solid #15803D"><div class="mstat-l">Ingresos</div><div class="mstat-v" id="rrhh-m-rot-ing" style="color:#15803D">—</div><div class="mstat-s">del día</div></div>
+        <div class="mstat" style="border-left:3px solid #DC2626"><div class="mstat-l">Salidas</div><div class="mstat-v" id="rrhh-m-rot-sal" style="color:#DC2626">—</div><div class="mstat-s">del día</div></div>
+        <div class="mstat" style="border-left:3px solid #D97706"><div class="mstat-l">Suspendidos</div><div class="mstat-v" id="rrhh-m-sus">—</div><div class="mstat-s">personas</div></div>
+        <div class="mstat" style="border-left:3px solid #003366"><div class="mstat-l">Índice Rotación</div><div class="mstat-v" id="rrhh-m-irot" style="color:#003366">—</div><div class="mstat-s">%</div></div>
+      </div>
+      <div style="padding:6px 16px 10px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div style="background:var(--w);border-radius:8px;padding:12px;border:1px solid var(--bd)">
+          <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:8px">Rotación por Empresa</div>
+          <div style="height:220px"><canvas id="chartRotacionEmp" style="display:block;width:100%;height:100%"></canvas></div>
+        </div>
+        <div style="background:var(--w);border-radius:8px;padding:12px;border:1px solid var(--bd)">
+          <div style="font-size:10px;font-weight:600;color:var(--t2);margin-bottom:8px">Ingresos vs Salidas</div>
+          <div style="height:220px"><canvas id="chartRotacionDetalle" style="display:block;width:100%;height:100%"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</div><!-- /page-content -->
+<!-- CONTROL DE REPORTE: ventana aparte, no forma parte del reporte -->
+<div id="ctrl-rep" class="cr-ov" onclick="if(event.target===this)cerrarCtrlRep()">
+  <div class="cr-box">
+    <div class="cr-head">
+      <span class="cr-title">Control de reporte · <span id="cr-fecha">—</span></span>
+      <span class="cr-res" id="cr-resumen">Cargando…</span>
+      <button class="cr-tog" id="cr-tog" onclick="toggleCtrlRep()">Ver todo</button>
+      <button class="cr-x" onclick="cerrarCtrlRep()" title="Cerrar">&times;</button>
+    </div>
+    <div class="cr-grid" id="cr-grid"></div>
+  </div>
+</div>
+</body>
+</html>
