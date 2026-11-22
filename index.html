@@ -1484,6 +1484,41 @@ body { background:#eef1f6; }
   </div>
 </div>
 
+<!-- PAD -->
+<div class="gf">
+  <div class="card">
+    <div class="ch">
+      <span class="ct">PAD – Lixiviación en pozas</span>
+      <div class="ch-r"><span class="csub">Act. <span id="pad-act-fecha">—</span></span><button class="ch-btn" onclick="openPAD()">Ver detalle</button></div>
+    </div>
+    <div class="tw"><table class="tbl" id="tbl-pad" style="width:100%">
+      <thead>
+        <tr>
+          <th style="text-align:left">Ingreso de mineral</th>
+          <th style="text-align:center">Avance de pozas</th>
+          <th style="text-align:center">Avance diario</th>
+          <th style="text-align:center">Avance acumulado</th>
+          <th style="text-align:center">Pozas evacuadas</th>
+          <th style="text-align:center">PLS (m³)</th>
+          <th style="text-align:left">Observaciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td id="pad-ingreso">—</td>
+          <td class="mono" style="text-align:center" id="pad-poza">—</td>
+          <td class="mono" style="text-align:center" id="pad-av-dia">—</td>
+          <td class="mono" style="text-align:center;font-weight:700" id="pad-av-acum">—</td>
+          <td class="mono" style="text-align:center" id="pad-evac">—</td>
+          <td class="mono" style="text-align:center" id="pad-pls">—</td>
+          <td style="font-size:10px;color:var(--t2)" id="pad-obs">—</td>
+        </tr>
+      </tbody>
+    </table></div>
+    <div class="note">Avance diario = 1 poza ÷ 19 pozas programadas del mes (5.26%) · Avance acumulado desde el inicio del período · PLS = solución rica del día (m³)</div>
+  </div>
+</div>
+
 <!-- MANT + ALM -->
 <div style="grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start">
   <div class="card">
@@ -2759,6 +2794,24 @@ body { background:#eef1f6; }
 
 
 <!-- MODAL MANTENIMIENTO -->
+<div class="mwrap" id="pad-modal" onclick="if(event.target===this)closePAD()">
+  <div class="modal" style="max-width:1000px">
+    <div class="mhead">
+      <span class="mtitle">PAD – Lixiviación en pozas &nbsp;·&nbsp; <span id="pad-modal-rango">—</span></span>
+      <button class="mclose" onclick="closePAD()">&#10005;</button>
+    </div>
+    <div class="mscroll" style="padding:12px 16px">
+      <table class="dtbl" style="min-width:760px">
+        <thead><tr>
+          <th>Fecha</th><th>Ingreso de mineral</th><th style="text-align:center">Avance de pozas</th>
+          <th style="text-align:center">Avance diario</th><th style="text-align:center">Avance acumulado</th>
+          <th style="text-align:center">Pozas evacuadas</th><th style="text-align:right">PLS (m³)</th><th>Observaciones</th>
+        </tr></thead>
+        <tbody id="pad-det-body"><tr><td colspan="8" style="text-align:center;color:var(--t3)">Sin datos</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
 <div class="mwrap" id="mant-modal" onclick="if(event.target===this)closeMant()">
   <div class="modal" style="max-width:1000px">
     <div class="mhead">
@@ -2993,6 +3046,9 @@ id="alm-modal" onclick="if(event.target===this)closeAlm()">
       <div><strong>BAJO</strong> — Ley Au &lt; 0.44 Oz/tc</div>
       <div><strong>Z23 / SR</strong> — Zona 23 / Santa Rosa</div>
       <div><strong>Recup.%</strong> — Recuperación metalúrgica</div>
+      <div><strong>PAD</strong> — Lixiviación del mineral en pozas con solución de cianuro</div>
+      <div><strong>PLS</strong> — Solución rica (con oro disuelto) que sale de las pozas</div>
+      <div><strong>Poza evacuada</strong> — Poza ya lixiviada que se descarga</div>
       <div><strong>Chancado · Molienda · Cianuración</strong> — Etapas del proceso en Planta Beneficio</div>
       <div style="grid-column:1/-1;font-size:9px;font-weight:700;color:var(--nv);text-transform:uppercase;letter-spacing:1px;margin-top:6px;border-bottom:1px solid var(--bd)">Izaje y Volquete</div>
       <div><strong>Skip</strong> — Balde de izaje que sube el material por el pique</div>
@@ -3109,6 +3165,7 @@ const APPSCRIPT_URL_SEG_SIV_TKL    = 'https://script.google.com/macros/s/AKfycby
 const APPSCRIPT_URL_SEG_SIV_CV     = 'https://script.google.com/macros/s/AKfycbyTK4s1v7H1zXwc3lNI9btT3r7VmF-PFima-9IKl_kdfDpvwfgfEf4fr-uLvM1e9CMKYQ/exec';
 const APPSCRIPT_URL_SEG_CORIMAYO   = 'https://script.google.com/macros/s/AKfycbzOCvtyaMgmcPOpEU9H44XP9UKj5BEthrQQjyKe2CjijvNmf70lzPduyPV5_tvcU2Zx/exec'; // Corimayo (Chulbe) Seguridad
 const APPSCRIPT_URL_ALM = 'https://script.google.com/macros/s/AKfycbwO-n6nSodHviw8sLf-GzTKKAvn8bCPMT8wQTR3lFsdpA5cKJTrw57zVc6QmIorpmbF/exec'; // ← Implementar SOTRAMI_appscript_almacen.js en ALMACEN_SOTRAMI → ALMACEN_SOTRAMI // ← Pegar URL de Almacén cuando esté implementado
+const APPSCRIPT_URL_PAD  = 'https://script.google.com/macros/s/AKfycbxZ4AYhhNKvM8WVKsC5aX0ngvpzR_U0uexuLq2Y9Flsg5so_UjGQJDn0EVILtiZv_TxxQ/exec'; // PAD: pegar aquí la URL /exec del Apps Script del libro PAD_SOTRAMI
 const APPSCRIPT_URL_MANT = 'https://script.google.com/macros/s/AKfycbxITbH2SqU_Q-SWFKzWn14cJktHvJaT2G_btaeSrwWRPsP63Xpibc5l23s2XLTFzbJ2/exec'; // ← Implementar SOTRAMI_appscript_mantto.js en MANTTO_SOTRAMI → MANTTO // ← Pegar URL de Mantenimiento cuando esté implementado
 
 // PALETA CORPORATIVA SOTRAMI
@@ -3302,6 +3359,7 @@ function onFechaReporteChange(fechaSel) {
   if (APPSCRIPT_URL_COP) cargarRehab(fechaSel);
   if (APPSCRIPT_URL_TUMI)     cargarRB_Tumi(fechaSel);
   if (APPSCRIPT_URL_PB)       cargarPB(fechaSel);
+  if (APPSCRIPT_URL_PAD)      cargarPAD(fechaSel);
   if (APPSCRIPT_URL_MANT)     cargarMantDesdeAPI(fechaSel);
   if (APPSCRIPT_URL_ALM)      cargarAlmacenDesdeAPI(fechaSel);
   if (APPSCRIPT_URL_SEG)      cargarSegDesdeAPI(fechaSel);
@@ -3486,7 +3544,7 @@ async function fetchAppScript(params = {}) {
 const CTRL_AREAS = [
   ['Mina', [['prod','Producción – Planta'],['skip','Izaje Skip'],['vq','Volquete – Cancha'],['rehab','Rehabilitación'],['rb','Raise Boring – Tumi']]],
   ['Avances', [['av-cv','Avances – Sector IV CV'],['av-tl','Avances – Sector IV TL'],['av-cia','Avances – Cía. TL'],['av-cop','Avances – Copsem'],['av-cor','Avances – Corimayo']]],
-  ['Planta / Lab / Geología', [['pb','Planta Beneficio'],['lab','Laboratorio Químico'],['geo','Geología – DDH'],['mant','Mantenimiento']]],
+  ['Planta / Lab / Geología', [['pb','Planta Beneficio'],['lab','Laboratorio Químico'],['pad','PAD – Pozas'],['geo','Geología – DDH'],['mant','Mantenimiento']]],
   ['RRHH', [['rh-sot','RRHH – Cía. Sotrami'],['rh-cv','RRHH – Sector IV CV'],['rh-tl','RRHH – Sector IV TL'],['rh-cop','RRHH – Copsem'],['rh-tumi','RRHH – Tumi'],['rh-cor','RRHH – Corimayo']]],
 ];
 window._estadoRep = {};
@@ -3505,7 +3563,7 @@ function resetCtrlRep() {
 function toggleCtrlRep() { _crSoloFaltan = !_crSoloFaltan; renderCtrlRep(); }
 function abrirCtrlRep()  { renderCtrlRep(); document.getElementById('ctrl-rep')?.classList.add('open'); }
 function cerrarCtrlRep() { document.getElementById('ctrl-rep')?.classList.remove('open'); }
-document.addEventListener('keydown', e => { if (e.key === 'Escape') cerrarCtrlRep(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { cerrarCtrlRep(); if (typeof closePAD === 'function') closePAD(); } });
 function renderCtrlRep() {
   const grid = document.getElementById('cr-grid'); if (!grid) return;
   const sel = _crSel(), kSel = _crKey(sel);
@@ -3515,6 +3573,7 @@ function renderCtrlRep() {
   CTRL_AREAS.forEach(([grp, items]) => {
     let gHtml = '';
     items.forEach(([k, nom]) => {
+      if (k === 'pad' && !APPSCRIPT_URL_PAD) return;
       nTot++;
       const e = window._estadoRep[k];
       let cls, txt, show = true;
@@ -4002,6 +4061,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (APPSCRIPT_URL_COP) cargarRehab('');
   if (APPSCRIPT_URL_TUMI)     cargarRB_Tumi('');
   if (APPSCRIPT_URL_PB)       cargarPB('');
+  if (APPSCRIPT_URL_PAD)      cargarPAD('');
   if (APPSCRIPT_URL_MANT)     cargarMantDesdeAPI('');
   if (APPSCRIPT_URL_ALM)      cargarAlmacenDesdeAPI('');
   renderAlmacen(null);
@@ -8600,6 +8660,76 @@ function segTab(id, btn) {
   if(id==='racs')    renderRacsPanel();
 }
 
+
+
+// PAD – Lixiviación en pozas (Apps Script del libro PAD_SOTRAMI, hoja PAD)
+let _padData = [], _padFecha = '';
+const _padKey = f => { const p = String(f||'').split('/'); return p.length === 3 ? p[2]+p[1].padStart(2,'0')+p[0].padStart(2,'0') : ''; };
+function _padIngreso(r) {
+  if (!r) return '—';
+  if (!r.volquetes) return r.sin_carga ? 'Sin carga' : '—';
+  const cnt = {}; (r.ingresos || []).forEach(x => { cnt[x] = (cnt[x] || 0) + 1; });
+  return r.volquetes + (r.volquetes === 1 ? ' volquete' : ' volquetes') + ' · ' +
+    Object.entries(cnt).map(([k, n]) => n > 1 ? k + ' ×' + n : k).join(', ');
+}
+const _padPct  = v => (v === null || v === undefined || v === '') ? '—' : (+v).toFixed(2) + '%';
+const _padNum  = v => (v === null || v === undefined || v === '') ? '—' : (+v).toLocaleString('es-PE', {maximumFractionDigits: 1});
+const _padPoza = (txt, n) => n ? 'Poza N° ' + n : (txt || '—');
+async function cargarPAD(fecha) {
+  _padFecha = fecha || document.getElementById('hdr-fecha-sel')?.value || _padFecha;
+  if (!APPSCRIPT_URL_PAD) return;
+  try {
+    const r = await fetch(APPSCRIPT_URL_PAD + '?accion=todo');
+    const j = await r.json();
+    if (j?.ok) _padData = j.registros || [];
+  } catch (e) { console.warn('[PAD]', e.message); }
+  renderPAD();
+}
+function renderPAD() {
+  const sel = document.getElementById('hdr-fecha-sel')?.value || _padFecha;
+  const kSel = _padKey(sel);
+  let reg = null;
+  _padData.forEach(r => { if (_padKey(r.fecha) <= kSel) reg = r; });   // el día, o el último anterior con registro
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  set('pad-act-fecha', reg ? reg.fecha : '—');
+  set('pad-ingreso', _padIngreso(reg));
+  set('pad-poza',    reg ? _padPoza(reg.poza_carga, reg.poza_carga_n) : '—');
+  set('pad-av-dia',  reg ? _padPct(reg.avance_dia) : '—');
+  set('pad-av-acum', reg ? _padPct(reg.avance_acum) : '—');
+  set('pad-evac',    reg ? _padPoza(reg.poza_evacuada, reg.poza_evacuada_n) : '—');
+  set('pad-pls',     reg ? _padNum(reg.pls_m3) : '—');
+  set('pad-obs',     reg && reg.obs ? reg.obs : '—');
+  if (typeof marcarEstado === 'function') marcarEstado('pad', reg ? reg.fecha : sel, !!reg);
+  console.log('[PAD]', sel, '→', reg ? reg.fecha + ' | ' + _padIngreso(reg) + ' | acum ' + _padPct(reg.avance_acum) + ' | PLS ' + _padNum(reg.pls_m3) : 'sin registro');
+}
+function openPAD() {
+  const sel = document.getElementById('hdr-fecha-sel')?.value || _padFecha;
+  const kSel = _padKey(sel);
+  const p = sel.split('/'); const d0 = p.length === 3 ? new Date(+p[2], +p[1]-1, +p[0] - 30) : null;
+  const kIni = d0 ? d0.getFullYear() + String(d0.getMonth()+1).padStart(2,'0') + String(d0.getDate()).padStart(2,'0') : '';
+  const rows = _padData.filter(r => { const k = _padKey(r.fecha); return k <= kSel && k >= kIni; });
+  const tb = document.getElementById('pad-det-body');
+  if (tb) {
+    if (!rows.length) tb.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--t3)">Sin datos</td></tr>';
+    else {
+      const totV = rows.reduce((s, r) => s + (r.volquetes || 0), 0);
+      const totP = rows.reduce((s, r) => s + (+r.pls_m3 || 0), 0);
+      tb.innerHTML = rows.map(r => '<tr><td class="mono">' + r.fecha + '</td><td>' + _padIngreso(r) + '</td>'
+        + '<td style="text-align:center">' + _padPoza(r.poza_carga, r.poza_carga_n) + '</td>'
+        + '<td class="mono" style="text-align:center">' + _padPct(r.avance_dia) + '</td>'
+        + '<td class="mono" style="text-align:center;font-weight:700">' + _padPct(r.avance_acum) + '</td>'
+        + '<td style="text-align:center">' + _padPoza(r.poza_evacuada, r.poza_evacuada_n) + '</td>'
+        + '<td class="mono" style="text-align:right">' + _padNum(r.pls_m3) + '</td>'
+        + '<td style="font-size:10px;color:var(--t2)">' + (r.obs || '') + '</td></tr>').join('')
+        + '<tr class="tot"><td>TOTAL</td><td>' + totV + ' volquetes</td><td></td><td></td><td></td><td></td>'
+        + '<td class="mono" style="text-align:right">' + _padNum(totP) + '</td><td></td></tr>';
+    }
+  }
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  set('pad-modal-rango', rows.length ? rows[0].fecha + ' – ' + rows[rows.length-1].fecha : sel);
+  document.getElementById('pad-modal')?.classList.add('open');
+}
+function closePAD() { document.getElementById('pad-modal')?.classList.remove('open'); }
 
 function openMant() {
   document.getElementById('mant-modal')?.classList.add('open');
