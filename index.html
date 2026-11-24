@@ -1544,19 +1544,19 @@ body { background:#eef1f6; }
     <div class="tw"><table class="tbl" id="tbl-alm">
       <thead>
         <tr>
-          <th>Tipo Material</th>
-          <th>Material</th>
-          <th style="text-align:center">UM</th>
-          <th style="text-align:center">Stock Act.</th>
-          <th style="text-align:center">Stock Mín.</th>
-          <th style="text-align:center">Estado</th>
+          <th style="text-align:left">Tipo</th>
+          <th style="text-align:left">Material</th>
+          <th style="text-align:center">Und.</th>
+          <th style="text-align:right">Stock Actual</th>
+          <th style="text-align:right">Consumo Prom.</th>
+          <th style="text-align:center">Indicador</th>
         </tr>
       </thead>
       <tbody id="tb-alm">
         <tr><td colspan="6" style="text-align:center;color:var(--t3);padding:12px">Cargando...</td></tr>
       </tbody>
     </table></div>
-    <div class="note">Vista principal: solo materiales críticos · El detalle muestra todos · <i class=dot-r></i>Críticos: <b><span id="alm-kpi-crit">—</span></b> · <i class=dot-y></i>Precaución: <b><span id="alm-kpi-pre">—</span></b></div>
+    <div class="note">Indicador = días de cobertura (Stock Actual ÷ Consumo Prom. × 30) · Materiales que solo cambian de número se agrupan (indicador = el más bajo) · <span class="pR">&lt;10</span> <b id="alm-kpi-r">—</b> · <span class="pR">Sin stock</span> <b id="alm-kpi-sin">—</b> · <span class="pY">10–25</span> <b id="alm-kpi-y">—</b> · <span class="pG">&gt;25</span> <b id="alm-kpi-g">—</b></div>
   </div>
 </div>
 
@@ -2850,53 +2850,51 @@ body { background:#eef1f6; }
 
 
 id="alm-modal" onclick="if(event.target===this)closeAlm()">
-  <div class="modal" style="max-width:860px">
+  <div class="modal" style="max-width:900px">
     <div class="mhead">
-      <span class="mtitle"> Almacén – Materiales Críticos &nbsp;·&nbsp; Detalle completo</span>
+      <span class="mtitle">Almacén – Materiales &nbsp;·&nbsp; <span id="alm-modal-fecha">—</span></span>
       <button class="mclose" onclick="closeAlm()">&#10005;</button>
     </div>
     <!-- KPIs -->
-    <div style="padding:10px 16px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
-      <div class="mstat" style="border-left:3px solid #DC2626">
-        <div class="mstat-l"><i class=dot-r></i>Crítico</div>
-        <div class="mstat-v" id="alm-cnt-crit" style="color:#DC2626">—</div>
-        <div class="mstat-s">ítems · compra urgente</div>
+    <div style="padding:10px 16px 0;display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+      <div class="mstat" style="border-left:3px solid var(--R);cursor:pointer" onclick="almFiltro('R')">
+        <div class="mstat-l"><span class="pR">&lt;10</span> Rojo</div>
+        <div class="mstat-v" id="alm-cnt-r" style="color:var(--R)">—</div>
+        <div class="mstat-s">ítems · reponer urgente</div>
       </div>
-      <div class="mstat" style="border-left:3px solid #D97706">
-        <div class="mstat-l"><i class=dot-y></i>Precaución</div>
-        <div class="mstat-v" id="alm-cnt-prec" style="color:#D97706">—</div>
-        <div class="mstat-s">ítems · revisar compras</div>
+      <div class="mstat" style="border-left:3px solid var(--Y);cursor:pointer" onclick="almFiltro('Y')">
+        <div class="mstat-l"><span class="pY">10–25</span> Ámbar</div>
+        <div class="mstat-v" id="alm-cnt-y" style="color:var(--Y)">—</div>
+        <div class="mstat-s">ítems · programar compra</div>
       </div>
-      <div class="mstat" style="border-left:3px solid #15803D">
-        <div class="mstat-l"><i class=dot-g></i>Adecuado</div>
-        <div class="mstat-v" id="alm-cnt-adeq" style="color:#15803D">—</div>
-        <div class="mstat-s">ítems · sin acción</div>
-      </div>
-      <div class="mstat" style="border-left:3px solid #1D4ED8">
-        <div class="mstat-l"><i class=dot-b></i>Excedente</div>
-        <div class="mstat-v" id="alm-cnt-exc" style="color:#1D4ED8">—</div>
-        <div class="mstat-s">ítems · evaluar rotación</div>
+      <div class="mstat" style="border-left:3px solid var(--G);cursor:pointer" onclick="almFiltro('G')">
+        <div class="mstat-l"><span class="pG">&gt;25</span> Verde</div>
+        <div class="mstat-v" id="alm-cnt-g" style="color:var(--G)">—</div>
+        <div class="mstat-s">ítems · cobertura suficiente</div>
       </div>
     </div>
+    <div style="padding:8px 16px 0;display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:10px;color:var(--t3)">
+      Tipo <select class="mf-sel" id="alm-f-tipo" onchange="renderAlmDet()"><option value="">Todos</option></select>
+      Indicador <select class="mf-sel" id="alm-f-sem" onchange="renderAlmDet()"><option value="">Todos</option><option value="R">Rojo</option><option value="Y">Ámbar</option><option value="G">Verde</option></select>
+      <span id="alm-f-n" style="margin-left:auto"></span>
+    </div>
     <!-- Tabla detalle -->
-    <div class="mscroll" style="padding:10px 16px 12px">
-      <table class="dtbl" style="min-width:620px">
+    <div class="mscroll" style="padding:8px 16px 12px">
+      <table class="dtbl" style="min-width:640px">
         <thead><tr>
-          <th style="text-align:center;font-size:8px;width:40px">Año</th>
-          <th style="text-align:left;font-size:8px;width:55px">Período</th>
-          <th style="text-align:left;font-size:8px">Tipo Material</th>
-          <th style="text-align:left;font-size:8px">Material</th>
-          <th style="text-align:center;font-size:8px;width:40px">UM</th>
-          <th style="text-align:center;font-size:8px;width:70px">Stock Act.</th>
-          <th style="text-align:center;font-size:8px;width:70px">Stock Mín.</th>
-          <th style="text-align:center;font-size:8px;width:70px">Diferencia</th>
-          <th style="text-align:center;width:90px">Estado</th>
+          <th style="text-align:left">Tipo Material</th>
+          <th style="text-align:left">Material</th>
+          <th style="text-align:center;width:44px">Und.</th>
+          <th style="text-align:right;width:80px">Stock Actual</th>
+          <th style="text-align:right;width:80px">Consumo Prom.</th>
+          <th style="text-align:center;width:70px">Duración (días)</th>
+          <th style="text-align:center;width:80px">Indicador</th>
         </tr></thead>
         <tbody id="tb-alm-det"></tbody>
       </table>
     </div>
     <div style="padding:5px 14px;font-size:10px;color:var(--t3);border-top:1px solid var(--bd);background:var(--bg)">
-      <i class=dot-r></i>Stock ≤ Min. · <i class=dot-y></i>Min &lt; Stock ≤ Min×1.5 · <i class=dot-g></i>Stock &gt; Min×1.5 · <i class=dot-b></i>Excedente
+      Indicador = días de cobertura (Stock Actual ÷ Consumo Prom. × 30) · <span class="pR">&lt;10 o sin stock</span> <span class="pY">10–25</span> <span class="pG">&gt;25</span>
     </div>
   </div>
 </div>
@@ -3099,12 +3097,13 @@ id="alm-modal" onclick="if(event.target===this)closeAlm()">
       <div><strong>Déficit</strong> — HC Prog. − Total HC (−n = falta personal)</div>
       <div><strong>Copsem · Tumi · Corimayo</strong> — Empresas contratistas</div>
       <div style="grid-column:1/-1;font-size:9px;font-weight:700;color:var(--nv);text-transform:uppercase;letter-spacing:1px;margin-top:6px;border-bottom:1px solid var(--bd)">Almacén</div>
-      <div><strong>Stock Act. / Stock Mín.</strong> — Stock actual / Stock mínimo</div>
-      <div><strong>UM</strong> — Unidad de medida</div>
-      <div><strong><i class=dot-r></i>Crítico</strong> — Stock ≤ mínimo</div>
-      <div><strong><i class=dot-y></i>Precaución</strong> — Mínimo &lt; stock ≤ 1.5 × mínimo</div>
-      <div><strong><i class=dot-g></i>Adecuado</strong> — Stock &gt; 1.5 × mínimo</div>
-      <div><strong><i class=dot-b></i>Excedente</strong> — Stock por encima de lo requerido</div>
+      <div><strong>Und.</strong> — Unidad de medida</div>
+      <div><strong>Consumo Prom.</strong> — Consumo promedio mensual</div>
+      <div><strong>Duración (días)</strong> — Días que dura el stock actual</div>
+      <div><strong>Indicador</strong> — Días de cobertura: Stock Actual ÷ Consumo Prom. × 30</div>
+      <div><strong><span class="pR">&lt;10</span></strong> — Reponer urgente (incluye sin stock)</div>
+      <div><strong><span class="pY">10–25</span></strong> — Programar compra</div>
+      <div><strong><span class="pG">&gt;25</span></strong> — Cobertura suficiente</div>
       <div style="grid-column:1/-1;font-size:9px;font-weight:700;color:var(--nv);text-transform:uppercase;letter-spacing:1px;margin-top:6px;border-bottom:1px solid var(--bd)">Mantenimiento</div>
       <div><strong>INOPERATIVO / OPERATIVO</strong> — Equipo fuera de servicio / en servicio</div>
       <div><strong>Overhaul</strong> — Reparación general (mantenimiento mayor)</div>
@@ -3164,7 +3163,7 @@ const APPSCRIPT_URL_SEG_COP        = 'https://script.google.com/macros/s/AKfycbx
 const APPSCRIPT_URL_SEG_SIV_TKL    = 'https://script.google.com/macros/s/AKfycbyB8IGpi36D6pHHYQxKgsfx63LPZ8HH99EtsFVhTsLp3pS41qJvFQQQBcaTdtomaRU1_g/exec';
 const APPSCRIPT_URL_SEG_SIV_CV     = 'https://script.google.com/macros/s/AKfycbyTK4s1v7H1zXwc3lNI9btT3r7VmF-PFima-9IKl_kdfDpvwfgfEf4fr-uLvM1e9CMKYQ/exec';
 const APPSCRIPT_URL_SEG_CORIMAYO   = 'https://script.google.com/macros/s/AKfycbzOCvtyaMgmcPOpEU9H44XP9UKj5BEthrQQjyKe2CjijvNmf70lzPduyPV5_tvcU2Zx/exec'; // Corimayo (Chulbe) Seguridad
-const APPSCRIPT_URL_ALM = 'https://script.google.com/macros/s/AKfycbwO-n6nSodHviw8sLf-GzTKKAvn8bCPMT8wQTR3lFsdpA5cKJTrw57zVc6QmIorpmbF/exec'; // ← Implementar SOTRAMI_appscript_almacen.js en ALMACEN_SOTRAMI → ALMACEN_SOTRAMI // ← Pegar URL de Almacén cuando esté implementado
+const APPSCRIPT_URL_ALM = 'https://script.google.com/macros/s/AKfycbwO-n6nSodHviw8sLf-GzTKKAvn8bCPMT8wQTR3lFsdpA5cKJTrw57zVc6QmIorpmbF/exec'; // Almacén: libro ALMACEN_SOTRAMI
 const APPSCRIPT_URL_PAD  = 'https://script.google.com/macros/s/AKfycbxZ4AYhhNKvM8WVKsC5aX0ngvpzR_U0uexuLq2Y9Flsg5so_UjGQJDn0EVILtiZv_TxxQ/exec'; // PAD: pegar aquí la URL /exec del Apps Script del libro PAD_SOTRAMI
 const APPSCRIPT_URL_MANT = 'https://script.google.com/macros/s/AKfycbxITbH2SqU_Q-SWFKzWn14cJktHvJaT2G_btaeSrwWRPsP63Xpibc5l23s2XLTFzbJ2/exec'; // ← Implementar SOTRAMI_appscript_mantto.js en MANTTO_SOTRAMI → MANTTO // ← Pegar URL de Mantenimiento cuando esté implementado
 
@@ -3544,7 +3543,7 @@ async function fetchAppScript(params = {}) {
 const CTRL_AREAS = [
   ['Mina', [['prod','Producción – Planta'],['skip','Izaje Skip'],['vq','Volquete – Cancha'],['rehab','Rehabilitación'],['rb','Raise Boring – Tumi']]],
   ['Avances', [['av-cv','Avances – Sector IV CV'],['av-tl','Avances – Sector IV TL'],['av-cia','Avances – Cía. TL'],['av-cop','Avances – Copsem'],['av-cor','Avances – Corimayo']]],
-  ['Planta / Lab / Geología', [['pb','Planta Beneficio'],['lab','Laboratorio Químico'],['pad','PAD – Pozas'],['geo','Geología – DDH'],['mant','Mantenimiento']]],
+  ['Planta / Lab / Geología / Almacén', [['pb','Planta Beneficio'],['lab','Laboratorio Químico'],['pad','PAD – Pozas'],['geo','Geología – DDH'],['mant','Mantenimiento'],['alm','Almacén']]],
   ['RRHH', [['rh-sot','RRHH – Cía. Sotrami'],['rh-cv','RRHH – Sector IV CV'],['rh-tl','RRHH – Sector IV TL'],['rh-cop','RRHH – Copsem'],['rh-tumi','RRHH – Tumi'],['rh-cor','RRHH – Corimayo']]],
 ];
 window._estadoRep = {};
@@ -7207,82 +7206,93 @@ function buildAvPerCharts(dias, resumen) {
 
 
 
-// RENDER ALMACEN (card table)
+// ALMACEN – semáforo por Indicador (días de cobertura): >25 verde · 10–25 ámbar · <10 o sin stock rojo
+const almSem = m => (m.ind === null || m.ind < 10) ? 'R' : (m.ind <= 25 ? 'Y' : 'G');
+const _almPill = m => { const s = almSem(m); const t = (m.ind === null || !m.stock) ? 'Sin stock' : m.ind.toLocaleString('es-PE', {minimumFractionDigits:1, maximumFractionDigits:1});
+  return '<span class="p' + s + '">' + t + '</span>'; };
+const _almN = (n, d) => (n === null || n === undefined) ? '—' : n.toLocaleString('es-PE', {maximumFractionDigits: d ?? 2});
+const _almOrd = (a, b) => (a.ind ?? -1) - (b.ind ?? -1) || String(a.tipo).localeCompare(String(b.tipo));
+function _almFila(m, card) {
+  return '<tr><td style="text-align:left;font-size:9px;color:var(--t3);white-space:nowrap">' + (m.tipo || '—') + '</td>'
+    + '<td style="text-align:left;font-weight:600;font-size:10px;min-width:170px">' + (m.mat || '—') + '</td>'
+    + '<td class="mono" style="text-align:center;font-size:9px">' + (m.um || '—') + '</td>'
+    + '<td class="mono" style="text-align:right">' + _almN(m.stock) + '</td>'
+    + '<td class="mono" style="text-align:right">' + _almN(m.consumo) + '</td>'
+    + (card ? '' : '<td class="mono" style="text-align:center">' + _almN(m.dias, 0) + '</td>')
+    + '<td style="text-align:center;white-space:nowrap">' + _almPill(m) + '</td></tr>';
+}
+// Familia: mismo material que solo cambia de número (N°03, (LP) 13 ...)
+function _almFam(mat) {
+  let s = String(mat || '').toUpperCase().replace(/\bDETONAD\.\s*/g, 'DETONADOR ');
+  const nums = [];
+  s = s.replace(/\s*N\s*°\s*(\d{1,2})\b/g, (_, n) => { nums.push(n); return ' '; })
+       .replace(/(\((?:LP|MS)\))\s+(\d{1,2})(?=\s|$)/g, (_, a, n) => { nums.push(n); return a + ' '; });
+  return { base: s.replace(/\s+/g, ' ').trim(), num: nums[0] || '' };
+}
+function _almAgrupar(rows) {
+  const g = {};
+  rows.forEach(m => {
+    const f = _almFam(m.mat), k = m.tipo + '|' + f.base + '|' + m.um;
+    if (!g[k]) g[k] = { tipo: m.tipo, base: f.base, um: m.um, items: [] };
+    g[k].items.push({ ...m, _num: f.num });
+  });
+  return Object.values(g).map(x => {
+    if (x.items.length === 1) return x.items[0];
+    const nums = x.items.map(i => i._num).filter(Boolean).sort((a, b) => a - b);
+    const sum = k => x.items.reduce((s, i) => s + (i[k] || 0), 0);
+    return { tipo: x.tipo, um: x.um, stock: sum('stock'), consumo: sum('consumo'),
+      dias: Math.min(...x.items.map(i => i.dias ?? 0)), ind: Math.min(...x.items.map(i => i.ind ?? 0)),
+      mat: x.base + ' <span style="font-weight:400;color:var(--t3)">(' + (nums.length ? 'N° ' + nums.join(', ') : x.items.length + ' ítems') + ')</span>' };
+  });
+}
+// Tarjeta: materiales en rojo con stock; los que están en cero solo se cuentan en el pie
 function renderAlmacen(rows) {
   const tbody = document.getElementById('tb-alm');
   if (!tbody) return;
-  if (!rows || !rows.length) {
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--t3);padding:12px">Sin materiales críticos</td></tr>';
-    return;
-  }
-  // Only show Critico in main card
-  const criticos = rows.filter(e => {
-    const ec  = String(e.estado_calc||'').trim();
-    if (ec === 'Critico') return true;
-    const est = String(e.estado_hoja||e.estado||'').toLowerCase()
-                .normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9 ]/g,'').trim();
-    return est.includes('critico') || (parseFloat(e.min||0)>0 && parseFloat(e.act||0)<=parseFloat(e.min||0));
-  });
-  if (!criticos.length) {
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--t3);padding:10px">Sin materiales críticos hoy</td></tr>';
-    return;
-  }
-  const fmtN = n => n > 0 ? n.toLocaleString('es-PE', {minimumFractionDigits:1, maximumFractionDigits:1}) : '—';
-  tbody.innerHTML = criticos.map(e => {
-    const act = parseFloat(e.act||0), min = parseFloat(e.min||0), dif = act - min;
-    return '<tr>' +
-      '<td style="font-size:9px;color:var(--t3)">' + (e.tipo||'—') + '</td>' +
-      '<td style="font-weight:600;font-size:10px">' + (e.mat||'—') + '</td>' +
-      '<td class="mono" style="text-align:center;font-size:9px">' + (e.um||'—') + '</td>' +
-      '<td class="mono" style="text-align:center">' + fmtN(act) + '</td>' +
-      '<td class="mono" style="text-align:center">' + fmtN(min) + '</td>' +
-      '<td style="text-align:center"><span class="eCrit"><i class=dot-r></i>Crítico</span></td>' +
-      '</tr>';
-  }).join('');
+  if (!rows) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--t3);padding:12px">Sin datos</td></tr>'; return; }
+  const rojos = _almAgrupar(rows.filter(m => almSem(m) === 'R' && m.stock)).sort(_almOrd);
+  tbody.innerHTML = rojos.length ? rojos.map(m => _almFila(m, true)).join('')
+    : '<tr><td colspan="6" style="text-align:center;color:var(--t3);padding:10px">Sin materiales en rojo</td></tr>';
 }
-
-// CARGAR ALMACEN
+function _almNum(v) {
+  if (v === '' || v === null || v === undefined) return null;
+  if (typeof v === 'number') return v;
+  let s = String(v).trim().replace(/\s/g, '');
+  if (!s || s === '-') return null;
+  if (s.includes(',') && s.includes('.')) s = s.replace(/,/g, '');
+  else if (/^-?\d{1,3}(,\d{3})+$/.test(s)) s = s.replace(/,/g, '');
+  else s = s.replace(',', '.');
+  const x = parseFloat(s); return isNaN(x) ? null : x;
+}
 async function cargarAlmacenDesdeAPI(fecha) {
   if (!APPSCRIPT_URL_ALM) { renderAlmacen(null); return; }
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
   try {
-    const qs = fecha ? '?accion=dia&fecha='+encodeURIComponent(fecha) : '?accion=dia';
+    const qs = fecha ? '?accion=dia&fecha=' + encodeURIComponent(fecha) : '?accion=dia';
     const res = await fetch(APPSCRIPT_URL_ALM + qs);
-    if (!res.ok) throw new Error('HTTP '+res.status);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
-    if (!data.ok) { renderAlmacen(null); return; }
-
-    const alerta = data.alerta || [];
-    const todos  = data.todos  || data.materiales || [];
-
-    const norm = m => ({
-      anio   : m.anio||m.ano||'',
-      periodo: m.periodo||'',
-      fecha  : m.fecha, tipo: m.tipo, mat: m.material||m.mat,
-      um: m.um, act: +(m.stock_act||m.act||0), min: +(m.stock_min||m.min||0),
-      diferencia: m.diferencia||0,
-      estado_hoja: m.estado_hoja||m.estado_calc||m.estado||'',
-      estado_calc: m.estado_calc||'',
-      estado: m.estado_hoja||m.estado_calc||m.estado||'Estable',
+    const sel = document.getElementById('hdr-fecha-sel')?.value || '';
+    if (fecha && sel && fecha !== sel) return;   // respuesta de una fecha ya no seleccionada
+    if (!data.ok) throw new Error(data.error || 'respuesta sin datos');
+    const rows = (data.materiales || data.todos || []).map(m => {
+      const stock = _almNum(m.stock ?? m.stock_act), consumo = _almNum(m.consumo);
+      let ind = _almNum(m.indicador);
+      if (ind === null && stock && consumo) ind = Math.round(stock / consumo * 3000) / 100;
+      return { tipo: m.tipo || '', mat: m.material || m.mat || '', um: m.um || '', stock, consumo, dias: _almNum(m.dias), ind };
     });
-
-    window._almRows = todos.map(norm);
-
-    const cardRows = alerta.length > 0
-      ? alerta.map(m => ({...norm(m), _prefiltered: true}))
-      : todos.map(norm);
-
-    renderAlmacen(cardRows);
-
-    const almFechaEl = document.getElementById('alm-act-fecha');
-    if (almFechaEl) almFechaEl.textContent = data.fecha || '—';
-    const almCritEl = document.getElementById('alm-kpi-crit');
-    const almPreEl  = document.getElementById('alm-kpi-pre');
-    if (almCritEl) almCritEl.textContent = data.criticos_count ?? alerta.filter(m=>(m.estado_calc||'').includes('Critico')).length;
-    if (almPreEl)  almPreEl.textContent  = data.precaucion_count ?? alerta.filter(m=>(m.estado_calc||'').includes('Precaucion')).length;
-
+    window._almRows = rows; window._almFecha = data.fecha || '';
+    renderAlmacen(rows);
+    const n = s => rows.filter(m => almSem(m) === s).length;
+    set('alm-act-fecha', data.fecha || '—');
+    set('alm-kpi-r', rows.filter(m => almSem(m) === 'R' && m.stock).length); set('alm-kpi-sin', rows.filter(m => !m.stock).length); set('alm-kpi-y', n('Y')); set('alm-kpi-g', n('G'));
+    if (typeof marcarEstado === 'function') marcarEstado('alm', data.fecha || fecha, rows.length > 0);
     if (document.getElementById('alm-modal')?.classList.contains('open')) renderAlmDet();
-    console.log('[ALM] OK: todos='+todos.length+' alerta='+alerta.length);
-  } catch(e) { console.warn('[ALM API]', e.message); renderAlmacen(null); }
+    console.log('[ALM]', data.fecha, rows.length + ' materiales · rojo ' + n('R') + ' · ámbar ' + n('Y') + ' · verde ' + n('G'));
+  } catch (e) {
+    console.warn('[ALM API]', e.message); renderAlmacen(null);
+    if (typeof marcarEstado === 'function') marcarEstado('alm', fecha, false);
+  }
 }
 
 // RENDER MANTENIMIENTO
@@ -7567,9 +7577,31 @@ async function cargarRRHH(fecha) {
 }
 
 // ALM MODAL
-function openAlm(){document.getElementById("alm-modal").classList.add("open");if(window._almRows?.length>0){renderAlmDet();}else{const tb=document.getElementById("tb-alm-det");if(tb)tb.innerHTML="<tr><td colspan=\"9\" style=\"text-align:center;padding:14px;color:var(--t3)\">Cargando...</td></tr>";cargarAlmacenDesdeAPI("").then(()=>renderAlmDet());}}
+function openAlm() {
+  document.getElementById('alm-modal').classList.add('open');
+  if (window._almRows?.length) renderAlmDet();
+  else { const tb = document.getElementById('tb-alm-det'); if (tb) tb.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:14px;color:var(--t3)">Cargando...</td></tr>';
+    cargarAlmacenDesdeAPI(document.getElementById('hdr-fecha-sel')?.value || '').then(renderAlmDet); }
+}
 function closeAlm(){document.getElementById("alm-modal")?.classList.remove("open");}
-function renderAlmDet(){const src=window._almRows||[];const tbody=document.getElementById("tb-alm-det");if(!tbody)return;if(!src.length){tbody.innerHTML="<tr><td colspan=\"9\" style=\"text-align:center;color:var(--t3);padding:12px\">Sin datos</td></tr>";return;}const sv=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};const cnt=t=>src.filter(e=>(e.estado_calc||"").toLowerCase().includes(t)||(e.estado_hoja||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").includes(t)).length;sv("alm-cnt-crit",cnt("critico"));sv("alm-cnt-prec",cnt("precaucion"));sv("alm-cnt-adeq",cnt("adecuado"));sv("alm-cnt-exc",cnt("excedente"));const estOrd=e=>{const s=String(e.estado_hoja||e.estado_calc||e.estado||"").toLowerCase().replace(/[^a-z]/g,"");return s.includes("critico")?0:s.includes("precaucion")?1:2;};const sorted=[...src].sort((a,b)=>estOrd(a)-estOrd(b));const fmtN2=n=>n>0?n.toLocaleString("es-PE",{minimumFractionDigits:1,maximumFractionDigits:1}):"—";tbody.innerHTML=sorted.map(e=>{const eN=String(e.estado_hoja||e.estado_calc||e.estado||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9 ]/g,"").trim();const iC=eN.includes("critico"),iP=eN.includes("precaucion");const bg=iC?"<span class=\"eCrit\"><i class=dot-r></i>Crítico</span>":iP?"<span style=\"background:var(--Ybg);color:var(--Y);border:1px solid var(--Ybd);padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700\"><i class=dot-y></i>Precaución</span>":"<span class=\"eoper\"><i class=dot-g></i>Adecuado</span>";const d=e.diferencia||0;return "<tr><td style=\"font-size:9px;color:var(--t3)\">"+(e.anio||"—")+"</td><td style=\"font-size:9px;color:var(--t3)\">"+(e.periodo||"—")+"</td><td style=\"font-size:9px;color:var(--t3)\">"+(e.tipo||"—")+"</td><td style=\"font-weight:600;font-size:10px\">"+(e.mat||"—")+"</td><td class=\"mono\" style=\"text-align:center;font-size:9px\">"+(e.um||"—")+"</td><td class=\"mono\" style=\"text-align:center\">"+fmtN2(e.act)+"</td><td class=\"mono\" style=\"text-align:center\">"+fmtN2(e.min)+"</td><td class=\"mono\" style=\"text-align:center;color:"+(d<0?"#DC2626":"#15803D")+";font-weight:600\">"+(d<0?d.toFixed(1):"+"+d.toFixed(1))+"</td><td style=\"text-align:center\">"+bg+"</td></tr>";}).join("");}
+function almFiltro(s) { const el = document.getElementById('alm-f-sem'); if (el) { el.value = el.value === s ? '' : s; renderAlmDet(); } }
+function renderAlmDet() {
+  const src = window._almRows || [];
+  const tbody = document.getElementById('tb-alm-det'); if (!tbody) return;
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  set('alm-modal-fecha', window._almFecha || '—');
+  ['R','Y','G'].forEach(s => set('alm-cnt-' + s.toLowerCase(), src.filter(m => almSem(m) === s).length));
+  const selT = document.getElementById('alm-f-tipo');
+  if (selT) {
+    const tipos = [...new Set(src.map(m => m.tipo).filter(Boolean))], v = selT.value;
+    selT.innerHTML = '<option value="">Todos</option>' + tipos.map(t => '<option' + (t === v ? ' selected' : '') + '>' + t + '</option>').join('');
+  }
+  const fT = selT?.value || '', fS = document.getElementById('alm-f-sem')?.value || '';
+  const rows = src.filter(m => (!fT || m.tipo === fT) && (!fS || almSem(m) === fS)).sort(_almOrd);
+  set('alm-f-n', rows.length + ' de ' + src.length + ' materiales');
+  tbody.innerHTML = rows.length ? rows.map(m => _almFila(m)).join('')
+    : '<tr><td colspan="7" style="text-align:center;color:var(--t3);padding:12px">Sin datos</td></tr>';
+}
 
 // RB TUMI
 async function cargarRB_Tumi(fecha){if(!APPSCRIPT_URL_TUMI)return;try{const qs=fecha?"?accion=rb&fecha="+encodeURIComponent(fecha):"?accion=rb";let d=await fetch(APPSCRIPT_URL_TUMI+qs).then(r=>r.json()).catch(()=>null);if(d?.ok&&(!d.zonas?.length||!d.zonas.some(z=>z.ejec_dia>0||z.ejec_acum>0))&&fecha)d=await fetch(APPSCRIPT_URL_TUMI+"?accion=rb").then(r=>r.json()).catch(()=>null)||d;if(!d?.ok)return;marcarEstado("rb",d.fecha,(d.zonas||[]).some(z=>(+z.ejec_dia||0)>0));const sv=(id,v)=>{const el=document.getElementById(id);if(el&&v!=null)el.textContent=v;};const f1=n=>n>0?n.toFixed(2):"—";const pC=(e,p)=>!p?"pN":e/p>=1?"pG":e/p>=0.85?"pY":"pR";    sv("rb-act-fecha",d.fecha||"—");const zSel=document.getElementById("rb-f-zona");if(zSel&&d.zonas?.length){const cur=zSel.value;zSel.innerHTML='<option value="">Todas</option>';d.zonas.forEach(z=>{const o=document.createElement("option");o.value=z.zona;o.textContent=z.zona||"—";zSel.appendChild(o);});if(cur)zSel.value=cur;}const tb=document.getElementById("tb-rb");if(tb&&d.zonas?.length){tb.innerHTML=d.zonas.map(z=>{const pD=z.prog_dia>0?(z.ejec_dia/z.prog_dia*100):null,pM=z.prog_mes>0?(z.ejec_acum/z.prog_mes*100):null,pP=z.prog_proy>0?(z.ejec_acum_proy/z.prog_proy*100):null,df=z.prog_proy-z.ejec_acum_proy;return "<tr><td>"+(z.zona||"—")+"</td><td>"+(z.proyecto||"—")+"</td><td style=\"font-size:9px;color:var(--t3)\">"+(z.tipo||"—")+"</td><td class=\"mono\" style=\"text-align:center\">"+f1(z.prog_dia)+"</td><td class=\"mono\" style=\"text-align:center\">"+f1(z.ejec_dia)+"</td><td style=\"text-align:center\"><span class=\""+pC(z.ejec_dia,z.prog_dia)+"\">"+(pD!=null?pD.toFixed(1)+"%":"—")+"</span></td><td class=\"mono\" style=\"text-align:center\">"+f1(z.prog_mes)+"</td><td class=\"mono\" style=\"text-align:center;font-weight:600;color:var(--gd)\">"+f1(z.ejec_acum)+"</td><td style=\"text-align:center\"><span class=\""+pC(z.ejec_acum,z.prog_mes)+"\">"+(pM!=null?pM.toFixed(1)+"%":"—")+"</span></td><td class=\"mono\" style=\"text-align:center\">"+f1(z.prog_proy)+"</td><td class=\"mono\" style=\"text-align:center;font-weight:600;color:var(--nv)\">"+f1(z.ejec_acum_proy)+"</td><td class=\"mono\" style=\"text-align:center;color:"+(df<0?"#15803D":"#DC2626")+"\">"+(df>=0?"+":"")+f1(df)+"</td><td style=\"text-align:center\"><span class=\""+pC(z.ejec_acum_proy,z.prog_proy)+"\">"+(pP!=null?pP.toFixed(1)+"%":"—")+"</span></td></tr>";}).join("");}const z0=d.zonas?.find(z=>z.ejec_dia>0||z.ejec_acum>0)||d.zonas?.[0]||{};sv("rb-ejec-dia",f1(z0.ejec_dia));sv("rb-prog-dia",f1(z0.prog_dia));sv("rb-ejec-acum",f1(z0.ejec_acum));sv("rb-prog-mes",f1(z0.prog_mes));sv("rb-ejec-proy",f1(z0.ejec_acum_proy));sv("rb-prog-proy",f1(z0.prog_proy));const p0=z0.prog_dia>0?(z0.ejec_dia/z0.prog_dia*100):null,pm0=z0.prog_mes>0?(z0.ejec_acum/z0.prog_mes*100):null,pp0=z0.prog_proy>0?(z0.ejec_acum_proy/z0.prog_proy*100):null;sv("rb-pct-dia",p0!=null?p0.toFixed(1)+"%":"—");sv("rb-pct-mes",pm0!=null?pm0.toFixed(1)+"%":"—");sv("rb-pct-proy",pp0!=null?pp0.toFixed(1)+"%":"—");const badge=document.getElementById("rb-pct-badge");if(badge&&pm0!=null){badge.textContent=(pm0>=100?"▲":pm0>=85?"●":"▼")+" "+pm0.toFixed(1)+"%";badge.className="kbdg "+(pm0>=100?"kG":pm0>=85?"kA":"kR");}console.log("[TUMI RB] OK");}catch(e){console.warn("[TUMI RB]",e.message);}}
